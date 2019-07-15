@@ -1,0 +1,1 @@
+(function(a){a(".chosen-select").chosen({width:"100%"})})(jQuery);
