@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.monginis.ops.constant.Constant" %>
+<%@ page import="com.monginis.ops.constant.Constant"%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <style>
@@ -112,7 +112,8 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<input type="hidden" name="factoryName" id="factoryName" value="${Constant.FACTORYNAME}">
+					<input type="hidden" name="factoryName" id="factoryName"
+						value="${Constant.FACTORYNAME}">
 					<div class="col-md-2 from_date">
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
@@ -155,11 +156,11 @@ jQuery(document).ready(function(){
 										<!-- <th class="col-md-1">Party Name</th> -->
 										<!-- 									<th class="col-md-1">GSTIN</th>
  -->
-										<th class="col-sm-1" style="text-align: center;">Invoice
+										<th class="col-sm-2" style="text-align: center;">Invoice
 											No</th>
-										<th class="col-sm-2" style="text-align: center;">Bill
+										<th class="col-sm-1" style="text-align: center;">Bill
 											Date</th>
-										<th class="col-md-2" style="text-align: center;">Taxable
+										<th class="col-md-1" style="text-align: center;">Taxable
 											Amt</th>
 										<th class="col-md-1" style="text-align: center;">IGST Amt</th>
 										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
@@ -167,6 +168,7 @@ jQuery(document).ready(function(){
 										<!-- <th class="col-md-1" style="text-align: center;">R.off</th> -->
 										<th class="col-md-2" style="text-align: center;">Bill
 											Amount</th>
+										<th class="col-md-1">Action</th>
 									</tr>
 
 								</thead>
@@ -182,11 +184,11 @@ jQuery(document).ready(function(){
 										<!-- <th class="col-md-1">Party Name</th> -->
 										<!-- 									<th class="col-md-1">GSTIN</th>
  -->
-										<th class="col-sm-1" style="text-align: center;">Invoice
+										<th class="col-sm-2" style="text-align: center;">Invoice
 											No</th>
 										<th class="col-sm-2" style="text-align: center;">Bill
 											Date</th>
-										<th class="col-md-2" style="text-align: center;">Taxable
+										<th class="col-md-1" style="text-align: center;">Taxable
 											Amt</th>
 										<th class="col-md-1" style="text-align: center;">IGST Amt</th>
 										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
@@ -194,6 +196,7 @@ jQuery(document).ready(function(){
 										<!-- 	<th class="col-md-1" style="text-align: center;">R.off</th> -->
 										<th class="col-md-2" style="text-align: center;">Bill
 											Amount</th>
+										<th class="col-md-1">Action</th>
 									</tr>
 
 								</thead>
@@ -245,8 +248,9 @@ jQuery(document).ready(function(){
 			//document.getElementById('btn_pdf').style.display = "block";
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
-			var factoryName= document.getElementById("factoryName").value;
-			$.getJSON(
+			var factoryName = document.getElementById("factoryName").value;
+			$
+					.getJSON(
 							'${getBillWisePurchase}',
 							{
 
@@ -284,7 +288,7 @@ jQuery(document).ready(function(){
 													document
 															.getElementById('range').style.display = 'block';
 
-													var partyname =factoryName;
+													var partyname = factoryName;
 													var gstNo = "#012";
 
 													var tr = $('<tr></tr>');
@@ -352,6 +356,11 @@ jQuery(document).ready(function(){
 																			(billWisePurchaseData.grandTotal)
 																					.toFixed(2)));
 
+													tr
+															.append($('<td class="col-md-2" style="text-align:center">  &nbsp;&nbsp;<a href="#" class="action_btn" onclick="genPdfSingle('
+																	+ billWisePurchaseData.billNo
+																	+ ')"><abbr title="Detail"><i class="fa fa-file-pdf-o"></i></abbr></a></td>'));
+
 													taxTotal = taxTotal
 															+ billWisePurchaseData.taxableAmt;
 													cgstTotal = cgstTotal
@@ -414,6 +423,9 @@ jQuery(document).ready(function(){
 												'<td class="col-md-1" style="text-align:right"></td>')
 												.html(billTotal.toFixed(2)));
 
+								tr.append($('<td class="col-md-1"></td>').html(
+										""));
+
 								$('#table_grid tbody').append(tr);
 
 							}
@@ -443,6 +455,20 @@ jQuery(document).ready(function(){
 
 	}
 </script>
+
+<script>
+	function genPdfSingle(billNo) {
+		alert(billNo);
+		//alert("Inside Gen Pdf ");
+		//alert("Inside Gen Pdf " + selArray);
+
+		window
+				.open('${pageContext.request.contextPath}/billPdf?url=pdf/showBillPdf/By-Road/0/'
+						+ billNo);
+
+	}
+</script>
+
 <script>
 	/*
 	//  jquery equivalent
