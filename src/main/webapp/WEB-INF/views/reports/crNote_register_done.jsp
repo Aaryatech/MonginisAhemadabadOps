@@ -66,7 +66,7 @@ table, th, td {
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Credit Note Register Done Report</h2>
+						<h2 class="pageTitle">Credit Note HSNwise Report</h2>
 					</div>
 				</div>
 

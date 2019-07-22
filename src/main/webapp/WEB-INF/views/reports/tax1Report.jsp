@@ -108,7 +108,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Tax Report</h2>
+						<h2 class="pageTitle">Billwiise Tax Percentage Report</h2>
 					</div>
 				</div>
 

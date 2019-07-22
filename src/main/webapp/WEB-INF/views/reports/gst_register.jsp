@@ -106,7 +106,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">GST Register Done Report</h2>
+						<h2 class="pageTitle">Billwise HSN Register Report</h2>
 					</div>
 				</div>
 

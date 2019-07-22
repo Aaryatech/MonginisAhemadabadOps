@@ -640,11 +640,6 @@
 								href="${pageContext.request.contextPath}/viewItemWiseDetailReport"><i
 								class="fa fa-files-o icon"></i>Itemwise-Billwise-Datewise
 								Purchase Report</a> <a
-								href="${pageContext.request.contextPath}/viewItemWiseReport"><i
-								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> <a
-								href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport"><i
-								class="fa fa-files-o icon"></i>Purchase Billwise Tax (Input)
-								Report</a> <a
 								href="${pageContext.request.contextPath}/showSaleReportBySubCategory"><i
 								class="fa fa-files-o icon"></i> Subcategory Summery Report</a> <a
 								href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
@@ -715,18 +710,23 @@
 							</div>
 
 							<a href="${pageContext.request.contextPath}/showTaxReport"><i
-								class="fa fa-files-o icon"></i>Tax Report 1</a> <a
-								href="${pageContext.request.contextPath}/showTax2Report"><i
-								class="fa fa-files-o icon"></i>Tax Report 2</a> <a
+								class="fa fa-files-o icon"></i>Billwiise Tax Percentage Report </a>
+							<a href="${pageContext.request.contextPath}/showTax2Report"><i
+								class="fa fa-files-o icon"></i>Billwiise Tax Percentage Report</a> <a
 								href="${pageContext.request.contextPath}/showCRNoteRegister"><i
-								class="fa fa-files-o icon"></i>Credit Note Register Report</a> <a
-								href="${pageContext.request.contextPath}/showCRNoteRegisterDone"><i
-								class="fa fa-files-o icon"></i>Credit Note Register Done Report</a>
+								class="fa fa-files-o icon"></i>Credit Note Tax Percentage Report</a>
 							<a
+								href="${pageContext.request.contextPath}/showCRNoteRegisterDone"><i
+								class="fa fa-files-o icon"></i>Credit Note HSNwise Report</a> <a
 								href="${pageContext.request.contextPath}/showHSNwiseReportBetDate"><i
-								class="fa fa-files-o icon"></i>HSN wise Report Report</a> <a
+								class="fa fa-files-o icon"></i>HSN wise Summery Report</a> <a
 								href="${pageContext.request.contextPath}/showGstRegister"><i
-								class="fa fa-files-o icon"></i>GST Register Done Report</a>
+								class="fa fa-files-o icon"></i>Billwise HSN Register Report</a> <a
+								href="${pageContext.request.contextPath}/viewItemWiseReport"><i
+								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> <a
+								href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport"><i
+								class="fa fa-files-o icon"></i>Purchase Billwise Tax (Input)
+								Report</a>
 
 
 
