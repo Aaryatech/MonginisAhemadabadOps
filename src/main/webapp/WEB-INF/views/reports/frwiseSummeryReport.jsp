@@ -107,7 +107,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Franchisee Report</h2>
+						<h2 class="pageTitle">Bill Credit Note Report</h2>
 					</div>
 				</div>
 
@@ -242,7 +242,7 @@ jQuery(document).ready(function(){
 						},
 						function(data) {
 
-							alert(data);
+							//alert(data);
 
 							$('#table_grid td').remove();
 							$('#loader').hide();
