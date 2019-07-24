@@ -452,7 +452,7 @@ function genPdf(headerId) {
 
 	// window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1+'/'+type);
 		    
-		    window.open('${pageContext.request.contextPath}/pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1+'/'+type);
+		    window.open('${pageContext.request.contextPath}/billPdf?url=pdf/getGrnPdf/'+fromDate+'/'+toDate+'/'+headerId+'/'+1+'/'+type);
 		   
 			
 	}

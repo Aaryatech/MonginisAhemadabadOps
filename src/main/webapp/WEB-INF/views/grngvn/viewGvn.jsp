@@ -368,9 +368,6 @@ $('#table_grid tbody')
 
 function getGvnDetail(headerId){
 	
-	//alert("PPP");
-			//alert("HIII");
-			//alert("header ID "+headerId)
 		    var form = document.getElementById("validation-form");
 		    form.action ="getGvnDetailList/"+headerId;
 		    form.submit();
@@ -442,17 +439,15 @@ function genPdf(headerId) {
 		    
 		    // window.open('${pageContext.request.contextPath}/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
 		    
-	    window.open('${pageContext.request.contextPath}/pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
-
-			
+	    window.open('${pageContext.request.contextPath}/billPdf?url=pdf/getGrnPdf/'+fromDate+'/'+toDate+'/'+headerId+'/'+0+'/'+type);
+	
 	}
 	</script>
 <script>
-
 function genCrnPdf(headerId) {
-	   
-		    window.open('${pageContext.request.contextPath}/pdf/getCrnCheckedHeaders/'+headerId);
-			
+	   		  
+	window.open('${pageContext.request.contextPath}/pdf/getCrnCheckedHeaders/'+headerId);
+	
 	}
 	</script>
 </body>

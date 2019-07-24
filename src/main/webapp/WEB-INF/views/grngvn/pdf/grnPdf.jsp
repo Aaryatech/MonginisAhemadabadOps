@@ -355,7 +355,7 @@
 			</tr>
 		</tbody>
 	</table>
-</body>
+</body><!-- 
 <body onload="directPrint()">
 	<script>
 		function directPrint() {
@@ -364,5 +364,5 @@
 			//window.close();
 		}
 	</script>
-</body>
+</body> -->
 </html>

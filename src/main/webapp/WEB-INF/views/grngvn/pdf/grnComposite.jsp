@@ -313,7 +313,7 @@
 		</tbody>
 	</table>
 </body>
-<body onload="directPrint()">
+<!-- <body onload="directPrint()">
 	<script>
 	 function directPrint()
 	{
@@ -322,6 +322,6 @@
 		//window.close();
 	} 
 	
-	</script>
+	</script> -->
 </body>
 </html>

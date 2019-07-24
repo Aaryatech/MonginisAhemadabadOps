@@ -44,6 +44,7 @@ import com.monginis.ops.constant.VpsImageUpload;
 import com.monginis.ops.model.AllspMessageResponse;
 import com.monginis.ops.model.ErrorMessage;
 import com.monginis.ops.model.Flavour;
+import com.monginis.ops.model.FlavourConf;
 import com.monginis.ops.model.FlavourList;
 import com.monginis.ops.model.FrItemStockConfigure;
 import com.monginis.ops.model.FrItemStockConfigureList;
@@ -401,8 +402,9 @@ public class SpCakeController {
 
 				int spBookb4 = Integer.parseInt(specialCake.getSpBookb4());
 				//--------------------------New For Flavors----------------------------------------
-
-				flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
+				 map = new LinkedMultiValueMap<String, Object>();
+				 map.add("spId", specialCake.getSpId());
+				flavourList = restTemplate.postForObject(Constant.URL + "/showFlavourListBySpId",map, FlavourList.class);
 				flavoursList = flavourList.getFlavour();
 
 				for (int i = 0; i < flavoursList.size(); i++) {
@@ -415,10 +417,10 @@ public class SpCakeController {
 						if (list.contains(""+flavour.getSpfId())) {
 							flavour.setSpfAdonRate(0.0);
 						
-						    flavoursListWithAddonRate.add(flavour);
 						}
 					
-					
+					    flavoursListWithAddonRate.add(flavour);
+
 				}
 				
 				//------------------------------------------------------------------
@@ -540,22 +542,28 @@ public class SpCakeController {
 	
 	// ------------------------Get Addon Rate AJAX method(spcakeorder)-----------------------------------
 	@RequestMapping(value = "/getAddOnRate", method = RequestMethod.GET)
-	public @ResponseBody Flavour getAddOnRate(@RequestParam(value = "spfId", required = true) int spfId) {
-		Flavour filteredFlavour = new Flavour();
+	public @ResponseBody FlavourConf getAddOnRate(@RequestParam(value = "spfId", required = true) int spfId,@RequestParam(value = "spId", required = true) int spId) {
+		//Flavour filteredFlavour = new Flavour();
+		FlavourConf flavourConf=new FlavourConf();
 		//List<Flavour>	flavoursList = flavourList.getFlavour();//commented
-		System.err.println(flavoursListWithAddonRate.toString()+"spfId");
-		for (Flavour flavour : flavoursListWithAddonRate) {
+		System.err.println(flavoursListWithAddonRate.toString()+"spfId"+"spId"+spId);
+		/*for (Flavour flavour : flavoursListWithAddonRate) {
 
 			if (flavour.getSpfId() == spfId) {
 
 				filteredFlavour = flavour;
 			}
 		}
-		System.err.println(filteredFlavour.toString());
+		System.err.println(filteredFlavour.toString());*/
+		RestTemplate restTemplate = new RestTemplate();
 
-		return filteredFlavour;
+		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		map.add("spId", spId);
+		map.add("spfId", spfId);
+		flavourConf = restTemplate.postForObject(Constant.URL + "getFlConfByIds", map, FlavourConf.class);
+
+		return flavourConf;
 	}
-
 
 	// --------------------------------------END--------------------------------------------------------------
 	public String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
