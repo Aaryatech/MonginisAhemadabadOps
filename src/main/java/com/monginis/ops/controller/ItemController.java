@@ -774,11 +774,11 @@ public class ItemController {
 					
 						if (frGrnTwo == 1) {
 
-							order.setGrnType(1);
+							order.setGrnType(frItem.getGrnTwo());
 
 						} else {
 
-							order.setGrnType(0);
+							order.setGrnType(2);
 						}
 
 						// for no grn these menuIds
