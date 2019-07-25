@@ -105,6 +105,35 @@ select {
       }
       google.setOnLoadCallback(onLoad);
     </script>
+     <script type="text/javascript">
+      // Load the Google Transliterate API
+      google.load("elements", "1", {
+            packages: "transliteration"
+          });
+
+      function onLoad() {
+        var options = {
+            sourceLanguage:
+                google.elements.transliteration.LanguageCode.ENGLISH,
+            destinationLanguage:
+                [google.elements.transliteration.LanguageCode.GUJARATI],
+            shortcutKey: 'ctrl+g',
+            transliterationEnabled: true
+        };
+
+        // Create an instance on TransliterationControl with the required
+        // options.
+        var control =
+            new google.elements.transliteration.TransliterationControl(options);
+
+        // Enable transliteration in the textbox with id
+        // 'transliterateTextarea'.
+        control.makeTransliteratable(['event_name_g']);
+      
+        
+      }
+      google.setOnLoadCallback(onLoad);
+    </script>
  <!--------------------------------END------------------------------------> 
    
       <!--new css added by kalpesh -->
@@ -405,10 +434,12 @@ select {
 	</div><div class="colOuter">
 		<div class="col1"><div class="col1title">MSG Name</div></div>
 		<div class="col2">  <select id="show" class="form-control" name="text1" onchange="showDiv1(this)" required>
-                              <option value="1" id="marathi" >Marathi</option>
+                              <option value="1" id="marathi" >GUJARATI</option>
                               <option value="2" id="hindi" >Hindi</option>
                               <option value="3" id="english" selected>English</option>
                        </select></div>
+                       <div class="col3" id="msgGujrati" style="display: none"><input class="texboxitemcode" placeholder="Name" name="event_name2" type="text" id="event_name_g" autocomplete="off">
+		</div> 
  <div class="col3" id="msgMarathi" style="display: none"><input class="texboxitemcode" placeholder="Name" name="event_name" type="text" id="event_name" autocomplete="off">
 		</div> 
 		<div class="col3" id="msgEnglish" ><input class="texboxitemcode" placeholder="Name" name="event_name1" type="text" id="event_name_e" autocomplete="off">
@@ -472,9 +503,10 @@ select {
 		<div class="col1"><div class="col1title">Special Instructions</div></div>
         <div class="col2full">
                       <select id="show" class="form-control" name="showtextarea" onchange="showDiv(this)" required>
-                           <!--    <option value="1" id="marathi" >Marathi</option>
-                              <option value="2" id="hindi" >Hindi</option> -->
-                              <option value="3" id="english" >English</option>
+                           <!--    <option value="1" id="marathi" >Marathi</option>-->
+                            
+                              <option value="3" id="english" selected>English</option>
+                                <option value="2" id="hindi" >Hindi</option> 
                        </select>
         </div>
         </div>
@@ -1416,21 +1448,25 @@ function showDiv(elem){
 function showDiv1(elem){
 	   if(elem.value == 1)
 		   {
-	         document.getElementById('msgMarathi').style.display= "block";
-	         document.getElementById('event_name').value = '';
+	         document.getElementById('msgGujrati').style.display= "block";
+	         document.getElementById('event_name_g').value = '';
 	         document.getElementById('msgEnglish').style="display:none";
+	         document.getElementById('msgMarathi').style="display:none";
 		   }
 	   else if(elem.value == 2)
 	   { 
 		   document.getElementById('msgMarathi').style.display= "block"; 
 	       document.getElementById('event_name').value = '';
 	       document.getElementById('msgEnglish').style="display:none";
+	       document.getElementById('msgGujrati').style="display:none";
 	   } else if(elem.value == 3)
 	   {
 		  
 		   document.getElementById('msgEnglish').style.display = "block"; 
 	       document.getElementById('event_name_e').value = '';
 		   document.getElementById('msgMarathi').style="display:none";
+	       document.getElementById('msgGujrati').style="display:none";
+
 	   }
 	}
 </script>
