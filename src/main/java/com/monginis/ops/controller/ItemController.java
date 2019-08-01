@@ -2,6 +2,7 @@ package com.monginis.ops.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -74,6 +75,10 @@ public class ItemController {
 	List<String> subCatList = new ArrayList<>();
 	public MultiValueMap<String, Object> map;
 	public String qtyAlert = "Enter the Quantity as per the Limit.";
+
+	public static float roundUp(double total) {
+		return BigDecimal.valueOf(total).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
+	}
 
 	@RequestMapping(value = "/showCutomerList")
 	public ModelAndView showCutomerList(HttpServletRequest request, HttpServletResponse response) {
@@ -201,36 +206,36 @@ public class ItemController {
 		prevFrItemList = new ArrayList<GetFrItem>();
 		List<GetOrder> orderList = new ArrayList<GetOrder>();
 		int flagRes = 0;
-		NewSetting settingValue=new NewSetting();
+		NewSetting settingValue = new NewSetting();
 		try {
 			RestTemplate rest = new RestTemplate();
-			//new on 10 july
-			//-----------------------------------------------------------------------------
+			// new on 10 july
+			// -----------------------------------------------------------------------------
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("settingKey", "show_prev_order");
-			 settingValue= rest.postForObject(Constant.URL + "/findNewSettingByKey", map, NewSetting.class);	
-			//------------------------------------------------------------------------------
-			
+			settingValue = rest.postForObject(Constant.URL + "/findNewSettingByKey", map, NewSetting.class);
+			// ------------------------------------------------------------------------------
+
 			System.out.println("Date is : " + currentDate);
 			currentMenuId = menuList.get(index).getMenuId();
-			if(currentMenuId==Integer.parseInt(settingValue.getSettingValue1())) {
-			  try {
-				map = new LinkedMultiValueMap<String, Object>();
-				map.add("frId", frDetails.getFrId());
-				map.add("date", currentDateFc);
-				map.add("menuId", settingValue.getSettingValue2());//new on 10 july
-				orderList = rest.postForObject(Constant.URL + "/getOrdersListRes", map, List.class);
-				System.err.println("orderList:" + orderList.toString());
-				model.addObject("orderList", orderList);
+			if (currentMenuId == Integer.parseInt(settingValue.getSettingValue1())) {
+				try {
+					map = new LinkedMultiValueMap<String, Object>();
+					map.add("frId", frDetails.getFrId());
+					map.add("date", currentDateFc);
+					map.add("menuId", settingValue.getSettingValue2());// new on 10 july
+					orderList = rest.postForObject(Constant.URL + "/getOrdersListRes", map, List.class);
+					System.err.println("orderList:" + orderList.toString());
+					model.addObject("orderList", orderList);
 
-				flagRes = 1;
-				model.addObject("flagRes", flagRes);
-			  } catch (Exception e) {
-				flagRes = 0;
-				model.addObject("flagRes", flagRes);
+					flagRes = 1;
+					model.addObject("flagRes", flagRes);
+				} catch (Exception e) {
+					flagRes = 0;
+					model.addObject("flagRes", flagRes);
 
-				e.printStackTrace();
-			  }
+					e.printStackTrace();
+				}
 			}
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -312,22 +317,22 @@ public class ItemController {
 			tabTitleData.setName(subCat);
 
 			if (isSameDayApplicable != 2) {
-				tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")");
+				tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")");
 			} else if (isSameDayApplicable == 2) {
 				if (subCat.equalsIgnoreCase("Pastries")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+					tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")" + "(Limit- "
 							+ frDetails.getFrKg1() + ")");
 
 				} else if (subCat.equalsIgnoreCase("1/2 Kg Cake")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+					tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")" + "(Limit- "
 							+ frDetails.getFrKg2() + ")");
 
 				} else if (subCat.equalsIgnoreCase("1 Kg Cake")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+					tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")" + "(Limit- "
 							+ frDetails.getFrKg3() + ")");
 
 				} else if (subCat.equalsIgnoreCase("Above 1 Kg Cake")) {
-					tabTitleData.setHeader(subCat + " (Rs." + total + ")" + "(Qty- " + qty + ")" + "(Limit- "
+					tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")" + "(Limit- "
 							+ frDetails.getFrKg4() + ")");
 
 				}
@@ -378,7 +383,7 @@ public class ItemController {
 		model.addObject("deliveryDate", strDeliveryDate);
 		model.addObject("menuTitle", menuTitle);
 		model.addObject("menuIdFc", menuList.get(index).getMenuId());
-		model.addObject("menuIdShow",settingValue.getSettingValue1());
+		model.addObject("menuIdShow", settingValue.getSettingValue1());
 		System.out.println("isSameDayApplicable" + isSameDayApplicable);
 		model.addObject("isSameDayApplicable", isSameDayApplicable);
 		model.addObject("qtyMessage", qtyAlert);
@@ -497,7 +502,6 @@ public class ItemController {
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		LoginInfo loginInfo = (LoginInfo) session.getAttribute("loginInfo");
 
-
 		ModelAndView mav = new ModelAndView("redirect:/showSavouries/" + globalIndex);
 		RestTemplate restTemplate = new RestTemplate();
 
@@ -514,15 +518,16 @@ public class ItemController {
 		int rateCat = frDetails.getFrRateCat();
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("menuList");
 
-		//-----------------------------------------------------------------------------
+		// -----------------------------------------------------------------------------
 		map = new LinkedMultiValueMap<String, Object>();
 		map.add("settingKey", "grn_type3");
-		NewSetting settingValue= restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", map, NewSetting.class);
+		NewSetting settingValue = restTemplate.postForObject(Constant.URL + "/findNewSettingByKey", map,
+				NewSetting.class);
 
 		List<Integer> settingMenuIds = Stream.of(settingValue.getSettingValue1().split(",")).map(Integer::parseInt)
 				.collect(Collectors.toList());
-		
-		//------------------------------------------------------------------------------
+
+		// ------------------------------------------------------------------------------
 		int isSameDayApplicable = menuList.get(globalIndex).getIsSameDayApplicable();
 		String menuTitle = request.getParameter("menuTitle");// For Notification
 		System.out.println("Fr Rate Cat " + rateCat);
@@ -624,15 +629,13 @@ public class ItemController {
 			if (isValidQty) {
 				frItemList = new ArrayList<GetFrItem>();
 
-
 				ParameterizedTypeReference<List<GetFrItem>> typeRef = new ParameterizedTypeReference<List<GetFrItem>>() {
 				};
 				ResponseEntity<List<GetFrItem>> responseEntity = restTemplate.exchange(Constant.URL + "/getFrItems",
 						HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 				frItemList = responseEntity.getBody();
-				
-				
+
 			}
 
 		}
@@ -771,7 +774,7 @@ public class ItemController {
 						Orders order = new Orders();
 
 						int frGrnTwo = frDetails.getGrnTwo();
-					
+
 						if (frGrnTwo == 1) {
 
 							order.setGrnType(frItem.getGrnTwo());
@@ -800,7 +803,7 @@ public class ItemController {
 						order.setOrderType(Integer.parseInt(frItem.getItemGrp1()));
 						order.setProductionDate(Common.stringToSqlDate(productionDate));
 						order.setRefId(0);// frItem.getId()on 21 feb
-						order.setUserId(loginInfo.getAccessRight());//new c
+						order.setUserId(loginInfo.getAccessRight());// new c
 						order.setMenuId(currentMenuId);
 
 						System.out.println("order qty===***************" + frItem.getItemQty());
@@ -809,7 +812,7 @@ public class ItemController {
 							order.setOrderMrp(frItem.getItemMrp1());
 							order.setOrderRate(frItem.getItemRate1());
 
-						}  else if (rateCat == 3) {
+						} else if (rateCat == 3) {
 							order.setOrderMrp(frItem.getItemMrp3());
 							order.setOrderRate(frItem.getItemRate3());
 
