@@ -77,6 +77,7 @@ public class Otheritems {
 	public void setPurchaseRate(float purchaseRate) {
 		this.purchaseRate = purchaseRate;
 	}
+	
 	public float getSellRate() {
 		return sellRate;
 	}
@@ -195,5 +196,6 @@ public class Otheritems {
 				+ ", exVar2=" + exVar2 + ", exVar3=" + exVar3 + ", exFloat1=" + exFloat1 + ", exFloat2=" + exFloat2
 				+ ", exFloat3=" + exFloat3 + ", exFloat4=" + exFloat4 + "]";
 	}
+	
 		
 }

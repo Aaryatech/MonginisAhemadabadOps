@@ -183,8 +183,8 @@ public class StockController {
 		menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 		System.out.println("Menu List " + menuList.toString());
 
-		int menuId = 0;
-
+	//	int menuId = 0;
+		List<Integer> menuIdList=null;
 		/*
 		 * if (catId.equalsIgnoreCase("1")) {
 		 * 
@@ -234,7 +234,7 @@ public class StockController {
 		System.out.println("## catId" + intCatId);
 
 		if (catId.equalsIgnoreCase("1")) {
-
+			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
 
 				if (header.getCatId() == intCatId) {
@@ -243,11 +243,11 @@ public class StockController {
 
 			}
 
-			menuId = 26;
+			menuIdList.add(26);
 
 		} else if (catId.equalsIgnoreCase("2")) {
-
-			menuId = 31;
+			menuIdList =new ArrayList<>();
+		
 			for (PostFrItemStockHeader header : list) {
 
 				if (header.getCatId() == intCatId) {
@@ -255,9 +255,9 @@ public class StockController {
 				}
 
 			}
+				menuIdList.add(82);
 		} else if (catId.equalsIgnoreCase("3")) {
-
-			menuId = 33;
+			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
 
 				if (header.getCatId() == intCatId) {
@@ -265,10 +265,9 @@ public class StockController {
 				}
 
 			}
-
+			menuIdList.add(33);
 		} else if (catId.equalsIgnoreCase("4")) {
-
-			menuId = 34;
+			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
 
 				if (header.getCatId() == intCatId) {
@@ -276,10 +275,9 @@ public class StockController {
 				}
 
 			}
-
+			menuIdList.add(34);
 		} else if (catId.equalsIgnoreCase("6")) {
-
-			menuId = 49;
+			menuIdList =new ArrayList<>();
 			for (PostFrItemStockHeader header : list) {
 
 				if (header.getCatId() == intCatId) {
@@ -287,22 +285,22 @@ public class StockController {
 				}
 
 			}
-
+			menuIdList.add(49);
 		}
-		System.err.println("Cat Id: " + catId + "running month " + runningMonth);
+		
 
 		String itemShow = "";
 
 		for (int i = 0; i < menuList.size(); i++) {
-
-			if (menuList.get(i).getMenuId() == menuId) {
+			for(int j=0;j<menuIdList.size();j++) {
+			if (menuList.get(i).getMenuId() == menuIdList.get(j)) {
 
 				itemShow = menuList.get(i).getItemShow();
 
 			}
-
+			}
 		}
-
+		System.err.println("Cat Id: " + catId + "running month " + runningMonth+"itemShow"+itemShow);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 		DateFormat yearFormat = new SimpleDateFormat("yyyy");
 

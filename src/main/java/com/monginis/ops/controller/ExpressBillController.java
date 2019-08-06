@@ -1013,7 +1013,7 @@ if(ses==null) {
 	}
 
 	@RequestMapping(value = "/getSelectedIdForPrint", method = RequestMethod.GET)
-	public void getSelectedIdForPrint(HttpServletRequest request, HttpServletResponse response) {
+	public @ResponseBody List<SellBillDetail> getSelectedIdForPrint(HttpServletRequest request, HttpServletResponse response) {
 
 		System.out.println("IN Metjod");
         try {
@@ -1070,6 +1070,7 @@ if(ses==null) {
 			e.printStackTrace();
 			
 		}
+        return BillDetailList;
 	}
 
 	@RequestMapping(value = "/printSelectedOrder", method = RequestMethod.GET)

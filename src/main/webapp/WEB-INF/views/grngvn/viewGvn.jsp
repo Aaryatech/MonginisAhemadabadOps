@@ -56,13 +56,13 @@ table, th, td {
 
 						<div class="calender-title">From</div>
 						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
+							<input id="datepicker" class="texboxitemcode texboxcal" autocomplete="off"
 								value="${cDate}" name="from_Date" type="text">
 						</div>
 
 						<div class="calender-title">TO</div>
 						<div class="col-md-2">
-							<input id="datepicker2" class="texboxitemcode texboxcal"
+							<input id="datepicker2" class="texboxitemcode texboxcal" autocomplete="off"
 								value="${cDate}" name="to_Date" type="text">
 						</div>
 

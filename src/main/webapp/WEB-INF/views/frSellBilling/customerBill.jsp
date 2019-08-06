@@ -477,7 +477,7 @@ label:before{
 
 
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Total:-</b>
 										</h4>
@@ -485,7 +485,7 @@ label:before{
 										<input type="hidden" class="form-control" id="tot1">
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(%):-</b>
 										</h4>
@@ -494,8 +494,17 @@ label:before{
 												onkeyup="disMinusTotal(1)" value="0">
 										</div>
 									</div>
+									<div class="col-md-3">
+										<h4 class="col-md-7" style="margin-top: 5px">
+											<b>Discount(Rs):-</b>
+										</h4>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="discountRs1"
+												onkeyup="disRsMinusTotal(1)" value="0">
+										</div>
+									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Grand Total:-</b>
 										</h4>
@@ -506,13 +515,13 @@ label:before{
 
 									<div class="clearfix"></div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 
 										<h4 class="col-md-7">
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode"
+											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
 												name="paymentMode1" class="form-control" tabindex="-1"
 												id="paymentMode1" data-rule-required="true">
 
@@ -525,7 +534,7 @@ label:before{
 										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Paid Amount:-</b>
 										</h4>
@@ -536,7 +545,7 @@ label:before{
 
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Remaining Amt:-</b>
 										</h4>
@@ -567,9 +576,9 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo1" id="phoneNo1">
+												placeholder="Enter phone No." name="phoneNo1" id="phoneNo1" maxlength="10">
 										</div>
 									</div>
 
@@ -578,10 +587,10 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill1"
-										onclick="generateSellBill(1)">Generate Bill</button>
+										onclick="generateSellBill(1)" disabled  >Generate Bill</button>
 
 									<button class="btn additem_btn" id="pdfBtn1" 
-										onclick="pdfBtn(1)">Print Bill</button>
+										onclick="pdfBtn(1)"  disabled >Print Bill</button>
 									<button class="btn additem_btn" id="clear1" 
 										onclick="clearData(1)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo1"
@@ -723,7 +732,7 @@ label:before{
 
 
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Total:-</b>
 										</h4>
@@ -731,7 +740,7 @@ label:before{
 										<input type="hidden" class="form-control" id="tot2">
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(%):-</b>
 										</h4>
@@ -740,8 +749,17 @@ label:before{
 												onkeyup="disMinusTotal(2)" value="0">
 										</div>
 									</div>
+									<div class="col-md-3">
+										<h4 class="col-md-7" style="margin-top: 5px">
+											<b>Discount(Rs):-</b>
+										</h4>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="discountRs2"
+												onkeyup="disRsMinusTotal(2)" value="0">
+										</div>
+									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Grand Total:-</b>
 										</h4>
@@ -752,14 +770,14 @@ label:before{
 
 									<div class="clearfix"></div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 
 										<h4 class="col-md-7">
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
-												name="paymentMode2" class="form-control" tabindex="-1"
+												name="paymentMode2" class="form-control" tabindex="-1" style="padding: 0px 0px;"
 												id="paymentMode2" data-rule-required="true">
 
 
@@ -772,7 +790,7 @@ label:before{
 										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Paid Amount:-</b>
 										</h4>
@@ -783,7 +801,7 @@ label:before{
 
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Remaining Amt:-</b>
 										</h4>
@@ -814,9 +832,9 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo2" id="phoneNo2">
+												placeholder="Enter phone No." name="phoneNo2" id="phoneNo2" maxlength="10">
 										</div>
 									</div>
 
@@ -825,9 +843,9 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill2"
-										onclick="generateSellBill(2)">Generate Bill</button>
+										onclick="generateSellBill(2)" disabled>Generate Bill</button>
 									<button class="btn additem_btn" id="pdfBtn2" 
-										onclick="pdfBtn(2)">Print Bill</button>
+										onclick="pdfBtn(2)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear2"
 										onclick="clearData(2)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo2"
@@ -970,7 +988,7 @@ label:before{
 
 
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Total:-</b>
 										</h4>
@@ -978,7 +996,7 @@ label:before{
 										<input type="hidden" class="form-control" id="tot3">
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(%):-</b>
 										</h4>
@@ -987,8 +1005,17 @@ label:before{
 												onkeyup="disMinusTotal(3)" value="0">
 										</div>
 									</div>
+									<div class="col-md-3">
+										<h4 class="col-md-7" style="margin-top: 5px">
+											<b>Discount(Rs):-</b>
+										</h4>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="discountRs3"
+												onkeyup="disRsMinusTotal(3)" value="0">
+										</div>
+									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Grand Total:-</b>
 										</h4>
@@ -999,14 +1026,14 @@ label:before{
 
 									<div class="clearfix"></div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 
 										<h4 class="col-md-7">
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
 											<select data-placeholder="Enter Payment Mode"
-												name="paymentMode3" class="form-control" tabindex="-1"
+												name="paymentMode3" class="form-control" tabindex="-1" style="padding: 0px 0px;"
 												id="paymentMode3" data-rule-required="true">
 
 
@@ -1019,7 +1046,7 @@ label:before{
 										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Paid Amount:-</b>
 										</h4>
@@ -1030,7 +1057,7 @@ label:before{
 
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Remaining Amt:-</b>
 										</h4>
@@ -1061,9 +1088,9 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo3" id="phoneNo3">
+												placeholder="Enter phone No." name="phoneNo3" id="phoneNo3" maxlength="10">
 										</div>
 									</div>
 
@@ -1072,9 +1099,9 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill3"
-										onclick="generateSellBill(3)">Generate Bill</button>
+										onclick="generateSellBill(3)" disabled>Generate Bill</button>
 									<button class="btn additem_btn" id="pdfBtn3" 
-										onclick="pdfBtn(3)">Print Bill</button>
+										onclick="pdfBtn(3)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear3"
 										onclick="clearData(3)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo3"
@@ -1214,15 +1241,15 @@ label:before{
 
 
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Total:-</b>
 										</h4>
-										<h4 class="col-md-5" id="total2">00</h4>
+										<h4 class="col-md-5" id="total4">00</h4>
 										<input type="hidden" class="form-control" id="tot4">
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(%):-</b>
 										</h4>
@@ -1231,8 +1258,17 @@ label:before{
 												onkeyup="disMinusTotal(4)" value="0">
 										</div>
 									</div>
+									<div class="col-md-3">
+										<h4 class="col-md-7" style="margin-top: 5px">
+											<b>Discount(Rs):-</b>
+										</h4>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="discountRs4"
+												onkeyup="disRsMinusTotal(4)" value="0">
+										</div>
+									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Grand Total:-</b>
 										</h4>
@@ -1243,13 +1279,13 @@ label:before{
 
 									<div class="clearfix"></div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 
 										<h4 class="col-md-7">
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode"
+											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
 												name="paymentMode4" class="form-control" tabindex="-1"
 												id="paymentMode4" data-rule-required="true">
 
@@ -1263,7 +1299,7 @@ label:before{
 										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Paid Amount:-</b>
 										</h4>
@@ -1274,7 +1310,7 @@ label:before{
 
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Remaining Amt:-</b>
 										</h4>
@@ -1305,9 +1341,9 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo4" id="phoneNo4">
+												placeholder="Enter phone No." name="phoneNo4" id="phoneNo4" maxlength="10">
 										</div>
 									</div>
 
@@ -1316,9 +1352,9 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill4"
-										onclick="generateSellBill(4)">Generate Bill</button>
+										onclick="generateSellBill(4)" disabled>Generate Bill</button>
 									<button class="btn additem_btn" id="pdfBtn4" 
-										onclick="pdfBtn(4)">Print Bill</button>
+										onclick="pdfBtn(4)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear4"
 										onclick="clearData(4)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo4"
@@ -1448,7 +1484,7 @@ label:before{
 
 
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Total:-</b>
 										</h4>
@@ -1456,7 +1492,7 @@ label:before{
 										<input type="hidden" class="form-control" id="tot5">
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(%):-</b>
 										</h4>
@@ -1465,8 +1501,17 @@ label:before{
 												onkeyup="disMinusTotal(5)" value="0">
 										</div>
 									</div>
+									<div class="col-md-3">
+										<h4 class="col-md-7" style="margin-top: 5px">
+											<b>Discount(Rs):-</b>
+										</h4>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="discountRs5"
+												onkeyup="disRsMinusTotal(5)" value="0">
+										</div>
+									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Grand Total:-</b>
 										</h4>
@@ -1477,13 +1522,13 @@ label:before{
 
 									<div class="clearfix"></div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 
 										<h4 class="col-md-7">
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode"
+											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
 												name="paymentMode5" class="form-control" tabindex="-1"
 												id="paymentMode5" data-rule-required="true">
 
@@ -1497,7 +1542,7 @@ label:before{
 										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Paid Amount:-</b>
 										</h4>
@@ -1508,7 +1553,7 @@ label:before{
 
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Remaining Amt:-</b>
 										</h4>
@@ -1539,9 +1584,9 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo5" id="phoneNo5">
+												placeholder="Enter phone No." name="phoneNo5" id="phoneNo5" maxlength="10">
 										</div>
 									</div>
 
@@ -1550,9 +1595,9 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill5"
-										onclick="generateSellBill(5)">Generate Bill</button>
+										onclick="generateSellBill(5)" disabled>Generate Bill</button>
 									<button class="btn additem_btn" id="pdfBtn5"
-										onclick="pdfBtn(5)">Print Bill</button>
+										onclick="pdfBtn(5)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear5" 
 										onclick="clearData(5)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo5"
@@ -1691,15 +1736,15 @@ label:before{
 
 
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Total:-</b>
 										</h4>
-										<h4 class="col-md-5" id="total2">00</h4>
+										<h4 class="col-md-5" id="total6">00</h4>
 										<input type="hidden" class="form-control" id="tot6">
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(%):-</b>
 										</h4>
@@ -1708,8 +1753,17 @@ label:before{
 												onkeyup="disMinusTotal(6)" value="0">
 										</div>
 									</div>
+									<div class="col-md-3">
+										<h4 class="col-md-7" style="margin-top: 5px">
+											<b>Discount(Rs):-</b>
+										</h4>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="discountRs6"
+												onkeyup="disRsMinusTotal(6)" value="0">
+										</div>
+									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Grand Total:-</b>
 										</h4>
@@ -1720,13 +1774,13 @@ label:before{
 
 									<div class="clearfix"></div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 
 										<h4 class="col-md-7">
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode"
+											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
 												name="paymentMode6" class="form-control" tabindex="-1"
 												id="paymentMode6" data-rule-required="true">
 
@@ -1740,7 +1794,7 @@ label:before{
 										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Paid Amount:-</b>
 										</h4>
@@ -1751,7 +1805,7 @@ label:before{
 
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Remaining Amt:-</b>
 										</h4>
@@ -1782,9 +1836,9 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo6" id="phoneNo6">
+												placeholder="Enter phone No." name="phoneNo6" id="phoneNo6" maxlength="10">
 										</div>
 									</div>
 
@@ -1793,9 +1847,9 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill6"
-										onclick="generateSellBill(6)">Generate Bill</button>
+										onclick="generateSellBill(6)" disabled>Generate Bill</button>
 									<button class="btn additem_btn" id="pdfBtn6" 
-										onclick="pdfBtn(6)">Print Bill</button>
+										onclick="pdfBtn(6)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear6" 
 										onclick="clearData(6)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo6"
@@ -1922,7 +1976,7 @@ label:before{
 
 
 								<div class="row">
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Total:-</b>
 										</h4>
@@ -1930,7 +1984,7 @@ label:before{
 										<input type="hidden" class="form-control" id="tot7">
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Discount(%):-</b>
 										</h4>
@@ -1938,9 +1992,18 @@ label:before{
 											<input type="text" class="form-control" id="discount7"
 												onkeyup="disMinusTotal(7)" value="0">
 										</div>
+										</div>
+									<div class="col-md-3">
+										<h4 class="col-md-7" style="margin-top: 5px">
+											<b>Discount(Rs):-</b>
+										</h4>
+										<div class="col-md-5">
+											<input type="text" class="form-control" id="discountRs7"
+												onkeyup="disRsMinusTotal(7)" value="0">
+										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Grand Total:-</b>
 										</h4>
@@ -1951,13 +2014,13 @@ label:before{
 
 									<div class="clearfix"></div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 
 										<h4 class="col-md-7">
 											<b>Payment Mode:-</b>
 										</h4>
 										<div class="col-md-5">
-											<select data-placeholder="Enter Payment Mode"
+											<select data-placeholder="Enter Payment Mode" style="padding: 0px 0px;"
 												name="paymentMode7" class="form-control" tabindex="-1"
 												id="paymentMode7" data-rule-required="true">
 
@@ -1971,7 +2034,7 @@ label:before{
 										</div>
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7">
 											<b>Paid Amount:-</b>
 										</h4>
@@ -1982,7 +2045,7 @@ label:before{
 
 									</div>
 
-									<div class="col-md-4">
+									<div class="col-md-3">
 										<h4 class="col-md-7" style="margin-top: 5px">
 											<b>Remaining Amt:-</b>
 										</h4>
@@ -2013,9 +2076,9 @@ label:before{
 
 
 										<div class="col-md-4">
-											<h4>Phone No:-</h4>
+											<h4>Mo No:-</h4>
 											<input type="text" class="form-control"
-												placeholder="Enter phone No." name="phoneNo7" id="phoneNo7">
+												placeholder="Enter phone No." name="phoneNo7" id="phoneNo7" maxlength="10">
 										</div>
 									</div>
 
@@ -2024,9 +2087,9 @@ label:before{
 
 								<center>
 									<button class="btn additem_btn" id="generateBill7"
-										onclick="generateSellBill(7)">Generate Bill</button>
+										onclick="generateSellBill(7)" disabled>Generate Bill</button>
 									<button class="btn additem_btn" id="pdfBtn7" 
-										onclick="pdfBtn(7)">Print Bill</button>
+										onclick="pdfBtn(7)" disabled>Print Bill</button>
 									<button class="btn additem_btn" id="clear7"
 										onclick="clearData(7)">Clear</button>
 								</center> <input type="hidden" class="form-control" id="sellBillNo7"
@@ -2824,6 +2887,15 @@ label:before{
 
 	<script type="text/javascript">
 		function appendToTable(key, data, token, allTotal) {
+			
+			if(data.length>0){
+				document.getElementById("generateBill"+token).disabled=false;
+				document.getElementById("pdfBtn"+token).disabled=false;
+			}else
+				{
+				document.getElementById("generateBill"+token).disabled=true;
+				document.getElementById("pdfBtn"+token).disabled=true;
+				}
 
 			var tr = $('<tr></tr>');
 
@@ -2919,6 +2991,15 @@ label:before{
 					grandMinusPaidAmt);
 
 			document.getElementById("barcode" + token).focus();
+			
+			if(grandAmt>0){
+				document.getElementById("generateBill"+token).disabled=false;
+				document.getElementById("pdfBtn"+token).disabled=false;
+			}else
+				{
+				document.getElementById("generateBill"+token).disabled=true;
+				document.getElementById("pdfBtn"+token).disabled=true;
+				}
 		}
 
 		var editFlag = 0;
@@ -2972,7 +3053,9 @@ label:before{
 
 			var total = $("#tot" + token).val();
 
-			var grandAmt = total - (total * (discount / 100));
+            var discountInRs=(total * (discount / 100));
+            var	 grandAmt = total - discountInRs;
+			
 			grandAmt = grandAmt.toFixed(2);
 			$('#grandtotal' + token).html(grandAmt);
 			document.getElementById("grandtot" + token).setAttribute('value',
@@ -2989,7 +3072,40 @@ label:before{
 			$('#remAmt' + token).html(remainingAmount);
 			document.getElementById("remAmount" + token).setAttribute('value',
 					remainingAmount);
+            $('#discountRs' + token).val(discountInRs.toFixed(2));
 
+			//document.getElementById("paidAmount"+token).setAttribute('value',grandAmt);
+			//paidAmt(token);
+
+			//document.getElementById("remAmount"+token).setAttribute('value',00);
+
+		}
+		function disRsMinusTotal(token) {
+
+			var discountRs = $("#discountRs" + token).val();
+
+			var total = $("#tot" + token).val();
+
+            var	discPer=discountRs/(total/100); 
+            var grandAmt = total - discountRs;
+         
+			grandAmt = grandAmt.toFixed(2);
+			$('#grandtotal' + token).html(grandAmt);
+			document.getElementById("grandtot" + token).setAttribute('value',
+					grandAmt);
+			
+			$('#paidAmount' + token).html(grandAmt);
+			document.getElementById("paidAmount" + token).setAttribute('value',
+					grandAmt);
+
+			var paidAmount = $("#paidAmount" + token).val();
+
+			var remainingAmount = (grandAmt - paidAmount);
+			remainingAmount = remainingAmount.toFixed(2);
+			$('#remAmt' + token).html(remainingAmount);
+			document.getElementById("remAmount" + token).setAttribute('value',
+					remainingAmount);
+            $('#discount' + token).val(discPer.toFixed(2));
 			//document.getElementById("paidAmount"+token).setAttribute('value',grandAmt);
 			//paidAmt(token);
 
@@ -3024,14 +3140,17 @@ label:before{
 			}, function(data) {
 
 				$('#table_grid' + token + ' td').remove();
-
+				
 				$.each(data, function(key, regData) {
 					//appensFuction
 					allTotal = allTotal
 							+ appendToTable(key, regData, token, allTotal);
 				})
-				calTotal(allTotal, token)
-
+				calTotal(allTotal, token);
+				  $('#discount' + token).val(0);
+				  $('#discountRs' + token).val(0);
+				  document.getElementById("itemName"+token).value="";
+                  $('.chosen-select').trigger('chosen:updated');
 			});
 
 		}
@@ -3043,10 +3162,9 @@ label:before{
 			//var isValid = validation(token);
 			var grandtot = $("#grandtot" + token).val();
 			// Animate loader off screen
-			$("#loader"+token).show();
-
-		//	alert(grandtot);
+			
 			if (validation(token) && grandtot > 0) {
+				$("#loader"+token).show();
 				var isb2b=0;
 				if(document.getElementById('is_b2b').checked && token==1) {
 				 isb2b=1;
@@ -3087,7 +3205,7 @@ label:before{
 										$("#check"+token).hide();
 									} else {
 										//setTimeout('document.getElementById("check2").style.display="none"', 1000); 
-										function showIt() {
+									function showIt() {
 											  document.getElementById("check"+token).style.visibility = "hidden";
 											}
 											setTimeout(showIt, 500);
@@ -3107,34 +3225,36 @@ label:before{
 										// alert(data.sellBillNo);
 
 										document.getElementById(
-												"barcode" + token)
-												.setAttribute('value', 0);
+												"barcode" + token).value="";
 
-										$("#rateTdVal" + token).html(0);
+										$("#rateTdVal" + token).html("0.0");
 
-										$("#total" + token).html(0.0);
-										document.getElementById("tot" + token)
-												.setAttribute('value', 0.0);
+										$("#total" + token).html("0.0");
+										document.getElementById("tot" + token).value="0.0";
 
 										document.getElementById(
-												"paidAmount" + token)
-												.setAttribute('value', 0.0);
+												"paidAmount" + token).value="0.0";
 
-										$('#grandtotal' + token).html(0.0);
+										$('#grandtotal' + token).html("0.0");
 										document.getElementById(
-												"grandtot" + token)
-												.setAttribute('value', 0.0);
-
-										$('#remAmt' + token).html(
-												grandMinusPaidAmt);
-										document.getElementById(
-												"remAmount" + token)
-												.setAttribute('value', 0.0);
-										$("#discount" + token).html(0);
-
-										document.getElementById(
-												"barcode" + token).focus();
+												"grandtot" + token).value="0.0";
 										
+										$('#remAmt'+token).html(0);
+										document.getElementById(
+												"remAmount"+token).value="0.0";
+										document.getElementById("discount"+token).value="0.0";
+										document.getElementById("discountRs"+token).value="0.0";
+										document.getElementById(
+												"barcode"+token).focus();
+										document.getElementById(
+												"gstNo"+token).value="";
+										document.getElementById(
+												"custName"+token).value="Cash";
+										document.getElementById(
+												"phoneNo"+token).value="";
+									       $("#rateTdVal"+token).html("0.0");
+									       document.getElementById("itemName"+token).value="";
+						                    $('.chosen-select').trigger('chosen:updated');
 
 									}
 									
@@ -3198,11 +3318,11 @@ label:before{
 									$('#loader').hide();
 									if (data == "") {
 										alert("Order Not Placed !!");
-									} else {
+									} else{
 										
 										document.getElementById("li"+token).style.backgroundColor = "white";
 									    loginWindow.location.href = '${pageContext.request.contextPath}/pdfSellBill?billNo='
-											+ data.sellBillNo;
+											+ data.sellBillNo+"&type=R";
 										document.getElementById("sellBillNo"
 												+ token).value = data.sellBillNo;
 										document.getElementById("pdfBtn"
@@ -3212,38 +3332,40 @@ label:before{
 
 										$('#table_grid' + token + ' td')
 												.remove();
-										// alert(data.sellBillNo);
+										document.getElementById("discount"+token).value="0.0";
 
 										document.getElementById(
-												"barcode" + token)
-												.setAttribute('value', 0);
+												"barcode" + token).value="";
 
-										$("#rateTdVal" + token).html(0);
+										$("#rateTdVal" + token).html("0.0");
 
-										$("#total" + token).html(0.0);
-										document.getElementById("tot" + token)
-												.setAttribute('value', 0.0);
+										$("#total" + token).html("0.0");
+										document.getElementById("tot" + token).value="0.0";
 
 										document.getElementById(
-												"paidAmount" + token)
-												.setAttribute('value', 0.0);
+												"paidAmount" + token).value="0.0";
 
-										$('#grandtotal' + token).html(0.0);
+										$('#grandtotal' + token).html("0.0");
 										document.getElementById(
-												"grandtot" + token)
-												.setAttribute('value', 0.0);
+												"grandtot" + token).value="0.0";
 
-										$('#remAmt' + token).html(
-												grandMinusPaidAmt);
+										$('#remAmt' + token).html(0);
 										document.getElementById(
-												"remAmount" + token)
-												.setAttribute('value', 0.0);
-										$("#discount" + token).html(0);
+												"remAmount" + token).value="0.0";
+										document.getElementById("discount"+token).value="0.0";
+										document.getElementById("discountRs"+token).value="0.0";
 
 										document.getElementById(
 												"barcode" + token).focus();
-										
-					                
+										document.getElementById(
+												"gstNo"+token).value="";
+										document.getElementById(
+												"custName"+token).value="Cash";
+										document.getElementById(
+												"phoneNo"+token).value="";
+									       $("#rateTdVal"+token).html("0.0");
+									       document.getElementById("itemName"+token).value="";
+						                    $('.chosen-select').trigger('chosen:updated');
 									}
 								});
 			}
@@ -3255,7 +3377,7 @@ function pdfPrint(token) {
 
 			window
 					.open("${pageContext.request.contextPath}/pdfSellBill?billNo="
-							+ billNo);
+							+ billNo+"&type=R");
 			clearData(token);
 		}
 		

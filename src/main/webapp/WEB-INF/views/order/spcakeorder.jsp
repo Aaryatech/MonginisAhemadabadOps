@@ -317,7 +317,6 @@ select {
 <input type="hidden" name="sp_code" id="sp_code" value="${specialCake.spCode}">
 <input type="hidden" name="sp_name" id="sp_name" value="${specialCake.spName}">
 <input type="hidden" name="fr_code" id="fr_code" value="4">
-<input type="hidden" name="spPhoUpload" id="spPhoUpload" value="${specialCake.spPhoupload}">
 <input type="hidden" name="isCustCh" id="isCustCh" value="${specialCake.isCustChoiceCk}">
 <input type="hidden" name="prevImage" id="prevImage" value="${specialCake.spImage}">
 <input type="hidden" name="isFound" id="isFound" value="${isFound}" onchange="onChangeValue()">
@@ -434,7 +433,7 @@ select {
 	</div><div class="colOuter">
 		<div class="col1"><div class="col1title">MSG Name</div></div>
 		<div class="col2">  <select id="show" class="form-control" name="text1" onchange="showDiv1(this)" required>
-                              <option value="1" id="marathi" >GUJARATI</option>
+                            <!--   <option value="1" id="marathi" >GUJARATI</option> -->
                               <option value="2" id="hindi" >Hindi</option>
                               <option value="3" id="english" selected>English</option>
                        </select></div>
@@ -531,7 +530,7 @@ select {
 
 		</c:when>
 		<c:otherwise>
-		<input id="datepicker" class="texboxitemcode texboxcal" value="<%=fDate %>"  name="datepicker" type="text" required>
+		<input id="datepicker" class="texboxitemcode texboxcal"  autocomplete="off" value="<%=fDate %>"  name="datepicker" type="text" required>
 		</c:otherwise>
 		</c:choose>
 		</div><div class="col2"> 
@@ -553,7 +552,7 @@ select {
 	
 	<div class="colOuter">
 	    <div class="col1"><div class="col1title">Customer Name</div></div>
-		<div class="col2full"><input class="texboxitemcode texboxcal2" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"required></div>
+		<div class="col2full"><input class="texboxitemcode texboxcal2" autocomplete="off" placeholder="Customer Name" name="sp_cust_name" type="text" id="sp_cust_name"required></div>
 		
 		
 <%-- 		<div class="col3"><input id="datepicker4" class="texboxitemcode texboxcal" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
@@ -566,7 +565,7 @@ select {
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Mobile</div></div>
 	
-			<div class="col2full"><input class="texboxitemcode" placeholder="Mobile No."  name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" required autocomplete="off"></div>
+			<div class="col2full"><input class="texboxitemcode" placeholder="Mobile No."  name="sp_cust_mobile_no" type="text" id="sp_cust_mobile_no" maxlength="10"  required autocomplete="off"></div>
 	
 	</div>
 	
@@ -649,6 +648,10 @@ select {
 				<li>
 					<div class="priceLeft">Discount(%) </div>
 					<div class="priceRight"><input name="sp_disc" id="sp_disc"  type="text"  value="0"  oninput="chChange()" style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
+				</li>
+				<li>
+					<div class="priceLeft">Discount(Rs) </div>
+					<div class="priceRight"><input name="sp_disc_rs" id="sp_disc_rs"  type="text"  value="0"  oninput="onChangeDiscRs()" style="width:75px;border-radius:20px;text-align:center;height: 27px;"></div>
 				</li>
 				<li>
 					<div class="priceLeft">Sub Total </div>
@@ -867,7 +870,7 @@ $(document).ready(function() {
 				}
 			}
 			
-         
+			 document.getElementById("sp_disc_rs").value=disc_amt.toFixed(2);//new
 
 			$('#gstrs').html(gstInRs.toFixed(2));  document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
 
@@ -880,15 +883,15 @@ $(document).ready(function() {
 		
 			$('#rate').html(wt*flavourAdonRate);	
 			document.getElementById("sp_add_rate").setAttribute('value',wt*flavourAdonRate);
-			$('#subtotal').html(spSubtotal);	
-			document.getElementById("sp_sub_total").setAttribute('value',spSubtotal);
+			$('#subtotal').html(spSubtotal.toFixed(2));	
+			document.getElementById("sp_sub_total").setAttribute('value',spSubtotal.toFixed(2));
 			
-			$('#INR').html('INR-'+spSubtotal);
-			document.getElementById("sp_grand").setAttribute('value',spSubtotal);
-			$('#tot').html('TOTAL-'+spSubtotal);
-			document.getElementById("total_amt").setAttribute('value',spSubtotal);
-			$('#rmAmt').html(spSubtotal);
-			document.getElementById("rm_amount").setAttribute('value',spSubtotal);
+			$('#INR').html('INR-'+spSubtotal.toFixed(2));
+			document.getElementById("sp_grand").setAttribute('value',spSubtotal.toFixed(2));
+			$('#tot').html('TOTAL-'+spSubtotal.toFixed(2));
+			document.getElementById("total_amt").setAttribute('value',spSubtotal.toFixed(2));
+			$('#rmAmt').html(spSubtotal.toFixed(2));
+			document.getElementById("rm_amount").setAttribute('value',spSubtotal.toFixed(2));
 			
 			document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
 			
@@ -978,21 +981,21 @@ $(document).ready(function() {
 						}
 						
 					  var grandTotal=parseFloat(totalCakeRate+totalFlavourAddonRate);
-					  
+					  document.getElementById("sp_disc_rs").value=disc_amt.toFixed(2);//new
 					    $('#price').html(totalCakeRate);
 					    document.getElementById("sp_calc_price").setAttribute('value',totalCakeRate);
 					    
 						$('#rate').html(totalFlavourAddonRate);$('#sp_add_rate').html(totalFlavourAddonRate);
 						document.getElementById("sp_add_rate").setAttribute('value',totalFlavourAddonRate);
-						$('#subtotal').html(totalAmount);
+						$('#subtotal').html(totalAmount.toFixed(2));
 						
-						document.getElementById("sp_sub_total").setAttribute('value', totalAmount);
-						$('#INR').html('INR-'+ totalAmount);
-						document.getElementById("sp_grand").setAttribute('value', totalAmount);
-						$('#tot').html('TOTAL-'+ totalAmount);
-						document.getElementById("total_amt").setAttribute('value', totalAmount);
-						$('#rmAmt').html(totalAmount);
-						document.getElementById("rm_amount").setAttribute('value', totalAmount);
+						document.getElementById("sp_sub_total").setAttribute('value', totalAmount.toFixed(2));
+						$('#INR').html('INR-'+ totalAmount.toFixed(2));
+						document.getElementById("sp_grand").setAttribute('value', totalAmount.toFixed(2));
+						$('#tot').html('TOTAL-'+ totalAmount.toFixed(2));
+						document.getElementById("total_amt").setAttribute('value', totalAmount.toFixed(2));
+						$('#rmAmt').html(totalAmount.toFixed(2));
+						document.getElementById("rm_amount").setAttribute('value', totalAmount.toFixed(2));
 						
 						document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
 						
@@ -1007,7 +1010,106 @@ $(document).ready(function() {
 			});
 });
 </script>
+<script>
 
+function onChangeDiscRs() {
+	var wt = $('#spwt').find(":selected").text();
+	var flavourAdonRate =$("#dbAdonRate").val();
+	var tax3 = parseFloat($("#tax3").val());
+	var tax1 = parseFloat($("#tax1").val());
+	var tax2 = parseFloat($("#tax2").val());
+	document.getElementById("adv").value=0;
+	var sp_ex_charges= parseFloat($("#sp_ex_charges").val());
+	//alert("sp_ex_charges"+sp_ex_charges);
+	var disc_amt=parseFloat($("#sp_disc_rs").val());
+	//alert("sp_disc"+sp_disc);
+	var dbRate = $("#dbPrice").val();//dbRate
+	//alert("tax1:"+tax1+"tax2"+tax2+"tax3"+tax3);
+	
+	
+	var totalCakeRate = wt*dbRate;
+	var totalFlavourAddonRate = wt*flavourAdonRate;
+    var add=parseFloat(totalCakeRate+totalFlavourAddonRate);
+    var grandTotal=parseFloat(add);
+    //alert("without sp_ex_charges"+add);
+	var spSubtotal=add+sp_ex_charges;
+	//alert("with sp_ex_charges"+spSubtotal);
+	document.getElementById("adv").value=0;
+	//alert("disc_amt"+disc_amt);
+	var discPer=disc_amt/(spSubtotal/100);
+	//alert("final "+spSubtotal);
+	spSubtotal=spSubtotal-disc_amt;
+	
+	var mrpBaseRate=parseFloat((spSubtotal*100)/(tax3+100));
+	
+	var gstInRs=0;
+	var taxPerPerc1=0;
+	var taxPerPerc2=0;
+	var tax1Amt=0;
+	var tax2Amt=0;
+	if(tax3==0)
+		{
+		    gstInRs=0;
+		
+		}
+    else
+	{
+	   gstInRs=(mrpBaseRate*tax3)/100;
+		
+	   if(tax1==0)
+		{
+		   taxPerPerc1=0;
+		}
+	   else
+		{
+		    taxPerPerc1=parseFloat((tax1*100)/tax3);
+		    tax1Amt=parseFloat((gstInRs*taxPerPerc1)/100);
+
+		}
+	   if(tax2==0)
+		{
+		   taxPerPerc2=0;
+		}
+	   else
+		{
+			taxPerPerc2=parseFloat((tax2*100)/tax3);
+			tax2Amt=parseFloat((gstInRs*taxPerPerc2)/100);
+
+		}
+	}
+	
+ 
+	document.getElementById("sp_disc").value=discPer.toFixed(2);//new
+	$('#gstrs').html(gstInRs.toFixed(2));  document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
+
+	var mGstAmt=mrpBaseRate;
+	$('#mgstamt').html('AMT-'+mGstAmt.toFixed(2));  document.getElementById("m_gst_amt").setAttribute('value',mGstAmt.toFixed(2));
+	
+	$('#price').html(wt*dbRate);
+	document.getElementById("sp_calc_price").value=wt*dbRate;
+	$('#rate').html(wt*flavourAdonRate);	
+	document.getElementById("sp_add_rate").setAttribute('value',wt*flavourAdonRate);
+	//$('#subtotal').html(grandTotal);	
+	
+	$('#subtotal').html(spSubtotal.toFixed(2));	
+	/* document.getElementById("sp_sub_total").setAttribute('value',add); */
+	document.getElementById("sp_sub_total").setAttribute('value',spSubtotal.toFixed(2));
+	
+	$('#INR').html('INR-'+spSubtotal.toFixed(2));
+	document.getElementById("sp_grand").setAttribute('value',spSubtotal.toFixed(2));
+	$('#tot').html('TOTAL-'+spSubtotal.toFixed(2));
+	document.getElementById("total_amt").setAttribute('value',spSubtotal.toFixed(2));
+	$('#rmAmt').html(spSubtotal.toFixed(2));
+	document.getElementById("rm_amount").setAttribute('value',spSubtotal.toFixed(2));
+	
+	document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
+	
+	document.getElementById("t2amt").setAttribute('value',tax2Amt.toFixed(2));
+	
+}
+
+
+</script>
 
 <script>
 
@@ -1083,7 +1185,7 @@ function chChange() {
 	}
 	
  
-
+	  document.getElementById("sp_disc_rs").value=disc_amt.toFixed(2);//new
 	$('#gstrs').html(gstInRs.toFixed(2));  document.getElementById("gst_rs").setAttribute('value',gstInRs.toFixed(2));
 
 	var mGstAmt=mrpBaseRate;
@@ -1095,16 +1197,16 @@ function chChange() {
 	document.getElementById("sp_add_rate").setAttribute('value',wt*flavourAdonRate);
 	//$('#subtotal').html(grandTotal);	
 	
-	$('#subtotal').html(spSubtotal);	
+	$('#subtotal').html(spSubtotal.toFixed(2));	
 	/* document.getElementById("sp_sub_total").setAttribute('value',add); */
-	document.getElementById("sp_sub_total").setAttribute('value',spSubtotal);
+	document.getElementById("sp_sub_total").setAttribute('value',spSubtotal.toFixed(2));
 	
-	$('#INR').html('INR-'+spSubtotal);
-	document.getElementById("sp_grand").setAttribute('value',spSubtotal);
-	$('#tot').html('TOTAL-'+spSubtotal);
-	document.getElementById("total_amt").setAttribute('value',spSubtotal);
-	$('#rmAmt').html(spSubtotal);
-	document.getElementById("rm_amount").setAttribute('value',spSubtotal);
+	$('#INR').html('INR-'+spSubtotal.toFixed(2));
+	document.getElementById("sp_grand").setAttribute('value',spSubtotal.toFixed(2));
+	$('#tot').html('TOTAL-'+spSubtotal.toFixed(2));
+	document.getElementById("total_amt").setAttribute('value',spSubtotal.toFixed(2));
+	$('#rmAmt').html(spSubtotal.toFixed(2));
+	document.getElementById("rm_amount").setAttribute('value',spSubtotal.toFixed(2));
 	
 	document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
 	
@@ -1147,7 +1249,7 @@ function validate() {
 	 var alphaExp = /^[a-zA-Z]+$/;
 
 
-    var eventName,spId,spCustName,spPlace,spCustMob,spType,spFlavour,spCode,spWt,noOfChars,image1;
+    var eventName,spId,spCustName,spPlace,spCustMob,spType,spFlavour,spCode,spWt,noOfChars,image1,spExCharges,spDisc,totalAmt,rmAmount;
     eventName = document.getElementById("event_name").value;
     spPlace = document.getElementById("sp_place").value;
     spCustName=document.getElementById("sp_cust_name").value;
@@ -1157,7 +1259,14 @@ function validate() {
     spCode=document.getElementById("sp_code").value;
     spWt=document.getElementById("spwt").value;
     noOfChars=document.getElementById("noOfChars").value;
+    spExCharges=document.getElementById("sp_ex_charges").value;
+    spDisc=document.getElementById("sp_disc").value;
+    totalAmt=document.getElementById("total_amt").value;
+    rmAmount=document.getElementById("rm_amount").value;
     image1 = document.getElementById('image');
+    var isCustChCake=document.getElementById('isCustChoiceCk').value;
+    var spPhoUpload=document.getElementById('spPhoUpload').value;
+
  
     var isValid=true;
     
@@ -1178,14 +1287,19 @@ function validate() {
         alert("Please Select Flavour");
   
         isValid=false;
-    }/* else
-    if(image1.getAttribute('src') == ""||image1.getAttribute('src') == null)
+    }  else
+    if((isCustChCake == 1 && (image1.getAttribute('src') == ""||image1.getAttribute('src') == null)))
     {
-    	alert("Please Select Photo Cake 1");
+    	alert("Please upload Photo Cake 1 !!");
         
         isValid=false;
-    } */
-    
+    } else
+    if((spPhoUpload == 1 && (image1.getAttribute('src') == ""||image1.getAttribute('src') == null)))
+    {
+    	alert("Please upload Photo Cake !!");
+        
+        isValid=false;
+    } 
     /* else  if (eventName == "") {
         alert("Please Enter Message");
         document.getElementById('event_name').focus();
@@ -1208,7 +1322,27 @@ function validate() {
 	     document.getElementById('sp_cust_mobile_no').value="";
 	     document.getElementById('sp_cust_mobile_no').focus();
 	     isValid= false;  
-	  } else  
+	  }  else   if(spExCharges == "")  
+	  {  
+		     alert("Please Enter Valid Extra Charges ");  
+		     document.getElementById('sp_ex_charges').value="";
+		     document.getElementById('sp_ex_charges').focus();
+		     isValid= false;  
+		  } else   if(spDisc == "")  
+		  {  
+			     alert("Please Enter Valid Discount % ");  
+			     document.getElementById('sp_disc').value="";
+			     document.getElementById('sp_disc').focus();
+			     isValid= false;  
+			  } else 
+				     if(rmAmount<0)  
+				  {  
+					     alert("Please Enter Valid Advance Amount!");  
+					     document.getElementById('adv').value="0";
+					     document.getElementById('adv').focus();
+					     $('#rmAmt').html(totalAmt);document.getElementById("rm_amount").setAttribute('value',totalAmt);
+					     isValid= false;  
+					  } else 
 	if(temp==0)
 		{
 		

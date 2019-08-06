@@ -369,7 +369,7 @@ public class HistoryController {
 	     MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 	        map.add("date",parsedDate);
 	        if(menuId==0)
-	        map.add("menuId","40,41,42");
+	        map.add("menuId","40,68");
 	        else
 	        map.add("menuId",menuId);
 	        map.add("frId",frDetails.getFrId());

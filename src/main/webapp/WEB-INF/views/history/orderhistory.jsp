@@ -190,6 +190,8 @@ jQuery(document).ready(function(){
 	<c:url var="findItemsByCatId" value="/getFlavourBySpfId" />
 	<c:url var="findAllMenus" value="/getAllTypes" />
 	<c:url var="getSpBill" value="/getSpBill" />
+	<c:url var="deleteSpOrder" value="/deleteSpOrder" />
+
 	<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 
 
@@ -460,7 +462,7 @@ jQuery(document).ready(function(){
 											<!-- <th class="col-md-1"style="text-align: center;">Rate</th> -->
 										<!-- 	<th class="col-md-1"style="text-align: center;">Add On Rate</th> -->
 											<th class="col-md-1"style="text-align: center;">Total</th>
-										<!-- 	<th class="col-md-1"style="text-align: center;">Advance</th> -->
+											<th class="col-md-1"style="text-align: center;">Advance</th>
 											<th class="col-md-1"style="text-align: center;">Memo & Bill</th>
 										
 										</tr>
@@ -485,7 +487,8 @@ jQuery(document).ready(function(){
 												<c:choose>
 												<c:when test="${orderList.isBillGenerated==0}">
 												&nbsp;&nbsp;<a href="editSpOrder/${orderList.spOrderNo}" ><span
-														class="fa fa-pencil"></span></a>&nbsp;&nbsp;
+														class="fa fa-pencil"></span></a>&nbsp;&nbsp;<a href="#" onclick="deleteSpOrder(${orderList.spOrderNo})"><span
+														class="fa fa-trash"></span></a>
 												</c:when>
 												<c:otherwise>
 												
@@ -503,14 +506,15 @@ jQuery(document).ready(function(){
 												<%-- <td class="col-md-1"style="text-align: right;"><c:out
 														value="${orderList.spTotalAddRate}" /></td> --%>
 												<td class="col-md-1"style="text-align: right;"><fmt:formatNumber type = "number" maxFractionDigits = "2" minFractionDigits = "2"  groupingUsed = "false" value = "${orderList.spGrandTotal}" /></td>
-												<%-- <td class="col-md-1"style="text-align: right;"><c:out
-														value="${orderList.spAdvance}" /></td> --%>
+												 <td class="col-md-1"style="text-align: right;"><c:out
+														value="${orderList.spAdvance}" /></td> 
 												<td class="col-md-1" style="text-align: left;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 					<a href="${pageContext.request.contextPath}/showSpCakeOrderHisPDF/${orderList.spOrderNo}" target="_blank">
 					<abbr title="Order Memo"><i class="fa fa-file-pdf-o"></i></abbr></a>
-					&nbsp;&nbsp;&nbsp;&nbsp;
+					&nbsp;&nbsp;&nbsp;&nbsp;  <c:choose>
+												<c:when test="${fn:length(orderList.spBookForMobNo)>1}">
 					<a href="${pageContext.request.contextPath}/printSpCkBill/${orderList.spOrderNo}" target="_blank">
-					<abbr title="Bill"><i class="fa fa-file-pdf-o"></i></abbr></a>
+					<abbr title="Bill"><i class="fa fa-file-pdf-o"></i></abbr></a></c:when></c:choose>
 					
 					</td>
 											</tr>
@@ -643,6 +647,8 @@ function exportToExcel()
         	   if(data==true)
         		   {
         		   alert("Bill Generated Successfully");
+        		   document.getElementById("frm_search").submit();
+
         		   document.getElementById("genBill"+spOrderNo).disabled = true;
 
         		   }
@@ -651,7 +657,30 @@ function exportToExcel()
 		
 	}
     </script>
-	
+	<script type="text/javascript">
+		function deleteSpOrder(spOrderNo) {
+			if (confirm("Do you want to Delete this order?") == true) {
+				$.getJSON(
+								'${deleteSpOrder}',
+								{
+									sp_order_no : spOrderNo,
+									ajax : 'true',
+								},
+								function(data) {
+								
+                                   if(data.isError==false)
+                                	   {
+                            		   document.getElementById("frm_search").submit();
+
+                                	   }else
+                                		   {
+                                		   document.getElementById("frm_search").submit();
+                                		 //  alert("Failed,Sorry,Your Order Not deleted")
+                                		   }
+								});
+			}
+		}
+	</script>
 	<script>
 	function getMenus(type)
 	{

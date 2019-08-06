@@ -319,15 +319,15 @@ public class ItemController {
 			if (isSameDayApplicable != 2) {
 				tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")");
 			} else if (isSameDayApplicable == 2) {
-				if (subCat.equalsIgnoreCase("Pastries")) {
+				if (subCat.equalsIgnoreCase("FRESH CREAM PASTRIES (EL)")) {
 					tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")" + "(Limit- "
 							+ frDetails.getFrKg1() + ")");
 
-				} else if (subCat.equalsIgnoreCase("1/2 Kg Cake")) {
+				} else if (subCat.equalsIgnoreCase("FRESH CREAM SMALL GATEUX (S) (EL)")) {
 					tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")" + "(Limit- "
 							+ frDetails.getFrKg2() + ")");
 
-				} else if (subCat.equalsIgnoreCase("1 Kg Cake")) {
+				} else if (subCat.equalsIgnoreCase("FRESH CREAM GATEUX (L) (EL)")) {
 					tabTitleData.setHeader(subCat + " (Rs." + roundUp(total) + ")" + "(Qty- " + qty + ")" + "(Limit- "
 							+ frDetails.getFrKg3() + ")");
 
@@ -447,15 +447,15 @@ public class ItemController {
 
 			GetFrItem item = tempOrderList.get(i);
 
-			if (item.getSubCatName().equalsIgnoreCase("Pastries")) {
+			if (item.getSubCatName().equalsIgnoreCase("FRESH CREAM PASTRIES (EL)")) {
 
 				kg1Qty = kg1Qty + item.getItemQty();
 
-			} else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
+			} else if (item.getSubCatName().equalsIgnoreCase("FRESH CREAM SMALL GATEUX (S) (EL)")) {
 
 				kg2Qty = kg2Qty + item.getItemQty();
 
-			} else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
+			} else if (item.getSubCatName().equalsIgnoreCase("FRESH CREAM GATEUX (L) (EL)")) {
 
 				kg3Qty = kg3Qty + item.getItemQty();
 
@@ -475,16 +475,16 @@ public class ItemController {
 			isValidQty = false;
 
 			info.setError(true);
-			info.setMessage("You have exceeded Max limit for Pastries");
+			info.setMessage("You have exceeded Max limit for FRESH CREAM PASTRIES (EL)");
 		} else if (frDetails.getFrKg2() < kg2Qty) {
 			isValidQty = false;
 
 			info.setError(true);
-			info.setMessage("You have exceeded Max limit for 1/2 Kg Cake");
+			info.setMessage("You have exceeded Max limit for FRESH CREAM SMALL GATEUX (S) (EL)");
 		} else if (frDetails.getFrKg3() < kg3Qty) {
 			isValidQty = false;
 			info.setError(true);
-			info.setMessage("You have exceeded Max limit for 1 Kg Cake");
+			info.setMessage("You have exceeded Max limit for FRESH CREAM GATEUX (L) (EL)");
 		} else if (frDetails.getFrKg4() < kg4Qty) {
 			isValidQty = false;
 			info.setError(true);
@@ -583,15 +583,15 @@ public class ItemController {
 
 				GetFrItem item = tempOrderList.get(i);
 
-				if (item.getSubCatName().equalsIgnoreCase("Pastries")) {
+				if (item.getSubCatName().equalsIgnoreCase("FRESH CREAM PASTRIES (EL)")) {
 
 					kg1Qty = kg1Qty + item.getItemQty();
 
-				} else if (item.getSubCatName().equalsIgnoreCase("1/2 Kg Cake")) {
+				} else if (item.getSubCatName().equalsIgnoreCase("FRESH CREAM SMALL GATEUX (S) (EL)")) {
 
 					kg2Qty = kg2Qty + item.getItemQty();
 
-				} else if (item.getSubCatName().equalsIgnoreCase("1 Kg Cake")) {
+				} else if (item.getSubCatName().equalsIgnoreCase("FRESH CREAM GATEUX (L) (EL)")) {
 
 					kg3Qty = kg3Qty + item.getItemQty();
 
@@ -610,15 +610,15 @@ public class ItemController {
 
 			if (frDetails.getFrKg1() < kg1Qty) {
 				isValidQty = false;
-				qtyAlert = "You have exceeded max limit for Pastries";
+				qtyAlert = "You have exceeded max limit for FRESH CREAM PASTRIES (EL)";
 
 			} else if (frDetails.getFrKg2() < kg2Qty) {
 				isValidQty = false;
-				qtyAlert = "You have exceeded max limit for 1/2 Kg Cake";
+				qtyAlert = "You have exceeded max limit for FRESH CREAM SMALL GATEUX (S) (EL)";
 
 			} else if (frDetails.getFrKg3() < kg3Qty) {
 				isValidQty = false;
-				qtyAlert = "You have exceeded max limit for 1 Kg Cake";
+				qtyAlert = "You have exceeded max limit for FRESH CREAM GATEUX (L) (EL)";
 
 			} else if (frDetails.getFrKg4() < kg4Qty) {
 				isValidQty = false;

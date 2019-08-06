@@ -8,7 +8,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLConnection;
-import java.sql.Date;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.ParseException;
@@ -17,7 +16,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
-import java.util.function.DoubleUnaryOperator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,9 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
- 
-import com.monginis.ops.billing.SellBillDataCommon;
-import com.monginis.ops.common.Common;
+
 import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.AddItemInOtherBill;
@@ -44,9 +40,12 @@ import com.monginis.ops.model.FrSupplier;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.Info;
 import com.monginis.ops.model.Item;
+import com.monginis.ops.model.ItemSup;
 import com.monginis.ops.model.MRule;
 import com.monginis.ops.model.OtherBillDetail;
 import com.monginis.ops.model.OtherBillHeader;
+import com.monginis.ops.model.otheritems.Otheritems;
+import com.monginis.ops.model.otheritems.RawMaterialUom;
    
 
 @Controller
@@ -79,7 +78,203 @@ public class OtherBillController {
 		 
 		return model; 
 	}
-	
+	@RequestMapping(value = "/addOtherItem", method = RequestMethod.GET)
+	public ModelAndView addOtherItem(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("otheritems/otherItem");
+		HttpSession session = request.getSession();
+		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+		RestTemplate rest = new RestTemplate();
+		try
+		{
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			Otheritems[] list = rest.postForObject(Constant.URL + "/getItemByFrId",map,
+					Otheritems[].class);
+			ArrayList<Otheritems> itemList = new ArrayList<>(Arrays.asList(list)); 
+			model.addObject("itemList",itemList);
+			List<RawMaterialUom> rawMaterialUomList = rest.getForObject(Constant.URL + "rawMaterial/getRmUom", List.class);
+			model.addObject("rmUomList", rawMaterialUomList);
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		 
+		return model; 
+	}
+	@RequestMapping(value = "/addOtherItemProcess", method = RequestMethod.POST)
+	public String addOtherItemProcess(HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("otheritems/otherItem");
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+
+			int itemId = 0;int id=0;
+             
+			try {
+				itemId = Integer.parseInt(request.getParameter("itemId"));
+				id= Integer.parseInt(request.getParameter("itemId"));
+			} catch (Exception e) {
+				itemId = 0;
+				System.out.println("In Catch of Add OtherItem Process Exc:" + e.getMessage());
+			}
+			String itemCode =request.getParameter("itemCode");
+
+			String itemName = request.getParameter("itemName");
+
+			int uomId = Integer.parseInt(request.getParameter("itemUom"));
+			
+			String selectedUom= request.getParameter("selectedUom");
+
+			String hsnCode = request.getParameter("hsnCode");
+			
+			float purchaseRate = Float.parseFloat(request.getParameter("purchaseRate"));
+
+			float saleRate= Float.parseFloat(request.getParameter("saleRate"));
+			
+			String taxDesc=request.getParameter("taxDesc");
+			
+			float cgstPer= Float.parseFloat(request.getParameter("cgstPer"));
+			
+			float sgstPer= Float.parseFloat(request.getParameter("sgstPer"));
+			
+			float igstPer= Float.parseFloat(request.getParameter("igstPer"));
+			
+			float cessPer= Float.parseFloat(request.getParameter("cessPer"));
+			
+			int isActive = Integer.parseInt(request.getParameter("isActive"));
+			
+			
+			Item item = new Item();
+			item.setId(itemId);
+			item.setItemId(itemCode);
+			item.setItemGrp1(7);//hardcoded
+			item.setItemGrp2(5);//hardcoded
+			item.setItemGrp3(0);
+			item.setItemName(itemName);
+			item.setItemImage("-");
+			item.setItemIsUsed(isActive);
+			item.setItemMrp1((double)saleRate);
+			item.setItemMrp2(0.00);
+			item.setItemMrp3((double)saleRate);
+			item.setItemRate1((double)purchaseRate);
+			item.setItemRate2((double)frDetails.getFrId());
+			item.setItemRate3((double)purchaseRate);
+			item.setItemSortId(0.00);
+			item.setItemTax1((double)sgstPer);
+			item.setItemTax2((double)cgstPer);
+			item.setItemTax3((double)igstPer);
+			item.setMinQty(1);
+			item.setShelfLife(1);
+			item.setGrnTwo(0);
+			item.setDelStatus(0);
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			Item info = restTemplate.postForObject(Constant.URL + "/addItem", item, Item.class);
+			System.out.println("Response: " + info.toString());
+
+			if (info!= null) {
+
+				ItemSup itemSup = new ItemSup();
+				itemSup.setId(0);
+				itemSup.setItemId(itemId);
+				itemSup.setUomId(uomId);
+				itemSup.setItemUom(selectedUom);
+				itemSup.setItemHsncd(hsnCode);
+				itemSup.setIsGateSale(0);
+				itemSup.setActualWeight(1);
+				itemSup.setBaseWeight(1);
+				itemSup.setInputPerQty(1);
+				itemSup.setIsGateSaleDisc(0);
+				itemSup.setIsAllowBday(0);
+				itemSup.setNoOfItemPerTray(1);
+				itemSup.setTrayType(0);
+				itemSup.setDelStatus(0);
+				itemSup.setIsTallySync(0);
+				itemSup.setCutSection(0);
+				itemSup.setShortName("");
+
+				Info infoRes = restTemplate.postForObject(Constant.URL + "/saveItemSup", itemSup, Info.class);
+				System.out.println("Response: " + info.toString());
+
+				if (infoRes.isError() == true) {
+					return "redirect:/addOtherItem";
+
+				} else {
+					return "redirect:/addOtherItem";
+				}
+
+			}
+
+		} catch (Exception e) {
+
+			System.out.println("Exception In Add Other Item Process:" + e.getMessage());
+
+		}
+
+		return "redirect:/addOtherItem";
+	}
+	@RequestMapping(value = "/updateOtherItem/{itemId}", method = RequestMethod.GET)
+	public ModelAndView updateOtherItem(@PathVariable("itemId") int itemId, HttpServletRequest request,
+			HttpServletResponse response) {
+		ModelAndView mav = new ModelAndView("otheritems/otherItem");
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", itemId);
+
+			Otheritems otheritemsRes = restTemplate.postForObject(Constant.URL + "/getItemById", map, Otheritems.class);
+			System.out.println("otheritemsRes" + otheritemsRes.toString());
+			List<RawMaterialUom> rawMaterialUomList = restTemplate.getForObject(Constant.URL + "rawMaterial/getRmUom",
+					List.class);
+			mav.addObject("rmUomList", rawMaterialUomList);
+
+			mav.addObject("otherItem", otheritemsRes);
+			 map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			Otheritems[] list = restTemplate.postForObject(Constant.URL + "/getItemByFrId",map,
+					Otheritems[].class);
+			ArrayList<Otheritems> itemList = new ArrayList<>(Arrays.asList(list)); 
+			mav.addObject("itemList",itemList);
+			mav.addObject("isEdit", 1);
+
+		} catch (Exception e) {
+			System.out.println("Exc In /updateOtherItem" + e.getMessage());
+		}
+
+		return mav;
+
+	}
+	@RequestMapping(value = "/deleteOtherItem/{itemId}", method = RequestMethod.GET)
+	public String deleteOtherItem(@PathVariable int itemId, HttpServletRequest request, HttpServletResponse response) {
+		 
+		try
+		{
+			 
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("id", itemId);
+			RestTemplate rest = new RestTemplate();
+			Info info = rest.postForObject(Constant.URL + "/deleteItemById", map,
+					Info.class);
+			System.out.println("info " + info);
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+ 
+		 
+		return "redirect:/addOtherItem"; 
+	}
 	@RequestMapping(value = "/editFrSupplier", method = RequestMethod.GET)
 	@ResponseBody
 	public FrSupplier editFrSupplier(HttpServletRequest request, HttpServletResponse response) {

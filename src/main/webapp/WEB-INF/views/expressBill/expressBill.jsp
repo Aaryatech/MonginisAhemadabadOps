@@ -179,6 +179,8 @@ input:checked+.slider:before {
 	<c:url var="getSpOrders" value="/getSpOrders" />
 	<c:url var="getSpOrder" value="/getSpOrder" />
 	<c:url var="dayClose" value="/dayClose" />
+	<c:url var="getSpBill" value="/getSpBill" />
+	
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 		<!--rightContainer-->
@@ -304,18 +306,18 @@ input:checked+.slider:before {
 								<table id="table_history" class="main-table" border="1px">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-1" style="text-align: center;">Type</th>
+											<th class="col-md-1" style="text-align: center;">BILL No</th>
 											<th class="col-md-1" style="text-align: center;">Order
 												No</th>
 											<th class="col-md-2" style="text-align: center;">Item
 												Name</th>
 											<th class="col-md-1" style="text-align: center;">Flavour</th>
-											<th class="col-md-1" style="text-align: center;">Qty</th>
+											<th class="col-md-1" style="text-align: center;">KG</th>
 											<th class="col-md-1" style="text-align: center;">Delivery
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Rate</th>
-											<th class="col-md-1" style="text-align: center;">Add On
-												Rate</th>
+										<!-- 	<th class="col-md-1" style="text-align: center;">Add On
+												Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Total</th>
 											<th class="col-md-1" style="text-align: center;">Advance</th>
 											<th class="col-md-1" style="text-align: center;">Memo &
@@ -441,7 +443,7 @@ input:checked+.slider:before {
 								</c:forEach>
 							</table>
 						</div>
-
+ 
 
 						<!-- Loader Div -->
 						<div align="center" id="loader" style="display: none">
@@ -456,10 +458,15 @@ input:checked+.slider:before {
 
 						<!--End of  Loader Div -->
 					</div>
-
+					   <c:set var="dayCloseStyleDisplay" value="disabled"/>
+					<c:choose>
+					<c:when test="${sellBillDetails.size()>0}">
+                    <c:set var="dayCloseStyleDisplay" value=""/>
+					</c:when>
+					</c:choose>
 					<center>
 						<input type="button" class="btn btn-primary"
-							onclick="todaysDayClose()" value="DAY CLOSE" id="dayClose1" />
+							onclick="todaysDayClose()" value="DAY CLOSE" id="dayClose1" ${dayCloseStyleDisplay}/>
 					</center>
 					<!--here input para was bill No  -->
 					<!-- </li> -->
@@ -877,6 +884,14 @@ function onRateChange(rate)
 				$('#table_grid1 tbody').append(tr);
 
 			});
+				var rowCount = document.getElementById('table_grid1').rows.length;
+				if(rowCount>=1)
+					{
+					document.getElementById('dayClose1').disabled=false;
+					}else{
+						document.getElementById('dayClose1').disabled=true;
+					}
+
 				 if(document.getElementById("id").checked){
 					 
 					// alert("print");
@@ -988,7 +1003,13 @@ function myFunction1() {
 
 					$('#loader').hide();
 					var len = data.length;
+                      if(len==0){
+  						document.getElementById('dayClose1').disabled=true;
 
+                      }else{
+  						document.getElementById('dayClose1').disabled=false;
+
+                      }
 					$('#table_grid1 td').remove();
 
 					$.each(data,function(key, item) {
@@ -1024,8 +1045,9 @@ function myFunction1() {
 					$('#table_grid1 tbody').append(tr);
 
 				});
-			
+				
 		         });
+				
 		}
 	
 	
@@ -1052,9 +1074,11 @@ function myFunction1() {
 					ajax : 'true',
 				
 
+				 },	function(data) {
+					 
+					 window.open("${pageContext.request.contextPath}/printSelectedOrder");
+					 
 				 });
-				  
-		window.open("${pageContext.request.contextPath}/printSelectedOrder");
 			}
 			else
 				{
@@ -1178,18 +1202,33 @@ $('#sp').change(function() {
 
 								
 									var tr = $('<tr></tr>');
-									tr.append($('<td class="col-md-1"></td>').html("SP"));
+									var spName="";
+									if((order.spBookForMobNo).length==1)
+									{
+									tr.append($('<td class="col-md-2"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill'"+order.spOrderNo+"  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
+									spName=order.spName+"&nbsp;&nbsp;&nbsp;	<a href='editSpOrder/"+order.spOrderNo+"'  ><span	class='fa fa-pencil'></span></a>";
+									}else
+										{
+										tr.append($('<td class="col-md-2"></td>').html(order.spBookForMobNo));
+										spName=order.spName;   
+										}
 									tr.append($('<td class="col-md-1"></td>').html(order.spDeliveryPlace));
-								  	tr.append($('<td class="col-md-1"></td>').html(order.spName));
+								  	tr.append($('<td class="col-md-1"></td>').html(spName));
 									tr.append($('<td class="col-md-1"></td>').html(order.spfName));	
-									tr.append($('<td class="col-md-1"></td>').html("NA"));
+									tr.append($('<td class="col-md-1"></td>').html(order.spSelectedWeight+" Kg"));
 									var price=parseFloat(order.spGrandTotal-order.spTotalAddRate);
 									tr.append($('<td class="col-md-1"></td>').html(order.spDeliveryDate));	
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(price));
-									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spTotalAddRate));
+								/* 	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spTotalAddRate)); */
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spGrandTotal));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spAdvance));
+									if((order.spBookForMobNo).length>1)
+									{
 									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showSpCakeOrderHisPDF/"+order.spOrderNo+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/printSpCkBill/"+order.spOrderNo+"' target='_blank'><abbr title='Bill'><i class='fa fa-file-pdf-o'></i></abbr></a>"));
+									}else{
+									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showSpCakeOrderHisPDF/"+order.spOrderNo+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;"));
+
+									}
 									$('#table_history tbody').append(tr);
 
 
@@ -1242,18 +1281,33 @@ $('#sp').change(function() {
 								off();
 								$.each(data.spCakeOrder,function(key, order) {
 									var tr = $('<tr></tr>');
-									tr.append($('<td class="col-md-1"></td>').html("SP"));
+									var spName="";
+									if((order.spBookForMobNo).length==1)
+										{
+										tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill'"+order.spOrderNo+"  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
+										spName=order.spName+"&nbsp;&nbsp;&nbsp;	<a href='editSpOrder/'"+order.spOrderNo+" ><span	class='fa fa-pencil'></span></a>";
+										}else
+											{
+											tr.append($('<td class="col-md-1"></td>').html(order.spBookForMobNo));
+											spName=order.spName;
+											}
 									tr.append($('<td class="col-md-1"></td>').html(order.spDeliveryPlace));
-								  	tr.append($('<td class="col-md-1"></td>').html(order.spName));
+								  	tr.append($('<td class="col-md-1"></td>').html(spName));
 									tr.append($('<td class="col-md-1"></td>').html(order.spfName));	
-									tr.append($('<td class="col-md-1"></td>').html("NA"));
+									tr.append($('<td class="col-md-1"></td>').html(order.spSelectedWeight+" Kg"));
 									var price=parseFloat(order.spGrandTotal-order.spTotalAddRate);
 									tr.append($('<td class="col-md-1"></td>').html(order.spDeliveryDate));	
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(price));
-									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spTotalAddRate));
+									/* tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spTotalAddRate)); */
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spGrandTotal));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spAdvance));
+									if((order.spBookForMobNo).length>1)
+									{
 									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showSpCakeOrderHisPDF/"+order.spOrderNo+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/printSpCkBill/"+order.spOrderNo+"' target='_blank'><abbr title='Bill'><i class='fa fa-file-pdf-o'></i></abbr></a>"));
+									}else{
+									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showSpCakeOrderHisPDF/"+order.spOrderNo+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;"));
+
+									}
 									$('#table_history tbody').append(tr);
 								  
 								})		
@@ -1286,6 +1340,34 @@ $('#sp').change(function() {
 		
 	}
 	</script>
+	<script type="text/javascript">
+	function genBill(spOrderNo)
+	{
+		var selectedValue = document.getElementById("type").value;
+
+		   $.getJSON('${getSpBill}', {
+			   spOrderNo:spOrderNo,
+               ajax : 'true'
+           }, function(data) {
+        	   if(data==true)
+        		   {
+        		   alert("Bill Generated Successfully");
+        		  // document.getElementById("frm_search").submit();
+                 if(selectedValue==1)
+                	 {
+                	 searchOrders();
+                	 }else
+                		 {
+                		 searchOrder();
+                		 }
+        		   document.getElementById("genBill"+spOrderNo).disabled = true;
+
+        		   }
+        	   
+           });
+		
+	}
+    </script>
 	<script type="text/javascript">
 /* 	$(".table tbody tr").click(function(e) {
 	    if($(e.target).is(':checkbox')) return; //ignore when click on the checkbox

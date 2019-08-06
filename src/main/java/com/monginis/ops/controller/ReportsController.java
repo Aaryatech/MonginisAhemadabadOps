@@ -1094,8 +1094,8 @@ public class ReportsController {
 		session.setAttribute("excelNameNew", "BillWisePurchaseReport");
 		session.setAttribute("reportNameNew", "Billwise Purchase Report");
 		session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-		session.setAttribute("mergeUpto1", "$A$1:$L$1");
-		session.setAttribute("mergeUpto2", "$A$2:$L$2");
+		session.setAttribute("mergeUpto1", "$A$1:$H$1");
+		session.setAttribute("mergeUpto2", "$A$2:$H$2");
 
 		return billWisePurchaseReportList;
 

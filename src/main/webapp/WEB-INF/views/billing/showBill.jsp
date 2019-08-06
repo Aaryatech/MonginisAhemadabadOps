@@ -115,7 +115,7 @@
 						</div>
 						<div class="col-md-2">
 							<input id="fromdatepicker" class="texboxitemcode texboxcal"
-								placeholder="From Date" name="from_datepicker" type="text" value="${fromDate}">
+								placeholder="From Date" name="from_datepicker"  autocomplete="off" type="text" value="${fromDate}">
 
 						</div>
 
@@ -125,7 +125,7 @@
 						</div>
 						<div class="col-md-2">
 							<input id="todatepicker" class="texboxitemcode texboxcal"
-								placeholder="To Date" name="to_datepicker" type="text" value="${toDate}">
+								placeholder="To Date" name="to_datepicker" autocomplete="off" type="text" value="${toDate}">
 
 						</div>
 

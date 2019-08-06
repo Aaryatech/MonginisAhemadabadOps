@@ -611,15 +611,15 @@ public class GrnGvnController {
 					float grnRate = 0.0f;
 
 					if (objShowGrn.getGrnType() == 0) {
-						grnBaseRate = baseRate * 80 / 100;
+						grnBaseRate = baseRate * 85 / 100;
 
-						grnRate = (baseRate * 80) / 100;
+						grnRate = (baseRate * 85) / 100;
 					}
 
 					if (objShowGrn.getGrnType() == 1) {
-						grnBaseRate = baseRate * 70 / 100;
+						grnBaseRate = baseRate * 75 / 100;
 
-						grnRate = (baseRate * 70) / 100;
+						grnRate = (baseRate * 75) / 100;
 					}
 
 					if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
@@ -842,15 +842,15 @@ public class GrnGvnController {
 				float grnRate = 0.0f;
 
 				if (objShowGrnList.get(i).getGrnType() == 0) {
-					grnBaseRate = baseRate * 80 / 100;
+					grnBaseRate = baseRate * 85 / 100;
 
-					grnRate = (objShowGrnList.get(i).getRate() * 80) / 100;
+					grnRate = (objShowGrnList.get(i).getRate() * 85) / 100;
 					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
 				}
 
 				if (objShowGrnList.get(i).getGrnType() == 1) {
-					grnBaseRate = baseRate * 70 / 100;
-					grnRate = (objShowGrnList.get(i).getRate() * 70) / 100;
+					grnBaseRate = baseRate * 75 / 100;
+					grnRate = (objShowGrnList.get(i).getRate() * 75) / 100;
 					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
 				}
 
@@ -1746,7 +1746,7 @@ public class GrnGvnController {
 					postGrnGvn.setIsGrn(0);// 10 postGrnGvn.setIsGrnEdit(0);// 11
 					postGrnGvn.setGrnGvnEntryDateTime(dateFormat.format(cal.getTime()));// 12
 					postGrnGvn.setFrGrnGvnRemark(frGvnRemark);// 13
-					postGrnGvn.setGrnGvnStatus(2);//changed to 2 from 1 on May 9 By Sachin // 16 postGrnGvn.setApprovedLoginGate(0);// 17
+					postGrnGvn.setGrnGvnStatus(4);//changed to 2 from 1 on May 9 By Sachin // 16 postGrnGvn.setApprovedLoginGate(0);// 17
 					postGrnGvn.setApproveimedDateTimeGate(dateFormat.format(cal.getTime()));// 18
 					postGrnGvn.setApprovedRemarkGate("");// 19
 					curDateTime = dateFormat.format(cal.getTime());
@@ -1848,7 +1848,7 @@ public class GrnGvnController {
 			grnHeader.setCreditNoteId("");
 			grnHeader.setGrngvnDate(new SimpleDateFormat("dd-MM-yyyy").format(grnGvnDate));
 			grnHeader.setGrngvnSrno(getGrnGvnSrNo(request, response));
-			grnHeader.setGrngvnStatus(2);//changed to 2 from 1 on May 9 Sachin
+			grnHeader.setGrngvnStatus(4);//changed to 2 from 1 on May 9 Sachin
 			grnHeader.setIsCreditNote(0);
 			// grnHeader.setIsGrn(0);
 			grnHeader.setApporvedAmt(0);
@@ -2074,11 +2074,11 @@ public class GrnGvnController {
 				float refRate = 0;
 				if (grnDetailList.get(i).getGrnType() == 0) {
 
-					refRate = grnDetailList.get(i).getItemRate() * 80 / 100;
+					refRate = grnDetailList.get(i).getItemRate() * 85 / 100;
 				}
 				if (grnDetailList.get(i).getGrnType() == 1) {
 
-					refRate = grnDetailList.get(i).getItemRate() * 70 / 100;
+					refRate = grnDetailList.get(i).getItemRate() * 75 / 100;
 				}
 				if (grnDetailList.get(i).getGrnType() == 2 || grnDetailList.get(i).getGrnType() == 4) {
 

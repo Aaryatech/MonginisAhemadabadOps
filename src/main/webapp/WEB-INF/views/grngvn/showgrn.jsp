@@ -136,10 +136,10 @@ table, th, td {
 													value="${grnConfList.itemName}"></c:out></td>
 											<c:choose>
 												<c:when test="${grnConfList.grnType==0}">
-													<td class="col-md-1" style="text-align: center;"><c:out value="GRN 1(80%)"></c:out></td>
+													<td class="col-md-1" style="text-align: center;"><c:out value="GRN 1(85%)"></c:out></td>
 												</c:when>
 												<c:when test="${grnConfList.grnType==1}">
-													<td class="col-md-1" style="text-align: center;"><c:out value="GRN 2(70%)"></c:out></td>
+													<td class="col-md-1" style="text-align: center;"><c:out value="GRN 2(75%)"></c:out></td>
 												</c:when>
 												<c:when test="${grnConfList.grnType==2}">
 													<td class="col-md-1" style="text-align: center;"><c:out value="GRN 3(100%)"></c:out></td>
@@ -322,12 +322,12 @@ table, th, td {
 			
 			var grnRate=$("#grn_rate"+billDetailNo).text();
 		
-			grnBaseRate = baseRate * 80 / 100;
+			grnBaseRate = baseRate * 85 / 100;
 			
-			 grnRate=(rate * 80) / 100;
+			 grnRate=(rate * 85) / 100;
 			
 			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			//grnAmt=grnAmt*80/100;	
+			//grnAmt=grnAmt*85/100;	
 			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
 		}
@@ -341,12 +341,12 @@ table, th, td {
 			
 			var grnRate=$("#grn_rate"+billDetailNo).text();
 			
-			grnBaseRate = baseRate * 70 / 100;
+			grnBaseRate = baseRate * 75 / 100;
 			
-			grnRate=(rate * 70) / 100;
+			grnRate=(rate * 75) / 100;
 			
 			//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
-			//grnAmt=grnAmt*70/100;	
+			//grnAmt=grnAmt*75/100;	
 			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
 			}

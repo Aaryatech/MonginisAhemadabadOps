@@ -2358,6 +2358,7 @@ if(currentNewItem.getCatId()==7) {
 				HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 		List<GetCustmoreBillResponse> getCustmoreBillResponseList = responseEntity.getBody();
+		System.out.println("bill no:" + billNo + "Custmore Bill : " + getCustmoreBillResponseList.toString());
 
 		GetCustmoreBillResponse billResponse = getCustmoreBillResponseList.get(0);
 
@@ -2365,11 +2366,7 @@ if(currentNewItem.getCatId()==7) {
 		float discPer = billResponse.getDiscountPer();
 
 		int intDiscAmt = Math.round((billAmt * discPer) / 100);
-
 		getCustmoreBillResponseList.get(0).setIntDiscAmt(intDiscAmt);
-
-		System.out.println("bill no:" + billNo + "Custmore Bill : " + getCustmoreBillResponseList.toString());
-
 		model.addObject("billList", getCustmoreBillResponseList);
 		model.addObject("frGstType", frGstType);
 		model.addObject("billType", billType);

@@ -1,10 +1,8 @@
 package com.monginis.ops.model;
 
-import java.util.Date;
-
-
 public class GetSellBillHeader {
 
+	private String id;
 	
 	private int sellBillNo;
 	
@@ -31,6 +29,15 @@ public class GetSellBillHeader {
 	private String frName;
 	
 	private char billType;
+
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public int getSellBillNo() {
 		return sellBillNo;
@@ -140,11 +147,11 @@ public class GetSellBillHeader {
 
 	@Override
 	public String toString() {
-		return "GetSellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
-				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", paidAmt="
-				+ paidAmt + ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode + ", discountPer="
-				+ discountPer + ", payableAmt=" + payableAmt + ", frName=" + frName + ", billType=" + billType + "]";
+		return "GetSellBillHeader [id=" + id + ", sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate="
+				+ billDate + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal
+				+ ", paidAmt=" + paidAmt + ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode
+				+ ", discountPer=" + discountPer + ", payableAmt=" + payableAmt + ", frName=" + frName + ", billType="
+				+ billType + "]";
 	}
-
-	
+    
 }

@@ -58,7 +58,7 @@ document.body.onload = function()
       <td colspan="2" align="center" style="padding:10px;"><p></p></td>
     </tr>
     <tr>
-      <td colspan="2" align="center" style="padding:5px; border-bottom:1px solid #E7E7E7;"><img src="${pageContext.request.contextPath}/resources/images/mongiLogi.jpg" alt="logo" width="150px" height="80px;"></td>
+      <td colspan="2" align="center" style="padding:5px; border-bottom:1px solid #E7E7E7;"><img src="${pageContext.request.contextPath}/resources/images/monginis1.png" alt="logo" width="150px" height="80px;"></td>
     </tr>
     <tr>
       <td colspan="2" align="center" style="padding:10px; border-bottom:1px solid #E7E7E7; font-size:12px; font-weight:bold; "><p>ORDER MEMO</p></td>
@@ -101,7 +101,7 @@ document.body.onload = function()
           </tr>
           <tr>
             <td><p style="font-size:12px">${spCakeOrder.itemId}</p></td>
-            <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}</p></td>
+            <td align="center"><p style="font-size:12px">${spCakeOrder.spSelectedWeight}&nbsp;&nbsp;</p></td>
             <td align="center"><p style="font-size:12px">
             <fmt:formatNumber type = "number"  maxFractionDigits = "2"   minFractionDigits = "2" value = " ${(spCakeOrder.spSubTotal)/spCakeOrder.spSelectedWeight}"/>
          </p></td>

@@ -119,14 +119,14 @@ jQuery(document).ready(function(){
 						<h4 class="pull-left">Month From :-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input type='text' placeholder="Select From Month" id='txtDate'
+						<input type='text' placeholder="Select From Month" id='txtDate' autocomplete="off"
 							name="from_stockdate" required size="25" />
 					</div>
 					<div class="col-md-2">
 						<h4 class="pull-left">To Month:-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input type='text' placeholder="Select To Month" id=txtDateto
+						<input type='text' placeholder="Select To Month" id=txtDateto autocomplete="off"
 							name="to_stockdate" required size="25" />
 					</div>
 					<!-- <div class="col-md-2">

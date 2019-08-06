@@ -81,6 +81,15 @@
 						<div class="title">
 							Customer Bill <span></span>
 						</div></a></li>
+						<li><a
+					href="${pageContext.request.contextPath}/viewBill"><div
+							class="img">
+							<i class="fa fa-file-pdf-o icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							View Bills <span></span>
+						</div></a></li>
 			</c:if>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -529,7 +538,10 @@
 
 
 							<a href="${pageContext.request.contextPath}/getGrnBillDetail"><i
-								class="fa fa-plus-circle icon"></i> Request GRN </a>
+								class="fa fa-plus-circle icon"></i> Grn Based on Expiry of product </a>
+							<div class="clearfix"></div>
+							<a href="${pageContext.request.contextPath}/showGrn"><i
+								class="fa fa-plus-circle icon"></i> Grn Based on stock FIFO method </a>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/displayGrn"><i
 								class="fa fa-search-plus icon"></i> View GRN </a>

@@ -183,14 +183,14 @@ public class ManualGrnController {
 					if (objShowGrn.getGrnType() == 0) {
 						grnBaseRate = baseRate * 85 / 100;
 
-						// grnRate = (objShowGrn.getRate() * 80) / 100;
+						// grnRate = (objShowGrn.getRate() * 85) / 100;
 
 						grnRate = (baseRate * 85) / 100;
 					}
 
 					if (objShowGrn.getGrnType() == 1) {
 						grnBaseRate = baseRate * 75 / 100;
-						// grnRate = (objShowGrn.getRate() * 70) / 100;
+						// grnRate = (objShowGrn.getRate() * 75) / 100;
 
 						grnRate = (baseRate * 75) / 100;
 					}
@@ -376,15 +376,15 @@ System.err.println("Inside Manual Grn POST method ");
 				float grnRate = 0.0f;
 
 				if (objShowGrnList.get(i).getGrnType() == 0) {
-					grnBaseRate = baseRate * 80 / 100;
+					grnBaseRate = baseRate * 85 / 100;
 
-					grnRate = (objShowGrnList.get(i).getRate() * 80) / 100;
+					grnRate = (objShowGrnList.get(i).getRate() * 85) / 100;
 					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
 				}
 
 				if (objShowGrnList.get(i).getGrnType() == 1) {
-					grnBaseRate = baseRate * 70 / 100;
-					grnRate = (objShowGrnList.get(i).getRate() * 70) / 100;
+					grnBaseRate = baseRate * 75 / 100;
+					grnRate = (objShowGrnList.get(i).getRate() * 75) / 100;
 					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
 				}
 

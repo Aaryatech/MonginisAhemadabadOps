@@ -46,7 +46,7 @@
 
 						<div class="calender-title">From</div>
 						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
+							<input id="datepicker" class="texboxitemcode texboxcal" 
 								value="${cDate}" autocomplete="off" name="from_Date" type="text">
 						</div>
 

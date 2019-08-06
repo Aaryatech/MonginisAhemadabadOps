@@ -26,6 +26,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFDataFormat;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -123,8 +124,34 @@ public class ExportExcelController {
 			for (int j = 0; j < exportToExcelList.get(rowIndex).getRowData().size(); j++) {
 
 				XSSFCell cell = row.createCell(j);
-				cell.setCellValue(exportToExcelList.get(rowIndex).getRowData().get(j));
+				try 
+		        { 
+		            // checking valid integer using parseInt() method 
+		           int value=Integer.parseInt(exportToExcelList.get(rowIndex).getRowData().get(j)); 
+		            cell.setCellValue(value);
+		        }  
+		        catch (NumberFormatException e)  
+		        { 
+		        	 try
+		             { 
+		        		 XSSFCellStyle cellStyle = wb.createCellStyle();
 
+		                 // checking valid float using parseInt() method
+		        		 XSSFDataFormat xssfDataFormat = wb.createDataFormat(); 
+
+		                double value=Double.parseDouble(exportToExcelList.get(rowIndex).getRowData().get(j)); 
+		                
+		                cellStyle.setDataFormat(xssfDataFormat.getFormat("#,##0.00"));
+		                cell.setCellStyle(cellStyle);
+		                cell.setCellValue(value);
+		                
+		             }  
+		             catch (NumberFormatException e1) 
+		             { 
+		            	 cell.setCellValue(exportToExcelList.get(rowIndex).getRowData().get(j));
+		             } 
+		               
+		        }  
 			}
 			if (rowIndex == 0)
 				row.setRowStyle(createHeaderStyle(wb));
@@ -147,7 +174,30 @@ public class ExportExcelController {
 
 				XSSFCell cell = row.createCell(j);
 
-				cell.setCellValue(exportToExcelListDummy.get(rowIndex).getRowData().get(j));
+				try 
+		        { 
+		            // checking valid integer using parseInt() method 
+		           int value=Integer.parseInt(exportToExcelListDummy.get(rowIndex).getRowData().get(j)); 
+		            cell.setCellValue(value);
+		        }  
+		        catch (NumberFormatException e)  
+		        { 
+		        	 try
+		             { 
+		        		 XSSFCellStyle cellStyle = wb.createCellStyle();
+		        		 XSSFDataFormat xssfDataFormat = wb.createDataFormat(); 
+		                 // checking valid float using parseInt() method 
+		                double value=Double.parseDouble(exportToExcelListDummy.get(rowIndex).getRowData().get(j)); 
+		                cellStyle.setDataFormat(xssfDataFormat.getFormat("#,##0.00"));
+		                cell.setCellStyle(cellStyle);
+		                cell.setCellValue(value);
+		             }  
+		             catch (NumberFormatException e1) 
+		             { 
+		            	 cell.setCellValue(exportToExcelListDummy.get(rowIndex).getRowData().get(j));
+		             } 
+		               
+		        } 
 
 			}
 			if (rowIndex == 0)
@@ -281,6 +331,7 @@ public class ExportExcelController {
 		/*
 		 * writeHeaders(wb, sheet); writeHeaders(wb, sheet); writeHeaders(wb, sheet);
 		 */
+		 XSSFCellStyle cellStyle = wb.createCellStyle();
 
 		for (int rowIndex = 0; rowIndex < exportToExcelListNew.size(); rowIndex++) {
 			XSSFRow row = sheet.createRow(rowIndex + 2);
@@ -288,10 +339,31 @@ public class ExportExcelController {
 
 				XSSFCell cell = row.createCell(j);
 
-				cell.setCellValue(exportToExcelListNew.get(rowIndex).getRowData().get(j));
-
+				try 
+		        { 
+		            // checking valid integer using parseInt() method 
+		           int value=Integer.parseInt(exportToExcelListNew.get(rowIndex).getRowData().get(j)); 
+		            cell.setCellValue(value);
+		        }  
+		        catch (NumberFormatException e)  
+		        { 
+		        	 try
+		             { 
+		        		 XSSFDataFormat xssfDataFormat = wb.createDataFormat(); 
+		                 // checking valid float using parseInt() method 
+		                double value=Double.parseDouble(exportToExcelListNew.get(rowIndex).getRowData().get(j)); 
+		                cellStyle.setDataFormat(xssfDataFormat.getFormat("#,##0.00"));
+		                cell.setCellStyle(cellStyle);
+		                cell.setCellValue(value);
+		             }  
+		             catch (NumberFormatException e1) 
+		             { 
+		            	 cell.setCellValue(exportToExcelListNew.get(rowIndex).getRowData().get(j));
+		             } 
+		               
+		        } 
 				// if((rowIndex+1)==1)
-				cell.setCellStyle(createHeaderStyleHeaderFont(wb, 242, 242, 242, 1));
+				//cell.setCellStyle(createHeaderStyleHeaderFont(wb, 242, 242, 242, 1));
 				if ((rowIndex + 2) == 2)
 					cell.setCellStyle(createHeaderStyleNew(wb));
 

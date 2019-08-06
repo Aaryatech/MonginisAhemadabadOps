@@ -1204,10 +1204,13 @@ public class SpCakeController {
 		
 		Boolean message=false;
 		try {
+			HttpSession session = request.getSession();
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		RestTemplate restTemplate = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		map.add("spOrderNo", spOrderNo);
 		map.add("invoiceNo", getInvoiceNo(request,response));
+		map.add("frId", frDetails.getFrId());
 		
 		message = restTemplate.postForObject(Constant.URL + "/generateSpBillOps", map,
 				Boolean.class);
@@ -1216,6 +1219,30 @@ public class SpCakeController {
 			e.printStackTrace();
 		}
 		return message;
+	}
+
+	@RequestMapping(value = "/deleteSpOrder", method = RequestMethod.GET)
+	public @ResponseBody Info deleteSpOrder(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Info info=new Info();
+		try {
+			
+		 int spOrderNo = Integer.parseInt(request.getParameter("sp_order_no"));
+
+		 MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+		 map.add("spOrderNo", spOrderNo);
+
+		 RestTemplate restTemp = new RestTemplate();
+
+		 info = restTemp.postForObject(Constant.URL + "deleteSpCkOrder", map, Info.class);
+		 
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return info;
 	}
 	// -----------------Showing of order Datails Page------------------------------
 	@RequestMapping(value = "/orderRes", method = RequestMethod.GET)
@@ -1385,6 +1412,8 @@ public class SpCakeController {
 		RestTemplate restTemplate = new RestTemplate();
 		frMenuList=new ArrayList<FrMenu>();//new
 		List<Float> weightList = new ArrayList<>();
+		List<Flavour> flavoursList = new ArrayList<Flavour>();
+		List<Flavour> filterFlavoursList = new ArrayList<Flavour>();
 
 		String 	menuTitle = "Edit Sp Order";
    try {
@@ -1425,32 +1454,30 @@ public class SpCakeController {
 		cutSec =searchSpCakeResponse.getSpCakeSup().getCutSection();
 		//------------------------------------------------------END----------------------------------------------------------------
 		//System.err.println(" specialCake.getSpType()"+ specialCake.toString());
-		//-------------------------------------------------FLAVOR LIST-------------------------------------------------------------
-		 flavoursListWithAddonRate = new ArrayList<Flavour>();
-		FlavourList flavourList = restTemplate.getForObject(Constant.URL + "/showFlavourList", FlavourList.class);
-		List<Flavour> filterFlavoursList=new ArrayList<>();
-			for (int i = 0; i < flavourList.getFlavour().size(); i++) {
+		//--------------------------New For Flavors----------------------------------------
+		flavoursListWithAddonRate = new ArrayList<Flavour>();
+		 map = new LinkedMultiValueMap<String, Object>();
+		 map.add("spId", specialCake.getSpId());
+		flavourList = restTemplate.postForObject(Constant.URL + "/showFlavourListBySpId",map, FlavourList.class);
+		flavoursList = flavourList.getFlavour();
 
-				/*if (flavourList.getFlavour().get(i).getSpType() == spCakeOrder.getSpType()) {*/
-					filterFlavoursList.add(flavourList.getFlavour().get(i));
-
-				/*}*/
-			}
-			for (Flavour flavour : filterFlavoursList) {
-			/*	if (specialCake.getIsAddonRateAppli() == 1) {*/
-					List<String> list = Arrays.asList(specialCake.getErpLinkcode().split(","));
-					if (list.contains(""+flavour.getSpfId())) {
-						flavour.setSpfAdonRate(0.0);
-						flavoursListWithAddonRate.add(flavour);
-					}
-					
-					//System.err.println(flavour.getSpfId());
-					//System.err.println(flavoursListWithAddonRate.toString());
-				/*} else {
+		for (int i = 0; i < flavoursList.size(); i++) {
+        	filterFlavoursList.add(flavoursList.get(i));
+		}
+		List<String> list = Arrays.asList(specialCake.getErpLinkcode().split(","));
+		for (Flavour flavour : filterFlavoursList) {
+			
+				if (list.contains(""+flavour.getSpfId())) {
 					flavour.setSpfAdonRate(0.0);
-					flavoursListWithAddonRate.add(flavour);
-				}*/
-			}
+				
+				}
+			
+			    flavoursListWithAddonRate.add(flavour);
+
+		}
+		
+		//------------------------------------------------------------------
+	
 			Flavour orderdFlavour=new Flavour();
 			for (Flavour flavour : flavoursListWithAddonRate) {
 				if (spCakeOrder.getSpFlavourId()==flavour.getSpfId()) {
@@ -1488,11 +1515,19 @@ public class SpCakeController {
 
 				weightList.add(minWt);
 				float currentWt = minWt;
-				while (currentWt < maxWt) {
-					currentWt = currentWt + specialCake.getSpRate2();//spr rate 2 means weight increment by 
+				while (currentWt < 2) {
+					currentWt = currentWt + 0.5f;//spr rate 2 means weight increment by 
+					if(currentWt<=2) {
 					weightList.add(currentWt);
-				} 
-
+					}
+					
+				}
+				float max=2;
+				while(max<maxWt)
+				{
+					max=max+specialCake.getSpRate2();
+					weightList.add(max);
+				}
 				System.out.println("Weight List for SP Cake: " + weightList.toString());
 
 				if (frDetails.getFrRateCat() == 1) {

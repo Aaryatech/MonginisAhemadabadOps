@@ -112,25 +112,30 @@
 													<td align="center"><span style="font-size: 11px">${billList.qty}</span></td>
 													<td align="center"><span style="font-size: 11px">${billList.mrp}</span></td>
 													<td align="right"><span style="font-size: 11px"> <fmt:formatNumber type="number"
-			maxFractionDigits="2" minFractionDigits="2" value=" ${billList.qty*billList.mrp}"/></span></td>
+			maxFractionDigits="2" minFractionDigits="2" value="${billList.qty*billList.mrp}"/></span></td>
 												</tr>
 											</c:forEach>
 											<tr>
 												<td rowspan="3">&nbsp;</td>
 												<td colspan="3" align="right"><span class="style5"><strong>Total
 															:</strong></span></td>
-												<td align="right"><span class="style5"><strong><c:choose><c:when test="${billType eq 'R'}">${billList[0].discountAmt}</c:when><c:otherwise>${billList[0].intBillAmt}</c:otherwise> </c:choose> </strong></span></td>
+												<td align="right"><span class="style5"><strong><c:choose><c:when test="${billType eq 'R'}"><fmt:formatNumber type="number"
+			maxFractionDigits="2" minFractionDigits="2" value="${billList[0].discountAmt}"/></c:when><c:otherwise><fmt:formatNumber type="number"
+			maxFractionDigits="2" minFractionDigits="2" value="${billList[0].intBillAmt}"/></c:otherwise> </c:choose> </strong></span></td>
 											</tr>
 											<tr>
 												<td colspan="3" align="right"><span class="style5"><strong>Discount
 															${billList[0].discountPer}% :</strong></span></td>
-												<td colspan="2" align="right"><span class="style5"><strong>${billList[0].intDiscAmt}</strong></span></td>
+												<td colspan="2" align="right"><span class="style5"><strong><fmt:formatNumber type="number"
+			maxFractionDigits="2" minFractionDigits="2" value="${billList[0].intDiscAmt}"/></strong></span></td>
 
 											</tr>
 											<tr>
 												<td colspan="3" align="right"><span class="style7">Bill
 														Total:</span></td>
-												<td align="right"><span class="style7"><c:choose><c:when test="${billType eq 'R'}">${billList[0].discountAmt-billList[0].intDiscAmt}</c:when><c:otherwise>${billList[0].intBillAmt}</c:otherwise> </c:choose></span></td>
+												<td align="right"><span class="style7"><c:choose><c:when test="${billType eq 'R'}"><fmt:formatNumber type="number"
+			maxFractionDigits="2" minFractionDigits="2" value="${billList[0].discountAmt-billList[0].intDiscAmt}"/></c:when><c:otherwise><fmt:formatNumber type="number"
+			maxFractionDigits="2" minFractionDigits="2" value="${billList[0].intBillAmt}"/></c:otherwise> </c:choose></span></td>
 											</tr>
 										</tbody>
 									</table></td>
@@ -166,19 +171,19 @@
 							varStatus="count">
 							<tr>
 								<td><fmt:formatNumber type="number"
-										maxFractionDigits="2" value="${custBilltax.taxableAmt}"/></td>
+										minFractionDigits="2" maxFractionDigits="2" value="${custBilltax.taxableAmt}"/></td>
 								<c:set var="taxAmount"
 									value="${taxAmount + custBilltax.taxableAmt}" />
 								<td>${custBilltax.cgstPer}</td>
 								<td><fmt:formatNumber type="number"
-										maxFractionDigits="2" value="${custBilltax.cgstRs}"/></td>
+									minFractionDigits="2"	maxFractionDigits="2" value="${custBilltax.cgstRs}"/></td>
 								<c:set var="cgst" value="${cgst+custBilltax.cgstRs }" />
 								<td>${custBilltax.sgstPer}</td>
 								<td><fmt:formatNumber type="number"
-										maxFractionDigits="2" value="${custBilltax.sgstRs}"/></td>
+									minFractionDigits="2"	maxFractionDigits="2" value="${custBilltax.sgstRs}"/></td>
 								<c:set var="sgst" value="${sgst+custBilltax.sgstRs }" />
 								<td align="center"><fmt:formatNumber type="number"
-										maxFractionDigits="2" value="${custBilltax.cgstRs+custBilltax.sgstRs}"/></td>
+									minFractionDigits="2"	maxFractionDigits="2" value="${custBilltax.cgstRs+custBilltax.sgstRs}"/></td>
 								<c:set var="totaltax"
 									value="${totaltax+custBilltax.sgstRs+custBilltax.cgstRs }" />
 							</tr>
@@ -186,16 +191,16 @@
 						
 						<tr>
 							<td bgcolor="#ECECEC"><b><fmt:formatNumber type="number"
-										maxFractionDigits="2" value="${taxAmount}" /></b></td>
+									minFractionDigits="2"	maxFractionDigits="2" value="${taxAmount}" /></b></td>
 
 							<td bgcolor="#ECECEC"></td>
 							<td bgcolor="#ECECEC"><fmt:formatNumber type="number"
-									maxFractionDigits="2" value="${cgst}" /></td>
+								minFractionDigits="2"	maxFractionDigits="2" value="${cgst}" /></td>
 							<td bgcolor="#ECECEC"></td>
 							<td bgcolor="#ECECEC"><fmt:formatNumber type="number"
-									maxFractionDigits="2" value="${sgst}" /></td>
+								minFractionDigits="2"	maxFractionDigits="2" value="${sgst}" /></td>
 							<td align="center" bgcolor="#ECECEC"><fmt:formatNumber
-									type="number" maxFractionDigits="2" value="${totaltax}" /></td>
+									type="number" minFractionDigits="2" maxFractionDigits="2" value="${totaltax}" /></td>
 						</tr>
 						<tr>
 							<td align="center"

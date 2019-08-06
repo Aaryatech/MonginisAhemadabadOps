@@ -147,14 +147,14 @@ jQuery(document).ready(function(){
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
 					<div class="col-md-3 ">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+						<input id="fromdatepicker" class="texboxitemcode texboxcal" autocomplete="off"
 							placeholder="DD-MM-YYYY" name="fromDate" type="text">
 					</div>
 					<div class="col-md-2">
 						<h4 class="pull-left">To Date:-</h4>
 					</div>
 					<div class="col-md-3 ">
-						<input id="todatepicker" class="texboxitemcode texboxcal"
+						<input id="todatepicker" class="texboxitemcode texboxcal" autocomplete="off"
 							placeholder="DD-MM-YYYY" name="toDate" type="text">
 					</div>
 					<div class="col-md-2">

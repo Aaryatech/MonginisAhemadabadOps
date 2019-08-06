@@ -35,7 +35,7 @@
 </head>
 <body >
 	 
-				  <table width="250" border="0" cellspacing="0" cellpadding="0" style="padding:0px; font-family:Times New Roman; font-size:12px; border:1px solid #E7E7E7;">
+<table width="250" border="0" cellspacing="0" cellpadding="0" style="padding:0px; font-family:Times New Roman; font-size:12px; border:1px solid #E7E7E7;">
 
   <tbody> 
  <tr>
@@ -54,7 +54,7 @@
        </td>
     </tr>
     <tr>
-      <td colspan="2" align="center" style="padding-left: 5px; padding:2px;font-family: Times New Roman; border-bottom:1px solid #E7E7E7; font-size:12px;"><span style="font-size: 10px;">
+      <td colspan="2" align="center" style="padding-left: 5px; padding:4px;font-family: Times New Roman; border-bottom:1px solid #E7E7E7; font-size:12px;"><span style="font-size: 10px;">
        
           <strong>${sessionScope.frDetails.frAddress}</strong><br/>
            <c:choose>
@@ -112,8 +112,10 @@
           <tr>
             <td style="font-size:10px;padding-left: 5px; ">${spCakeOrder.spName}(${spCakeOrder.itemId})-${spCakeOrder.spfName}</td>
             <td align="center" style="font-size:10px">${spCakeOrder.spSelectedWeight}</td>
-            <td align="center" style="font-size:10px">${spCakeOrder.spSubTotal/spCakeOrder.spSelectedWeight}</td>
-            <td align="right" style="font-size:10px">${spCakeOrder.spSubTotal}</td>
+            <td align="center" style="font-size:10px"> <fmt:formatNumber type = "number" 
+         maxFractionDigits = "2" minFractionDigits = "2" value = "${spCakeOrder.spSubTotal/spCakeOrder.spSelectedWeight}" /></td>
+            <td align="right" style="font-size:10px"><fmt:formatNumber type = "number" 
+         maxFractionDigits = "2" minFractionDigits = "2" value = "${spCakeOrder.spSubTotal}" /></td>
           </tr>
            <tr>
             <td style="font-size:10px;padding-left: 5px; ">HSN- ${spInvoiceHsn}</td>
@@ -128,7 +130,8 @@
           <tr>
           <!--   <td rowspan="3">&nbsp;</td> -->
             <td colspan="3" align="right"><span class="style5"><strong>Total :</strong></span></td>
-            <td align="right"><span class="style5"><strong>${spCakeOrder.spSubTotal}</strong></span></td>
+            <td align="right"><span class="style5"><strong><fmt:formatNumber type = "number" 
+         maxFractionDigits = "2" minFractionDigits = "2" value = "${spCakeOrder.spSubTotal}"/></strong></span></td>
           </tr>
            <%--  <tr>
            <!--  <td rowspan="3">&nbsp;</td> -->
@@ -177,14 +180,14 @@
 									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${spCakeOrder.spSubTotal-(spCakeOrder.tax1Amt+spCakeOrder.tax2Amt)}" /></td>
 								<c:set var="taxAmount"
 									value="${spCakeOrder.spSubTotal-(spCakeOrder.tax1Amt+spCakeOrder.tax2Amt)}" />
-								<td>${spCakeOrder.tax1}</td>
+								<td>&nbsp;&nbsp;${spCakeOrder.tax1}</td>
 								<td>${spCakeOrder.tax1Amt}</td>
 								<c:set var="cgst" value="${cgst+spCakeOrder.tax1Amt }" />
-								<td>${spCakeOrder.tax2}</td>
+								<td>&nbsp;&nbsp;${spCakeOrder.tax2}</td>
 								<td>${spCakeOrder.tax2Amt}</td>
 								<c:set var="sgst" value="${sgst+spCakeOrder.tax2Amt }" />
 								
-								<td><fmt:formatNumber
+								<td>&nbsp;&nbsp;&nbsp;<fmt:formatNumber
 									type="number" maxFractionDigits="2" minFractionDigits="2"  value="${spCakeOrder.spSubTotal-taxAmount}" /></td>
 								<c:set var="totaltax"
 									value="${totaltax+(spCakeOrder.tax1Amt+spCakeOrder.tax2Amt) }" />
