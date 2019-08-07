@@ -677,17 +677,14 @@
 						
 							</li> -->
 
-					<li class="small-box">
+					<%-- <li class="small-box">
 
 
 						<div class="ibox">
 							<div class="ibox-head">
 								<div class="ibox-title">GRN GVN Report</div>
 							</div>
-							<%-- <a href="${pageContext.request.contextPath}/viewFrTaxSellBill"><i class="fa fa-file-text-o icon"></i> Tax Report summary (Sell) </a>
-						<a href="${pageContext.request.contextPath}/viewFrDatewiseTaxSellBill"><i class="fa fa-calendar icon"></i> Date Report (Sell) </a>
-						<a href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill"><i class="fa fa-files-o icon"></i> Bill Report (Sell)</a>
-						<a href="${pageContext.request.contextPath}/hsnWiseReport"><i class="fa fa-files-o icon"></i> HSN Code wise Report (Sell)</a> --%>
+						 
 							<a href="${pageContext.request.contextPath}/grnReport"><i
 								class="fa fa-files-o icon"></i> GRN Report (Sell)</a> <a
 								href="${pageContext.request.contextPath}/gvnReport"><i
@@ -697,7 +694,7 @@
 
 						</div>
 
-					</li>
+					</li> --%>
 
 					<li class="small-box">
 
@@ -711,7 +708,11 @@
 								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
 								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> <a
 								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
-								class="fa fa-files-o icon"></i>Credit Note Report</a>
+								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
+								href="${pageContext.request.contextPath}/grnReport"><i
+								class="fa fa-files-o icon"></i> GRN Report (Sell)</a> <a
+								href="${pageContext.request.contextPath}/gvnReport"><i
+								class="fa fa-files-o icon"></i> GVN Report (Sell)</a>
 
 						</div>
 					</li>
@@ -721,7 +722,10 @@
 
 						<div class="ibox">
 							<div class="ibox-head">
-								<div class="ibox-title"><!-- Purchase Sale Reports -->Purchase/credit note tax report</div>
+								<div class="ibox-title">
+									<!-- Purchase Sale Reports -->
+									Purchase/Credit Note Tax Report
+								</div>
 							</div>
 
 							<a href="${pageContext.request.contextPath}/showTaxReport"><i

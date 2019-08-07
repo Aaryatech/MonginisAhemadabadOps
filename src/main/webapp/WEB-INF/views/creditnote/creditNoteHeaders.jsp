@@ -184,6 +184,15 @@ table, th, td {
 
 
 <script>
+
+function selectBillNo(source) {
+    var checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    for (var i = 0; i < checkboxes.length; i++) {
+        if (checkboxes[i] != source)
+            checkboxes[i].checked = source.checked;
+    }
+}
+
 	function genPdf() {
 		//alert("Inside Gen Pdf ");
 		checkboxes = document.getElementsByName('select_to_agree');
@@ -209,7 +218,7 @@ table, th, td {
 		//	alert(selArray);
 
 		window
-				.open('${pageContext.request.contextPath}/pdf?url=pdf/getCrnCheckedHeadersNew/'
+				.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getCrnCheckedHeadersNew/'
 						+ selArray);
 
 	}
