@@ -257,6 +257,7 @@ jQuery(document).ready(function(){
 							 */
 							var totalArAmt = 0;
 							var totalCrAmt = 0;
+							var balAmt = 0;
 
 							$
 									.each(
@@ -292,6 +293,8 @@ jQuery(document).ready(function(){
 																	.html(
 																			report.grandTotal
 																					.toFixed(2)));
+													balAmt = balAmt + report.grandTotal;
+													
 												} else {
 													tr
 															.append($(
@@ -308,6 +311,8 @@ jQuery(document).ready(function(){
 																	.html(
 																			report.grandTotal
 																					.toFixed(2)));
+													balAmt = balAmt - report.grandTotal;
+													
 												} else {
 													tr
 															.append($(
@@ -316,7 +321,7 @@ jQuery(document).ready(function(){
 												}
 
 												tr.append($('<td style="text-align:right;"></td>').html(
-														""));
+														balAmt.toFixed(2)));
 
 												$('#table_grid tbody').append(
 														tr);
@@ -399,10 +404,10 @@ jQuery(document).ready(function(){
 	function genPdf() {
 		var from_date = $("#fromdatepicker").val();
 		var to_date = $("#todatepicker").val();
-
+		var frId = $("#frId").val();
 		window
-				.open('${pageContext.request.contextPath}/pdfForReport?url=pdf/showSummeryFrByFrPdf/'
-						+ from_date + '/' + to_date);
+				.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSummeryFrByFrPdf/'
+						+ from_date + '/' + to_date + '/' + frId);
 
 	}
 </script>

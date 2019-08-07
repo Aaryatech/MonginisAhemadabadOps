@@ -74,6 +74,7 @@ th {
 
 			<c:set var="totalDrAMt" value="${0}" />
 			<c:set var="totalCrAMt" value="${0}" />
+			<c:set var="bal" value="${0}" />
 			<tr>
 				<td width="200"><c:out value="${fr.frName}" /></td>
 
@@ -98,6 +99,7 @@ th {
 
 							<c:set var="totalDrAMt"
 								value="${totalDrAMt + report.grandTotal }" />
+							<c:set var="bal" value="${bal+report.grandTotal}" />
 						</c:when>
 						<c:otherwise>
 							<td width="80" align="right"><fmt:formatNumber type="number"
@@ -112,7 +114,7 @@ th {
 							<td width="80" align="right"><fmt:formatNumber type="number"
 									maxFractionDigits="2" minFractionDigits="2"
 									value="${report.grandTotal}" /></td>
-
+							<c:set var="bal" value="${bal-report.grandTotal}" />
 
 							<c:set var="totalCrAMt"
 								value="${totalCrAMt + report.grandTotal }" />
@@ -122,7 +124,8 @@ th {
 									maxFractionDigits="2" minFractionDigits="2" value="${0}" /></td>
 						</c:otherwise>
 					</c:choose>
-
+					<td width="80" align="right"><fmt:formatNumber type="number"
+							maxFractionDigits="2" minFractionDigits="2" value="${bal}" /></td>
 				</tr>
 
 			</c:forEach>

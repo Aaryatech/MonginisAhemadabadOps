@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.monginis.ops.common.DateConvertor;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.Franchisee;
@@ -38,8 +39,8 @@ import com.monginis.ops.model.SalesReportFranchisee;
 @Scope("session")
 public class SalesReportController2 {
 
-	String todaysDate;
-
+	String todaysDate;  
+	
 	@RequestMapping(value = "/showFranchiseeWiseBillReport", method = RequestMethod.GET)
 	public ModelAndView showFranchiseeWiseBillReport(HttpServletRequest request, HttpServletResponse response) {
 
@@ -54,7 +55,10 @@ public class SalesReportController2 {
 			LocalDate date = LocalDate.now(z);
 			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d-MM-uuuu");
 			todaysDate = date.format(formatters);
-
+			
+			Franchisee frDetasessionils = (Franchisee) session.getAttribute("frDetails");
+			model.addObject("frId", frDetasessionils.getFrId());
+			
 		} catch (Exception e) {
 
 			System.out.println("Exc in show sales report bill wise  " + e.getMessage());
@@ -87,8 +91,8 @@ public class SalesReportController2 {
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			RestTemplate restTemplate = new RestTemplate();
 
-			System.out.println("Inside If all fr Selected ");
-
+			System.out.println("Inside If all fr Selected "); 
+			
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
 			map.add("frIdList", frDetails.getFrId());
@@ -194,9 +198,9 @@ public class SalesReportController2 {
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 	}
 
-	@RequestMapping(value = "pdf/showSummeryFrByFrPdf/{fromDate}/{toDate}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showSummeryFrByFrPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
 	public ModelAndView showSummeryFrByFrPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("reports/frwiseSummeryPdf");
 
 		List<SalesReportFranchisee> saleList = new ArrayList<>();
@@ -207,10 +211,12 @@ public class SalesReportController2 {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			RestTemplate restTemplate = new RestTemplate();
-			map.add("fromDate", fromDate);
+			map.add("fromDate", fromDate );
 			map.add("toDate", toDate);
-			map.add("frIdList", frDetails.getFrId());
+			map.add("frIdList", frId);
 
+			System.out.println(map);
+			
 			ParameterizedTypeReference<List<SalesReportFranchisee>> typeRef = new ParameterizedTypeReference<List<SalesReportFranchisee>>() {
 			};
 			ResponseEntity<List<SalesReportFranchisee>> responseEntity = restTemplate.exchange(
