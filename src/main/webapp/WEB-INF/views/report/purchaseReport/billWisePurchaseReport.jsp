@@ -148,35 +148,41 @@ jQuery(document).ready(function(){
 
 					<div id="table-scroll" class="table-scroll">
 						<div id="faux-table" class="faux-table" aria="hidden">
-							<table id="table_grid1" class="main-table" border="1">
-								<thead>
-									<tr class="bgpink">
+							<div class="table-wrap">
+								<table id="table_grid" class="main-table">
+									<thead>
+										<tr class="bgpink">
 
-										<th class="col-sm-1">Sr.No.</th>
-										<!-- <th class="col-md-1">Party Name</th> -->
-										<!-- 									<th class="col-md-1">GSTIN</th>
+											<th class="col-sm-1">Sr.No.</th>
+											<!-- <th class="col-md-1">Party Name</th> -->
+											<!-- 									<th class="col-md-1">GSTIN</th>
  -->
-										<th class="col-sm-2" style="text-align: center;">Invoice
-											No</th>
-										<th class="col-sm-1" style="text-align: center;">Bill
-											Date</th>
-										<th class="col-md-1" style="text-align: center;">Taxable
-											Amt</th>
-										<th class="col-md-1" style="text-align: center;">IGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">CGST Amt</th>
-										<th class="col-md-1" style="text-align: center;">SGST Amt</th>
-										<!-- <th class="col-md-1" style="text-align: center;">R.off</th> -->
-										<th class="col-md-2" style="text-align: center;">Bill
-											Amount</th>
-										<th class="col-md-1">Action</th>
-									</tr>
+											<th class="col-sm-2" style="text-align: center;">Invoice
+												No</th>
+											<th class="col-sm-1" style="text-align: center;">Bill
+												Date</th>
+											<th class="col-md-1" style="text-align: center;">Taxable
+												Amt</th>
+											<th class="col-md-1" style="text-align: center;">IGST
+												Amt</th>
+											<th class="col-md-1" style="text-align: center;">CGST
+												Amt</th>
+											<th class="col-md-1" style="text-align: center;">SGST
+												Amt</th>
+											<!-- <th class="col-md-1" style="text-align: center;">R.off</th> -->
+											<th class="col-md-2" style="text-align: center;">Bill
+												Amount</th>
+											<th class="col-md-1" style="text-align: center;" >Action</th>
+										</tr>
 
-								</thead>
-								<tbody>
-							</table>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="table-wrap">
-							<table id="table_grid" class="main-table" border="1">
+							<table id="table_grid" class="main-table">
 								<thead>
 									<tr class="bgpink">
 
@@ -196,7 +202,7 @@ jQuery(document).ready(function(){
 										<!-- 	<th class="col-md-1" style="text-align: center;">R.off</th> -->
 										<th class="col-md-2" style="text-align: center;">Bill
 											Amount</th>
-										<th class="col-md-1">Action</th>
+										<th class="col-md-1" style="text-align: center;" >Action</th>
 									</tr>
 
 								</thead>

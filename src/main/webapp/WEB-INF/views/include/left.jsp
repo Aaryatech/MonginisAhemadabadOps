@@ -81,8 +81,7 @@
 						<div class="title">
 							Customer Bill <span></span>
 						</div></a></li>
-						<li><a
-					href="${pageContext.request.contextPath}/viewBill"><div
+				<li><a href="${pageContext.request.contextPath}/viewBill"><div
 							class="img">
 							<i class="fa fa-file-pdf-o icon"
 								style="font-size: 22px !important;"></i>
@@ -538,10 +537,12 @@
 
 
 							<a href="${pageContext.request.contextPath}/getGrnBillDetail"><i
-								class="fa fa-plus-circle icon"></i> Grn Based on Expiry of product </a>
+								class="fa fa-plus-circle icon"></i> Grn Based on Expiry of
+								product </a>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/showGrn"><i
-								class="fa fa-plus-circle icon"></i> Grn Based on stock FIFO method </a>
+								class="fa fa-plus-circle icon"></i> Grn Based on stock FIFO
+								method </a>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/displayGrn"><i
 								class="fa fa-search-plus icon"></i> View GRN </a>
@@ -656,6 +657,8 @@
 								class="fa fa-files-o icon"></i> Subcategory Summery Report</a> <a
 								href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
 								class="fa fa-files-o icon"></i> Bill Credit Note Summery Report</a>
+							<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i
+								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a>
 
 
 
@@ -718,7 +721,7 @@
 
 						<div class="ibox">
 							<div class="ibox-head">
-								<div class="ibox-title">Purchase Sale Reports</div>
+								<div class="ibox-title"><!-- Purchase Sale Reports -->Purchase/credit note tax report</div>
 							</div>
 
 							<a href="${pageContext.request.contextPath}/showTaxReport"><i
@@ -733,9 +736,11 @@
 								href="${pageContext.request.contextPath}/showHSNwiseReportBetDate"><i
 								class="fa fa-files-o icon"></i>HSN wise Summery Report</a> <a
 								href="${pageContext.request.contextPath}/showGstRegister"><i
-								class="fa fa-files-o icon"></i>Billwise HSN Register Report</a> <a
+								class="fa fa-files-o icon"></i>Billwise HSN Register Report</a>
+							<%-- <a
 								href="${pageContext.request.contextPath}/viewItemWiseReport"><i
-								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> <a
+								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a> --%>
+							<a
 								href="${pageContext.request.contextPath}/viewBillTaxPurchaseReport"><i
 								class="fa fa-files-o icon"></i>Purchase Billwise Tax (Input)
 								Report</a>

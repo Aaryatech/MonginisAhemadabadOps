@@ -145,30 +145,33 @@ jQuery(document).ready(function(){
 				<div class="row">
 					<div class="clearfix"></div>
 
-
+ 
 					<div id="table-scroll" class="table-scroll">
 						<div id="faux-table" class="faux-table" aria="hidden">
-							<table id="table_grid1" class="main-table" border="1">
-								<thead>
-									<tr class="bgpink">
+							<div class="table-wrap">
+								<table id="table_grid" class="main-table" >
+									<thead>
+										<tr class="bgpink">
 
-										<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-										<th class="col-sm-1" style="text-align: center;">Date</th>
-										<th class="col-sm-1" style="text-align: center;">Type</th>
-										<th class="col-sm-1" style="text-align: center;">Invoice
-											No</th>
-										<th class="col-md-2" style="text-align: center;">Document</th>
-										<th class="col-md-1" style="text-align: center;">Dr Amt</th>
-										<th class="col-md-1" style="text-align: center;">Cr Amt</th>
-										<th class="col-md-1" style="text-align: center;">Balance</th>
-									</tr>
+											<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
+											<th class="col-sm-1" style="text-align: center;">Date</th>
+											<th class="col-sm-1" style="text-align: center;">Type</th>
+											<th class="col-sm-1" style="text-align: center;">Invoice
+												No</th>
+											<th class="col-md-2" style="text-align: center;">Document</th>
+											<th class="col-md-1" style="text-align: center;">Dr Amt</th>
+											<th class="col-md-1" style="text-align: center;">Cr Amt</th>
+											<th class="col-md-1" style="text-align: center;">Balance</th>
+										</tr>
 
-								</thead>
-								<tbody>
-							</table>
+									</thead>
+									<tbody>
+									</tbody>
+								</table>
+							</div>
 						</div>
 						<div class="table-wrap">
-							<table id="table_grid" class="main-table" border="1">
+							<table id="table_grid" class="main-table">
 								<thead>
 									<tr class="bgpink">
 
@@ -312,7 +315,7 @@ jQuery(document).ready(function(){
 																	.html(0));
 												}
 
-												tr.append($('<td></td>').html(
+												tr.append($('<td style="text-align:right;"></td>').html(
 														""));
 
 												$('#table_grid tbody').append(

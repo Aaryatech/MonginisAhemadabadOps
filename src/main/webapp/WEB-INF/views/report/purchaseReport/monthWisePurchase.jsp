@@ -108,26 +108,35 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Monthwise Purchase Report</h2>
+						<h2 class="pageTitle">Month wise Purchase Report</h2>
 					</div>
 				</div>
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<h4 class="pull-left">Month From :-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input type='text' placeholder="Select From Month" id='txtDate' autocomplete="off"
-							name="from_stockdate" required size="25" />
+						<input type='text' placeholder="Select From Month" id='txtDate'
+							autocomplete="off" name="from_stockdate" required size="25" />
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<h4 class="pull-left">To Month:-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input type='text' placeholder="Select To Month" id=txtDateto autocomplete="off"
-							name="to_stockdate" required size="25" />
+						<input type='text' placeholder="Select To Month" id=txtDateto
+							autocomplete="off" name="to_stockdate" required size="25" />
+					</div>
+					<div class="col-md-1 ">Select :</div>
+					<div class="col-md-2 ">
+						<select id="typeId" name="typeId" class="form-control">
+							<option value="">Select</option>
+							<option value="1">Purchase</option>
+							<option value="2">GRN</option>
+							<option value="3">Cumulative</option>
+						</select>
 					</div>
 					<!-- <div class="col-md-2">
 		    <button class="btn search_btn pull-left" onclick="monthWisePurchase()">Search </button>
@@ -168,12 +177,13 @@ jQuery(document).ready(function(){
 												<th class="col-md-1" style="text-align: center;">CGST</th>
 												<th class="col-md-1" style="text-align: center;">SGST</th>
 												<th class="col-md-1" style="text-align: center;">CESS</th>
-											<!-- 	<th class="col-md-1" style="text-align: center;">ROFF</th> -->
+												<!-- 	<th class="col-md-1" style="text-align: center;">ROFF</th> -->
 												<th class="col-md-1" style="text-align: center;">TOTAL</th>
 
 											</tr>
 										</thead>
 										<tbody>
+										</tbody>
 									</table>
 
 								</div>
@@ -271,192 +281,205 @@ jQuery(document).ready(function(){
 
 		var fromDate = document.getElementById("txtDate").value;
 		var toDate = document.getElementById("txtDateto").value;
+		var typeId = document.getElementById("typeId").value;
 
-		$
-				.getJSON(
-						'${monthWisePurchaseReport}',
-						{
+		if (typeId != "") {
 
-							fromDate : fromDate,
-							toDate : toDate,
-							ajax : 'true',
+			$
+					.getJSON(
+							'${monthWisePurchaseReport}',
+							{
 
-						},
-						function(data) {
+								fromDate : fromDate,
+								toDate : toDate,
+								typeId : typeId,
+								ajax : 'true',
 
-							var taxTotal = 0;
-							var igstTotal = 0;
-							var cgstTotal = 0;
-							var cessTotal = 0;
-							var sgstTotal = 0;
-							var roundOffTotal = 0;
-							var billTotal = 0;
+							},
+							function(data) {
 
-							$('#loader').hide();
-							var len = data.length;
+								var taxTotal = 0;
+								var igstTotal = 0;
+								var cgstTotal = 0;
+								var cessTotal = 0;
+								var sgstTotal = 0;
+								var roundOffTotal = 0;
+								var billTotal = 0;
 
-							if (data == "") {
-								alert("No records found !!");
-								document.getElementById("expExcel").disabled = true;
+								$('#loader').hide();
+								var len = data.length;
+
+								if (data == "") {
+									alert("No records found !!");
+									document.getElementById("expExcel").disabled = true;
+								}
+								$('#table_grid td').remove();
+
+								$
+										.each(
+												data,
+												function(key,
+														monthWisePurchaseData) {
+
+													document
+															.getElementById("expExcel").disabled = false;
+													document
+															.getElementById('range').style.display = 'block';
+
+													var index = key + 1;
+
+													var monthNumber = monthWisePurchaseData.month;
+
+													var monthNames = [ '0',
+															'Jan', 'Feb',
+															'Mar', 'Apr',
+															'May', 'Jun',
+															'Jul', 'Aug',
+															'Sep', 'Oct',
+															'Nov', 'Dec' ];
+
+													var tr = $('<tr></tr>');
+
+													tr
+															.append($(
+																	'<td class="col-md-1"></td>')
+																	.html(index));
+
+													tr
+															.append($(
+																	'<td class="col-md-1"style="text-align:center;"></td>')
+																	.html(
+																			monthNumber));
+
+													tr
+															.append($(
+																	'<td class="col-md-1"style="text-align:right;"></td>')
+																	.html(
+																			(monthWisePurchaseData.taxableAmt)
+																					.toFixed(2)));
+
+													tr
+															.append($(
+																	'<td class="col-md-1"style="text-align:right;"></td>')
+																	.html(
+																			(monthWisePurchaseData.igstRs)
+																					.toFixed(2)));
+
+													tr
+															.append($(
+																	'<td class="col-md-1"style="text-align:right;"></td>')
+																	.html(
+																			parseFloat(
+																					Math
+																							.round(monthWisePurchaseData.cgstRs * 100) / 100)
+																					.toFixed(
+																							2)));
+
+													tr
+															.append($(
+																	'<td class="col-md-1"style="text-align:right;"></td>')
+																	.html(
+																			parseFloat(
+																					Math
+																							.round(monthWisePurchaseData.sgstRs * 100) / 100)
+																					.toFixed(
+																							2)));
+
+													tr
+															.append($(
+																	'<td class="col-md-1"style="text-align:right;"></td>')
+																	.html(
+																			(monthWisePurchaseData.sess)
+																					.toFixed(2)));
+
+													/* 	tr
+																.append($(
+																		'<td class="col-md-1"style="text-align:right;"></td>')
+																		.html(
+																				(monthWisePurchaseData.roundOff)
+																						.toFixed(2)));
+													 */
+													tr
+															.append($(
+																	'<td class="col-md-1"style="text-align:right;"></td>')
+																	.html(
+																			(monthWisePurchaseData.grandTotal)
+																					.toFixed(2)));
+
+													taxTotal = taxTotal
+															+ monthWisePurchaseData.taxableAmt;
+													cgstTotal = cgstTotal
+															+ monthWisePurchaseData.cgstRs;
+													sgstTotal = sgstTotal
+															+ monthWisePurchaseData.sgstRs;
+													igstTotal = igstTotal
+															+ monthWisePurchaseData.igstRs;
+
+													roundOffTotal = roundOffTotal
+															+ monthWisePurchaseData.roundOff;
+													cessTotal = cessTotal
+															+ monthWisePurchaseData.sess;
+
+													billTotal = billTotal
+															+ monthWisePurchaseData.grandTotal;
+
+													$('#table_grid tbody')
+															.append(tr);
+
+												});
+
+								var tr = $('<tr></tr>');
+
+								tr.append($('<td class="col-md-1"></td>').html(
+										""));
+
+								tr
+										.append($(
+												'<td class="col-md-1" style="font-weight:bold;"></td>')
+												.html("Total"));
+
+								tr
+										.append($(
+												'<td class="col-md-1" style="text-align:right"></td>')
+												.html((taxTotal).toFixed(2)));
+								tr
+										.append($(
+												'<td class="col-md-1" style="text-align:right"></td>')
+												.html(igstTotal.toFixed(2)));
+
+								tr
+										.append($(
+												'<td class="col-md-1" style="text-align:right"></td>')
+												.html(cgstTotal.toFixed(2)));
+
+								tr
+										.append($(
+												'<td class="col-md-1" style="text-align:right"></td>')
+												.html(sgstTotal.toFixed(2)));
+
+								tr
+										.append($(
+												'<td class="col-md-1" style="text-align:right"></td>')
+												.html(cessTotal.toFixed(2)));
+
+								/* 	tr
+											.append($(
+													'<td class="col-md-1" style="text-align:right"></td>')
+													.html(roundOffTotal.toFixed(2)));
+								 */
+								tr
+										.append($(
+												'<td class="col-md-1" style="text-align:right"></td>')
+												.html(billTotal.toFixed(2)));
+
+								$('#table_grid tbody').append(tr);
 							}
-							$('#table_grid td').remove();
 
-							$
-									.each(
-											data,
-											function(key, monthWisePurchaseData) {
+					);
+		} else {
+			alert("Select Type ");
 
-												document
-														.getElementById("expExcel").disabled = false;
-												document
-														.getElementById('range').style.display = 'block';
-
-												var index = key + 1;
-
-												var monthNumber = monthWisePurchaseData.month;
-
-												var monthNames = [ '0', 'Jan',
-														'Feb', 'Mar', 'Apr',
-														'May', 'Jun', 'Jul',
-														'Aug', 'Sep', 'Oct',
-														'Nov', 'Dec' ];
-
-												var tr = $('<tr></tr>');
-
-												tr
-														.append($(
-																'<td class="col-md-1"></td>')
-																.html(index));
-
-												tr
-														.append($(
-																'<td class="col-md-1"style="text-align:center;"></td>')
-																.html(monthNumber));
-
-												tr
-														.append($(
-																'<td class="col-md-1"style="text-align:right;"></td>')
-																.html(
-																		(monthWisePurchaseData.taxableAmt)
-																				.toFixed(2)));
-
-												tr
-														.append($(
-																'<td class="col-md-1"style="text-align:right;"></td>')
-																.html(
-																		(monthWisePurchaseData.igstRs)
-																				.toFixed(2)));
-
-												tr
-														.append($(
-																'<td class="col-md-1"style="text-align:right;"></td>')
-																.html(
-																		parseFloat(
-																				Math
-																						.round(monthWisePurchaseData.cgstRs * 100) / 100)
-																				.toFixed(
-																						2)));
-
-												tr
-														.append($(
-																'<td class="col-md-1"style="text-align:right;"></td>')
-																.html(
-																		parseFloat(
-																				Math
-																						.round(monthWisePurchaseData.sgstRs * 100) / 100)
-																				.toFixed(
-																						2)));
-
-												tr
-														.append($(
-																'<td class="col-md-1"style="text-align:right;"></td>')
-																.html(
-																		(monthWisePurchaseData.sess)
-																				.toFixed(2)));
-
-											/* 	tr
-														.append($(
-																'<td class="col-md-1"style="text-align:right;"></td>')
-																.html(
-																		(monthWisePurchaseData.roundOff)
-																				.toFixed(2)));
- */
-												tr
-														.append($(
-																'<td class="col-md-1"style="text-align:right;"></td>')
-																.html(
-																		(monthWisePurchaseData.grandTotal)
-																				.toFixed(2)));
-
-												taxTotal = taxTotal
-														+ monthWisePurchaseData.taxableAmt;
-												cgstTotal = cgstTotal
-														+ monthWisePurchaseData.cgstRs;
-												sgstTotal = sgstTotal
-														+ monthWisePurchaseData.sgstRs;
-												igstTotal = igstTotal
-														+ monthWisePurchaseData.igstRs;
-
-												roundOffTotal = roundOffTotal
-														+ monthWisePurchaseData.roundOff;
-												cessTotal = cessTotal
-														+ monthWisePurchaseData.sess;
-
-												billTotal = billTotal
-														+ monthWisePurchaseData.grandTotal;
-
-												$('#table_grid tbody').append(
-														tr);
-
-											});
-
-							var tr = $('<tr></tr>');
-
-							tr.append($('<td class="col-md-1"></td>').html(""));
-
-							tr
-									.append($(
-											'<td class="col-md-1" style="font-weight:bold;"></td>')
-											.html("Total"));
-
-							tr
-									.append($(
-											'<td class="col-md-1" style="text-align:right"></td>')
-											.html((taxTotal).toFixed(2)));
-							tr
-									.append($(
-											'<td class="col-md-1" style="text-align:right"></td>')
-											.html(igstTotal.toFixed(2)));
-
-							tr
-									.append($(
-											'<td class="col-md-1" style="text-align:right"></td>')
-											.html(cgstTotal.toFixed(2)));
-
-							tr
-									.append($(
-											'<td class="col-md-1" style="text-align:right"></td>')
-											.html(sgstTotal.toFixed(2)));
-
-							tr
-									.append($(
-											'<td class="col-md-1" style="text-align:right"></td>')
-											.html(cessTotal.toFixed(2)));
-
-						/* 	tr
-									.append($(
-											'<td class="col-md-1" style="text-align:right"></td>')
-											.html(roundOffTotal.toFixed(2)));
- */
-							tr
-									.append($(
-											'<td class="col-md-1" style="text-align:right"></td>')
-											.html(billTotal.toFixed(2)));
-
-							$('#table_grid tbody').append(tr);
-						}
-
-				);
+		}
 	}
 
 	/* function(data) {
@@ -894,9 +917,16 @@ jQuery(document).ready(function(){
 			var fromDate = document.getElementById("txtDate").value;
 			var toDate = document.getElementById("txtDateto").value;
 			var frId = document.getElementById("frId").value;
+			var typeId = document.getElementById("typeId").value;
 			window
 					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showPurchaseMonthwiseReportPdf/'
-							+ fromDate + '/' + toDate + '/' + frId);
+							+ fromDate
+							+ '/'
+							+ toDate
+							+ '/'
+							+ frId
+							+ '/'
+							+ typeId);
 		}
 	}
 </script>
