@@ -260,11 +260,11 @@ public class ReportsController {
 			e.printStackTrace();
 		}
 
-		PdfPTable table = new PdfPTable(6);
+		PdfPTable table = new PdfPTable(10);
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 0.5f, 1.8f, 1.8f, 1.2f, 1.0f, 1.2f });
+			table.setWidths(new float[] { 0.5f, 2.2f, 1.8f, 2.2f, 1.8f,1.2f, 1.2f, 1.0f, 1.2f, 1.2f });
 			Font headFont = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
 			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
@@ -277,8 +277,20 @@ public class ReportsController {
 			hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Mobile no", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Item Name", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Flavour", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("KG", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 
@@ -291,6 +303,10 @@ public class ReportsController {
 			table.addCell(hcell);
 
 			hcell = new PdfPCell(new Phrase("Advance Amt", headFont1));
+			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+			table.addCell(hcell);
+			
+			hcell = new PdfPCell(new Phrase("Del Date", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
 
@@ -312,10 +328,28 @@ public class ReportsController {
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(advance.getSpCustMobNo(), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(5);
+				table.addCell(cell);
 
 				cell = new PdfPCell(new Phrase(String.valueOf(advance.getItemName()), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(5);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(String.valueOf(advance.getSpfName()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
+				cell.setPaddingRight(5);
+				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(String.valueOf(advance.getWeight()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
 
@@ -336,6 +370,13 @@ public class ReportsController {
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
+				
+				cell = new PdfPCell(new Phrase(String.valueOf(advance.getDelDate()), headFont));
+				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
+				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+				cell.setPaddingRight(5);
+				table.addCell(cell);
+				
 				totalMrp = totalMrp + advance.getTotalMrp();
 				totalAmt = totalAmt + advance.getAdvAmt();
 

@@ -19,6 +19,12 @@ private int spOrderNo;
 	private float weight;
 	
 	private String delDate;
+	
+	private String spCustMobNo;
+	
+	private float rmAmount;
+	
+	private String spfName;
 
 	public int getSpOrderNo() {
 		return spOrderNo;
@@ -68,9 +74,7 @@ private int spOrderNo;
 	public void setWeight(float weight) {
 		this.weight = weight;
 	}
-
-	
-
+ 
 	public String getOrderDate() {
 		return orderDate;
 	}
@@ -87,11 +91,36 @@ private int spOrderNo;
 		this.delDate = delDate;
 	}
 
+	public String getSpCustMobNo() {
+		return spCustMobNo;
+	}
+
+	public void setSpCustMobNo(String spCustMobNo) {
+		this.spCustMobNo = spCustMobNo;
+	}
+
+	public float getRmAmount() {
+		return rmAmount;
+	}
+
+	public void setRmAmount(float rmAmount) {
+		this.rmAmount = rmAmount;
+	}
+
+	public String getSpfName() {
+		return spfName;
+	}
+
+	public void setSpfName(String spfName) {
+		this.spfName = spfName;
+	}
+
 	@Override
 	public String toString() {
 		return "GetSpAdvanceReport [spOrderNo=" + spOrderNo + ", custName=" + custName + ", itemName=" + itemName
 				+ ", orderDate=" + orderDate + ", totalMrp=" + totalMrp + ", advAmt=" + advAmt + ", weight=" + weight
-				+ ", delDate=" + delDate + "]";
+				+ ", delDate=" + delDate + ", spCustMobNo=" + spCustMobNo + ", rmAmount=" + rmAmount + ", spfName="
+				+ spfName + "]";
 	}
 	
 

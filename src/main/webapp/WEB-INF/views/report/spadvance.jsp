@@ -44,16 +44,18 @@
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="calender-title">From</div>
+						<div class="col-md-1">From Date :</div>
 						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal" 
-								value="${cDate}" autocomplete="off" name="from_Date" type="text">
+							<input id="datepicker" class="texboxitemcode texboxcal"
+								value="${cDate}" autocomplete="off" name="from_Date" type="text"
+								placeholder="From Date">
 						</div>
 
-						<div class="calender-title">TO</div>
+						<div class="col-md-1">TO Date :</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
-								value="${cDate}" autocomplete="off" name="to_Date" type="text">
+								value="${cDate}" autocomplete="off" name="to_Date" type="text"
+								placeholder="To Date">
 						</div>
 
 						<div class="col-md-1"></div>
@@ -76,33 +78,35 @@
 
 						<div id="table-scroll" class="table-scroll">
 							<div id="faux-table" class="faux-table" aria="hidden">
-								<table id="table_grid" class="main-table" border="1">
-									<thead>
-										<tr class="bgpink">
-											<!-- 	<th class="col-md-1">Sr No</th>
-											<th  class="col-md-3" align="left">Customer Name</th>
-											<th class="col-md-3">Item Name</th>
-											<th class="col-md-1">Order Date</th>
-											<th class="col-md-1">MRP</th>
-											<th class="col-md-2">Advance Amt</th> -->
-										</tr>
-									</thead>
-								</table>
+								<div class="table-wrap">
+									<table id="table_grid" class="main-table" border="1">
+										<thead>
+											<tr class="bgpink">
+												<!-- <th width="5%" style="text-align: center;">Sr No</th>
+												<th style="text-align: center;">Customer Name</th>
+												<th style="text-align: center;">Item Name</th>
+												<th width="10%" style="text-align: center;">Order Date</th>
+												<th width="10%" style="text-align: center;">MRP</th>
+												<th width="10%" style="text-align: center;">Advance Amt</th> -->
+											</tr>
+										</thead>
+									</table>
+								</div>
 							</div>
 							<div class="table-wrap">
 								<table id="table_grid" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-1" style="text-align: center;">Sr No</th>
-											<th class="col-md-3" style="text-align: center;">Customer
-												Name</th>
-											<th class="col-md-3" style="text-align: center;">Item
-												Name</th>
-											<th class="col-md-1" style="text-align: center;">Order
-												Date</th>
-											<th class="col-md-1" style="text-align: center;">MRP</th>
-											<th class="col-md-2" style="text-align: center;">Advance
-												Amt</th>
+											<th width="5%" style="text-align: center;">Sr No</th>
+											<th style="text-align: center;">Customer Name</th>
+											<th width="10%" style="text-align: center;">Mobile no</th>
+											<th style="text-align: center;">Item Name</th>
+											<th width="10%" style="text-align: center;">Flavour</th>
+											<th width="10%" style="text-align: center;">KG</th>
+											<th width="10%" style="text-align: center;">Order Date</th>
+											<th width="10%" style="text-align: center;">MRP</th>
+											<th width="10%" style="text-align: center;">Advance Amt</th>
+											<th width="10%" style="text-align: center;">Del Date</th>
 
 										</tr>
 									</thead>
@@ -266,12 +270,17 @@
 						
 				
 								
-						tr.append($('<td class="col-md-1" ></td>').html(key+1));
-						tr.append($('<td class="col-md-3"></td>').html(spAdv.custName));
-						tr.append($('<td class="col-md-3"></td>').html(spAdv.itemName));
-						tr.append($('<td class="col-md-1"></td>').html(spAdv.orderDate));
-						tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(spAdv.totalMrp));
-						tr.append($('<td class="col-md-2" style="text-align:right;"></td>').html(spAdv.advAmt));
+						tr.append($('<td   ></td>').html(key+1));
+						tr.append($('<td  ></td>').html(spAdv.custName));
+						tr.append($('<td  ></td>').html(spAdv.spCustMobNo));
+						tr.append($('<td  ></td>').html(spAdv.itemName));
+						tr.append($('<td  ></td>').html(spAdv.spfName));
+						tr.append($('<td  style="text-align:right;"></td>').html(spAdv.weight));
+						tr.append($('<td  ></td>').html(spAdv.orderDate));
+						tr.append($('<td   style="text-align:right;"></td>').html(spAdv.totalMrp.toFixed(2)));
+						tr.append($('<td   style="text-align:right;"></td>').html(spAdv.advAmt.toFixed(2)));
+						tr.append($('<td  ></td>').html(spAdv.delDate));
+						
 						totalAmt=totalAmt+spAdv.advAmt;
 						totalMrp=totalMrp+spAdv.totalMrp;
 						
@@ -286,12 +295,16 @@ $('#table_grid tbody')
 var tr = $('<tr></tr>');
 					
 				
-						tr.append($('<td class="col-md-1" ></td>').html(""));
-						tr.append($('<td class="col-md-3"></td>').html(""));
-						tr.append($('<td class="col-md-3"></td>').html(""));
-						tr.append($('<td class="col-md-1"></td>').html("Total"));
-						tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(totalMrp.toFixed(2)));
-						tr.append($('<td class="col-md-2" style="text-align:right;"></td>').html(totalAmt.toFixed(2)));
+						tr.append($('<td  ></td>').html(""));
+						tr.append($('<td  ></td>').html("Total"));
+						tr.append($('<td  ></td>').html(""));
+						tr.append($('<td  ></td>').html(""));  
+						tr.append($('<td  ></td>').html(""));
+						tr.append($('<td  ></td>').html(""));
+						tr.append($('<td  ></td>').html(""));
+						tr.append($('<td   style="text-align:right;"></td>').html(totalMrp.toFixed(2)));
+						tr.append($('<td   style="text-align:right;"></td>').html(totalAmt.toFixed(2)));
+						tr.append($('<td  ></td>').html(""));
 				
 $('#table_grid tbody')
 	.append(
