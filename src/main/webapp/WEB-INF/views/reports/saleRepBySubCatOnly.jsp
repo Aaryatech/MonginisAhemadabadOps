@@ -355,7 +355,7 @@
 			var frId = document.getElementById("frId").value;
 			window
 					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSaleReportBySubCatPdf/'
-							+ fromDate + '/' + toDate);
+							+ fromDate + '/' + toDate + '/' + frId);
 		}
 	}
 </script>

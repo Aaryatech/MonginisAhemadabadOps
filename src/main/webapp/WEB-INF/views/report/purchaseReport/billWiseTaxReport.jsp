@@ -67,7 +67,7 @@
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<div class="col-md-2 from_date">
+					<div class="col-md-1 from_date">
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
 					<div class="col-md-2 ">
@@ -83,6 +83,17 @@
 							class="texboxitemcode texboxcal" placeholder="DD-MM-YYYY"
 							name="toDate" type="text">
 					</div>
+					
+					<div class="col-md-1 ">Select :</div>
+					<div class="col-md-2 ">
+						<select id="typeId" name="typeId" class="form-control">
+							<option value="">Select</option>
+							<option value="1">Purchase</option>
+							<option value="2">GRN</option>
+							<option value="3">Cumulative</option>
+						</select>
+					</div>
+					
 					<div class="col-md-2">
 						<button class="btn search_btn pull-left"
 							onclick="billWiseTaxReport()">Search</button>
@@ -200,7 +211,9 @@
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var factoryName= document.getElementById("factoryName").value;
-
+			var typeId= document.getElementById("typeId").value;
+			
+			
 			$
 					.getJSON(
 							'${getBillWiseTaxReport}',
@@ -208,6 +221,7 @@
 
 								fromDate : fromDate,
 								toDate : toDate,
+								typeId : typeId,
 								ajax : 'true',
 
 							},
@@ -510,7 +524,8 @@
 
 		var fromDate = $("#fromdatepicker").val();
 		var toDate = $("#todatepicker").val();
-
+		var typeId= document.getElementById("typeId").value;
+		
 		var isValid = true;
 
 		if (fromDate == "" || fromDate == null) {
@@ -521,6 +536,10 @@
 
 			isValid = false;
 			alert("Please select To Date");
+		}else if (typeId=="") {
+
+			isValid = false;
+			alert("Please select ");
 		}
 		return isValid;
 
@@ -551,9 +570,10 @@
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var frId = document.getElementById("frId").value;
+			var typeId = document.getElementById("typeId").value;
 			window
 					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showPurchaseTaxBillwiseReportPdf/'
-							+ fromDate + '/' + toDate + '/' + frId + '/');
+							+ fromDate + '/' + toDate + '/' + frId + '/' + typeId);
 		}
 	}
 </script>

@@ -1375,100 +1375,260 @@ public class ReportsController {
 			int frId = frDetails.getFrId();
 			System.out.println("frId" + frId);
 
-			map.add("frId", frId);
-			map.add("fromDate", Main.formatDate(fromDate));
-			map.add("toDate", Main.formatDate(toDate));
+			int typeId = Integer.parseInt(request.getParameter("typeId"));
 
 			billWiseTaxReport = new ArrayList<BillWiseTaxReport>();
 
-			BillWiseTaxReportList billWiseTaxReportList = restTemplate
-					.postForObject(Constant.URL + "/showBillWiseTaxReport", map, BillWiseTaxReportList.class);
+			if (typeId == 3) {
 
-			billWiseTaxReport = billWiseTaxReportList.getBillWiseTaxReportList();
+				map.add("frId", frId);
+				map.add("fromDate", Main.formatDate(fromDate));
+				map.add("toDate", Main.formatDate(toDate));
+				map.add("typeId", 1);
+				BillWiseTaxReportList purchase = restTemplate.postForObject(
+						Constant.URL + "/showBillWiseTaxReportByTypeId", map, BillWiseTaxReportList.class);
+
+				map = new LinkedMultiValueMap<>();
+				map.add("frId", frId);
+				map.add("fromDate", Main.formatDate(fromDate));
+				map.add("toDate", Main.formatDate(toDate));
+				map.add("typeId", 2);
+				BillWiseTaxReportList grn = restTemplate.postForObject(Constant.URL + "/showBillWiseTaxReportByTypeId",
+						map, BillWiseTaxReportList.class);
+
+				// export to excel
+
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
+
+				rowData.add("Sr. No.");
+				rowData.add("Party Name");
+				rowData.add("Purchase Taxable Amount");
+				rowData.add("Credit Note Taxable Amount");
+				rowData.add("Tax Rate");
+				rowData.add("Purchase CGST");
+				rowData.add("Credit Note CGST");
+				rowData.add("Purchase SGST");
+				rowData.add("Credit Note SGST");
+				rowData.add("Purchase IGST");
+				rowData.add("Credit Note IGST");
+				rowData.add("CESS");
+				rowData.add("Purchase Grand Amount");
+				rowData.add("Credit Note Grand Amount");
+				rowData.add("Grand Amount");
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				float taxableAmt = 0.0f;
+				float taxableAmtG = 0.0f;
+				float cgstSum = 0.0f;
+				float cgstSumG = 0.0f;
+				float sgstSum = 0.0f;
+				float sgstSumG = 0.0f;
+				float igstSum = 0.0f;
+				float igstSumG = 0.0f;
+				float totalCess = 0.0f;
+				float grandTotal = 0.0f;
+				float grandTotalG = 0.0f;
+				float grandTotala = 0.0f;
+
+				for (int i = 0; i < purchase.getBillWiseTaxReportList().size(); i++) {
+
+					for (int j = 0; j < grn.getBillWiseTaxReportList().size(); j++) {
+
+						if (purchase.getBillWiseTaxReportList().get(i).getTaxRate() == grn.getBillWiseTaxReportList()
+								.get(j).getTaxRate()) {
+
+							expoExcel = new ExportToExcel();
+							rowData = new ArrayList<String>();
+							rowData.add("" + (i + 1));
+							rowData.add(Constant.FACTORYNAME);
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getTaxableAmt()));
+							rowData.add("" + roundUp(grn.getBillWiseTaxReportList().get(j).getTaxableAmt()));
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getTaxRate()));
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getCgstRs()));
+							rowData.add("" + roundUp(grn.getBillWiseTaxReportList().get(j).getCgstRs()));
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getSgstRs()));
+							rowData.add("" + roundUp(grn.getBillWiseTaxReportList().get(j).getSgstRs()));
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getIgstRs()));
+							rowData.add("" + roundUp(grn.getBillWiseTaxReportList().get(j).getIgstRs()));
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getCess()));
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getGrandTotal()));
+							rowData.add("" + roundUp(grn.getBillWiseTaxReportList().get(j).getGrandTotal()));
+							rowData.add("" + roundUp(purchase.getBillWiseTaxReportList().get(i).getGrandTotal()
+									- grn.getBillWiseTaxReportList().get(j).getGrandTotal()));
+
+							taxableAmt = taxableAmt + purchase.getBillWiseTaxReportList().get(i).getTaxableAmt();
+							cgstSum = cgstSum + purchase.getBillWiseTaxReportList().get(i).getCgstRs();
+							sgstSum = sgstSum + purchase.getBillWiseTaxReportList().get(i).getSgstRs();
+							igstSum = igstSum + purchase.getBillWiseTaxReportList().get(i).getIgstRs();
+							totalCess = totalCess + purchase.getBillWiseTaxReportList().get(i).getCess();
+							grandTotal = grandTotal + purchase.getBillWiseTaxReportList().get(i).getGrandTotal();
+
+							taxableAmtG = taxableAmtG + grn.getBillWiseTaxReportList().get(j).getTaxableAmt();
+							cgstSumG = cgstSumG + grn.getBillWiseTaxReportList().get(j).getCgstRs();
+							sgstSumG = sgstSumG + grn.getBillWiseTaxReportList().get(j).getSgstRs();
+							igstSumG = igstSumG + grn.getBillWiseTaxReportList().get(j).getIgstRs();
+							grandTotalG = grandTotalG + grn.getBillWiseTaxReportList().get(j).getGrandTotal();
+
+							grandTotala = grandTotala + (purchase.getBillWiseTaxReportList().get(i).getGrandTotal()
+									- grn.getBillWiseTaxReportList().get(j).getGrandTotal());
+
+							expoExcel.setRowData(rowData);
+							exportToExcelList.add(expoExcel);
+
+							purchase.getBillWiseTaxReportList().get(i)
+									.setTaxableAmt(purchase.getBillWiseTaxReportList().get(i).getTaxableAmt()
+											- grn.getBillWiseTaxReportList().get(j).getTaxableAmt());
+							purchase.getBillWiseTaxReportList().get(i)
+									.setCgstRs(purchase.getBillWiseTaxReportList().get(i).getCgstRs()
+											- grn.getBillWiseTaxReportList().get(j).getCgstRs());
+							purchase.getBillWiseTaxReportList().get(i)
+									.setSgstRs(purchase.getBillWiseTaxReportList().get(i).getSgstRs()
+											- grn.getBillWiseTaxReportList().get(j).getSgstRs());
+							purchase.getBillWiseTaxReportList().get(i)
+									.setIgstRs(purchase.getBillWiseTaxReportList().get(i).getIgstRs()
+											- grn.getBillWiseTaxReportList().get(j).getIgstRs());
+							purchase.getBillWiseTaxReportList().get(i)
+									.setGrandTotal(purchase.getBillWiseTaxReportList().get(i).getGrandTotal()
+											- grn.getBillWiseTaxReportList().get(j).getGrandTotal());
+							break;
+						}
+
+					}
+
+				}
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("");
+				rowData.add("Total");
+
+				rowData.add("" + roundUp(taxableAmt));
+				rowData.add("" + roundUp(taxableAmtG));
+				rowData.add("");
+				rowData.add("" + roundUp(cgstSum));
+				rowData.add("" + roundUp(cgstSumG));
+				rowData.add("" + roundUp(sgstSum));
+				rowData.add("" + roundUp(sgstSumG));
+				rowData.add("" + roundUp(igstSum));
+				rowData.add("" + roundUp(igstSumG));
+				rowData.add("" + roundUp(totalCess));
+				rowData.add("" + roundUp(grandTotal));
+				rowData.add("" + roundUp(grandTotalG));
+				rowData.add("" + roundUp(grandTotala));
+				
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				billWiseTaxReport = purchase.getBillWiseTaxReportList();
+
+				HttpSession session = request.getSession();
+				session.setAttribute("exportExcelListNew", exportToExcelList);
+				session.setAttribute("excelNameNew", "BillWiseTaxPurchaseReport");
+				session.setAttribute("reportNameNew", "Purchase Billwise Tax (Input) Report");
+				session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+				session.setAttribute("mergeUpto1", "$A$1:$O$1");
+				session.setAttribute("mergeUpto2", "$A$2:$O$2");
+
+			} else {
+
+				map.add("frId", frId);
+				map.add("fromDate", Main.formatDate(fromDate));
+				map.add("toDate", Main.formatDate(toDate));
+				map.add("typeId", typeId);
+
+				BillWiseTaxReportList billWiseTaxReportList = restTemplate.postForObject(
+						Constant.URL + "/showBillWiseTaxReportByTypeId", map, BillWiseTaxReportList.class);
+
+				billWiseTaxReport = billWiseTaxReportList.getBillWiseTaxReportList();
+
+				// export to excel
+
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
+
+				rowData.add("Sr. No.");
+				rowData.add("Party Name");
+				rowData.add("Taxable Amount");
+				rowData.add("Tax Rate");
+				rowData.add("CGST");
+				rowData.add("SGST");
+				rowData.add("IGST");
+				rowData.add("CESS");
+				rowData.add("Grand Amount");
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				float taxableAmt = 0.0f;
+				float cgstSum = 0.0f;
+				float sgstSum = 0.0f;
+				float igstSum = 0.0f;
+				float totalCess = 0.0f;
+				float grandTotal = 0.0f;
+
+				for (int i = 0; i < billWiseTaxReport.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
+					rowData.add("" + (i + 1));
+					rowData.add(Constant.FACTORYNAME);
+					rowData.add("" + roundUp(billWiseTaxReport.get(i).getTaxableAmt()));
+					rowData.add("" + roundUp(billWiseTaxReport.get(i).getTaxRate()));
+					rowData.add("" + roundUp(billWiseTaxReport.get(i).getCgstRs()));
+					rowData.add("" + roundUp(billWiseTaxReport.get(i).getSgstRs()));
+					rowData.add("" + roundUp(billWiseTaxReport.get(i).getIgstRs()));
+					rowData.add("" + roundUp(billWiseTaxReport.get(i).getCess()));
+					rowData.add("" + roundUp(billWiseTaxReport.get(i).getGrandTotal()));
+
+					taxableAmt = taxableAmt + billWiseTaxReport.get(i).getTaxableAmt();
+					cgstSum = cgstSum + billWiseTaxReport.get(i).getCgstRs();
+					sgstSum = sgstSum + billWiseTaxReport.get(i).getSgstRs();
+					igstSum = igstSum + billWiseTaxReport.get(i).getIgstRs();
+					totalCess = totalCess + billWiseTaxReport.get(i).getCess();
+					grandTotal = grandTotal + billWiseTaxReport.get(i).getGrandTotal();
+
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
+
+				}
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("");
+				rowData.add("Total");
+
+				rowData.add("" + roundUp(taxableAmt));
+				rowData.add("");
+				rowData.add("" + roundUp(cgstSum));
+				rowData.add("" + roundUp(sgstSum));
+				rowData.add("" + roundUp(igstSum));
+				rowData.add("" + roundUp(totalCess));
+				rowData.add("" + roundUp(grandTotal));
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				HttpSession session = request.getSession();
+				session.setAttribute("exportExcelListNew", exportToExcelList);
+				session.setAttribute("excelNameNew", "BillWiseTaxPurchaseReport");
+				session.setAttribute("reportNameNew", "Purchase Billwise Tax (Input) Report");
+				session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+				session.setAttribute("mergeUpto1", "$A$1:$L$1");
+				session.setAttribute("mergeUpto2", "$A$2:$L$2");
+
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
 		}
-
-		System.out.println("billWiseTaxReport: " + billWiseTaxReport.toString());
-
-		// export to excel
-
-		List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
-
-		ExportToExcel expoExcel = new ExportToExcel();
-		List<String> rowData = new ArrayList<String>();
-
-		rowData.add("Sr. No.");
-		rowData.add("Party Name");
-		rowData.add("Taxable Amount");
-		rowData.add("Tax Rate");
-		rowData.add("CGST");
-		rowData.add("SGST");
-		rowData.add("IGST");
-		rowData.add("CESS");
-		rowData.add("Grand Amount");
-		expoExcel.setRowData(rowData);
-		exportToExcelList.add(expoExcel);
-
-		float taxableAmt = 0.0f;
-		float cgstSum = 0.0f;
-		float sgstSum = 0.0f;
-		float igstSum = 0.0f;
-		float totalCess = 0.0f;
-		float grandTotal = 0.0f;
-
-		for (int i = 0; i < billWiseTaxReport.size(); i++) {
-			expoExcel = new ExportToExcel();
-			rowData = new ArrayList<String>();
-			rowData.add("" + (i + 1));
-			rowData.add(Constant.FACTORYNAME);
-			rowData.add("" + roundUp(billWiseTaxReport.get(i).getTaxableAmt()));
-			rowData.add("" + roundUp(billWiseTaxReport.get(i).getTaxRate()));
-			rowData.add("" + roundUp(billWiseTaxReport.get(i).getCgstRs()));
-			rowData.add("" + roundUp(billWiseTaxReport.get(i).getSgstRs()));
-			rowData.add("" + roundUp(billWiseTaxReport.get(i).getIgstRs()));
-			rowData.add("" + roundUp(billWiseTaxReport.get(i).getCess()));
-			rowData.add("" + roundUp(billWiseTaxReport.get(i).getGrandTotal()));
-
-			taxableAmt = taxableAmt + billWiseTaxReport.get(i).getTaxableAmt();
-			cgstSum = cgstSum + billWiseTaxReport.get(i).getCgstRs();
-			sgstSum = sgstSum + billWiseTaxReport.get(i).getSgstRs();
-			igstSum = igstSum + billWiseTaxReport.get(i).getIgstRs();
-			totalCess = totalCess + billWiseTaxReport.get(i).getCess();
-			grandTotal = grandTotal + billWiseTaxReport.get(i).getGrandTotal();
-
-			expoExcel.setRowData(rowData);
-			exportToExcelList.add(expoExcel);
-
-		}
-
-		expoExcel = new ExportToExcel();
-		rowData = new ArrayList<String>();
-
-		rowData.add("");
-		rowData.add("Total");
-
-		rowData.add("" + roundUp(taxableAmt));
-		rowData.add("");
-		rowData.add("" + roundUp(cgstSum));
-		rowData.add("" + roundUp(sgstSum));
-		rowData.add("" + roundUp(igstSum));
-		rowData.add("" + roundUp(totalCess));
-		rowData.add("" + roundUp(grandTotal));
-
-		expoExcel.setRowData(rowData);
-		exportToExcelList.add(expoExcel);
-
-		HttpSession session = request.getSession();
-		session.setAttribute("exportExcelListNew", exportToExcelList);
-		session.setAttribute("excelNameNew", "BillWiseTaxPurchaseReport");
-		session.setAttribute("reportNameNew", "Purchase Billwise Tax (Input) Report");
-		session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-		session.setAttribute("mergeUpto1", "$A$1:$L$1");
-		session.setAttribute("mergeUpto2", "$A$2:$L$2");
-
 		return billWiseTaxReport;
 
 	}
@@ -1487,10 +1647,9 @@ public class ReportsController {
 		HttpSession ses = request.getSession();
 		Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 		int frId = frDetails.getFrId();
-		
+
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-		
-		
+
 		try {
 			System.out.println("in method");
 			fromDate = request.getParameter("fromDate");
@@ -1509,253 +1668,259 @@ public class ReportsController {
 			LocalDate tDate = ym1.atEndOfMonth();
 			System.out.println("tdate" + tDate);
 
-			
-
 			RestTemplate restTemplate = new RestTemplate();
 
-			
-			
 			frName = frDetails.getFrName();
 			System.out.println("frId" + frId);
 
-			 
-			
 			monthWiseReportList = new ArrayList<MonthWiseReport>();
 
-			/*MonthWiseReportList monthWiseReportListBean = restTemplate
-					.postForObject(Constant.URL + "/showMonthWiseReport", map, MonthWiseReportList.class);*/
-			
-			 
+			/*
+			 * MonthWiseReportList monthWiseReportListBean = restTemplate
+			 * .postForObject(Constant.URL + "/showMonthWiseReport", map,
+			 * MonthWiseReportList.class);
+			 */
 
-		// export to excel
+			// export to excel
 
-		if(typeId==3) {
-			
-			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+			if (typeId == 3) {
 
-			ExportToExcel expoExcel = new ExportToExcel();
-			List<String> rowData = new ArrayList<String>();
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
-			rowData.add("Sr. No");
-			rowData.add("Month");
-			rowData.add("Franchisee Name");
-			rowData.add("Purchase Taxable Amount");
-			rowData.add("Gredit Note Taxable Amount");
-			rowData.add("Purchase cgst"); 
-			rowData.add("Gredit Note cgst"); 
-			rowData.add("Purchase sgst");
-			rowData.add("Gredit Note sgst");
-			rowData.add("Purchase igst");  
-			rowData.add("Gredit Note igst");
-			rowData.add("Purchase Grand Amount");
-			rowData.add("Gredit Note Grand Amount");
-			rowData.add("Grand Amount");
-			
-			float taxableAmt = 0.0f;
-			float taxableAmtC = 0.0f;
-			float cgstSum = 0.0f;
-			float cgstSumC = 0.0f;
-			float sgstSum = 0.0f;
-			float sgstSumC = 0.0f;
-			float igstSum = 0.0f;
-			float igstSumC = 0.0f;
-			float grandTotala = 0.0f;
-			float grandTotal = 0.0f;
-			float grandTotalC = 0.0f;
- 
-			
-			map = new LinkedMultiValueMap<>(); 
-			map.add("frId", frId);
-			map.add("fromDate", "" + fDate);
-			map.add("toDate", "" + tDate);
-			map.add("typeId", 1); 
-			MonthWiseReportList purchase = restTemplate
-					.postForObject(Constant.URL + "/showMonthWiseReportByTypeId", map, MonthWiseReportList.class);
-			
-			map = new LinkedMultiValueMap<>(); 
-			map.add("frId", frId);
-			map.add("fromDate", "" + fDate);
-			map.add("toDate", "" + tDate);
-			map.add("typeId", 2); 
-			MonthWiseReportList grn = restTemplate
-					.postForObject(Constant.URL + "/showMonthWiseReportByTypeId", map, MonthWiseReportList.class);
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
 
-			expoExcel.setRowData(rowData);
-			exportToExcelList.add(expoExcel);
-			
-			for (int i = 0; i < purchase.getMonthWiseReportList().size(); i++) {
-				
-				for (int j = 0; j < grn.getMonthWiseReportList().size(); j++) {
-					
-					if(purchase.getMonthWiseReportList().get(i).getMonth().equals(grn.getMonthWiseReportList().get(j).getMonth())) {
-						
-						expoExcel = new ExportToExcel();
-						rowData = new ArrayList<String>();
- 
-						rowData.add("" + (i + 1));
-						rowData.add("" + purchase.getMonthWiseReportList().get(i).getMonth()); 
-						rowData.add("" + frName);
-						rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getTaxableAmt()));
-						rowData.add("" + roundUp(grn.getMonthWiseReportList().get(i).getTaxableAmt()));
-						rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getCgstRs()));
-						rowData.add("" + roundUp(grn.getMonthWiseReportList().get(i).getCgstRs()));
-						rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getSgstRs())); 
-						rowData.add("" + roundUp(grn.getMonthWiseReportList().get(i).getSgstRs()));
-						rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getIgstRs())); 
-						rowData.add("" + roundUp(grn.getMonthWiseReportList().get(i).getIgstRs())); 
-						rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getGrandTotal()));
-						rowData.add("" + roundUp(grn.getMonthWiseReportList().get(i).getGrandTotal())); 
-						rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getGrandTotal()-grn.getMonthWiseReportList().get(i).getGrandTotal())); 
-						
-						taxableAmt = taxableAmt + purchase.getMonthWiseReportList().get(i).getTaxableAmt();
-						cgstSum = cgstSum + purchase.getMonthWiseReportList().get(i).getCgstRs();
-						sgstSum = sgstSum + purchase.getMonthWiseReportList().get(i).getSgstRs();
-						igstSum = igstSum + purchase.getMonthWiseReportList().get(i).getIgstRs(); 
-						grandTotal = grandTotal + purchase.getMonthWiseReportList().get(i).getGrandTotal();
-						
-						taxableAmtC = taxableAmtC + grn.getMonthWiseReportList().get(i).getTaxableAmt();
-						cgstSumC = cgstSumC + grn.getMonthWiseReportList().get(i).getCgstRs();
-						sgstSumC = sgstSumC + grn.getMonthWiseReportList().get(i).getSgstRs();
-						igstSumC = igstSumC + grn.getMonthWiseReportList().get(i).getIgstRs(); 
-						grandTotalC = grandTotalC + grn.getMonthWiseReportList().get(i).getGrandTotal();
-						
-						grandTotala = grandTotala + (purchase.getMonthWiseReportList().get(i).getGrandTotal()-grn.getMonthWiseReportList().get(i).getGrandTotal());
+				rowData.add("Sr. No");
+				rowData.add("Month");
+				rowData.add("Franchisee Name");
+				rowData.add("Purchase Taxable Amount");
+				rowData.add("Gredit Note Taxable Amount");
+				rowData.add("Purchase cgst");
+				rowData.add("Gredit Note cgst");
+				rowData.add("Purchase sgst");
+				rowData.add("Gredit Note sgst");
+				rowData.add("Purchase igst");
+				rowData.add("Gredit Note igst");
+				rowData.add("Purchase Grand Amount");
+				rowData.add("Gredit Note Grand Amount");
+				rowData.add("Grand Amount");
 
-						expoExcel.setRowData(rowData);
-						exportToExcelList.add(expoExcel);
-						
-						purchase.getMonthWiseReportList().get(i).setTaxableAmt(purchase.getMonthWiseReportList().get(i).getTaxableAmt()-grn.getMonthWiseReportList().get(j).getTaxableAmt());
-						purchase.getMonthWiseReportList().get(i).setCgstRs(purchase.getMonthWiseReportList().get(i).getCgstRs()-grn.getMonthWiseReportList().get(j).getCgstRs());
-						purchase.getMonthWiseReportList().get(i).setSgstRs(purchase.getMonthWiseReportList().get(i).getSgstRs()-grn.getMonthWiseReportList().get(j).getSgstRs());
-						purchase.getMonthWiseReportList().get(i).setIgstRs(purchase.getMonthWiseReportList().get(i).getIgstRs()-grn.getMonthWiseReportList().get(j).getIgstRs());
-						purchase.getMonthWiseReportList().get(i).setGrandTotal(purchase.getMonthWiseReportList().get(i).getGrandTotal()-grn.getMonthWiseReportList().get(j).getGrandTotal());
-						
-						break;
-					}
-				}
-				
+				float taxableAmt = 0.0f;
+				float taxableAmtC = 0.0f;
+				float cgstSum = 0.0f;
+				float cgstSumC = 0.0f;
+				float sgstSum = 0.0f;
+				float sgstSumC = 0.0f;
+				float igstSum = 0.0f;
+				float igstSumC = 0.0f;
+				float grandTotala = 0.0f;
+				float grandTotal = 0.0f;
+				float grandTotalC = 0.0f;
 
-			}
-			monthWiseReportList = purchase.getMonthWiseReportList();
-			
-			expoExcel = new ExportToExcel();
-			rowData = new ArrayList<String>();
+				map = new LinkedMultiValueMap<>();
+				map.add("frId", frId);
+				map.add("fromDate", "" + fDate);
+				map.add("toDate", "" + tDate);
+				map.add("typeId", 1);
+				MonthWiseReportList purchase = restTemplate.postForObject(Constant.URL + "/showMonthWiseReportByTypeId",
+						map, MonthWiseReportList.class);
 
-			rowData.add("");
-			rowData.add("Total");
-			rowData.add(""); 
-			rowData.add("" + roundUp(taxableAmt));
-			rowData.add("" + roundUp(taxableAmtC));
-			rowData.add("" + roundUp(cgstSum));
-			rowData.add("" + roundUp(cgstSumC));
-			rowData.add("" + roundUp(sgstSum));
-			rowData.add("" + roundUp(sgstSumC));
-			rowData.add("" + roundUp(igstSum));
-			rowData.add("" + roundUp(igstSumC)); 
-			rowData.add("" + roundUp(grandTotal));
-			rowData.add("" + roundUp(grandTotalC));
-			rowData.add("" + roundUp(grandTotala));
-			
-			expoExcel.setRowData(rowData);
-			exportToExcelList.add(expoExcel);
-
-			HttpSession session = request.getSession();
-			session.setAttribute("exportExcelListNew", exportToExcelList);
-			session.setAttribute("excelNameNew", "MonthWiseTaxPurchaseReport");
-			session.setAttribute("reportNameNew", "Monthwise Purchase Report");
-			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-			session.setAttribute("mergeUpto1", "$A$1:$N$1");
-			session.setAttribute("mergeUpto2", "$A$2:$N$2");
-			
-		}else {
-			
-			map.add("frId", frId);
-			map.add("fromDate", "" + fDate);
-			map.add("toDate", "" + tDate);
-			map.add("typeId", typeId);
-			MonthWiseReportList monthWiseReportListBean = restTemplate
-					.postForObject(Constant.URL + "/showMonthWiseReportByTypeId", map, MonthWiseReportList.class); 
-
-			monthWiseReportList = monthWiseReportListBean.getMonthWiseReportList();
-			
-			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
-
-			ExportToExcel expoExcel = new ExportToExcel();
-			List<String> rowData = new ArrayList<String>();
-
-			rowData.add("Sr. No");
-			rowData.add("Month");
-			rowData.add("Franchisee Name");
-			rowData.add("Taxable Amount");
-			rowData.add("cgst"); 
-			rowData.add("sgst");
-			rowData.add("igst"); 
-			rowData.add("cess"); 
-			rowData.add("Grand Amount");
-
-			float taxableAmt = 0.0f;
-			float cgstSum = 0.0f;
-			float sgstSum = 0.0f;
-			float igstSum = 0.0f;
-			float totalSess = 0.0f;
-			float grandTotal = 0.0f;
-
-			String[] monthNames = { "0", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov",
-					"Dec" };
-
-			expoExcel.setRowData(rowData);
-			exportToExcelList.add(expoExcel);
-			for (int i = 0; i < monthWiseReportList.size(); i++) {
-				expoExcel = new ExportToExcel();
-				rowData = new ArrayList<String>(); 
-				
-				rowData.add("" + (i + 1));
-				rowData.add("" + monthWiseReportList.get(i).getMonth());
-				rowData.add("" + frName);
-				rowData.add("" + roundUp(monthWiseReportList.get(i).getTaxableAmt()));
-				rowData.add("" + roundUp(monthWiseReportList.get(i).getCgstRs()));
-				rowData.add("" + roundUp(monthWiseReportList.get(i).getSgstRs())); 
-				rowData.add("" + roundUp(monthWiseReportList.get(i).getIgstRs())); 
-				rowData.add("" + roundUp(monthWiseReportList.get(i).getSess())); 
-				rowData.add("" + roundUp(monthWiseReportList.get(i).getGrandTotal())); 
-				taxableAmt = taxableAmt + monthWiseReportList.get(i).getTaxableAmt();
-				cgstSum = cgstSum + monthWiseReportList.get(i).getCgstRs();
-				sgstSum = sgstSum + monthWiseReportList.get(i).getSgstRs();
-				igstSum = igstSum + monthWiseReportList.get(i).getIgstRs();
-				totalSess = totalSess + monthWiseReportList.get(i).getSess();
-				grandTotal = grandTotal + monthWiseReportList.get(i).getGrandTotal();
+				map = new LinkedMultiValueMap<>();
+				map.add("frId", frId);
+				map.add("fromDate", "" + fDate);
+				map.add("toDate", "" + tDate);
+				map.add("typeId", 2);
+				MonthWiseReportList grn = restTemplate.postForObject(Constant.URL + "/showMonthWiseReportByTypeId", map,
+						MonthWiseReportList.class);
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
 
+				for (int i = 0; i < purchase.getMonthWiseReportList().size(); i++) {
+
+					for (int j = 0; j < grn.getMonthWiseReportList().size(); j++) {
+
+						if (purchase.getMonthWiseReportList().get(i).getMonth()
+								.equals(grn.getMonthWiseReportList().get(j).getMonth())) {
+
+							expoExcel = new ExportToExcel();
+							rowData = new ArrayList<String>();
+
+							rowData.add("" + (i + 1));
+							rowData.add("" + purchase.getMonthWiseReportList().get(i).getMonth());
+							rowData.add("" + frName);
+							rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getTaxableAmt()));
+							rowData.add("" + roundUp(grn.getMonthWiseReportList().get(j).getTaxableAmt()));
+							rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getCgstRs()));
+							rowData.add("" + roundUp(grn.getMonthWiseReportList().get(j).getCgstRs()));
+							rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getSgstRs()));
+							rowData.add("" + roundUp(grn.getMonthWiseReportList().get(j).getSgstRs()));
+							rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getIgstRs()));
+							rowData.add("" + roundUp(grn.getMonthWiseReportList().get(j).getIgstRs()));
+							rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getGrandTotal()));
+							rowData.add("" + roundUp(grn.getMonthWiseReportList().get(j).getGrandTotal()));
+							rowData.add("" + roundUp(purchase.getMonthWiseReportList().get(i).getGrandTotal()
+									- grn.getMonthWiseReportList().get(j).getGrandTotal()));
+
+							taxableAmt = taxableAmt + purchase.getMonthWiseReportList().get(i).getTaxableAmt();
+							cgstSum = cgstSum + purchase.getMonthWiseReportList().get(i).getCgstRs();
+							sgstSum = sgstSum + purchase.getMonthWiseReportList().get(i).getSgstRs();
+							igstSum = igstSum + purchase.getMonthWiseReportList().get(i).getIgstRs();
+							grandTotal = grandTotal + purchase.getMonthWiseReportList().get(i).getGrandTotal();
+
+							taxableAmtC = taxableAmtC + grn.getMonthWiseReportList().get(j).getTaxableAmt();
+							cgstSumC = cgstSumC + grn.getMonthWiseReportList().get(j).getCgstRs();
+							sgstSumC = sgstSumC + grn.getMonthWiseReportList().get(j).getSgstRs();
+							igstSumC = igstSumC + grn.getMonthWiseReportList().get(j).getIgstRs();
+							grandTotalC = grandTotalC + grn.getMonthWiseReportList().get(j).getGrandTotal();
+
+							grandTotala = grandTotala + (purchase.getMonthWiseReportList().get(i).getGrandTotal()
+									- grn.getMonthWiseReportList().get(j).getGrandTotal());
+
+							expoExcel.setRowData(rowData);
+							exportToExcelList.add(expoExcel);
+
+							purchase.getMonthWiseReportList().get(i)
+									.setTaxableAmt(purchase.getMonthWiseReportList().get(i).getTaxableAmt()
+											- grn.getMonthWiseReportList().get(j).getTaxableAmt());
+							purchase.getMonthWiseReportList().get(i)
+									.setCgstRs(purchase.getMonthWiseReportList().get(i).getCgstRs()
+											- grn.getMonthWiseReportList().get(j).getCgstRs());
+							purchase.getMonthWiseReportList().get(i)
+									.setSgstRs(purchase.getMonthWiseReportList().get(i).getSgstRs()
+											- grn.getMonthWiseReportList().get(j).getSgstRs());
+							purchase.getMonthWiseReportList().get(i)
+									.setIgstRs(purchase.getMonthWiseReportList().get(i).getIgstRs()
+											- grn.getMonthWiseReportList().get(j).getIgstRs());
+							purchase.getMonthWiseReportList().get(i)
+									.setGrandTotal(purchase.getMonthWiseReportList().get(i).getGrandTotal()
+											- grn.getMonthWiseReportList().get(j).getGrandTotal());
+
+							break;
+						}
+					}
+
+				}
+				monthWiseReportList = purchase.getMonthWiseReportList();
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("");
+				rowData.add("Total");
+				rowData.add("");
+				rowData.add("" + roundUp(taxableAmt));
+				rowData.add("" + roundUp(taxableAmtC));
+				rowData.add("" + roundUp(cgstSum));
+				rowData.add("" + roundUp(cgstSumC));
+				rowData.add("" + roundUp(sgstSum));
+				rowData.add("" + roundUp(sgstSumC));
+				rowData.add("" + roundUp(igstSum));
+				rowData.add("" + roundUp(igstSumC));
+				rowData.add("" + roundUp(grandTotal));
+				rowData.add("" + roundUp(grandTotalC));
+				rowData.add("" + roundUp(grandTotala));
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				HttpSession session = request.getSession();
+				session.setAttribute("exportExcelListNew", exportToExcelList);
+				session.setAttribute("excelNameNew", "MonthWiseTaxPurchaseReport");
+				session.setAttribute("reportNameNew", "Monthwise Purchase Report");
+				session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+				session.setAttribute("mergeUpto1", "$A$1:$N$1");
+				session.setAttribute("mergeUpto2", "$A$2:$N$2");
+
+			} else {
+
+				map.add("frId", frId);
+				map.add("fromDate", "" + fDate);
+				map.add("toDate", "" + tDate);
+				map.add("typeId", typeId);
+				MonthWiseReportList monthWiseReportListBean = restTemplate
+						.postForObject(Constant.URL + "/showMonthWiseReportByTypeId", map, MonthWiseReportList.class);
+
+				monthWiseReportList = monthWiseReportListBean.getMonthWiseReportList();
+
+				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+
+				ExportToExcel expoExcel = new ExportToExcel();
+				List<String> rowData = new ArrayList<String>();
+
+				rowData.add("Sr. No");
+				rowData.add("Month");
+				rowData.add("Franchisee Name");
+				rowData.add("Taxable Amount");
+				rowData.add("cgst");
+				rowData.add("sgst");
+				rowData.add("igst");
+				rowData.add("cess");
+				rowData.add("Grand Amount");
+
+				float taxableAmt = 0.0f;
+				float cgstSum = 0.0f;
+				float sgstSum = 0.0f;
+				float igstSum = 0.0f;
+				float totalSess = 0.0f;
+				float grandTotal = 0.0f;
+
+				String[] monthNames = { "0", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct",
+						"Nov", "Dec" };
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+				for (int i = 0; i < monthWiseReportList.size(); i++) {
+					expoExcel = new ExportToExcel();
+					rowData = new ArrayList<String>();
+
+					rowData.add("" + (i + 1));
+					rowData.add("" + monthWiseReportList.get(i).getMonth());
+					rowData.add("" + frName);
+					rowData.add("" + roundUp(monthWiseReportList.get(i).getTaxableAmt()));
+					rowData.add("" + roundUp(monthWiseReportList.get(i).getCgstRs()));
+					rowData.add("" + roundUp(monthWiseReportList.get(i).getSgstRs()));
+					rowData.add("" + roundUp(monthWiseReportList.get(i).getIgstRs()));
+					rowData.add("" + roundUp(monthWiseReportList.get(i).getSess()));
+					rowData.add("" + roundUp(monthWiseReportList.get(i).getGrandTotal()));
+					taxableAmt = taxableAmt + monthWiseReportList.get(i).getTaxableAmt();
+					cgstSum = cgstSum + monthWiseReportList.get(i).getCgstRs();
+					sgstSum = sgstSum + monthWiseReportList.get(i).getSgstRs();
+					igstSum = igstSum + monthWiseReportList.get(i).getIgstRs();
+					totalSess = totalSess + monthWiseReportList.get(i).getSess();
+					grandTotal = grandTotal + monthWiseReportList.get(i).getGrandTotal();
+
+					expoExcel.setRowData(rowData);
+					exportToExcelList.add(expoExcel);
+
+				}
+
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("");
+				rowData.add("Total");
+				rowData.add("");
+				rowData.add("" + roundUp(taxableAmt));
+				rowData.add("" + roundUp(cgstSum));
+				rowData.add("" + roundUp(sgstSum));
+				rowData.add("" + roundUp(igstSum));
+				rowData.add("" + roundUp(totalSess));
+				rowData.add("" + roundUp(grandTotal));
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				HttpSession session = request.getSession();
+				session.setAttribute("exportExcelListNew", exportToExcelList);
+				session.setAttribute("excelNameNew", "MonthWiseTaxPurchaseReport");
+				session.setAttribute("reportNameNew", "Monthwise Purchase Report");
+				session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+				session.setAttribute("mergeUpto1", "$A$1:$I$1");
+				session.setAttribute("mergeUpto2", "$A$2:$I$2");
+
 			}
 
-			expoExcel = new ExportToExcel();
-			rowData = new ArrayList<String>();
-
-			rowData.add("");
-			rowData.add("Total");
-			rowData.add(""); 
-			rowData.add("" + roundUp(taxableAmt));
-			rowData.add("" + roundUp(cgstSum));
-			rowData.add("" + roundUp(sgstSum));
-			rowData.add("" + roundUp(igstSum));
-			rowData.add("" + roundUp(totalSess));
-			rowData.add("" + roundUp(grandTotal));
-
-			expoExcel.setRowData(rowData);
-			exportToExcelList.add(expoExcel);
-
-			HttpSession session = request.getSession();
-			session.setAttribute("exportExcelListNew", exportToExcelList);
-			session.setAttribute("excelNameNew", "MonthWiseTaxPurchaseReport");
-			session.setAttribute("reportNameNew", "Monthwise Purchase Report");
-			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-			session.setAttribute("mergeUpto1", "$A$1:$I$1");
-			session.setAttribute("mergeUpto2", "$A$2:$I$2");
-			
-		}
-		
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -3234,9 +3399,10 @@ public class ReportsController {
 		return model;
 	}
 
-	@RequestMapping(value = "pdf/showPurchaseTaxBillwiseReportPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showPurchaseTaxBillwiseReportPdf/{fromDate}/{toDate}/{frId}/{typeId}", method = RequestMethod.GET)
 	public ModelAndView showPurchaseTaxBillwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, @PathVariable int typeId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/billWiseTaxReportPdf");
 		try {
@@ -3247,11 +3413,12 @@ public class ReportsController {
 			map.add("frId", frId);
 			map.add("fromDate", Main.formatDate(fromDate));
 			map.add("toDate", Main.formatDate(toDate));
+			map.add("typeId", typeId);
 
 			billWiseTaxReport = new ArrayList<BillWiseTaxReport>();
 
 			BillWiseTaxReportList billWiseTaxReportList = restTemplate
-					.postForObject(Constant.URL + "/showBillWiseTaxReport", map, BillWiseTaxReportList.class);
+					.postForObject(Constant.URL + "/showBillWiseTaxReportByTypeId", map, BillWiseTaxReportList.class);
 
 			billWiseTaxReport = billWiseTaxReportList.getBillWiseTaxReportList();
 
@@ -3266,7 +3433,8 @@ public class ReportsController {
 
 	@RequestMapping(value = "pdf/showPurchaseMonthwiseReportPdf/{fromDate}/{toDate}/{frId}/{typeId}", method = RequestMethod.GET)
 	public ModelAndView showPurchaseMonthwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId,@PathVariable int typeId, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, @PathVariable int typeId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/monthWisePurchasePdf");
 		try {
@@ -3290,7 +3458,7 @@ public class ReportsController {
 			map.add("fromDate", "" + fDate);
 			map.add("toDate", "" + tDate);
 			map.add("typeId", "" + typeId);
-			
+
 			monthWiseReportList = new ArrayList<MonthWiseReport>();
 
 			MonthWiseReportList monthWiseReportListBean = restTemplate
@@ -4573,7 +4741,7 @@ public class ReportsController {
 		String appPath = context.getRealPath("");
 		String filename = "ordermemo221.pdf";
 		// String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/report.pdf";
-		String filePath =Constant.CRN_REPORT_PATH;// "/opt/apache-tomcat-8.5.37/webapps/uploadspune/crn.pdf";
+		String filePath = Constant.CRN_REPORT_PATH;// "/opt/apache-tomcat-8.5.37/webapps/uploadspune/crn.pdf";
 		// String filePath = "/opt/apache-tomcat-8.5.6/webapps/uploads/report.pdf";
 		// String filePath="/home/ats-12/pdf/ordermemo221.pdf";
 		// construct the complete absolute path of the file
@@ -4823,7 +4991,7 @@ public class ReportsController {
 				rowData.add("" + crNoteRegItemListDone.get(i).getFrCode());
 				rowData.add("" + crNoteRegItemListDone.get(i).getCrnDate());
 				rowData.add(" ");
-				rowData.add(""+Constant.STATE);
+				rowData.add("" + Constant.STATE);
 				rowData.add("" + roundUp(crnTotal));
 				rowData.add(" ");
 				rowData.add(

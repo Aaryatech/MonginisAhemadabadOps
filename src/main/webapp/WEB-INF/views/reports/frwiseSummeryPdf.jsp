@@ -83,9 +83,9 @@ th {
 				<tr>
 
 
-					<td width="0"><c:out value="${count.index+1}" /></td>
-					<td width="200"><c:out value="${report.billDate}" /></td>
-					<td width="100"><c:out value="${report.type}" /></td>
+					<td width="5%"><c:out value="${count.index+1}" /></td>
+					<td width="10%"><c:out value="${report.billDate}" /></td>
+					<td width="10%"><c:out value="${report.type}" /></td>
 					<td width="100"><c:out value="${report.invoiceNo}" /></td>
 					<td width="100"><c:out value="${report.orderRef}" /></td>
 

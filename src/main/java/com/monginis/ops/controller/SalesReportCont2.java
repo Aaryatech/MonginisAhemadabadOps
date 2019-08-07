@@ -54,12 +54,14 @@ public class SalesReportCont2 {
 
 		try {
 			ZoneId z = ZoneId.of("Asia/Calcutta");
-
+			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
+			
 			LocalDate date = LocalDate.now(z);
 			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d-MM-uuuu");
 			todaysDate = date.format(formatters);
 
 			model.addObject("todaysDate", todaysDate);
+			model.addObject("frId", frDetails.getFrId());
 
 		} catch (Exception e) {
 
@@ -218,8 +220,8 @@ public class SalesReportCont2 {
 		return saleList;
 	}
 
-	@RequestMapping(value = "pdf/showSaleReportBySubCatPdf/{fromDate}/{toDate}  ", method = RequestMethod.GET)
-	public ModelAndView showSaleReportBySubCatPdf(@PathVariable String fromDate, @PathVariable String toDate,
+	@RequestMapping(value = "pdf/showSaleReportBySubCatPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView showSaleReportBySubCatPdf(@PathVariable String fromDate, @PathVariable String toDate,@PathVariable int frId,
 			HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView model = new ModelAndView("reports/saleRepBySubCatOnlyPdf");
 
@@ -235,7 +237,7 @@ public class SalesReportCont2 {
 
 			map.add("fromDate", fromDate);
 			map.add("toDate", toDate);
-			map.add("frId", frDetails.getFrId());
+			map.add("frId", frId);
 
 			ParameterizedTypeReference<List<SubCatReport>> typeRef = new ParameterizedTypeReference<List<SubCatReport>>() {
 			};
