@@ -21,6 +21,7 @@ import java.time.YearMonth;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
@@ -80,6 +81,7 @@ import com.monginis.ops.model.GetRepFrItemwiseSellResponse;
 import com.monginis.ops.model.GetRepMenuwiseSellResponse;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
+import com.monginis.ops.model.Item;
 import com.monginis.ops.model.ItemWiseDetail;
 import com.monginis.ops.model.ItemWiseDetailList;
 import com.monginis.ops.model.ItemWiseReport;
@@ -1168,17 +1170,21 @@ public class ReportsController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			int frId = frDetails.getFrId();
-			System.out.println("frId" + frId);
+			
 
+			String values = request.getParameter("values");
+			System.out.println("values" + values);
+			
 			map.add("frId", frId);
 			map.add("fromDate", Main.formatDate(fromDate));
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
-
+			map.add("itemIds", values);
+			
 			itemWiseDetailReportList = new ArrayList<ItemWiseDetail>();
 
 			ItemWiseDetailList itemWiseDetailList = restTemplate
-					.postForObject(Constant.URL + "/showItemWiseDetailsReport", map, ItemWiseDetailList.class);
+					.postForObject(Constant.URL + "/showItemWiseDetailsReportByCatId", map, ItemWiseDetailList.class);
 
 			itemWiseDetailReportList = itemWiseDetailList.getItemWiseDetailList();
 
@@ -1268,6 +1274,31 @@ public class ReportsController {
 		session.setAttribute("mergeUpto2", "$A$2:$L$2");
 
 		return itemWiseDetailReportList;
+
+	}
+	
+	@RequestMapping(value = "/getItemListBycatId", method = RequestMethod.GET)
+	public @ResponseBody List<Item> getItemListBycatId(HttpServletRequest request,
+			HttpServletResponse response) {
+		 
+		ArrayList<Item> itemList = new ArrayList<Item>();
+		
+		try {
+			
+			int  catId = Integer.parseInt(request.getParameter("catId"));
+			RestTemplate restTemplate = new RestTemplate();
+			
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>(); 
+			map.add("itemGrp1", catId); 
+			Item[] item = restTemplate.postForObject(Constant.URL + "getItemsByCatId", map, Item[].class);
+			itemList = new ArrayList<Item>(Arrays.asList(item));
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+
+		return itemList;
 
 	}
 
@@ -3557,9 +3588,9 @@ public class ReportsController {
 		return model;
 	}
 
-	@RequestMapping(value = "pdf/showPurchaseItemwiseDetailPdf/{fromDate}/{toDate}/{frId}/{catId}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showPurchaseItemwiseDetailPdf/{fromDate}/{toDate}/{frId}/{catId}/{values}", method = RequestMethod.GET)
 	public ModelAndView showPurchaseItemwiseDetailpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId, @PathVariable int catId, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, @PathVariable int catId,@PathVariable String values, HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseDetailPdf");
 		try {
@@ -3571,11 +3602,12 @@ public class ReportsController {
 			map.add("fromDate", Main.formatDate(fromDate));
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
-
+			map.add("itemIds", values);
+			
 			itemWiseDetailReportList = new ArrayList<ItemWiseDetail>();
 
 			ItemWiseDetailList itemWiseDetailList = restTemplate
-					.postForObject(Constant.URL + "/showItemWiseDetailsReport", map, ItemWiseDetailList.class);
+					.postForObject(Constant.URL + "/showItemWiseDetailsReportByCatId", map, ItemWiseDetailList.class);
 
 			itemWiseDetailReportList = itemWiseDetailList.getItemWiseDetailList();
 

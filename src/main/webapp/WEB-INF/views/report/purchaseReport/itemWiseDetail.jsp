@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.monginis.ops.constant.Constant" %>
+<%@ page import="com.monginis.ops.constant.Constant"%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <style>
@@ -57,6 +57,8 @@ jQuery(document).ready(function(){
 <!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
 <script>
 	$(function() {
 		$("#todatepicker").datepicker({
@@ -73,6 +75,7 @@ jQuery(document).ready(function(){
 
 
 <c:url var="getItemWiseDetailReport" value="/findItemWiseDetailReport" />
+<c:url var="getItemListBycatId" value="/getItemListBycatId" />
 
 <div class="sidebarOuter"></div>
 
@@ -118,14 +121,14 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 
-					<div class="col-md-2">
-						<div class="pull-left">
-							<b>Group</b>
-						</div>
+
+					<div class="col-md-1 pull-left">
+						<h4 class="pull-left">Group:-</h4>
 					</div>
-					<div class="col-md-5">
+
+					<div class="col-md-3">
 						<select name="catId" id="catId" class="form-control chosen"
-							required>
+							required onchange="getItemList()">
 							<option value="" selected>Select Group</option>
 
 							<c:forEach items="${catList}" var="catList">
@@ -133,29 +136,43 @@ jQuery(document).ready(function(){
 							</c:forEach>
 						</select>
 					</div>
+
+					<div class="col-md-1 pull-left">
+						<h4 class="pull-left">Select Item:-</h4>
+					</div>
+					<div class="col-md-3">
+						<select name="itemId" id="itemId"
+							data-placeholder="Choose Menus..." class="chosen-select"
+							style="text-align: left;" required multiple="multiple">
+
+						</select>
+					</div>
 				</div>
 
-				</br>
+				<br>
 
 
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<input type="hidden" name="factoryName" id="factoryName" value="${Constant.FACTORYNAME}">
+					<input type="hidden" name="factoryName" id="factoryName"
+						value="${Constant.FACTORYNAME}">
 
-					<div class="col-md-2 from_date">
+					<div class="col-md-1 from_date">
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
 					<div class="col-md-3 ">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal" autocomplete="off"
-							placeholder="DD-MM-YYYY" name="fromDate" type="text">
+						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="DD-MM-YYYY" name="fromDate"
+							type="text">
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<h4 class="pull-left">To Date:-</h4>
 					</div>
 					<div class="col-md-3 ">
-						<input id="todatepicker" class="texboxitemcode texboxcal" autocomplete="off"
-							placeholder="DD-MM-YYYY" name="toDate" type="text">
+						<input id="todatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="DD-MM-YYYY" name="toDate"
+							type="text">
 					</div>
 					<div class="col-md-2">
 						<button class="btn search_btn pull-left"
@@ -167,7 +184,7 @@ jQuery(document).ready(function(){
 					</div>
 
 				</div>
-
+				<br>
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
@@ -239,9 +256,41 @@ jQuery(document).ready(function(){
 
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
 <!--easyTabs-->
 
+<script>
+	function getItemList() {
 
+		var catId = document.getElementById("catId").value;
+
+		$.getJSON('${getItemListBycatId}', {
+			catId : catId,
+			ajax : 'true'
+		}, function(data) {
+
+			var len = data.length;
+
+			$('#itemId').find('option').remove().end()
+			$("#itemId").append(
+					$("<option align=left; selected></option>")
+							.attr("value", 0).text("ALL"));
+			for (var i = 0; i < len; i++) {
+
+				$("#itemId").append(
+						$("<option align=left;></option>").attr("value",
+								data[i].id).text(data[i].itemName));
+			}
+
+			$('.chosen-select').trigger('chosen:updated');
+
+		});
+
+	}
+</script>
 <script type="text/javascript">
 	function itemWiseTaxReport() {
 		$('#table_grid td').remove();
@@ -254,15 +303,36 @@ jQuery(document).ready(function(){
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var catId = document.getElementById("catId").value;
-			var factoryName= document.getElementById("factoryName").value;
+			var factoryName = document.getElementById("factoryName").value;
+			var fld = document.getElementById('itemId');
+			var values = -1;
+			for (var i = 0; i < fld.options.length; i++) {
+				if (fld.options[i].selected) {
+					//values.push(fld.options[i].value);
+					values = values + ',' + fld.options[i].value;
 
-			$.getJSON(
+					if (fld.options[i].value == 0) {
+
+						values = 0;
+						break;
+					}
+
+				}
+			}
+			if (values == -1) {
+				values = 0;
+			}
+			//alert(values);
+
+			$
+					.getJSON(
 							'${getItemWiseDetailReport}',
 							{
 
 								fromDate : fromDate,
 								toDate : toDate,
 								catId : catId,
+								values : values,
 								ajax : 'true',
 
 							},
@@ -543,6 +613,27 @@ jQuery(document).ready(function(){
 <script type="text/javascript">
 	function genPdf() {
 		var isValid = validate();
+
+		var fld = document.getElementById('itemId');
+		var values = -1;
+		for (var i = 0; i < fld.options.length; i++) {
+			if (fld.options[i].selected) {
+				//values.push(fld.options[i].value);
+				values = values + ',' + fld.options[i].value;
+
+				if (fld.options[i].value == 0) {
+
+					values = 0;
+					break;
+				}
+
+			}
+		}
+
+		if (values == -1) {
+			values = 0;
+		}
+
 		if (isValid == true) {
 			var catId = document.getElementById("catId").value;
 			var fromDate = document.getElementById("fromdatepicker").value;
@@ -556,7 +647,7 @@ jQuery(document).ready(function(){
 							+ '/'
 							+ frId
 							+ '/'
-							+ catId);
+							+ catId + '/' + values);
 		}
 	}
 </script>
