@@ -52,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 import org.zefer.pd4ml.PD4PageMark;
-
+ 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -90,6 +90,8 @@ import com.monginis.ops.model.MCategory;
 import com.monginis.ops.model.Main;
 import com.monginis.ops.model.MonthWiseReport;
 import com.monginis.ops.model.MonthWiseReportList;
+import com.monginis.ops.model.SpCakeResponse;
+import com.monginis.ops.model.SpecialCake;
 import com.monginis.ops.model.grngvn.GrnGvnHeader;
 import com.monginis.ops.model.reportv2.CrNoteRegItem;
 import com.monginis.ops.model.reportv2.CrNoteRegSp;
@@ -1301,6 +1303,27 @@ public class ReportsController {
 		return itemList;
 
 	}
+	
+	@RequestMapping(value = "/getSpcakeList", method = RequestMethod.GET)
+	public @ResponseBody List<SpecialCake> getSpcakeList(HttpServletRequest request,
+			HttpServletResponse response) {
+		 
+		List<SpecialCake>itemList = new ArrayList<SpecialCake>();
+		
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+			SpCakeResponse spCakeResponse = restTemplate
+					.getForObject(Constant.URL + "showSpecialCakeListOrderBySpCode", SpCakeResponse.class); 
+			itemList=spCakeResponse.getSpecialCake();
+			
+		}catch(Exception e) {
+			
+			e.printStackTrace();
+		}
+
+		return itemList;
+
+	}
 
 	// ---------------------------------------------------------------------------------------------------------------------
 	// ----------------------------------Item Wise Detail
@@ -1324,7 +1347,8 @@ public class ReportsController {
 
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-
+			int typeId = Integer.parseInt(request.getParameter("typeId"));
+			
 			RestTemplate restTemplate = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -1335,10 +1359,10 @@ public class ReportsController {
 			map.add("fromDate", Main.formatDate(fromDate));
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
-
+			map.add("typeId", typeId);
 			itemWiseReportList = new ArrayList<ItemWiseReport>();
 
-			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReport", map,
+			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReportByTypeId", map,
 					ItemWiseReportList.class);
 
 			itemWiseReportList = itemWiseList.getItemWiseReportList();
@@ -1567,6 +1591,7 @@ public class ReportsController {
 							purchase.getBillWiseTaxReportList().get(i)
 									.setGrandTotal(purchase.getBillWiseTaxReportList().get(i).getGrandTotal()
 											- grn.getBillWiseTaxReportList().get(j).getGrandTotal());
+							grn.getBillWiseTaxReportList().remove(j);
 							break;
 						}
 
@@ -1574,6 +1599,22 @@ public class ReportsController {
 
 				}
 
+				for (int j = 0; j < grn.getBillWiseTaxReportList().size(); j++) {
+
+					purchase.getBillWiseTaxReportList().add(grn.getBillWiseTaxReportList().get(j)); 
+				}
+				
+				
+				Collections.sort(purchase.getBillWiseTaxReportList(), new Comparator<BillWiseTaxReport>() {
+					public int compare(BillWiseTaxReport c1, BillWiseTaxReport c2) {
+						if (c1.getTaxRate() > c2.getTaxRate())
+							return 1;
+						if (c1.getTaxRate() < c2.getTaxRate())
+							return -1;
+						return 0;
+					}
+				});
+				
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
 
@@ -3553,9 +3594,9 @@ public class ReportsController {
 		return model;
 	}
 
-	@RequestMapping(value = "pdf/showPurchaseItemwiseReportpPdf/{fromDate}/{toDate}/{frId}/{catId}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showPurchaseItemwiseReportpPdf/{fromDate}/{toDate}/{frId}/{catId}/{typeId}", method = RequestMethod.GET)
 	public ModelAndView showPurchaseItemwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId, @PathVariable int catId, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, @PathVariable int catId, @PathVariable int typeId , HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseReportPdf");
 		RestTemplate restTemplate = new RestTemplate();
@@ -3566,10 +3607,10 @@ public class ReportsController {
 			map.add("fromDate", Main.formatDate(fromDate));
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
-
+			map.add("typeId", typeId);
 			itemWiseReportList = new ArrayList<ItemWiseReport>();
 
-			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReport", map,
+			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReportByTypeId", map,
 					ItemWiseReportList.class);
 
 			itemWiseReportList = itemWiseList.getItemWiseReportList();

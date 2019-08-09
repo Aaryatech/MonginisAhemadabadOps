@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page import="com.monginis.ops.constant.Constant" %>
+<%@ page import="com.monginis.ops.constant.Constant"%>
 
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 <style>
@@ -76,10 +76,11 @@ table, th, td {
 
 				<div class="row">
 
-					<div class="col-md-2">
-						<div class="pull-left">Group</div>
+
+					<div class="col-md-1 from_date">
+						<h4 class="pull-left">Group:-</h4>
 					</div>
-					<div class="col-md-5">
+					<div class="col-md-3">
 						<select name="catId" id="catId" class="form-control chosen"
 							required>
 							<option value="" selected>Select Group</option>
@@ -89,29 +90,44 @@ table, th, td {
 							</c:forEach>
 						</select>
 					</div>
+					<div class="col-md-1 from_date">
+						<h4 class="pull-left">Select:-</h4>
+					</div>
+
+					<div class="col-md-3 ">
+						<select id="typeId" name="typeId" class="form-control">
+							<option value="">Select</option>
+							<option value="1">Purchase</option>
+							<option value="2">GRN</option>
+							<option value="3">Cumulative</option>
+						</select>
+					</div>
 				</div>
 
-				</br>
+				<br>
 
 
 
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
-					<input type="hidden" name="factoryName" id="factoryName" value="${Constant.FACTORYNAME}">
+					<input type="hidden" name="factoryName" id="factoryName"
+						value="${Constant.FACTORYNAME}">
 
-					<div class="col-md-2 from_date">
+					<div class="col-md-1 from_date">
 						<h4 class="pull-left">From Date:-</h4>
 					</div>
 					<div class="col-md-3 ">
-						<input id="fromdatepicker" class="texboxitemcode texboxcal" autocomplete="off"
-							placeholder="DD-MM-YYYY" name="fromDate" type="text">
+						<input id="fromdatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="DD-MM-YYYY" name="fromDate"
+							type="text">
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<h4 class="pull-left">To Date:-</h4>
 					</div>
 					<div class="col-md-3 ">
-						<input id="todatepicker" class="texboxitemcode texboxcal" autocomplete="off"
-							placeholder="DD-MM-YYYY" name="toDate" type="text">
+						<input id="todatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="DD-MM-YYYY" name="toDate"
+							type="text">
 					</div>
 					<div class="col-md-2">
 						<button class="btn search_btn pull-left"
@@ -131,7 +147,31 @@ table, th, td {
 
 
 						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"></div>
+							<div id="faux-table" class="faux-table" aria="hidden">
+								<div class="table-wrap">
+									<table id="table_grid" class="main-table">
+										<thead>
+											<tr class="bgpink">
+
+
+
+												<th class="col-md-1" style="text-align: center;">Sr.No.</th>
+												<th class="col-md-1" style="text-align: center;">Party
+													Name</th>
+												<th class="col-md-2" style="text-align: center;">Item
+													Name</th>
+												<th class="col-md-1" style="text-align: center;">QTY</th>
+												<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
+												<th class="col-md-1" style="text-align: center;">Amount</th>
+
+											</tr>
+										</thead>
+										<tbody>
+										</tbody>
+									</table>
+
+								</div>
+							</div>
 							<div class="table-wrap">
 								<table id="table_grid" class="main-table">
 									<thead>
@@ -144,8 +184,8 @@ table, th, td {
 												Name</th>
 											<th class="col-md-2" style="text-align: center;">Item
 												Name</th>
-											<th class="col-md-1" style="text-align: center;">Qty</th>
-											<th class="col-md-1" style="text-align: center;">Rate</th>
+											<th class="col-md-1" style="text-align: center;">QTY</th>
+											<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Amount</th>
 
 										</tr>
@@ -203,7 +243,8 @@ table, th, td {
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var catId = document.getElementById("catId").value;
-			var factoryName= document.getElementById("factoryName").value;
+			var factoryName = document.getElementById("factoryName").value;
+			var typeId = document.getElementById("typeId").value;
 
 			$
 					.getJSON(
@@ -213,6 +254,7 @@ table, th, td {
 								fromDate : fromDate,
 								toDate : toDate,
 								catId : catId,
+								typeId : typeId,
 								ajax : 'true',
 
 							},
@@ -240,7 +282,7 @@ table, th, td {
 													document
 															.getElementById('range').style.display = 'block';
 
-													var partyname=factoryName;
+													var partyname = factoryName;
 
 													var tr = $('<tr></tr>');
 
@@ -269,12 +311,12 @@ table, th, td {
 																			(itemWiseTaxData.qty)
 																					.toFixed(2)));
 
-													tr
+													/* tr
 															.append($(
 																	'<td class="col-md-1"style="text-align:right;"></td>')
 																	.html(
 																			(itemWiseTaxData.rate)
-																					.toFixed(2)));
+																					.toFixed(2))); */
 
 													tr
 															.append($(
@@ -310,8 +352,8 @@ table, th, td {
 												'<td  class="col-md-1" style="text-align:right;"></td>')
 												.html(qtyTotal.toFixed(2)));
 
-								tr.append($('<td  class="col-md-1"></td>')
-										.html(""));
+								/* tr.append($('<td  class="col-md-1"></td>')
+										.html("")); */
 
 								tr
 										.append($(
@@ -324,103 +366,13 @@ table, th, td {
 					);
 		}
 	}
-	/* function(data) {
-
-		//$('#table_grid td').remove();
-		
-		
-
-		if (data == "") {
-			alert("No records found !!");
-
-		}
-		alert(data);
-
-		
-		$.each(data,function(key, itemWiseTaxData) {
-
-							var index = key + 1;
-							
-	                        var partyname="GFPL";
-	                        
-							var tr = "<tr>";
-
-							var itemName = "<td>&nbsp;&nbsp;&nbsp;"
-								+ itemWiseTaxData.itemName
-								+ "</td>";
-
-								var partyName = "<td>&nbsp;&nbsp;&nbsp;"
-									+ partyname
-									+ "</td>";
-									
-							   var billNo = "<td>&nbsp;&nbsp;&nbsp;"
-									+ itemWiseTaxData.billNo
-									+ "</td>";
-									
-										var billDate = "<td>&nbsp;&nbsp;&nbsp;"
-											+ itemWiseTaxData.billDate
-											+ "</td>";
-
-											var qty = "<td>&nbsp;&nbsp;&nbsp;"
-												+ itemWiseTaxData.qty
-												+ "</td>";
-												
-												var rate = "<td>&nbsp;&nbsp;&nbsp;"
-													+ itemWiseTaxData.rate
-													+ "</td>";
-
-												
-											var grandTotal = "<td>&nbsp;&nbsp;&nbsp;"
-												+ itemWiseTaxData.total
-												+ "</td>";
-
-												var grnType = "<td>&nbsp;&nbsp;&nbsp;"
-													+ itemWiseTaxData.grnType
-													+ "</td>";
-													
-													
-
-							var trclosed = "</tr>";
-
-							$('#table_grid tbody')
-									.append(tr);
-							$('#table_grid tbody')
-									.append(itemName);
-							$('#table_grid tbody')
-							.append(partyName);
-							$('#table_grid tbody')
-							.append(billNo);
-							$('#table_grid tbody')
-							.append(billDate);
-							$('#table_grid tbody')
-							.append(qty);
-							$('#table_grid tbody')
-							.append(rate);
-							
-							$('#table_grid tbody')
-							.append(grandTotal);
-							
-							$('#table_grid tbody')
-							.append(grnType);
-							
-							$('#table_grid tbody')
-							.append(trclosed);
-							
-							
-
-						})
-							
-
-	});
-
-	}
-	} */
 </script>
 <script type="text/javascript">
 	function validate() {
 
 		var fromDate = $("#fromdatepicker").val();
 		var toDate = $("#todatepicker").val();
+		var typeId = $("#typeId").val();
 
 		var isValid = true;
 
@@ -432,6 +384,10 @@ table, th, td {
 
 			isValid = false;
 			alert("Please select To Date");
+		} else if (typeId == "") {
+
+			isValid = false;
+			alert("Please select ");
 		}
 		return isValid;
 
@@ -461,7 +417,7 @@ table, th, td {
 		var isValid = validate();
 		if (isValid == true) {
 			var catId = document.getElementById("catId").value;
-
+			var typeId = document.getElementById("typeId").value;
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var frId = document.getElementById("frId").value;
@@ -473,7 +429,7 @@ table, th, td {
 							+ '/'
 							+ frId
 							+ '/'
-							+ catId + '/');
+							+ catId + '/' + typeId);
 		}
 	}
 </script>

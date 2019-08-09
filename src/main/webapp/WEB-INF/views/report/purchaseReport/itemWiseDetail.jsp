@@ -76,7 +76,7 @@ jQuery(document).ready(function(){
 
 <c:url var="getItemWiseDetailReport" value="/findItemWiseDetailReport" />
 <c:url var="getItemListBycatId" value="/getItemListBycatId" />
-
+<c:url var="getSpcakeList" value="/getSpcakeList" />
 <div class="sidebarOuter"></div>
 
 <div class="wrapper">
@@ -132,7 +132,7 @@ jQuery(document).ready(function(){
 							<option value="" selected>Select Group</option>
 
 							<c:forEach items="${catList}" var="catList">
-								<option value="${catList.catId}" selected>${catList.catName}</option>
+								<option value="${catList.catId}">${catList.catName}</option>
 							</c:forEach>
 						</select>
 					</div>
@@ -208,6 +208,8 @@ jQuery(document).ready(function(){
 												Name</th>
 											<th class="col-md-2" style="text-align: center;">Item
 												Name</th>
+											<th class="col-md-1" style="text-align: center;">Expiry
+												Date</th>
 											<th class="col-md-1" style="text-align: center;">Qty</th>
 											<th class="col-md-1" style="text-align: center;">Rate</th>
 											<th class="col-md-1" style="text-align: center;">Amount</th>
@@ -267,27 +269,55 @@ jQuery(document).ready(function(){
 
 		var catId = document.getElementById("catId").value;
 
-		$.getJSON('${getItemListBycatId}', {
-			catId : catId,
-			ajax : 'true'
-		}, function(data) {
+		if (catId == 5) {
 
-			var len = data.length;
+			$.getJSON('${getSpcakeList}', {
 
-			$('#itemId').find('option').remove().end()
-			$("#itemId").append(
-					$("<option align=left; selected></option>")
-							.attr("value", 0).text("ALL"));
-			for (var i = 0; i < len; i++) {
+				ajax : 'true'
+			}, function(data) {
 
+				var len = data.length;
+
+				$('#itemId').find('option').remove().end()
 				$("#itemId").append(
-						$("<option align=left;></option>").attr("value",
-								data[i].id).text(data[i].itemName));
-			}
+						$("<option align=left; selected></option>").attr(
+								"value", 0).text("ALL"));
+				for (var i = 0; i < len; i++) {
 
-			$('.chosen-select').trigger('chosen:updated');
+					$("#itemId").append(
+							$("<option align=left;></option>").attr("value",
+									data[i].spId).text(data[i].spName));
+				}
 
-		});
+				$('.chosen-select').trigger('chosen:updated');
+
+			});
+
+		} else {
+
+			$.getJSON('${getItemListBycatId}', {
+				catId : catId,
+				ajax : 'true'
+			}, function(data) {
+
+				var len = data.length;
+
+				$('#itemId').find('option').remove().end()
+				$("#itemId").append(
+						$("<option align=left; selected></option>").attr(
+								"value", 0).text("ALL"));
+				for (var i = 0; i < len; i++) {
+
+					$("#itemId").append(
+							$("<option align=left;></option>").attr("value",
+									data[i].id).text(data[i].itemName));
+				}
+
+				$('.chosen-select').trigger('chosen:updated');
+
+			});
+
+		}
 
 	}
 </script>
@@ -405,6 +435,11 @@ jQuery(document).ready(function(){
 																	'<td  class="col-md-2"></td>')
 																	.html(
 																			itemWiseTaxData.itemName));
+													tr
+															.append($(
+																	'<td  class="col-md-1"></td>')
+																	.html(
+																			itemWiseTaxData.expiryDate));
 
 													tr
 															.append($(
@@ -449,6 +484,8 @@ jQuery(document).ready(function(){
 										.append($(
 												'<td class="col-md-1" style="font-weight:bold;"></td>')
 												.html("Total"));
+								tr.append($('<td  class="col-md-1"></td>')
+										.html(""));
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
 								tr.append($('<td  class="col-md-1"></td>')

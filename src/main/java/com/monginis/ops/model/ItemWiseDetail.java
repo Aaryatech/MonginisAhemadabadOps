@@ -1,5 +1,7 @@
 package com.monginis.ops.model;
 
+import java.util.Date;
+
 public class ItemWiseDetail {
 
     private String billNo;
@@ -20,6 +22,7 @@ public class ItemWiseDetail {
 
 	private String billDate;
 	
+	private String expiryDate;
 	
 	public int getGrnType() {
 		return grnType;
@@ -96,11 +99,19 @@ public class ItemWiseDetail {
 		this.itemName = itemName;
 	}
 
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
 	@Override
 	public String toString() {
 		return "ItemWiseDetail [billNo=" + billNo + ", itemId=" + itemId + ", billDetailNo=" + billDetailNo + ", rate="
 				+ rate + ", qty=" + qty + ", grnType=" + grnType + ", total=" + total + ", itemName=" + itemName
-				+ ", billDate=" + billDate + "]";
+				+ ", billDate=" + billDate + ", expiryDate=" + expiryDate + "]";
 	}
 
 	
