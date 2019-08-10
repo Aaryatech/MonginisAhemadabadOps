@@ -675,8 +675,9 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("itemList", items);
+			map.add("frId", frDetails.getFrId());
 
-			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameById", map,
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", map,
 					ItemResponse.class);
 
 			newItemsList = itemsList.getItemList();

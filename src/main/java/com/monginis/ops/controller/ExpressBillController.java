@@ -227,8 +227,8 @@ public class ExpressBillController {
 			MultiValueMap<String, Object> mvm = new LinkedMultiValueMap<String, Object>();
 
 			mvm.add("itemList", items);
-
-			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameById", mvm,
+			mvm.add("frId", frDetails.getFrId());
+			ItemResponse itemsList = restTemplate.postForObject(Constant.URL + "/getItemsNameByIdWithOtherItem", mvm,
 					ItemResponse.class);
 
 			List<Item> newItemsList = itemsList.getItemList();

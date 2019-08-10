@@ -714,13 +714,20 @@ public class OtherItemsController {
 			stockHeader = new ArrayList<>(Arrays.asList(stockHeadObj));
 			System.out.println("Stock Header List:" + stockHeader);
 
-			map = new LinkedMultiValueMap<>();
-			map.add("frId", frDetails.getFrId());
-			map.add("catId", 7);
+		//	map = new LinkedMultiValueMap<>();comment  on 6 aug 19 - mahesh
+		//	map.add("frId", frDetails.getFrId());
+		//	map.add("catId", 7);
 
-			ItemResponse itemsList = rest.postForObject(Constant.URL + "/getOtherItemsForFr", map, ItemResponse.class);
+		//	ItemResponse itemsList = rest.postForObject(Constant.URL + "/getOtherItemsForFr", map, ItemResponse.class);
 
-			List<Item> otherItmList = itemsList.getItemList();
+		//	List<Item> otherItmList = itemsList.getItemList();
+			map = new LinkedMultiValueMap<String, Object>();
+			//	map.add("itemGrp1", 7); 
+			map.add("frId", frDetails.getFrId()); 
+			Item[] items  = rest.postForObject(Constant.URL + "/getOtherItemsByCatIdAndFrId", map,
+						Item[].class);  
+			
+			ArrayList<Item> otherItmList =new ArrayList<>(Arrays.asList(items));
 
 			int flag = 0;
 
@@ -774,7 +781,7 @@ public class OtherItemsController {
 
 				}
 			}
-
+           mav.addObject("getotherStockList", getotherStockList);
 		} catch (Exception e) {
 			System.out.println(e);
 			e.printStackTrace();

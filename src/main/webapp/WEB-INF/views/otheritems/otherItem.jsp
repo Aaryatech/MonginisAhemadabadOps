@@ -59,7 +59,8 @@
 						<div class="col1title" align="left"><h3>Add Other Item</h3></div>
 						</c:otherwise>
 						</c:choose>
-								
+							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
+							<input id="id" class="form-control"	  name="id"  value="${item.id}" type="hidden" >	
 								<div class="col1title" align="right"> 
 						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn btn-info">
 							</a>
@@ -72,8 +73,8 @@
 						</div>
 						<div class="col-md-3">
 							<input id="itemCode" class="form-control"
-								placeholder="Item Code" name="itemCode" type="text" value="${item.itemId}" required>
-								<input id="itemId" class="form-control"	  name="itemId" value="${item.id}" type="hidden" >
+								placeholder="Item Code" name="itemCode" autocomplete="off"  type="text" value="${code}" required>
+								
 						</div>
 						<div class="col-md-1">
 							 
@@ -83,7 +84,7 @@
 						</div>
 						<div class="col-md-3">
 							<input id="itemName" class="form-control"
-								placeholder="Item Name" name="itemName" type="text" value="${item.itemName}" required>
+								placeholder="Item Name" name="itemName" autocomplete="off"  type="text" value="${item.itemName}" required>
 						</div>
 					 
 					</div>
@@ -93,10 +94,10 @@
 							<div class="col1title" align="left">UOM*: </div>
 						</div>
 						<div class="col-md-3">
-						    <input type="text" name="selectedUom" id="selectedUom">
+						    <input type="hidden" name="selectedUom" id="selectedUom">
 						
-							<select name="itemUom" id="itemUom" class="form-control"placeholder="Item UOM" onchange="javascript:getSelectedLabel(this);"
-												 data-rule-required="true" >
+							<select name="itemUom" required id="itemUom" class="form-control"placeholder="Item UOM" onchange="javascript:getSelectedLabel(this);"
+												 >
 											<option value="">Select Item UOM</option>
 											<c:forEach items="${rmUomList}" var="rmUomList"
 													varStatus="count">
@@ -119,9 +120,9 @@
 							<div class="col1title" align="left">HSN Code*: </div>
 						</div>
 						<div class="col-md-3">
-							<input type="text" name="hsnCode" id="hsnCode"
+							<input type="text" name="hsnCode" autocomplete="off"  id="hsnCode" 
 											placeholder="HSN Code" class="form-control"
-											data-rule-required="true" value="${itemSup.itemHsncd}"/>
+											required value="${itemSup.itemHsncd}"/>
 
 						</div>
 				 
@@ -133,7 +134,7 @@
 						</div>
 						<div class="col-md-3">
 							<input id="purchaseRate" class="form-control"
-								placeholder="Purchase Rate" name="purchaseRate" type="text" value="${item.itemRate1}" required>
+								placeholder="Purchase Rate" autocomplete="off"  name="purchaseRate" type="text" value="${item.itemRate1}" required>
 
 						</div>
 						<div class="col-md-1">
@@ -145,7 +146,7 @@
 						</div>
 						<div class="col-md-3">
 							<input id="saleRate" class="form-control"
-								placeholder="Sale Rate" name="saleRate" type="text" value="${item.itemMrp1}"  required>
+								placeholder="Sale Rate" autocomplete="off"  name="saleRate" type="text" value="${item.itemMrp1}"  required>
 
 						</div>
 				 
@@ -160,6 +161,14 @@
 								placeholder="Tax Description" name="taxDesc" type="text" value="${otherItem.taxDesc}" required>
 
 						</div> --%>
+							<div class="col-md-2">
+							<div class="col1title" align="left">Sgst Per*: </div>
+						</div>
+						<div class="col-md-3">
+							<input id="sgstPer" class="form-control"
+								placeholder="Sgst Per" autocomplete="off"  name="sgstPer" type="text" value="${item.itemTax1}" onkeyup="changeTax()" required>
+
+						</div>
 						<div class="col-md-1">
 							 
 						</div>
@@ -169,47 +178,27 @@
 						</div>
 						<div class="col-md-3">
 							<input id="cgstPer" class="form-control"
-								placeholder="Cgst Per" name="cgstPer" type="text" value="${item.itemTax2}"  required>
+								placeholder="Cgst Per" autocomplete="off"  name="cgstPer" type="text" value="${item.itemTax2}" onkeyup="changeTax()" required>
 
 						</div>
 				 
 					</div>
 					
 					<div class="colOuter">
-						<div class="col-md-2">
-							<div class="col1title" align="left">Sgst Per*: </div>
-						</div>
-						<div class="col-md-3">
-							<input id="sgstPer" class="form-control"
-								placeholder="Sgst Per" name="sgstPer" type="text" value="${item.itemTax3}" required>
-
-						</div>
-						<div class="col-md-1">
-							 
-						</div>
-
+					
 						<div class="col-md-2">
 							<div class="col1title" align="left">Igst Per*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="igstPer" class="form-control"
-								placeholder="Igst Per" name="igstPer" type="text"  value="${otherItem.igstPer}"  required>
+								placeholder="Igst Per" autocomplete="off"  name="igstPer" type="text"  value="${item.itemTax3}"  required>
 
 						</div>
 				 
-					</div> 
-				
-						<div class="colOuter">
-						<div class="col-md-2">
-							<div class="col1title" align="left">Cess Per*: </div>
-						</div>
-						<div class="col-md-3">
-						<input id="cessPer" class="form-control"
-								placeholder="Cess Per" name="cessPer" type="text"  value="${otherItem.cessPer}"  required>
-                        </div>
 						<div class="col-md-1">
 							 
 						</div>
+				 
 
 						<div class="col-md-2">
 							<div class="col1title" align="left">Is Active?* </div>
@@ -251,11 +240,11 @@
 									<th class="col-sm-1">Sr No</th>
 									<th class="col-md-1">Item Code</th> 
 									<th class="col-md-1">Name</th>
-									<th class="col-md-1">UOM</th> 
-									<th class="col-md-1">HSN Code</th>
 									<th class="col-md-1">Purchase Rate</th>
 									<th class="col-md-1">Sale Rate</th>
-									<th class="col-md-1">Total Tax %</th>
+									<th class="col-md-1">SGST Per</th>
+									<th class="col-md-1">CGST Per</th>
+									<th class="col-md-1">IGST Per</th>
 									<th class="col-md-1">Is Active</th>
 									<th class="col-md-1">Action</th>
 								</tr>
@@ -276,22 +265,23 @@
 									<tr style="${color}">
 										 <td class="col-sm-1"><c:out value="${count.index+1}" /></td>
 										<td class="col-md-1"><c:out
-												value="${itemList.itemCode}" /></td>
+												value="${itemList.itemId}" /></td>
 										<td class="col-md-2"><c:out
 												value="${itemList.itemName}" /></td>
+									
 										<td class="col-md-1"><c:out
-												value="${itemList.uom}" /></td>
+												value="${itemList.itemRate1}" /></td>
 										<td class="col-md-1"><c:out
-												value="${itemList.hsnCode}" /></td>
+												value="${itemList.itemMrp1}" /></td>
 										<td class="col-md-1"><c:out
-												value="${itemList.purchaseRate}" /></td>
-										<td class="col-md-1"><c:out
-												value="${itemList.sellRate}" /></td>
-										<td class="col-md-1"><c:out
-												value="${itemList.totalPer}" /></td>
+												value="${itemList.itemTax1}" /></td>
+											<td class="col-md-1"><c:out
+												value="${itemList.itemTax2}" /></td>
+												<td class="col-md-1"><c:out
+												value="${itemList.itemTax3}" /></td>
 										<td class="col-md-1">
 										<c:choose>
-													<c:when test="${itemList.isActive==1}">
+													<c:when test="${itemList.itemIsUsed==1}">
  														Yes						
  												    </c:when>
 												    <c:otherwise>
@@ -300,10 +290,10 @@
 										</c:choose>
 												</td>
 										<td class="col-md-1"><div >
-					<a href="${pageContext.request.contextPath}/updateOtherItem/${itemList.itemId}"   >
+					<a href="${pageContext.request.contextPath}/updateOtherItem/${itemList.id}"   >
 						<abbr title='Edit'><i  class='fa fa-edit'></i></abbr></a>
 												&nbsp;&nbsp;
-						<a href="${pageContext.request.contextPath}/deleteOtherItem/${itemList.itemId}" onClick="return confirm('Are you sure want to delete this record');"   >
+						<a href="${pageContext.request.contextPath}/deleteOtherItem/${itemList.id}" onClick="return confirm('Are you sure want to delete this record');"   >
 						<abbr title='Delete'><i  class='fa fa-trash'></i></abbr></a>
 												 
 											</div></td>
@@ -362,6 +352,28 @@
 <script>
 function getSelectedLabel(sel) {
     document.getElementById("selectedUom").value = sel.options[sel.selectedIndex].text;
+}
+</script>
+<script type="text/javascript">
+function changeTax()
+{
+	  var cgstPer=document.getElementById("cgstPer").value;
+	  if( cgstPer.length !="")
+		  {
+		  cgstPer=parseInt(cgstPer);
+		  }else
+			  {
+			  cgstPer=0;
+			  }
+	  var sgstPer=document.getElementById("sgstPer").value;
+	  if( sgstPer.length !="")
+		  {
+		  sgstPer=parseInt(sgstPer);
+		  }else
+			  {
+			  sgstPer=0;
+			  }
+	  document.getElementById("igstPer").value=(cgstPer+sgstPer).toFixed(2);
 }
 </script>
 </body>

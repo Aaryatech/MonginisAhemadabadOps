@@ -243,7 +243,9 @@ body {
 
 					</div>
 					<br>
-					<div class="order-right" align="right">
+					<div class="col-md-12" align="right"  style="width:100%">
+					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn btn-info">
+										</a>
 					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn btn-info">
 										</a>
 					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="btn btn-info">
@@ -257,11 +259,11 @@ body {
 					<!--tabNavigation-->
 					<div class="cd-tabs">
 						<!--tabMenu-->
-						<nav>
+						<!-- <nav>
 							<ul class="cd-tabs-navigation">
 								 
 							</ul>
-						</nav>
+						</nav> -->
 						<!--tabMenu-->
 						<ul class="cd-tabs-content">
 							<!--tab1-->
@@ -275,7 +277,7 @@ body {
 												<h4 class="col-md-7">
 													<b>Invoice No:-</b>
 												</h4>
-												<input type="text" class="form-control"
+												<input type="text" class="form-control" autocomplete="off"
 												placeholder="Enter Invoice No" name="invoiceNo" id="invoiceNo"
 												 required><br>
 											</div>
