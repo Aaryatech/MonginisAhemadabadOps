@@ -94,9 +94,14 @@ a:hover {
 									<c:when
 										test="${category.catId != '5' and category.catId != '6' and category.catId != '7' }">
 										<!-- and category.catId != '6' -->
-
-										<option value="${category.catId}"><c:out
-												value="${category.catName}" /></option>
+                                     <c:choose>
+									<c:when test="${category.catId==catId}">
+										<option value="${category.catId}" selected><c:out value="${category.catName}" /></option>
+									</c:when>
+									<c:otherwise>
+								    <option value="${category.catId}" ><c:out value="${category.catName}" /></option>
+									</c:otherwise>
+									</c:choose>
 									</c:when>
 								</c:choose>
 							</c:forEach>
@@ -104,7 +109,7 @@ a:hover {
 						</select>
 					</div>
                   <input type="hidden" name="selectStock" id="selectStock" value="1" />
-				  <input type="hidden" name="st_type" id="st_type" value="2" />
+				  <input type="hidden" name="st_type" id="st_type" value="1" />
                  <input type="hidden" name="selectRate" id="selectRate" value="2" />
 				</div>
 
@@ -118,6 +123,7 @@ a:hover {
 					</div>
              	</div>
              	</form>
+             	                   <c:set var="btnDisplayStyle" value="none;color:grey;" />
              	
 					<div class="col-md-12">
 						<!--table-->
@@ -154,7 +160,6 @@ a:hover {
 						<!--tabMenu-->
 						<ul class="cd-tabs-content">
 							<!--tab1-->
-
 							<c:forEach var="tabs" items="${subCatListTitle}" varStatus="loop"> 
 
 								 <c:choose>
@@ -170,8 +175,8 @@ a:hover {
 							 
 									<div id="faux-table" class="faux-table" aria="hidden">
 									 <table id="table_grid" class="main-table" >
-											<thead>
-												<tr class="bgpink">
+											<thead >
+												<tr class="bgpink"style="background-color: #ee578f;color:#ffffff;">
                                                  <td class="col-md-1">Sr.No</td>
                                                  <td class="col-md-2">Item Name</td>
                                                  <td class="col-md-1">Current Stock</td>
@@ -187,8 +192,8 @@ a:hover {
 									<div class="table-wrap">
 									
 										<table id="table_grid1" class="main-table">
-											<thead>
-												<tr class="bgpink">
+											<thead >
+												<tr class="bgpink"style="background-color: #ee578f;color:#ffffff;">
 												 <td class="col-md-1">Sr.No</td>
                                                  <td class="col-md-2">Item Name</td>
                                                  <td class="col-md-1">Current Stock</td>
@@ -201,17 +206,35 @@ a:hover {
 												<tbody>
 											<c:forEach var="stockDetailList" items="${stockDetailList}" varStatus="loop">
 											  <c:if test="${stockDetailList.subCatId eq tabs.header}">
- 										 	<tr class="bgpink">
+
+						                <c:set var="color" value="" />
+   												<c:set var="flag" value="0" />
+                                             	<c:if test="${stockDetailList.currentRegStock<=0}">
+                                             	  <c:set var="color" value="red" />	<c:set var="flag" value="1" />
+                                             	</c:if>
+                                             	<c:if test="${stockDetailList.currentRegStock>0}">
+                                             	<c:set var="btnDisplayStyle" value="block" />
+                                             	</c:if>
+                                       		 	<tr class="bgpink" style="color:${color}">
 												 <td class="col-md-1">${(loop.index)+1}</td>
                                                  <td class="col-md-2">${stockDetailList.itemName}</td>
                                                  <td class="col-md-1">${stockDetailList.currentRegStock}</td>
-                                                 <td class="col-md-1"><input type="text" name="physicalQty${stockDetailList.itemId}" id="physicalQty${stockDetailList.itemId}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.itemId},${stockDetailList.currentRegStock})"/></td>
-                                                 <td class="col-md-1" id="billQty${stockDetailList.itemId}">0</td>
+                                                 <td class="col-md-1"><c:choose>
+                                                 <c:when test="${flag==0}">
+                                                  <input type="number" class="form-control" style="width: 80%;" name="physicalQty${stockDetailList.itemId}" id="physicalQty${stockDetailList.itemId}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.itemId},${stockDetailList.currentRegStock})"/>
+                                                 </c:when>
+                                                 <c:otherwise>
+                                                  <input type="number" class="form-control" style="width: 80%;" name="physicalQty${stockDetailList.itemId}" id="physicalQty${stockDetailList.itemId}" value="0"  onchange="onChange(${stockDetailList.spTotalPurchase},${stockDetailList.itemId},${stockDetailList.currentRegStock})" readonly/>
+                                                 </c:otherwise>
+                                                 </c:choose>
+                                                </td>
+                                                <input type="hidden" name="qty${stockDetailList.itemId}" id="qty${stockDetailList.itemId}"  />
+                                                 <td class="col-md-1" id="billQty${stockDetailList.itemId}">0 </td>
                                                  <td class="col-md-1">${stockDetailList.spTotalPurchase}</td>
                                                  <td class="col-md-1" id="total${stockDetailList.itemId}">0</td>
 												</tr>
-										 	</c:if>  
-											 </c:forEach>
+ 										 	</c:if>  
+ 										 </c:forEach>
 												
 											   </tbody>
 
@@ -224,13 +247,10 @@ a:hover {
 						</ul>
 					</div>
 
-
-							
-
 							<div class="colOuter" id="sellBillAdd">
 								<div class="col4full" align="right">
 									<input name="" class="buttonsaveorder" value="Add Sell Bill"
-										id="substk" type="submit">
+										id="substk" type="submit" style="display:${btnDisplayStyle}">
 								</div>
 							</div>
 
@@ -339,14 +359,17 @@ a:hover {
 			//calculate total value  
 			var qty = $('#physicalQty'+id).val();
 			
-			if(qty<stkQty && qty>0){
-			    var total = rate * qty;
-			
+			if(qty<stkQty){
+				var insertQty=stkQty-qty;
+				
+			    var total = rate * insertQty;
+			   $('#billQty'+id).html(insertQty);
+			   $('#qty'+id).val(insertQty);
 			   $('#total'+id).html(total.toFixed(2));
 			}else
 			{   alert("Please Enter Valid Qty!!");
 				
-				$('#total'+id).html(total);
+				$('#total'+id).html(0);$('#physicalQty'+id).val(0);
 			}
 		}
 	</script>

@@ -111,8 +111,7 @@ table, th, td {
 										<th class="col-sm-3" style="text-align: center;">Customer
 											Mobile No</th>
 
-										<th class="col-md-3" style="text-align: center;">Date of
-											Birth</th>
+										<th class="col-md-3" style="text-align: center;">GST No.</th>
 
 									</tr>
 

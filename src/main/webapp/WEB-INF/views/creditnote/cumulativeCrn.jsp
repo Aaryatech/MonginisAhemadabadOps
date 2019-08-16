@@ -235,7 +235,7 @@ jQuery(document).ready(function(){
 
 						},
 						function(data) {
-							alert(data);
+							
 							var len = data.length;
 
 							$('#table1 td').remove();

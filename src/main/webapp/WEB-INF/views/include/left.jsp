@@ -273,6 +273,30 @@
 							Stock <span>Details</span>
 						</div></a></li>
 			</c:if>
+				<c:set var="flag" value="${0}"></c:set>
+			<c:forEach items="${setList}" var="setting" varStatus="count">
+				<c:choose>
+
+					<c:when test="${setting.settingKey eq 'Stock Match'}">
+						<c:set var="flag" value="${1}"></c:set>
+					</c:when>
+
+
+				</c:choose>
+			</c:forEach>
+			<c:if
+				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
+				<li><a
+					href="${pageContext.request.contextPath}/showStockMatchUtility"><div
+							class="img">
+							<img
+								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
+								alt="img">
+						</div>
+						<div class="title">
+							Stock <span>Match </span>
+						</div></a></li>
+			</c:if>
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -621,7 +645,7 @@
 				alt="monginis"></a>
 			<div class="listarea">
 				<ul>
-					<%-- <li class="small-box">
+					 <li class="small-box">
 						
 							<div class="ibox">
 						<div class="ibox-head">
@@ -636,7 +660,7 @@
 								
 						</div>
 						
-					</li> --%>
+					</li> 
 
 					<li class="small-box">
 
@@ -708,12 +732,18 @@
 								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
 								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> <a
 								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
-								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
+								class="fa fa-files-o icon"></i>Credit Note Report</a>
+								<a
+								href="${pageContext.request.contextPath}/showCumulativeCrnNotes"><i
+								class="fa fa-files-o icon"></i>Cumulative Credit Note</a>
+								 <a
 								href="${pageContext.request.contextPath}/grnReport"><i
 								class="fa fa-files-o icon"></i> GRN Report (Sell)</a> <a
 								href="${pageContext.request.contextPath}/gvnReport"><i
 								class="fa fa-files-o icon"></i> GVN Report (Sell)</a>
-
+                                  <a
+								href="${pageContext.request.contextPath}/showCutomerList"><i
+								class="fa fa-files-o icon"></i>Customer List(Sell)</a>
 						</div>
 					</li>
 
