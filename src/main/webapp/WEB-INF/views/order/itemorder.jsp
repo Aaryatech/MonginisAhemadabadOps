@@ -166,7 +166,7 @@ a:hover {
 
 
 				<form action="${pageContext.request.contextPath}/saveOrder"
-					name="form1" method="post">
+					name="form1" method="post"  >
 					<!-- <div class="col-md-9"></div>
 					<label for="search" class="col-md-3" id="search"> <i
 						class="fa fa-search" style="font-size: 20px"></i> <input
@@ -473,7 +473,7 @@ a:hover {
 					<!--<div class="order-btn"><a href="#" class="saveOrder">SAVE ORDER</a></div>-->
 					<div class="order-btn textcenter">
 
-						<input name="" class="buttonsaveorder" value="SAVE ORDER"
+						<input name="" id="subm" class="buttonsaveorder" value="SAVE ORDER"
 							type="button" ONCLICK="button1()">
 					</div>
 
@@ -540,8 +540,12 @@ a:hover {
            
             function button1()
             {
+                var isSubmit=confirm("Do you want to save Order?");
+                if(isSubmit==true){    
+                	document.getElementById("subm").disabled = true;
 
-              form1.submit();
+                       form1.submit();
+                }
                 
     		/* 	if(isSameDayApplicable!=2)
     				{
