@@ -744,6 +744,13 @@
                                   <a
 								href="${pageContext.request.contextPath}/showCutomerList"><i
 								class="fa fa-files-o icon"></i>Customer List(Sell)</a>
+								
+								<a
+								href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
+								class="fa fa-files-o icon"></i>Month Wise Purchase Report</a>
+								<a
+								href="${pageContext.request.contextPath}/showYearlySellReport"><i
+								class="fa fa-files-o icon"></i>Month Wise Sell Report</a>
 						</div>
 					</li>
 
