@@ -273,7 +273,7 @@
 							Stock <span>Details</span>
 						</div></a></li>
 			</c:if>
-				<c:set var="flag" value="${0}"></c:set>
+			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
 
@@ -645,22 +645,33 @@
 				alt="monginis"></a>
 			<div class="listarea">
 				<ul>
-					 <li class="small-box">
-						
-							<div class="ibox">
-						<div class="ibox-head">
-						<div class="ibox-title">Punching Based Reports</div>
-						</div>
-						<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i class="fa fa-files-o icon"></i>Billwise Sale Report</a>
-						<a href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i class="fa fa-calendar-o icon"></i>Datewise Sale Report</a>
-						<a href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i class="fa fa-calendar-o  icon"></i>Monthwise Sale Report</a>
-						<a href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i class="fa fa-chevron-circle-down icon"></i>Categorywise- Itemwise Sale Report</a>
-					<a href="${pageContext.request.contextPath}/viewDateItemwiseSellBill"> <i class="fa fa-chevron-circle-down icon"></i>Datewise-Itemwise Sale Report</a>
-						
+					<li class="small-box">
+
+						<div class="ibox">
+							<div class="ibox-head">
+								<div class="ibox-title">Punching Based Reports</div>
+							</div>
+							<a href="${pageContext.request.contextPath}/viewBillwiseSell"><i
+								class="fa fa-files-o icon"></i>Billwise Sale Report</a> <a
+								href="${pageContext.request.contextPath}/viewDatewiseSellBill"><i
+								class="fa fa-calendar-o icon"></i>Datewise Sale Report</a> <a
+								href="${pageContext.request.contextPath}/viewMonthwiseSellBill"><i
+								class="fa fa-calendar-o  icon"></i>Monthwise Sale Report</a> <a
+								href="${pageContext.request.contextPath}/viewItemwiseSellBill"><i
+								class="fa fa-chevron-circle-down icon"></i>Categorywise-
+								Itemwise Sale Report</a> <a
+								href="${pageContext.request.contextPath}/viewDateItemwiseSellBill">
+								<i class="fa fa-chevron-circle-down icon"></i>Datewise-Itemwise
+								Sale Report
+							</a> 
 								
+								<a
+								href="${pageContext.request.contextPath}/showYearlySellReport"><i
+								class="fa fa-files-o icon"></i>Month Wise Sub Category Sell Report Or Month Wise Item Sell Report</a>
+
 						</div>
-						
-					</li> 
+
+					</li>
 
 					<li class="small-box">
 
@@ -684,7 +695,10 @@
 							<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i
 								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a>
 
-
+<a
+								href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
+								class="fa fa-files-o icon"></i>Month Wise Sub Category Purchase
+								Report Or Month Wise Item Purchase Report</a>
 
 						</div>
 					</li>
@@ -732,25 +746,15 @@
 								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
 								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> <a
 								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
-								class="fa fa-files-o icon"></i>Credit Note Report</a>
-								<a
+								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
 								href="${pageContext.request.contextPath}/showCumulativeCrnNotes"><i
-								class="fa fa-files-o icon"></i>Cumulative Credit Note</a>
-								 <a
+								class="fa fa-files-o icon"></i>Cumulative Credit Note</a> <a
 								href="${pageContext.request.contextPath}/grnReport"><i
 								class="fa fa-files-o icon"></i> GRN Report (Sell)</a> <a
 								href="${pageContext.request.contextPath}/gvnReport"><i
-								class="fa fa-files-o icon"></i> GVN Report (Sell)</a>
-                                  <a
+								class="fa fa-files-o icon"></i> GVN Report (Sell)</a> <a
 								href="${pageContext.request.contextPath}/showCutomerList"><i
-								class="fa fa-files-o icon"></i>Customer List(Sell)</a>
-								
-								<a
-								href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
-								class="fa fa-files-o icon"></i>Month Wise Purchase Report</a>
-								<a
-								href="${pageContext.request.contextPath}/showYearlySellReport"><i
-								class="fa fa-files-o icon"></i>Month Wise Sell Report</a>
+								class="fa fa-files-o icon"></i>Customer List(Sell)</a> 
 						</div>
 					</li>
 
