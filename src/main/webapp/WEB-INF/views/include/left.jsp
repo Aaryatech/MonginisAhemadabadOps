@@ -668,11 +668,21 @@
 								<a
 								href="${pageContext.request.contextPath}/showYearlySellReport"><i
 								class="fa fa-files-o icon"></i>Month Wise Sub Category Sell Report Or Month Wise Item Sell Report</a>
-
+								
+								<a
+								href="${pageContext.request.contextPath}/showSubCatDateWiseSellReport"><i
+								class="fa fa-files-o icon"></i>Datewise Sub Category Sale Report</a>
+								
+								
+								<a
+								href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
+								class="fa fa-files-o icon"></i>Datewise HSN Sale Report</a>
+								
+								
 						</div>
-
+								
 					</li>
-
+							
 					<li class="small-box">
 
 						<div class="ibox">
