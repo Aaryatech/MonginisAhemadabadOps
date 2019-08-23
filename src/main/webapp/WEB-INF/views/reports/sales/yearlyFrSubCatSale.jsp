@@ -442,7 +442,7 @@ table, th, td {
 		function searchItemReport() {
 			//	var isValid = validate();
 			
-			alert("hi");
+			//alert("hi");
 
 			var frId = document.getElementById("frId").value;
 			var selectedCat = $("#item_grp1Item").val();
@@ -454,7 +454,7 @@ table, th, td {
 
 			$('#loader').show();
 			
-			alert("hi 111");
+			//alert("hi 111");
 
 			$.getJSON('${getItemList}',
 
