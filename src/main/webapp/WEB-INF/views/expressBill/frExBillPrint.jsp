@@ -109,7 +109,7 @@
           <%-- <c:forEach items="${billList}" var="billList" varStatus="count"> --%>
           <tr>
             <td><span style="font-size:10px">${itemName}</span><br><span style="font-size:7px">Det No.:${exBill.sellBillDetailNo}
-			<br>HSN-${itemHsn}</span></td>
+			<br>HSN-${exBill.remark}</span></td>
             <td align="center"><span style="font-size:10px">${exBill.qty}</span></td>
             <td align="center"><span style="font-size:10px">${exBill.mrp}</span></td>
             <td align="right"><span style="font-size:10px">${exBill.qty*exBill.mrp}</span></td>

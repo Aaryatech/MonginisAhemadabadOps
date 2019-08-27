@@ -326,7 +326,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 					sellBillDetail.setMrp(rate);
 					sellBillDetail.setMrpBaseRate(mrpBaseRate);
 					sellBillDetail.setQty(qty);
-					sellBillDetail.setRemark("");
+					sellBillDetail.setRemark(sellBillEditBean.getSellBillDetailList().get(i).getRemark());//hsn
 					sellBillDetail.setBillStockType(sellBillEditBean.getSellBillDetailList().get(i).getBillStockType());
 
 					sumMrp = sumMrp + (rate * qty);
@@ -693,6 +693,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 				customerBillItem.setId(item.getId());
 				customerBillItem.setItemId(item.getItemId());
 				customerBillItem.setItemName(item.getItemName());
+				customerBillItem.setHsnCode(item.getItemImage());//get hsn from image --query -new
 				customerBillItem.setQty(0);
 				customerBillItem.setItemTax1(item.getItemTax1());
 				customerBillItem.setItemTax2(item.getItemTax2());
@@ -815,6 +816,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 				currentNewItem.setId(customerBillItemList.get(i).getId());
 				currentNewItem.setItemId(customerBillItemList.get(i).getItemId());
 				currentNewItem.setItemName(customerBillItemList.get(i).getItemName());
+				currentNewItem.setHsnCode(customerBillItemList.get(i).getHsnCode());//new for hsn
 				currentNewItem.setItemTax1(customerBillItemList.get(i).getItemTax1());
 				currentNewItem.setItemTax2(customerBillItemList.get(i).getItemTax2());
 				currentNewItem.setItemTax3(customerBillItemList.get(i).getItemTax3());
@@ -2130,7 +2132,7 @@ if(currentNewItem.getCatId()==7) {
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
 				sellBillDetail.setQty(customerBillItemList.get(i).getQty());
-				sellBillDetail.setRemark("");
+				sellBillDetail.setRemark(customerBillItemList.get(i).getHsnCode());//new for hsn
 				sellBillDetail.setSellBillDetailNo(0);
 				sellBillDetail.setSellBillNo(0);
 				sellBillDetail.setBillStockType(customerBillItemList.get(i).getBillStockType());

@@ -1607,6 +1607,7 @@ public class StockController {
 				customerBillItem.setId(item.getId());
 				customerBillItem.setItemId(item.getItemId());
 				customerBillItem.setItemName(item.getItemName());
+				customerBillItem.setHsnCode(item.getItemImage());//hsn code from itemImage --query
 				customerBillItem.setQty(qty);
 				customerBillItem.setItemTax1(item.getItemTax1());
 				customerBillItem.setItemTax2(item.getItemTax2());
@@ -1682,7 +1683,7 @@ public class StockController {
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
 				sellBillDetail.setQty(customerBillItemList.get(i).getQty());
-				sellBillDetail.setRemark("");
+				sellBillDetail.setRemark(customerBillItemList.get(i).getHsnCode());//hsncode --new
 				sellBillDetail.setSellBillDetailNo(0);
 				sellBillDetail.setSellBillNo(0);
 				sellBillDetail.setBillStockType(customerBillItemList.get(i).getBillStockType());

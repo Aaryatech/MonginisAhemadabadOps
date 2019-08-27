@@ -1239,7 +1239,7 @@ public class GrnGvnController {
 						sellBillDetail.setMrp(rate);
 						sellBillDetail.setMrpBaseRate(mrpBaseRate);
 						sellBillDetail.setQty(sellBillData.get(i).getAutoGrnQty());
-						sellBillDetail.setRemark("");
+						sellBillDetail.setRemark(sellBillData.get(i).getHsnCode());//new Hsn  change
 						sellBillDetail.setSellBillDetailNo(0);
 						sellBillDetail.setSellBillNo(0);
 						sellBillDetail.setBillStockType(1);

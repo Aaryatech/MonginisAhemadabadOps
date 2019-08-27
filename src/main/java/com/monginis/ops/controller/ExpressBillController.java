@@ -244,6 +244,7 @@ public class ExpressBillController {
 				customerBillItem.setId(item.getId());
 				customerBillItem.setItemId(item.getItemId());
 				customerBillItem.setItemName(item.getItemName());
+				customerBillItem.setHsnCode(item.getItemImage());//taken hsn from itemImage parameter  --new
 				customerBillItem.setQty(0);
 				customerBillItem.setItemTax1(item.getItemTax1());
 				customerBillItem.setItemTax2(item.getItemTax2());
@@ -577,7 +578,7 @@ if(ses==null) {
 				sellBillDetail.setMrp(rate);
 				sellBillDetail.setMrpBaseRate(mrpBaseRate);
 				sellBillDetail.setQty(qty);
-				sellBillDetail.setRemark("");
+				sellBillDetail.setRemark(item.getHsnCode());//hsn new change
 				sellBillDetail.setSellBillDetailNo(0);
 				sellBillDetail.setSellBillNo(sellBillHeaderGlobal.getSellBillNo());
 				sellBillDetail.setBillStockType(1);
@@ -997,7 +998,7 @@ if(ses==null) {
 		
 		if (getItemHsnCode != null) {
 			model.addObject("itemName", getItemHsnCode.getItemName());
-			model.addObject("itemHsn", getItemHsnCode.getHsncd());
+			//model.addObject("itemHsn", getItemHsnCode.getHsncd());//change on 22 aug for hsn
 		}
 		model.addObject("date", new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
 		
