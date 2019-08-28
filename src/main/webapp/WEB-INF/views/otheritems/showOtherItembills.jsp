@@ -286,7 +286,7 @@ body {
 											 
 
 											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
+												<h4 ><!--style="margin-top: 5px" class="col-md-8"  -->
 													<b>Supplier:-</b>
 												</h4>
 		
@@ -301,20 +301,20 @@ body {
 																		</select> 
 											</div>
 											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
+												<h4 ><!--style="margin-top: 5px" class="col-md-8"  -->
 													<b>From Date:-</b>
 												</h4>
-													<div class="col-md-8">
+													<div><!--  class="col-md-8" -->
 														<input id="datepicker1" class="texboxitemcode texboxcal" value="${fromDate}"  autocomplete="off"
 															name="fromDate" type="text" required>
 													</div>
  											</div>
  											
  											<div class="col-md-4">
-												<h4 class="col-md-8" style="margin-top: 5px">
+												<h4 ><!--style="margin-top: 5px" class="col-md-8"  -->
 													<b>To Date:-</b>
 												</h4>
-													<div class="col-md-8">
+													<div><!-- class="col-md-8" -->
 														<input id="datepicker2"  class="texboxitemcode texboxcal" value="${toDate}" autocomplete="off"
 															name="toDate" type="text" required>
 													</div>
@@ -400,10 +400,10 @@ body {
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" ><!-- class="table-scroll" -->
+									<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid1" class="main-table small-td">
+										<table id="table_grid1" class="responsive-table" style="margin:0;"><!-- class="main-table small-td" -->
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>

@@ -303,7 +303,7 @@ table, th, td {
 							</label>
 
 
-							<div id="table-scroll" class="table-scroll">
+							<div id="table-scroll"><!-- class="table-scroll" -->
 								<!-- <div id="faux-table" class="faux-table" aria="hidden"> -->
 								<%-- <div class="table-wrap">	<table id="table_grid1" class="main-table">
 										<thead>
@@ -328,8 +328,8 @@ table, th, td {
 											</tr>
 										</thead></table></div> --%>
 								<!-- </div> -->
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+								<div><!-- class="table-wrap" -->
+									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 										<thead>
 											<tr class="bgpink">
 												<th class="col-md-1">Item Code</th>

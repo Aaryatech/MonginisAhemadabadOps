@@ -230,7 +230,7 @@
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="Captain Password"
 									name="user2_password" type="password"  value="${frSup.pass2}" id="user2_password" 
-									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
+									style="font-size: 16px; height: 33px; width:130px; background-color:LightGrey;" disabled="disabled">
 								
 							</div>
 						</div>
@@ -324,7 +324,7 @@
 							<div class="form-group">
 						
 								<input name="" class="" value="Change Admin Password"
-									type="button" id="changePwd1" onclick="showDiv()"style="font-size: 8pt; height: 33px; width:143px;">
+									type="button" id="changePwd1" onclick="showDiv()"style="font-size: 8pt; height: 33px;">
 							
 						</div>	
 							<div  class="update FormAlert" id="divCheckPasswordMatch">
@@ -337,9 +337,9 @@
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="CSP Password"
 									name="user3_password" type="password"  value="${frSup.pass3}" id="user3_password" 
-									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;"disabled="disabled">
+									style="font-size: 16px; height: 33px; width:130px; background-color:LightGrey;"disabled="disabled">
 								
-							</div>
+							</div> 
 							<div class="form-group">
 								<input name="" class="" value="Change Password"
 									type="button" id="changePwd2" onclick="showDiv1()"style="font-size: 8pt; height: 33px; width:90px;">

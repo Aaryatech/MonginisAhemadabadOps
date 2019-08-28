@@ -338,10 +338,10 @@ body {
 
 
 
-									<div id="table-scroll" class="table-scroll">
-										<div id="faux-table" class="faux-table" aria="hidden"></div>
-										<div class="table-wrap table-wrap-custbill">
-											<table id="table_grid1" class="main-table small-td">
+									<div id="table-scroll" ><!-- class="table-scroll" -->
+										<!-- <div id="faux-table" class="faux-table" aria="hidden"></div> -->
+										<div ><!-- class="table-wrap table-wrap-custbill" -->
+											<table id="table_grid1" class="responsive-table"><!--  class="main-table small-td" -->
 												<thead>
 													<tr class="bgpink">
 														<th class="col-sm-1">Sr no.</th>
