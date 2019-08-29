@@ -21,8 +21,8 @@
   width: 50px;
   z-index: 1;
   pointer-events: none;
-  background: -webkit-linear-gradient( right , #f8f7ee, rgba(248, 247, 238, 0));
-  background: linear-gradient(to left, #f8f7ee, rgba(248, 247, 238, 0));
+  /*background: -webkit-linear-gradient( right , #f8f7ee, rgba(248, 247, 238, 0));
+  background: linear-gradient(to left, #f8f7ee, rgba(248, 247, 238, 0));*/
   visibility: visible;
   opacity: 1;
   -webkit-transition: opacity .3s 0s, visibility 0s 0s;
@@ -221,7 +221,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
 .additem_btn{
 	
 	font-size:16px;
-	padding:3px 12px !important;
+	padding:3px 12px;/* !important */
 	background-color: #343690 !important;
 	color:#fff;
 	

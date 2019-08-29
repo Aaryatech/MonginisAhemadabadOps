@@ -312,7 +312,7 @@ font-size: 18px !important;
 }
 
 .small-box {
-    width: 23% !important;
+    width: 23%;
  }
  
  .cd-tabs-navigation a {
@@ -435,6 +435,10 @@ width:100px
     height:630px;
 }
 
+}
+
+@media screen and (max-width:700px){
+	.content{height: auto;}
 }
 
 

@@ -57,11 +57,11 @@ a:hover{ text-decoration:none; color:#343690;}
 .captions .right b{width:100%; float:left;font-size:14px; color:#2c2e2c;font-weight:normal; margin:5px 0px; padding-left:27px; min-height:22px; background:url(../images/pointer.png) no-repeat; background-position:left top;}
 .captions .right h5{width:100%; float:left;}
 .captions .right h6{width:100%; float:left; padding:0px 0px 20px 0px;}
-.captionsPrice{ width:153px; height:153px; position:absolute; top:70px; left:-20px;background:url(../images/circleprice.png) no-repeat; background-position:center top; text-align:center;}
+.captionsPrice{width:153px; height:153px; position:absolute; top:70px; left:-20px;background:url(../images/circleprice.png) no-repeat; background-position:center top; text-align:center;}
 .captionsPrice h3{width:100%; float:left; padding-bottom:5px; font-size:18px; color:#2c2e2c; margin-top:34px;}
 .captionsPrice h3 span{width:100%; float:left;font-size:30px; color:#2c2e2c; margin-top:-6px;}
 .captionsPrice h3 strong{}
-.captionsPrice h3 b{width:100%; float:left;font-size:16px; color:#2c2e2c;text-align:right; padding-right:30px; margin-top:-8px;}
+.captionsPrice h3 b{width:100%; float:left;font-size:16px; color:#2c2e2c; text-align:right; padding-right:30px; margin-top:-8px;}
 
 .homeslider{ width:100%; float:left; margin:20px 0px 30px 0px; text-align:left;}
 .latestNews{ width:100%; float:left; text-align:left;}
@@ -280,7 +280,7 @@ a.saveOrder:hover{background:#343690;}
 .sidenav .closebtn {
     position:absolute;
     top:10px;
-    right:10px;
+    right:10px; z-index:10;
 }
 
 
@@ -289,7 +289,8 @@ a.saveOrder:hover{background:#343690;}
 /* padding:20px 60px 20px 20px; */ text-align:left;}
 
 
-* {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}:before, :after {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+* {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+:before, :after {-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 #mySidenav{-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s; }
 #mySidenav1{-webkit-transition: all ease 0.2s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.2s;-ms-transition: all ease 0.2s;transition: all ease 0.2s;}
 #mySidenav3{-webkit-transition: all ease 0.5s;-moz-transition: all ease 0.5s;-o-transition: all ease 0.5s;-ms-transition: all ease 0.5s;transition: all ease 0.5s; }
@@ -442,6 +443,17 @@ input[type=checkbox]:checked + label:before {
 .loginUser img{ top:-80px; position:relative;}
 
 
+/*new css start here*/
+
+table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto; margin: 1.5em 0; background-color: transparent;}
+.responsive-table th{padding: 8px 3px; vertical-align: top; background: #ec268f !important; color: #fff !important; font-size: 16px;}
+.responsive-table tr:nth-child(2n+1) {background: #e1e1e1;}
+.responsive-table td{text-align: right; padding: 10px; font-size: 18px;}
+#insertItemButton,#printExBill {margin: 0 0 15px 0; }
+
+
+.ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span{display: none !important;}
+
 /*--css-divices--*/
 @media screen and (max-width:1366px){
 .wrapperIn{ width:100%;}
@@ -468,6 +480,8 @@ input[type=checkbox]:checked + label:before {
 .profileinsite{ padding:0px;}
 .profile{ font-size:14px;}
 .loginInner{ padding-left:25%; padding-right:25%;}
+
+.table .bgpink,.table{font-size: 16px;}
 }
 
 @media screen and (max-width:800px){
@@ -490,13 +504,19 @@ input[type=checkbox]:checked + label:before {
 .cackrighttexbox{ width:66.66666666666666%}
 .listarea li{ width:50%;}
 .screen4plan{ padding:10px 0px;}
-.profileinsiteLeft{ width:100%; padding-right:0px;}
-.profileinsiteRight{ width:100%; padding-right:0px;}
+.profileinsiteLeft{width:100%; padding-right:0px;}
+.profileinsiteRight{width:100%; padding-right:0px;}
 .profilefildset{ width:30%;}
 .profileinput{ width:70%;}
+
+/*new css start here*/
+.buttonsaveorder{margin: 15px 0 0 0;}
+.shInnerwidth{width: 100%;}
+.cd-tabs-navigation li{margin: 5px 0;}
 }
 
 @media screen and (max-width:700px){
+	
 .logoBarLeft img{ max-width:120px;}
 .logoBarbg{ height:90px;}
 .logoBarRight{padding:34px 0px 0px 0px; position:absolute; right:0px; top:0px; width:100%;}
@@ -512,8 +532,8 @@ input[type=checkbox]:checked + label:before {
 
 .sidebarhome{ position:relative /*static*/; background:#ec268f; width:100%;}
 .sidebarhome ul{ padding:0px;}
-.sidebarhome li{ width:25%; float:left;}
-.sidebarhome li a{ padding:10px; width:100%;}
+.sidebarhome li{ width:33.333% /*25%*/; float:left;}
+.sidebarhome li a{ padding:10px; width:100%; min-height:100px;}
 .sidebarOuter{ display:none;}
 .sidebarright{ padding-left:20px;}
 .table{ font-size:14px;}
@@ -539,6 +559,31 @@ input[type=checkbox]:checked + label:before {
 .pageTitle{ font-size:20px;}
 .loginInner{ padding-left:10%; padding-right:10%;}
 
+
+/*new css start here*/
+.loginInner h2{padding-bottom: 15px;}
+.loginInner h2 span{font-size: 32px;}
+.pageTitle,.ordercloser2 span,.order-amount{font-size: 20px;}
+.buttonsaveorder{margin: 15px 0 0 0;}
+table.responsive-table{display: block;}
+.shInnerwidth{width: 100%;}
+#tp{margin: 0 0 15px 0;}
+.table .bgpink,.table{font-size: 15px;}
+#frm_search{margin: 0 15px;}
+#group{margin:0 0 15px 0;}
+.buttonsaveorder{margin: 15px 0 0 0;}
+#orderHistory{margin: 0 15px;}
+.h4, h4 {font-size: 16px !important;}
+
+.sidebarhome li{box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 0px 0px, rgba(0, 0, 0, 0.1) 0px 2px 1px -10px, rgba(0, 0, 0, 0.1) 0px 0px 2px 0px;}
+#todatepicker{margin: 0 0 15px 0;}
+.responsive-table td {padding: 8px; font-size: 16px;}
+.cd-tabs-navigation a{font-size: 16px;}
+
+
+
+
+
 }
 
 @media screen and (max-width:480px){
@@ -561,7 +606,20 @@ input[type=checkbox]:checked + label:before {
 .profilefildset{ width:100%;}
 .profileinput{ width:100%;}
 .loginInner{ padding:30px 20px;}
+
+.responsive-table th{font-size:14px; padding: 8px 15px;}
+.topSlide2 {padding: 0 20px !important;}
+/* .sidebarright {padding: 0;} */
+.btn-info{margin:5px;}
+.buttonsaveorder{margin: 0;}
+#frm_search {margin: 0;}
+
+#datepicker{margin: 0 0 15px 0;}
+.buttonsaveorder{margin: 8px 0;}
 }
 
 @media screen and (max-width:320px){
+	.checkbox {float: none; text-align: left; position: relative; width: 100%; margin: 30px 0 0 0;}
+	.sidebarhome li{ width:50% /*25%*/; float:left;}
+	.sidebarhome li a{ padding:10px; width:100%; min-height:95px;}
 }
