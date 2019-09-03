@@ -68,10 +68,10 @@ table, th, td {
 	<div class="colOuter">
 		<div align="center" >
 		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35" autocomplete="off" >
+		<input id="fromdatepicker"  placeholder="From Date"  name="from_Date" class="texboxitemcode texboxcal" type="text" size="35" autocomplete="off" >
 		</div></div>
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" autocomplete="off">
+		<input id="todatepicker"  placeholder="To Date"  name="to_Date" type="text" class="texboxitemcode texboxcal" size="35" autocomplete="off">
 		</div></div>
 												<input type="hidden" name="frId" id="frId" value="${frId}"/>
 		                                        <input type="hidden" name="catId" id="catId"/>
@@ -88,10 +88,10 @@ table, th, td {
 	
 	
 	<div class="row" id="table" style="display: none">
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden">
+								<div id="table-scroll">
+									<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
 											
-										<table id="table_grid" class="main-table">
+										<table id="table_grid" class="responsive-table">
 											<thead>
 													<tr class="bgpink">
 									<th style="text-align:center;" class="col-md-1">Sr no.</th>
@@ -110,7 +110,7 @@ table, th, td {
 				
 							</div></div><div id="table-scroll" class="table-scroll">
 									<div class="table-wrap">
-										<table id="table_grid" class="main-table">
+										<table id="table_grid"  class="responsive-table">
 											<thead>
 													<tr class="bgpink">
 									<th style="text-align:center;" class="col-md-1">Sr no.</th>

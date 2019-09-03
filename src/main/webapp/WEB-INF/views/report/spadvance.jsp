@@ -76,8 +76,8 @@
 
 						<!--tabMenu-->
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
+						<div id="table-scroll">
+							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table" border="1">
 										<thead>
@@ -93,8 +93,8 @@
 									</table>
 								</div>
 							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table" border="1">
+							<div>
+								<table id="table_grid" class="responsive-table" border="1">
 									<thead>
 										<tr class="bgpink">
 											<th width="5%" style="text-align: center;">Sr No</th>

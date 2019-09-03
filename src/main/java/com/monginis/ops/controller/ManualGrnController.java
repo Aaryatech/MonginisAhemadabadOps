@@ -134,9 +134,9 @@ public class ManualGrnController {
 			grnConfList = new ArrayList<>();
 
 			grnConfList = grnGvnConfResponse.getGetGrnItemConfigs();
-			if(grnConfList.isEmpty()==false || grnConfList!=null) {
+		/*	if(grnConfList.isEmpty()==false || grnConfList!=null) {
 			System.out.println("gvn conf list " + grnConfList.toString());
-			}
+			}*/
 
 			modelAndView.addObject("frBillList", frBillList);
 			//modelAndView.addObject("selctedBillNo", billNo);
@@ -288,7 +288,7 @@ System.err.println("Inside Manual Grn POST method ");
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgrn");
 
 		HttpSession session = request.getSession();
-
+        int flag=0;
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		int fraId = frDetails.getFrId();
 		try {
@@ -352,6 +352,7 @@ System.err.println("Inside Manual Grn POST method ");
 				System.out.println("tempGrnQtyAuto ===" + tempGrnQtyAuto);
 */
 				int grnQty = Integer.parseInt(tempGrnQtyAuto);
+				if (grnQty > 0) {flag=1;
 				/*int fixedGrnQty = Integer.parseInt(tempGrnQty);
 				int isEdit = 0;
 				if (grnQty != fixedGrnQty) {
@@ -422,7 +423,7 @@ System.err.println("Inside Manual Grn POST method ");
 				 * }
 				 */
 
-				if (grnQty > 0) {
+				
 					postGrnGvn.setGrnGvnDate(grnGvnDate);
 
 					postGrnGvn.setBillDetailNo(objShowGrnList.get(i).getBillDetailNo());// 15 Feb added
@@ -537,7 +538,7 @@ System.err.println("Inside Manual Grn POST method ");
 			System.out.println("post grn for rest----- " + postGrnList.toString());
 			// System.out.println("post grn for rest size " +
 			// postGrnList.getGrnGvn().size());
-
+       if(flag==1) {
 			Info insertGrn = restTemplate.postForObject(Constant.URL + "insertGrnGvn", postGrnList, Info.class);
 			//Info insertGrn=null;
 			if (insertGrn.getError() == false) {
@@ -665,7 +666,7 @@ System.err.println("Inside Manual Grn POST method ");
 
 
 			}
-
+       }
 		} catch (Exception e) {
 
 			System.out.println("exce in grn insert or Express Bill Day close " + e.getMessage());

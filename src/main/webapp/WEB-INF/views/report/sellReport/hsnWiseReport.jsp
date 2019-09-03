@@ -62,10 +62,10 @@
 <div class="colOuter">
 		<div align="center" >
 		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker" autocomplete="off" placeholder="Delivery Date"  name="from_Date" type="text" size="35" >
+		<input id="fromdatepicker" autocomplete="off" placeholder="From Date"  name="from_Date" type="text" size="35" class="texboxitemcode texboxcal">
 		</div></div>
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker" autocomplete="off" placeholder="Delivery Date"  name="to_Date" type="text" size="35" >
+		<input id="todatepicker" autocomplete="off" placeholder="To Date"  name="to_Date" type="text" size="35" class="texboxitemcode texboxcal">
 		</div></div>
 										<input type="hidden" name="frId" id="frId" value="${frId}">
 										<input type="hidden" name="frName" id="frName" value="${frName}">
@@ -87,10 +87,10 @@
 			<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table" border="1">
+				<div id="table-scroll" >
+					<div id="faux-table" class="faux-table" aria="hidden" style="display: none;"></div>
+					<div>
+						<table id="table_grid" class="responsive-table" border="1">
 							<thead>
 								<tr class="bgpink">
 

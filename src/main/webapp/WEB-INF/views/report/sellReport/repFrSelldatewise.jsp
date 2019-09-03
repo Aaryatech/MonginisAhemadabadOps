@@ -66,10 +66,10 @@ table, th, td {
 	<div class="colOuter">
 		<div align="center" >
 		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date"  name="from_Date" type="text" size="35"  autocomplete="off" >
+		<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="From Date"  name="from_Date" type="text" size="35"  autocomplete="off" >
 		</div></div>
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date"  name="to_Date" type="text" size="35" autocomplete="off"  >
+		<input id="todatepicker" class="texboxitemcode texboxcal" placeholder="To Date"  name="to_Date" type="text" size="35" autocomplete="off"  >
 		</div></div>
 				<input type="hidden" name="frId" id="frId" value="${frId}">
 		
@@ -92,9 +92,9 @@ table, th, td {
 		<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
-						<div class="table-wrap">
+				<div id="table-scroll">
+					<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+						<div >
 						<table id="table_grid" class="main-table" >
 							<thead>
 								<tr class="bgpink">
@@ -115,8 +115,8 @@ table, th, td {
 								  
 								</table></div>
 				</div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table" >
+					<div > <!-- class="table-wrap" -->
+						<table id="table_grid" class="responsive-table" >
 							<thead>
 								<tr class="bgpink">
 

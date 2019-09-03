@@ -225,7 +225,7 @@ input:checked+.slider:before {
 					</div>
 					<div class="col-md-2">
 						<span
-							style="padding-top: 0px; float: left; margin-top: 13px; font-size: 16px;">Single
+							style="padding-top: 0px; float: left; margin-top: 13px; font-size: 16px;width:100px;">Single
 							Print</span><label class="switch"> <input type="checkbox"
 							id="id"> <span class="slider round"></span>
 					</div>
@@ -233,7 +233,7 @@ input:checked+.slider:before {
 					<div class="row">
 						<div class="col-md-2">
 							<span
-								style="padding-top: 0px; float: left; margin-top: 13px; font-size: 14px;">SP</span>
+								style="padding-top: 0px; float: left; margin-top: 13px; font-size: 14px;width:100px;">SP</span>
 							<label class="switch"> <input type="checkbox" id="sp"
 								name="sp"> <span class="slider round"></span>
 							</label>
@@ -478,7 +478,7 @@ input:checked+.slider:before {
 							<div class="table">
 								<div class="shInnerwidth">
 
-									<table class="table table-bordered" width="100%" border="0"
+									<table class="responsive-table table-bordered" width="100%" border="0"
 										cellspacing="0" cellpadding="0 " id="table_grid">
 										<tr class="bgpink">
 											<th>Bill No.</th>

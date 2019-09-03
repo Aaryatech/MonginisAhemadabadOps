@@ -76,14 +76,14 @@ table, th, td {
 							<div class="col1">
 								<div class="col1title">
 									<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="fromdatepicker" placeholder="Delivery Date"
+										id="fromdatepicker" placeholder="From Date" 	class="texboxitemcode texboxcal"
 										name="from_Date" type="text" autocomplete="off"  size="35">
 								</div>
 							</div>
 							<div class="col2">
 								<div class="col1title">
 									<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="todatepicker" placeholder="Delivery Date" name="to_Date" autocomplete="off" 
+										id="todatepicker" placeholder="To Date" name="to_Date" 	class="texboxitemcode texboxcal" autocomplete="off" 
 										type="text" size="35">
 								</div>
 							</div>
@@ -111,8 +111,8 @@ table, th, td {
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table" aria="hidden">
+							<div id="table-scroll" >
+								<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
 									<table id="table_grid" class="main-table">
 										<thead>
 											<tr class="bgpink">
@@ -141,8 +141,8 @@ table, th, td {
 										</tbody>
 									</table>
 								</div>
-								<div class="table-wrap">
-									<table id="table_grid" class="main-table">
+								<div >
+									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="bgpink">
 

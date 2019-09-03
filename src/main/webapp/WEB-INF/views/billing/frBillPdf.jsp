@@ -27,7 +27,7 @@ page-break-inside: auto !important
 	<c:forEach items="${billDetails}" var="frDetails" varStatus="count">
 	<c:set var="srCnt" value="0" />
 	<c:set var="totalRowCount" value="0" />
-	<c:set var="maxRowCount" value="79" />
+	<c:set var="maxRowCount" value="34" />
 	<div style="text-align: center; font-size: 12px;"><b>TAX INVOICE</b></div>
 		<div style="text-align: right; font-size: 10px;">CIN : ${frDetails.company.cinNo}
 			</div>
@@ -315,60 +315,72 @@ page-break-inside: auto !important
 			</div>
 		<table width="100%" border="0" cellpadding="0" cellspacing="0"
 			style="border-left: 1px solid #313131; border-right: 1px solid #313131; border-top: 1px solid #313131;">
-			<tr>
-				<td colspan="3" width="30%"
-					style="padding: 10px; color: #FFF; font-size: 15px;"><p
-						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
-						Invoice No: &nbsp;<b>${frDetails.invoiceNo}</b>
-	            	</p>
-					<p
-						style="color: #000; font-size: 13px; text-align: left; margin: 0px;"> 
-						Invoice Date: &nbsp;<b>${frDetails.billDate}</b>
-					</p></td>
-				<td width="40%" colspan="5"
-					style="border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 15px; text-align: center">
-					<h4 style="color: #000; font-size: 16px; text-align: center; margin: 0px;">${frDetails.company.compName}</h4>
-					<p style="color: #000; font-size: 10px; text-align: center; margin: 0px;">
-						Factory Add.: ${frDetails.company.factAddress} <br />
+		<tr>
+				<!-- <td colspan="2" width="20%"
+					style="padding: 10px; color: #FFF; font-size: 15px;">&nbsp;</td> -->
+				<td width="60%" colspan="6" rowspan="2"
+					style="border-left: 1px solid #313131; padding: 5px; color: #000; font-size: 15px; text-align: left">
+					<p style="color: #000; font-size: 10px; text-align: left; margin: 0px;">&nbsp;Name & Address of Licensee:<br></br></p>
+					<h4 style="color: #000; font-size: 16px; text-align: left; margin: 0px;">&nbsp;${frDetails.company.compName}</h4>
+					<p style="color: #000; font-size: 10px; text-align: left; margin: 0px;">&nbsp;
+						Fact.Address: ${frDetails.company.factAddress} <br />&nbsp;
 						Phone: ${frDetails.company.phoneNo1}, Email: ${frDetails.company.email}
+					</p><br>
+					<p style="color: #000; font-size: 13px; text-align:left; margin: 0px;">&nbsp;
+						<b>GST No:</b>
+						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${frDetails.company.gstin}
+						
 					</p>
 				</td>
-				<td colspan="3" width="30%"
-					style="border-left: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
+				<td colspan="4" width="40%" 
+					style="border-left: 1px solid #313131; border-right: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
 						style="color: #000; font-size: 11px; text-align: left; margin: 0px;">
-						Original for Buyer <br /> Duplicate for Transporter<br />Triplicate
-						for Assesse
+						ORIGINAL - FOR BUYER <br /> DUPLICATE - FOR TRANSPORTER/ACESSEE
 					</p>
 				</td>
 
 			</tr>
-
-		<tr>
-				<td width="50%" colspan="6"
-					style="border-top: 1px solid #313131; padding: 8px; color: #FFF; font-size: 14px;">
+			<tr>
+			<td colspan="4" width="40%" 
+					style="border-left: 1px solid #313131; border-top: 1px solid #313131;border-right: 1px solid #313131; padding: 10px; color: #FFF; font-size: 15px;">
 					<p
+						style="color: #000; font-size: 10px; text-align: left; margin: 0px;">
+						Date Of Receiver (Bill To/Ship To)<br /> 
+					</p>
+					<p style="color: #000; font-size: 12px; text-align: left; margin: 0px;">
+					<b>${frDetails.partyName}</b>   <br /> 
+						<span style="font-size: 10px;"> ${frDetails.frAddress} </span><br></br>
+						<span style="font-size: 10px;">GSTIN:   ${frDetails.partyGstin}</span>
+					</p>
+				</td>
+			</tr>
+
+			<tr>
+				<td width="50%" colspan="6"
+					style="border-top: 1px solid #313131; padding: 8px; color: #FFF; font-size: 
+					14px;">
+					<%-- <p
 						style="color: #000; font-size: 13px; text-align:; left; margin: 0px;">
 						GSTIN:
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>${frDetails.company.gstin}</b>&nbsp;&nbsp;&nbsp;&nbsp;<span>
 							State:&nbsp;${frDetails.company.stateCode} ${frDetails.company.state} </span>
-					</p> <!--         <p style="color:#000; font-size:13px; text-align:left;margin:0px;"></p>
- -->
+					</p>  --%>
 					<p
-						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
-						Invoice No: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>${frDetails.invoiceNo}</b>
-		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;			<!-- </p>
+						style="color: #000; font-size: 13px;font-weight:bold; text-align: left; margin: 0px;">
+						Invoice No: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>${frDetails.invoiceNo}</b> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<!-- </p>
 					<p
 						style="color: #000; font-size: 13px; text-align: left; margin: 0px;"> -->
-						Invoice Date: &nbsp;&nbsp;&nbsp;<b>${frDetails.billDate}</b>
+						<!-- Invoice  -->Date: &nbsp;&nbsp;&nbsp;<b>${frDetails.billDate}</b>
 					</p>
-					<p
+					<!-- <p
 						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">Is reverse tax Applicable?(Yes/No): No</p>
-				</td>
+			 -->	</td>
 
 				<td width="50%" colspan="5"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 8px; color: #FFF; font-size: 15px;">
-					<p
+				<%-- 	<p
 						style="color: #000; font-size: 13px; text-align:; left; margin: 0px;">
 						Mode of Transport: &nbsp;&nbsp;&nbsp;&nbsp;<b>${transportMode}</b>
 					</p>
@@ -376,38 +388,38 @@ page-break-inside: auto !important
 						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
 						Vehicle No:
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>${frDetails.vehNo}</b>
-					</p>
-					<p
+					</p> --%>
+					<%-- <p
 						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">
 						Supply Dt & Time:&nbsp;&nbsp;&nbsp; &nbsp;<b>${dateTime}</b>
-					</p>
+					</p> --%>
 					<p
-						style="color: #000; font-size: 13px; text-align: left; margin: 0px;">Place
-						of supply:&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ${Constant.CITY}   &nbsp;&nbsp;&nbsp;&nbsp; Bill Prep Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${frDetails.billTime}</p>
+						style="color: #000; font-weight:bold; font-size: 13px; text-align: left; margin: 0px;"><%-- Place
+						of supply: &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ${Constants.STATE}    &nbsp;&nbsp;&nbsp;&nbsp; --%>&nbsp; Date Of Remo.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${frDetails.billDate}&nbsp;&nbsp;${frDetails.billTime}</p>
 				</td>
 			</tr>
-			<tr>
+		<%-- 	<tr>
 				<td width="50%" colspan="6"
 					style="border-top: 1px solid #313131; padding: 7px; color: #FFF; font-size: 15px;">
 					<p
 						style="color: #000; font-size: 13px; text-align:; left; margin: 0px;">
-						<b> Billed To:&nbsp; &nbsp; ${frDetails.frName}</b>
+						<b> Billed To:&nbsp; &nbsp; ${frDetails.partyName}  [GSTIN:   ${frDetails.partyGstin}]</b>
 					</p>
 					<p
-						style="color: #000; font-size: 11px; text-align:; left; margin: 0px;">${frDetails.frAddress}</p>
-  
+						style="color: #000; font-size: 11px; text-align:; left; margin: 0px;">${frDetails.partyAddress}</p>
+
 				</td>
 				<td width="50%" colspan="5"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; padding: 7px; color: #FFF; font-size: 15px;">
 					<p
 						style="color: #000; font-size: 13px; text-align:; left; margin: 0px;">
-						<b> Ship To:&nbsp; &nbsp; ${frDetails.frName}</b>
+						<b> Ship To:&nbsp; &nbsp; ${frDetails.partyName}  [GSTIN:   ${frDetails.partyGstin}]</b>
 					</p>
 					<p
-						style="color: #000; font-size: 11px; text-align:; left; margin: 0px;">${frDetails.frAddress}</p>
+						style="color: #000; font-size: 11px; text-align:; left; margin: 0px;">${frDetails.partyAddress}</p>
 
 				</td>
-			</tr> 
+			</tr> --%>
 		</table>
 						
 							<table width="100%" border="1" cellpadding="0" cellspacing="0"

@@ -90,6 +90,30 @@
 							View Bills <span></span>
 						</div></a></li>
 			</c:if>
+				<c:set var="flag" value="${0}"></c:set>
+			<c:forEach items="${setList}" var="setting" varStatus="count">
+				<c:choose>
+
+					<c:when test="${setting.settingKey eq 'Bill As Per Physical Stock'}">
+						<c:set var="flag" value="${1}"></c:set>
+					</c:when>
+
+
+				</c:choose>
+			</c:forEach>
+			<c:if
+				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
+				<li><a
+					href="${pageContext.request.contextPath}/showStockMatchUtility"><div
+							class="img">
+							<img
+								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
+								alt="img">
+						</div>
+						<div class="title">
+							Bill As Per <span>Physical Stock </span>
+						</div></a></li>
+			</c:if>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -273,30 +297,7 @@
 							Stock <span>Details</span>
 						</div></a></li>
 			</c:if>
-			<c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
-				<c:choose>
-
-					<c:when test="${setting.settingKey eq 'Stock Match'}">
-						<c:set var="flag" value="${1}"></c:set>
-					</c:when>
-
-
-				</c:choose>
-			</c:forEach>
-			<c:if
-				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
-				<li><a
-					href="${pageContext.request.contextPath}/showStockMatchUtility"><div
-							class="img">
-							<img
-								src="${pageContext.request.contextPath}/resources/images//nav-orerhistory.png"
-								alt="img">
-						</div>
-						<div class="title">
-							Stock <span>Match </span>
-						</div></a></li>
-			</c:if>
+		
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -644,7 +645,7 @@
 				src="${pageContext.request.contextPath}/resources//images/closebtn.png"
 				alt="monginis"></a>
 			<div class="listarea">
-				<ul>
+				<ul><div class="row">
 					<li class="small-box">
 
 						<div class="ibox">
@@ -709,6 +710,7 @@
 								href="${pageContext.request.contextPath}/showYearlyFrSubCatSaleReport"><i
 								class="fa fa-files-o icon"></i>Month Wise Sub Category Purchase
 								Report Or Month Wise Item Purchase Report</a>
+								
 
 						</div>
 					</li>
@@ -767,8 +769,8 @@
 								class="fa fa-files-o icon"></i>Customer List(Sale)</a> 
 						</div>
 					</li>
-
-
+</div>
+<div class="row">
 					<li class="small-box">
 
 						<div class="ibox">
@@ -819,7 +821,7 @@
 						
 						</li>
 
-
+</div>
 				</ul>
 			</div>
 

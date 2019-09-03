@@ -211,10 +211,10 @@
 				 
 					</div>
 					
-					<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
+					<div id="table-scroll"><!--  class="table-scroll"> -->
+				<!-- 	<div id="faux-table" class="faux-table" aria="hidden"></div> -->
 					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+						<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 
 							<thead>
 								<tr class="bgpink">

@@ -441,7 +441,7 @@
 							Value:</b></td>
 					<td align="right"
 						style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
-								type="number" minFractionDigits="0" maxFractionDigits="0"
+								type="number" minFractionDigits="0" maxFractionDigits="0"  groupingUsed="false"
 								value="${totalAmt+totalCgst+totalSgst}" var="netValueFinal" />${netValueFinal}</b></td>
 				</tr>
 

@@ -163,15 +163,10 @@
 										type="text" value="${todaysDate}" />
 								</div>
 
-
-								<div class="col-sm-2 " style="text-align: right;">
+								<div class="col-md-3" style="margin-top:3px;  text-align: right;">
 									<input type="button" id="submit" class="btn btn-primary"
 										value="Search Report" onclick="searchReport()">
 
-
-								</div>
-
-								<div class="col-sm-1 " style="text-align: center;">
 
 									<button class="btn btn-primary" value="PDF" id="PDFButton"
 										onclick="genPdf()">PDF</button>
@@ -199,9 +194,9 @@
 
 
 							<div id="table-scroll" >
-								<div class="table-wrap">
+								<div >
 
-									<table id="table_grid" class="main-table">
+									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr>
 

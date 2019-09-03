@@ -103,7 +103,7 @@ table, th, td {
 					<div class="clearfix"></div>
 
 
-					<div id="table-scroll" class="table-scroll">
+					<div id="table-scroll">
 						<div id="faux-table" class="faux-table" aria="hidden">
 							<!-- <table id="table2" class="main-table" border="1">
 								<thead>
@@ -129,8 +129,8 @@ table, th, td {
 								<tbody>
 							</table> -->
 						</div>
-						<div class="table-wrap">
-							<table id="table1" class="main-table" border="1">
+						<div>
+							<table id="table1" class="responsive-table" border="1">
 								<thead>
 									<tr class="bgpink">
 

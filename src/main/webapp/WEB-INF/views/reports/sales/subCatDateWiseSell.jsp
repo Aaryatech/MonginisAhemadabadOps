@@ -186,11 +186,10 @@
 								</select>
 							</div>
 
-							<div class="col-sm-2 " style="text-align: center;">
+							<div class="col-md-3" style="text-align: center;">
 								<input type="button" id="submit" class="btn btn-primary"
 									value="Search Report" onclick="searchReport()">
-							</div>
-							<div class="col-sm-1 ">
+							
 								<button class="btn btn-primary" value="PDF" id="PDFButton"
 									onclick="genPdf()">PDF</button>
 							</div>
@@ -210,10 +209,10 @@
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll" class="table-scroll">
-								<div class="table-wrap">
+							<div id="table-scroll" >
+								<div > <!-- class="table-wrap" -->
 
-									<table id="table_grid" class="main-table">
+									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="fixed-side">
 

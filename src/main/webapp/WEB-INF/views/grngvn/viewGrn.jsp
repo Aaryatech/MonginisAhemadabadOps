@@ -97,8 +97,8 @@ table, th, td {
 						<!--tabMenu-->
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
+						<div id="table-scroll"> <!-- class="table-scroll" -->
+							<div id="faux-table" aria="hidden"> <!-- class="faux-table" -->
 								<table id="table_grid" class="main-table" border="1px">
 									<thead>
 										<tr class="bgpink">
@@ -117,7 +117,7 @@ table, th, td {
 										</tr>
 									</thead></table></div>
 							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="responsive-table">  <!-- class="main-table"  -->
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-3" style="text-align: center;">GrnSr No</th>

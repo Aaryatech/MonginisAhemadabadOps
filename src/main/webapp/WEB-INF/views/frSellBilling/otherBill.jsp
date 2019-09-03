@@ -317,7 +317,7 @@ body {
 											<div>
 												<div class="shInnerwidth">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0" class="table" class="responsive-table">
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
@@ -384,10 +384,10 @@ body {
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" > <!-- class="table-scroll" -->
+									<div id="faux-table" class="faux-table" aria="hidden" style="display: none;"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid1" class="main-table small-td">
+										<table id="table_grid1" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>

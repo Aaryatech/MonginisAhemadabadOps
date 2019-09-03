@@ -64,6 +64,7 @@ a:link {
 a:hover {
 	color: black;
 }
+
 </style>
 
 
@@ -231,9 +232,9 @@ a:hover {
 									style="border-radius: 25px;" placeholder="Search items by name"
 									title="Type item name">
 								</label>
-								<div id="table-scroll" class="table-scroll">
+								<div id="table-scroll" ><!-- class="table-scroll" -->
 
-									<div id="faux-table" class="faux-table" aria="hidden">
+									<div id="faux-table" class="faux-table" aria="hidden"style="display:none">
 										<table id="table_grid" class="main-table">
 											<thead>
 												<tr class="bgpink">
@@ -255,7 +256,7 @@ a:hover {
 									</div>
 									<div class="table-wrap">
 
-										<table id="table_grid${loop.index}" class="main-table">
+										<table id="table_grid${loop.index}" class="responsive-table"style="margin:0px;"><!--   class="main-table" -->
 											<thead>
 												<tr class="bgpink">
 													<th class="col-md-2">Item Name</th>

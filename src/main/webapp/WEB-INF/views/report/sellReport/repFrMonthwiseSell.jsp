@@ -117,10 +117,10 @@ jQuery(document).ready(function(){
 	<div class="colOuter">
 		<div align="center" >
 		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker"  placeholder="Delivery Date" autocomplete="off" name="from_Date" type="text" size="35" value="${frommonth}">
+		<input id="fromdatepicker"  placeholder="Delivery Date" autocomplete="off" class="texboxitemcode texboxcal" name="from_Date" type="text" size="35" value="${frommonth}">
 		</div></div>
 		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker"  placeholder="Delivery Date" autocomplete="off"  name="to_Date" type="text" size="35" value="${tomonth}">
+		<input id="todatepicker"  placeholder="Delivery Date" autocomplete="off"  name="to_Date"  class="texboxitemcode texboxcal" type="text" size="35" value="${tomonth}">
 		</div></div>
 				<input type="hidden" name="frId" id="frId" value="${frId}">
 		
@@ -144,9 +144,9 @@ jQuery(document).ready(function(){
 			<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
-						<div class="table-wrap">
+				<div id="table-scroll" >
+					<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+						<div >
 						<table id="table_grid" class="main-table">
 							<thead>
 								<tr class="bgpink">
@@ -169,8 +169,8 @@ jQuery(document).ready(function(){
 					
 				</div>
 					</div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+					<div >
+						<table id="table_grid" class="responsive-table">
 							<thead>
 								<tr class="bgpink">
 

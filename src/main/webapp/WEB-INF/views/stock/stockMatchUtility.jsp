@@ -75,16 +75,16 @@ a:hover {
 			 	<form action="${pageContext.request.contextPath}/showStockMatchUtility" method="POST" >
 			
 				<div class="order-left">
-					<h2 class="pageTitle">Stock Match Utility</h2>
+					<h2 class="pageTitle">Bill As Per Physical Stock</h2>
 					<!--<h3 class="pageTitle2">Order Date : 22-02-2017 </h3>-->
 				</div>
 				<div class="order-right" align="right">
              	</div>
 				<div class="colOuter">
-					<div class="col-md-1">
+					<div class="col-md-2">
 						<div class="col1title">Select Category</div>
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<select name="cat_id" class="form-control chosen"
 							tabindex="4" id="cat_id"  required>
 
@@ -111,17 +111,13 @@ a:hover {
                   <input type="hidden" name="selectStock" id="selectStock" value="1" />
 				  <input type="hidden" name="st_type" id="st_type" value="1" />
                  <input type="hidden" name="selectRate" id="selectRate" value="2" />
-				</div>
+			
 
-				<div class="colOuter">
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
 					<div class="col2">
 						<input name="search" class="buttonsaveorder" value="Search"
 							type="submit" >
 					</div>
-             	</div>
+             	</div>	
              	</form>
              	                   <c:set var="btnDisplayStyle" value="none;color:grey;" />
              	
@@ -171,9 +167,9 @@ a:hover {
 									</c:otherwise>
 								</c:choose>
 
-								<div id="table-scroll" class="table-scroll">
+								<div id="table-scroll" >
 							 
-									<div id="faux-table" class="faux-table" aria="hidden">
+									<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
 									 <table id="table_grid" class="main-table" >
 											<thead >
 												<tr class="bgpink"style="background-color: #ee578f;color:#ffffff;">
@@ -191,7 +187,7 @@ a:hover {
 									</div>
 									<div class="table-wrap">
 									
-										<table id="table_grid1" class="main-table">
+										<table id="table_grid1" class="responsive-table">
 											<thead >
 												<tr class="bgpink"style="background-color: #ee578f;color:#ffffff;">
 												 <td class="col-md-1">Sr.No</td>

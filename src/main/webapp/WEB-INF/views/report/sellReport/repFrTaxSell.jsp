@@ -110,13 +110,13 @@ jQuery(document).ready(function(){
 							<div class="col1title">
 								<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
 									id="fromdatepicker" autocomplete="off"
-									placeholder="Delivery Date" name="from_Date" type="text"
+									placeholder="Delivery Date" name="from_Date" type="text" class="texboxitemcode texboxcal"
 									size="35">
 							</div>
 						</div>
 						<div class="col2">
 							<div class="col1title">
-								<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input id="todatepicker"
+								<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input id="todatepicker" class="texboxitemcode texboxcal"
 									autocomplete="off" placeholder="Delivery Date" name="to_Date"
 									type="text" size="35">
 							</div>
@@ -144,10 +144,10 @@ jQuery(document).ready(function(){
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" class="table-scroll">
+						<div id="table-scroll">
 							<div id="faux-table" class="faux-table" aria="hidden"></div>
 							<div class="table-wrap">
-								<table id="table_grid" class="main-table" border="1">
+								<table id="table_grid" class="responsive-table" border="1" style="display: none;">
 									<thead>
 										<tr class="bgpink">
 

@@ -14,12 +14,14 @@ table, th, td {
 </style>
 <!DOCTYPE html>
 <html>
-
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
 <body>
 
 	<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
+	
 	<script>
 		$(function() {
 			$("#toDate").datepicker({
@@ -146,9 +148,11 @@ table, th, td {
 							<div class="col-md-2">Select Category</div>
 							<div class="col-md-4" style="text-align: left;">
 								<select data-placeholder="Select Group"
-									class="form-control chosen" name="item_grp1" tabindex="-1"
+									 name="item_grp1" tabindex="-1"
 									onchange="getSubCategoriesByCatId()" id="item_grp1"
-									data-rule-required="true" multiple="multiple">
+									data-rule-required="true"data-placeholder="Choose Menus..." class="chosen-select"
+							style="text-align: left;" required multiple="multiple">
+
 									<option value="-1">Select All</option>
 
 									<c:forEach items="${mCategoryList}" var="mCategoryList">
@@ -162,10 +166,11 @@ table, th, td {
 
 							<div class="col-sm-2 col-lg-2 ">Sub Category</div>
 							<div class="col-md-4">
-								<select data-placeholder="Select Sub Category"
-									multiple="multiple" class="form-control chosen "
-									name="item_grp2" id="item_grp2" tabindex="-1"
-									data-rule-required="true">
+								<select data-placeholder="Select Sub Category" 
+								class="chosen-select" name="item_grp2"  id="item_grp2"
+							style="text-align: left;" required multiple="multiple">
+
+								
 
 								</select>
 							</div>
@@ -239,10 +244,10 @@ table, th, td {
 						<div class="row">
 							<div class="col-md-2">Select Category</div>
 							<div class="col-md-4" style="text-align: left;">
-								<select data-placeholder="Select Group"
-									class="form-control chosen" name="item_grp1Item" tabindex="-1"
-									 id="item_grp1Item"
-									data-rule-required="true" multiple="multiple">
+								<select data-placeholder="Select Group"  id="item_grp1Item"
+									 name="item_grp1Item" tabindex="-1"data-placeholder="Choose Category" class="chosen-select"
+							style="text-align: left;" required multiple="multiple">
+									 
 									<option value="-1">Select All</option>
 
 									<c:forEach items="${mCategoryList}" var="mCategoryList">
@@ -292,10 +297,15 @@ table, th, td {
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-	<script type="text/javascript"
-		src="https://www.gstatic.com/charts/loader.js"></script>
+	<!-- <script type="text/javascript"
+		src="https://www.gstatic.com/charts/loader.js"></script> -->
 	<!--easyTabs-->
 
+<script
+	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
+<!--easyTabs-->
 
 
 	<script type="text/javascript">
@@ -497,7 +507,9 @@ table, th, td {
 													"value", data[i].subCatId)
 													.text(data[i].subCatName));
 								}
-								$("#item_grp2").trigger("chosen:updated");
+							    $('.chosen-select').trigger('chosen:updated');
+
+
 							});
 		}
 	</script>

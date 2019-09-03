@@ -450,10 +450,10 @@ label:before{
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" > <!-- class="table-scroll" -->
+									<div id="faux-table"aria="hidden"></div>  <!-- class="faux-table"  -->
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid1" class="main-table small-td">
+										<table id="table_grid1" class="responsive-table"><!--  class="main-table small-td"> -->
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -695,10 +695,10 @@ label:before{
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" >
+									<div id="faux-table"  aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid2" class="main-table small-td">
+										<table id="table_grid2" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -951,10 +951,10 @@ label:before{
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" >
+									<div id="faux-table"  aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid3" class="main-table small-td">
+										<table id="table_grid3" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -1204,10 +1204,10 @@ label:before{
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" >
+									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid4" class="main-table small-td">
+										<table id="table_grid4"class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -1456,10 +1456,10 @@ label:before{
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" >
+									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid5" class="main-table small-td">
+										<table id="table_grid5" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -1699,10 +1699,10 @@ label:before{
 
 
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" >
+									<div id="faux-table" aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid6" class="main-table small-td">
+										<table id="table_grid6" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>
@@ -1949,10 +1949,10 @@ label:before{
 								<div class="checkdiv" style="display: none;" id="check7"></div>
 								<div class="clearfix"></div> <br /> <!-- Form End -->
 
-								<div id="table-scroll" class="table-scroll">
-									<div id="faux-table" class="faux-table" aria="hidden"></div>
+								<div id="table-scroll" >
+									<div id="faux-table"  aria="hidden"></div>
 									<div class="table-wrap table-wrap-custbill">
-										<table id="table_grid7" class="main-table small-td">
+										<table id="table_grid7" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
 													<th class="col-sm-1">Sr no.</th>

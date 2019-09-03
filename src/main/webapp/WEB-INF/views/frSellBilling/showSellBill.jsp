@@ -128,10 +128,10 @@ jQuery(document).ready(function(){
 			<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden">
+				<div id="table-scroll" > <!-- class="table-scroll" -->
+					<div id="faux-table" aria="hidden">  <!-- class="faux-table" -->
 				<table width="100%" border="1" cellspacing="0"
-														cellpadding="1" id="table_grid"  class="main-table">
+														cellpadding="1" id="table_grid"  class="main-table" style="display: none;">
 								<thead>	<tr class="bgpink">
 									<th style="text-align:center;">Sr No</th>
 										<th style="text-align:center;">Invoice No</th>
@@ -150,7 +150,7 @@ jQuery(document).ready(function(){
 					<div class="table-wrap">
 					
 								<table width="100%" border="1" cellspacing="0"
-														cellpadding="1" id="table_grid"  class="main-table">
+														cellpadding="1" id="table_grid"  class="responsive-table"> <!-- class="main-table" -->
 								<thead>	<tr class="bgpink">
 									<th style="text-align:center;">Sr No</th>
 										<th style="text-align:center;" >Invoice No</th>

@@ -12,8 +12,12 @@ table, th, td {
 	display: none;
 }
 </style>
+
 <!DOCTYPE html>
 <html>
+
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/dropdownmultiple/bootstrap-chosen.css">
 
 <body>
 
@@ -123,7 +127,7 @@ table, th, td {
 							<div class="form-group">
 								<div class="col-sm-3 col-lg-2	">From Date</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal"
+									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
 										size="30" type="text" value="${todaysDate}" />
 								</div>
@@ -134,7 +138,7 @@ table, th, td {
 
 								<div class="col-sm-3 col-lg-2	">To Date</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal"
+									<input class="texboxitemcode texboxcal" autocomplete="off"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
 										type="text" value="${todaysDate}" />
 								</div>
@@ -148,7 +152,7 @@ table, th, td {
 							<div class="col-md-2">Select Category</div>
 							<div class="col-md-4" style="text-align: left;">
 								<select data-placeholder="Select Group"
-									class="form-control chosen" name="item_grp1" tabindex="-1"
+									class="chosen-select" name="item_grp1" tabindex="-1"
 									onchange="getSubCategoriesByCatId()" id="item_grp1"
 									data-rule-required="true" multiple="multiple">
 									<option value="-1">Select All</option>
@@ -165,7 +169,7 @@ table, th, td {
 							<div class="col-sm-2 col-lg-2 ">Sub Category</div>
 							<div class="col-md-4">
 								<select data-placeholder="Select Sub Category"
-									multiple="multiple" class="form-control chosen "
+									multiple="multiple" class="chosen-select"
 									name="item_grp2" id="item_grp2" tabindex="-1"
 									data-rule-required="true">
 
@@ -260,7 +264,7 @@ table, th, td {
 							<div class="col-md-2">Select Category</div>
 							<div class="col-md-4" style="text-align: left;">
 								<select data-placeholder="Select Group"
-									class="form-control chosen" name="item_grp1Item" tabindex="-1"
+									class="chosen-select" name="item_grp1Item" tabindex="-1"
 									 id="item_grp1Item"
 									data-rule-required="true" multiple="multiple">
 									<option value="-1">Select All</option>
@@ -322,8 +326,15 @@ table, th, td {
 
 	<!--easyTabs-->
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
-	<script type="text/javascript"
-		src="https://www.gstatic.com/charts/loader.js"></script>
+	<!-- <script type="text/javascript"
+		src="https://www.gstatic.com/charts/loader.js"></script> -->
+		
+<script
+	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+<script
+	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
+<!--easyTabs-->
+		
 	<!--easyTabs-->
 
 

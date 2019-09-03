@@ -119,14 +119,14 @@ jQuery(document).ready(function(){
 						<h4 class="pull-left">Month From :-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input type='text' placeholder="Select From Month" id='txtDate'
+						<input type='text' placeholder="Select From Month" id='txtDate' class="texboxitemcode texboxcal"
 							autocomplete="off" name="from_stockdate" required size="25" />
 					</div>
 					<div class="col-md-1">
 						<h4 class="pull-left">To Month:-</h4>
 					</div>
 					<div class="col-md-2 ">
-						<input type='text' placeholder="Select To Month" id=txtDateto
+						<input type='text' placeholder="Select To Month" id='txtDateto' class="texboxitemcode texboxcal"
 							autocomplete="off" name="to_stockdate" required size="25" />
 					</div>
 					<div class="col-md-1 ">Select :</div>
@@ -141,7 +141,7 @@ jQuery(document).ready(function(){
 					<!-- <div class="col-md-2">
 		    <button class="btn search_btn pull-left" onclick="monthWisePurchase()">Search </button>
 		</div> -->
-					<div align="center">
+					<div align="center" style="margin-top:3px;">
 						<button class="btn search_btn" onclick="monthWisePurchase()">HTML
 							View</button>
 						<button class="btn search_btn" onclick="showChart()">Graph</button>
@@ -160,9 +160,9 @@ jQuery(document).ready(function(){
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden">
-								<div class="table-wrap">
+						<div id="table-scroll">
+							<div id="faux-table" class="faux-table" aria="hidden"style="display: none;">
+								<div > <!-- class="table-wrap" -->
 									<table id="table_grid" class="main-table">
 										<thead>
 											<tr class="bgpink">
@@ -188,8 +188,8 @@ jQuery(document).ready(function(){
 
 								</div>
 							</div>
-							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+							<div >
+								<table id="table_grid"  class="responsive-table">
 									<thead>
 										<tr class="bgpink">
 

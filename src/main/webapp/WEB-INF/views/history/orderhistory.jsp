@@ -443,12 +443,12 @@ jQuery(document).ready(function(){
 							<div class="clearfix"></div>
 							<div class="table-wrap">
 
-							<div id="table-scroll" class="table-scroll">
-								<div id="faux-table" class="faux-table1" aria="hidden">
+							<div id="table-scroll"> <!-- class="table-scroll"> -->
+								<div id="faux-table"  aria="hidden"> <!-- class="faux-table1" -->
 								</div>
 								<!-- 					<div class="table-wrap">
  -->
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="responsive-table" ><!-- class="main-table" -->
 									<thead>
 										<tr class="bgpink">
 											<th class="col-md-1" style="text-align: center;">Sr No</th>

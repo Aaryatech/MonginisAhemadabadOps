@@ -109,8 +109,8 @@ jQuery(document).ready(function(){
 	<br>
 <div class="row">
 	
-	<div class="col-sm-1"><div class="pull-left"><b>Group</b></div></div>
-		<div class="col-md-3"><select id="category" class="form-control chosen"  style="width: 230px" placeholder="Select Category"  name="category" tabindex="4"    >
+	<div class="col-sm-1"><div class="pull-left"><b>Group&nbsp;</b></div></div>
+		<div class="col-md-3"><select id="category" class="form-control"  style="width: 230px" placeholder="Select Category"  name="category" tabindex="4"    >
 		<option value="-1">Select Option</option>
 								
 											
@@ -121,13 +121,13 @@ jQuery(document).ready(function(){
 
 							</select>
 							</div>
-		<div class="col-sm-1"><div class="pull-left"><b>From</b></div></div>
+		<div class="col-sm-1"><div class="pull-left"><b>From&nbsp;&nbsp;&nbsp;&nbsp;</b></div></div>
 	    <div class="col-md-3">
-		<input id="fromdatepicker"  placeholder="From Date"  name="from_Date" type="text" style="width: 230px; text-align:left;" size="30"  class="form-control" autocomplete="off">
+		<input id="fromdatepicker"  placeholder="From Date"  name="from_Date" type="text" style="margin-top:3px;width: 230px; text-align:left;" size="30"  class="form-control" autocomplete="off">
 		</div>
-			<div class="col-sm-1"><div class="pull-left"><b>TO</b></div></div>
+			<div class="col-sm-1"><div class="pull-left"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></div></div>
 			  <div class="col-md-3">
-		<input id="todatepicker"  placeholder="To Date"  name="to_Date" type="text" size="30" style="width: 230px;  text-align:left;"  class="form-control" autocomplete="off">
+		<input id="todatepicker"  placeholder="To Date"  name="to_Date" type="text" size="30" style="margin-top:3px;width: 230px;  text-align:left;"  class="form-control" autocomplete="off">
 		</div></div>
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 		
@@ -197,10 +197,10 @@ jQuery(document).ready(function(){
 			<div class="clearfix"></div>
 
 
-				<div id="table-scroll" class="table-scroll">
-					<div id="faux-table" class="faux-table" aria="hidden"></div>
-					<div class="table-wrap">
-						<table id="table_grid" class="main-table">
+				<div id="table-scroll" >
+					<div id="faux-table" class="faux-table" aria="hidden" style="display: none;"></div>
+					<div>
+						<table id="table_grid"  class="responsive-table">
 							<thead>
 								<tr class="bgpink">
 

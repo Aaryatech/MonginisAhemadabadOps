@@ -340,7 +340,7 @@ public class GrnGvnController {
 
 		}
 
-		String sro = getGrnGvnSrNo(request, response);
+	//	String sro = getGrnGvnSrNo(request, response);
 
 		// System.out.println("#########" + srNo + "################");
 
@@ -1617,8 +1617,11 @@ public class GrnGvnController {
 						int gvnQty = Integer.parseInt(strGvnQty);
 
 						System.out.println("GVN QTY " + gvnQty);
+						if(gvnQty>0) {
 						objShowGvnList.get(j).setAutoGrnQty(gvnQty);
+						
 						gvnList.add(objShowGvnList.get(j));
+						}
 						
 
 					}

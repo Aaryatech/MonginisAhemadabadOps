@@ -135,8 +135,8 @@ table, th, td {
 
 						<div class="clearfix"></div>
 
-						<div id="table-scroll" class="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden" >
+						<div id="table-scroll" > <!-- class="table-scroll" -->
+							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;" >
 				 	<table id="table_grid1" class="main-table">
 									<thead>
 										<tr class="bgpink">
@@ -167,7 +167,7 @@ table, th, td {
 							
 							</div>
 							<div class="table-wrap">
-								<table id="table_grid" class="main-table">
+								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
 											<!-- 	<th class="col-md-1">Sr No.</th>
