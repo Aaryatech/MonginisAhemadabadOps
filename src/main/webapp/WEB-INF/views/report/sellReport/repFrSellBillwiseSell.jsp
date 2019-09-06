@@ -75,15 +75,15 @@ table, th, td {
 						<div align="center">
 							<div class="col1">
 								<div class="col1title">
-									<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="fromdatepicker" placeholder="From Date" 	class="texboxitemcode texboxcal"
+									<span class="frm_txt">From</span> <input
+										id="fromdatepicker" placeholder="From Date" class="texboxitemcode texboxcal float_l"
 										name="from_Date" type="text" autocomplete="off"  size="35">
 								</div>
 							</div>
 							<div class="col2">
 								<div class="col1title">
-									<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-										id="todatepicker" placeholder="To Date" name="to_Date" 	class="texboxitemcode texboxcal" autocomplete="off" 
+									<span class="frm_txt">To</span> <input
+										id="todatepicker" placeholder="To Date" name="to_Date" 	class="texboxitemcode texboxcal float_l" autocomplete="off" 
 										type="text" size="35">
 								</div>
 							</div>
@@ -91,9 +91,8 @@ table, th, td {
 						</div>
 
 
-						<div align="center">
-							<button class="btn search_btn" onclick="searchSellBill()">HTML
-								View</button>
+						<div align="center" class="right_btn">
+							<button class="btn search_btn" onclick="searchSellBill()">HTML View</button>
 
 							<%--  <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
 							<button class="btn btn-primary" value="PDF" id="PDFButton"
@@ -111,8 +110,8 @@ table, th, td {
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll" >
-								<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+							<div id="table-scroll"  class="table-scroll responsive-table-one">
+								<div id="faux-table" class="faux-table" aria="hidden">
 									<table id="table_grid" class="main-table">
 										<thead>
 											<tr class="bgpink">
@@ -142,7 +141,7 @@ table, th, td {
 									</table>
 								</div>
 								<div >
-									<table id="table_grid" class="responsive-table">
+									<table id="table_grid" class="responsive-table" style="margin:0px;">
 										<thead>
 											<tr class="bgpink">
 
@@ -255,7 +254,7 @@ table, th, td {
 														document
 																.getElementById('range').style.display = 'block';
 
-														var tr = $('<tr></tr>');
+														var tr = $('<tr class="responsive-table"></tr>');
 
 														tr
 																.append($(

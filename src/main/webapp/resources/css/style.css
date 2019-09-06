@@ -97,7 +97,8 @@ margin: 0px auto;
 }
 
 .wrapperIn2 {
-    padding-top: 65px;
+    padding-top: 61px;
+    vertical-align: top;
 }
 
 .content{
@@ -439,6 +440,7 @@ width:100px
 
 @media screen and (max-width:700px){
 	.content{height: auto;}
+	.faux-table{height: 71px;}
 }
 
 

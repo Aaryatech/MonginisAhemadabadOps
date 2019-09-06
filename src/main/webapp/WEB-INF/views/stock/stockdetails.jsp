@@ -110,7 +110,7 @@ table, th, td {
 	<!--rightContainer-->
 	<div class="fullGrid center">
 		<!--fullGrid-->
-		<div class="wrapperIn2">
+		<div class="wrapperIn2 single">
 
 			<!--leftNav-->
 
@@ -274,7 +274,7 @@ table, th, td {
 
 
 					<div class="col-md-2">
-						<select name="select_rate" class="form-control chosen"
+						<select name="select_rate" class="form-control chosen mob_marg"
 							tabindex="4" id="select_rate" onchange="searchStock()" required>
 							<option value="">Select Rate Type</option>
 
@@ -387,9 +387,9 @@ table, th, td {
 							</label>
 
 
-							<div id="table-scroll"><!-- class="table-scroll" -->
-								<!-- <div id="faux-table" class="faux-table" aria="hidden"> -->
-								<%-- <div class="table-wrap">	<table id="table_grid1" class="main-table">
+							<div id="table-scroll"  class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
+								<div id="faux-table" class="faux-table responsive-table" aria="hidden"> 
+								 <div class="table-wrap"><table id="table_grid1" class="main-table responsive-table">
 										<thead>
 											<tr class="bgpink">
 							<th class="col-md-1">Item Id</th>
@@ -410,8 +410,8 @@ table, th, td {
 													<th>Stock Difference</th>
 												</c:if>
 											</tr>
-										</thead></table></div> --%>
-								<!-- </div> -->
+										</thead></table></div> 
+							</div>
 								<div><!--  class="table-wrap" -->
 									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 										<thead>
@@ -504,16 +504,16 @@ table, th, td {
 
 								<button type="button" class="btn btn-primary"
 									onclick="exportToExcel();" id="expExcel"
-									style="align-content: center; width: 200px; margin-left: 80px; margin-top:5px;">
+									>
 									Export To Excel</button>
-							</div>
+						<!-- 	</div>
 
 
 							<div class="col-md-3">
-
+ -->
 								<button type="button" class="btn btn-primary" onclick="genPdf()"
 									id="PDFButton"
-									style="align-content: center; width: 100px; margin-left: 80px; margin-top:5px;">
+									>
 									PDF</button>
 							</div>
 

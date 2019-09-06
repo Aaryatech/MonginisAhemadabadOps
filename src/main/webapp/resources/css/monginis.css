@@ -451,6 +451,11 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 .responsive-table td{text-align: right; padding: 10px; font-size: 18px;}
 #insertItemButton,#printExBill {margin: 0 0 15px 0; }
 
+.responsive-table-one{width: 100%; overflow-x: scroll; display: inline-block !important;}
+
+.frm_txt{float: left; width: 15%; float: left; margin: 9px 0 0 0;}
+.float_l{float: left; width: 82%;}
+.right_btn{float: left; margin:9px 0 0 0;}
 
 .ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span{display: none !important;}
 
@@ -516,6 +521,12 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 }
 
 @media screen and (max-width:700px){
+	.texboxitemcode{position: relative; z-index:999999;}
+	.right_btn{float: none; margin:0;}
+	.frm_txt {width: 100%; float: none; margin: 0 0 5px 0; text-align: left; display: block;}
+	.wrapperIn2.single {padding-top: 41px;}
+	.mob_marg{margin: 15px 0 0 0;}
+	.form-control{position: relative; z-index:999999;}
 	
 .logoBarLeft img{ max-width:120px;}
 .logoBarbg{ height:90px;}
