@@ -141,7 +141,7 @@
 
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 
-						<br> <br>
+					
 
 
 						<div class="row">
@@ -151,7 +151,7 @@
 								<div class="col-sm-3 col-lg-2	">From Date</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
-										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
+										placeholder="From Date" id="fromDate" name="fromDate"
 										size="30" type="text" value="${todaysDate}" />
 								</div>
 
@@ -159,14 +159,14 @@
 								<div class="col-sm-3 col-lg-2	">To Date</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
-										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
+										placeholder="To Date" id="toDate" name="toDate" size="30"
 										type="text" value="${todaysDate}" />
 								</div>
 							</div>
 
 						</div>
 
-						<br> <br>
+						<br>
 
 						<div class="row">
 							<div class="col-md-2">Select Category</div>
@@ -195,8 +195,7 @@
 							</div>
 						</div>
 
-						<br> <br>
-
+					
 					</form>
 
 					<!-- form -->

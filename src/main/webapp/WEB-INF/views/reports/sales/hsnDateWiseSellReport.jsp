@@ -141,7 +141,7 @@
 
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 
-						<br> <br>
+					
 
 
 						<div class="row">
@@ -177,7 +177,7 @@
 
 						</div>
 
-						<br> <br>
+				
 
 					</form>
 

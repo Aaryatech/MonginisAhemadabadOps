@@ -44,14 +44,14 @@
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="col-md-1">From Date :</div>
+						<div class="col-md-1">From Date</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" autocomplete="off" name="from_Date" type="text"
 								placeholder="From Date">
 						</div>
 
-						<div class="col-md-1">TO Date :</div>
+						<div class="col-md-1">TO </div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" autocomplete="off" name="to_Date" type="text"

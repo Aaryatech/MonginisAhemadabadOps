@@ -52,13 +52,13 @@
 
 						<div class="calender-title">From</div>
 						<div class="col-md-2">
-							<input id="datepicker" class="texboxitemcode texboxcal"
+							<input id="datepicker" class="texboxitemcode texboxcal" placeholder="From Date"
 								value="${cDate}" autocomplete="off" name="from_Date" type="text">
 						</div>
 
 						<div class="calender-title">TO</div>
 						<div class="col-md-2">
-							<input id="datepicker2" class="texboxitemcode texboxcal"
+							<input id="datepicker2" class="texboxitemcode texboxcal"  placeholder="To Date"
 								value="${cDate}" autocomplete="off" name="to_Date" type="text">
 						</div>
 

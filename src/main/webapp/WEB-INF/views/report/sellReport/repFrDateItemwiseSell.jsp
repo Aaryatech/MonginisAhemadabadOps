@@ -150,7 +150,7 @@ jQuery(document).ready(function(){
  --%>		 	<button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>
 		
     </div></div> 
-		<br> 
+	
 	<%-- <div class="row">
 	
 	<div class="colOuter">

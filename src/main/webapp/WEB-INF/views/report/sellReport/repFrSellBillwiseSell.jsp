@@ -10,6 +10,7 @@
 table, th, td {
 	border: 1px solid #9da88d;
 }
+
 </style>
 <body>
 
@@ -112,7 +113,7 @@ table, th, td {
 
 							<div id="table-scroll"  class="table-scroll responsive-table-one">
 								<div id="faux-table" class="faux-table" aria="hidden">
-									<table id="table_grid" class="main-table">
+									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="bgpink">
 
@@ -141,7 +142,7 @@ table, th, td {
 									</table>
 								</div>
 								<div >
-									<table id="table_grid" class="responsive-table" style="margin:0px;">
+									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="bgpink">
 

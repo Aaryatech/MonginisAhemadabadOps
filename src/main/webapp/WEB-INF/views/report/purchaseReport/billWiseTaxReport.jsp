@@ -68,7 +68,7 @@
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From Date:-</h4>
+						<h4 class="pull-left">From</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="fromdatepicker" autocomplete="off" 
@@ -76,7 +76,7 @@
 							name="fromDate" type="text">
 					</div>
 					<div class="col-md-1">
-						<h4 class="pull-left">To Date:-</h4>
+						<h4 class="pull-left">To </h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="todatepicker" autocomplete="off"
@@ -94,7 +94,7 @@
 						</select>
 					</div>
 					
-					<div class="col-md-2">
+					<div class="col-md-2" >
 						<button class="btn search_btn pull-left"
 							onclick="billWiseTaxReport()">Search</button>
 						<%-- 		  &nbsp;&nbsp;&nbsp;  <a href='${pageContext.request.contextPath}/pdf?reportURL=showPurchaseTaxBillwiseReportPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>

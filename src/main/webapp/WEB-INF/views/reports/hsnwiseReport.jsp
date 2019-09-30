@@ -114,8 +114,8 @@ jQuery(document).ready(function(){
 				<div class="row">
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 
-					<div class="col-md-2 from_date">
-						<h4 class="pull-left">From Date:-</h4>
+					<div class="col-md-1 from_date">
+						<h4 class="pull-left">From</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="fromdatepicker" autocomplete="off"
@@ -123,7 +123,7 @@ jQuery(document).ready(function(){
 							name="fromDate" type="text" value="${todaysDate}">
 					</div>
 					<div class="col-md-1">
-						<h4 class="pull-left">To Date:-</h4>
+						<h4 class="pull-left">To </h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="todatepicker" autocomplete="off"
@@ -131,13 +131,13 @@ jQuery(document).ready(function(){
 							name="toDate" type="text" value="${todaysDate}">
 					</div>
 
-				</div>
+			<!-- 	</div>
 				<br>
 				<div class="row">
-					<div class="form-group">
-						<label class="col-sm-3 col-lg-2	 control-label">Select
+					<div class="form-group"> -->
+						<label class="col-md-2">Select
 							Type</label>
-						<div class="col-sm-2 col-lg-4  controls">
+						<div class="col-sm-2 col-lg-2  controls">
 
 							<select data-placeholder="Select Type"
 								class="form-control chosen" id="type" name="type" required>
@@ -150,18 +150,18 @@ jQuery(document).ready(function(){
 
 
 
-						<div class="col-md-4">
+						<div class="col-md-2">
 							<button class="btn btn-info" onclick="searchReport()">Search
-								Report</button>
+								</button>
 							<button class="btn btn-primary" value="PDF" id="PDFButton"
 								onclick="genPdf()">PDF</button>
 
 						</div>
 
 
-					</div>
+					
 				</div>
-				<br>
+				
 
 
 				<div class="row">

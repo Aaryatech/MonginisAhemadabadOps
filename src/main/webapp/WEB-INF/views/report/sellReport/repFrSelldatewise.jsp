@@ -64,19 +64,22 @@ table, th, td {
 	</div>
 	
 	<div class="colOuter">
-		<div align="center" >
-		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker" class="texboxitemcode texboxcal" placeholder="From Date"  name="from_Date" type="text" size="35"  autocomplete="off" >
+		<div align="center" >	<div class="col1">
+								<div class="col1title">
+			<span class="frm_txt">From</span> 
+		<input id="fromdatepicker" class="texboxitemcode texboxcal float_l" placeholder="From Date"  name="from_Date" type="text" size="35"  autocomplete="off" >
 		</div></div>
-		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker" class="texboxitemcode texboxcal" placeholder="To Date"  name="to_Date" type="text" size="35" autocomplete="off"  >
+		<div class="col2">
+								<div class="col1title">
+			<span class="frm_txt">To</span> 
+		<input id="todatepicker" class="texboxitemcode texboxcal float_l" placeholder="To Date"  name="to_Date" type="text" size="35" autocomplete="off"  >
 		</div></div>
 				<input type="hidden" name="frId" id="frId" value="${frId}">
 		
 	</div>
  
 	
- 	<div align="center"> 
+ 	<div align="center" class="right_btn"> 
 		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
 		    <button class="btn search_btn" onclick="showChart()" >Graph</button>
 <%-- 		    	   <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellDatewiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a>

@@ -69,16 +69,16 @@
 					<div align="center">
 						<div class="col1">
 							<div class="col1title">
-								<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal"
-									placeholder="Delivery Date" name="from_Date" type="text"
+								<b><span class="frm_txt">From</span></b> <input
+									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal float_l"
+									placeholder="From Date" name="from_Date" type="text"
 									size="35">
 							</div>
 						</div>
 						<div class="col2">
 							<div class="col1title">
-								<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input id="todatepicker" class="texboxitemcode texboxcal"
-									autocomplete="off" placeholder="Delivery Date" name="to_Date"
+								<b><span class="frm_txt">To</span></b> <input id="todatepicker" class="texboxitemcode texboxcal float_l"
+									autocomplete="off" placeholder="To Date" name="to_Date"
 									type="text" size="35">
 							</div>
 						</div>
@@ -88,7 +88,7 @@
 					</div>
 
 
-					<div align="center">
+					<div align="center" class="right_btn">
 						<button class="btn search_btn" onclick="searchSellBill()">HTML
 							View</button>
 						<%--   &nbsp;&nbsp;&nbsp;

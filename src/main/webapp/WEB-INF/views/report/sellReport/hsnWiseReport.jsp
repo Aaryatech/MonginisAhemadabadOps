@@ -61,11 +61,11 @@
 	
 <div class="colOuter">
 		<div align="center" >
-		<div class="col1"><div class="col1title"><b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="fromdatepicker" autocomplete="off" placeholder="From Date"  name="from_Date" type="text" size="35" class="texboxitemcode texboxcal">
+		<div class="col1"><div class="col1title"><b><span class="frm_txt">From</span></b>
+		<input id="fromdatepicker" autocomplete="off" placeholder="From Date"  name="from_Date" type="text" size="35" class="texboxitemcode texboxcal float_l">
 		</div></div>
-		<div class="col2"><div class="col1title"><b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b>
-		<input id="todatepicker" autocomplete="off" placeholder="To Date"  name="to_Date" type="text" size="35" class="texboxitemcode texboxcal">
+		<div class="col2"><div class="col1title"><b><span class="frm_txt">To</span></b>
+		<input id="todatepicker" autocomplete="off" placeholder="To Date"  name="to_Date" type="text" size="35" class="texboxitemcode texboxcal float_l">
 		</div></div>
 										<input type="hidden" name="frId" id="frId" value="${frId}">
 										<input type="hidden" name="frName" id="frName" value="${frName}">
@@ -73,8 +73,8 @@
 	</div>
  
 	
- 	<div align="center"> 
-		    <button class="btn search_btn" onclick="searchSellBill()" >HTML View </button>
+ 	<div align="center" class="right_btn"> 
+		    <button class="btn search_btn" onclick="searchSellBill()" >Search </button>
 		<%--   &nbsp;&nbsp;&nbsp;
 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
 		  <button class="btn btn-primary" value="PDF" id="PDFButton" onclick="genPdf()">PDF</button>

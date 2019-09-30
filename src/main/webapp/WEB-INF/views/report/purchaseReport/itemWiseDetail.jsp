@@ -138,11 +138,11 @@ jQuery(document).ready(function(){
 					</div>
 
 					<div class="col-md-1 pull-left">
-						<h4 class="pull-left">Select Item:-</h4>
+						<h4 class="pull-left">Items:-</h4>
 					</div>
 					<div class="col-md-3">
 						<select name="itemId" id="itemId"
-							data-placeholder="Choose Menus..." class="chosen-select"
+							data-placeholder="Choose Items..." class="chosen-select"
 							style="text-align: left;" required multiple="multiple">
 
 						</select>
@@ -159,19 +159,19 @@ jQuery(document).ready(function(){
 						value="${Constant.FACTORYNAME}">
 
 					<div class="col-md-1 from_date">
-						<h4 class="pull-left">From Date:-</h4>
+						<h4 class="pull-left">From</h4>
 					</div>
 					<div class="col-md-3 ">
 						<input id="fromdatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="DD-MM-YYYY" name="fromDate"
+							autocomplete="off" placeholder="From Date" name="fromDate"
 							type="text">
 					</div>
 					<div class="col-md-1">
-						<h4 class="pull-left">To Date:-</h4>
+						<h4 class="pull-left">To</h4>
 					</div>
 					<div class="col-md-3 ">
 						<input id="todatepicker" class="texboxitemcode texboxcal"
-							autocomplete="off" placeholder="DD-MM-YYYY" name="toDate"
+							autocomplete="off" placeholder="To Date" name="toDate"
 							type="text">
 					</div>
 					<div class="col-md-2">
@@ -184,7 +184,7 @@ jQuery(document).ready(function(){
 					</div>
 
 				</div>
-				<br>
+			
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->

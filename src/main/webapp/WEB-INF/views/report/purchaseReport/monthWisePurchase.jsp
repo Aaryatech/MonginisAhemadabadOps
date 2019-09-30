@@ -116,14 +116,14 @@ jQuery(document).ready(function(){
 					<input type="hidden" name="frId" id="frId" value="${frId}">
 
 					<div class="col-md-1">
-						<h4 class="pull-left">Month From :-</h4>
+						<h4 class="pull-left">From :-</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input type='text' placeholder="Select From Month" id='txtDate' class="texboxitemcode texboxcal"
 							autocomplete="off" name="from_stockdate" required size="25" />
 					</div>
 					<div class="col-md-1">
-						<h4 class="pull-left">To Month:-</h4>
+						<h4 class="pull-left">To:-</h4>
 					</div>
 					<div class="col-md-2 ">
 						<input type='text' placeholder="Select To Month" id='txtDateto' class="texboxitemcode texboxcal"

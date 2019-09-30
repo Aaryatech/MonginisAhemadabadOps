@@ -388,7 +388,7 @@ table, th, td {
 
 
 							<div id="table-scroll"  class="table-scroll responsive-table-one"><!-- class="table-scroll" -->
-								<div id="faux-table" class="faux-table responsive-table" aria="hidden"> 
+								<div id="faux-table" class="faux-table responsive-table" aria="hidden" style="display:none;"> 
 								 <div class="table-wrap"><table id="table_grid1" class="main-table responsive-table">
 										<thead>
 											<tr class="bgpink">
@@ -506,11 +506,11 @@ table, th, td {
 									onclick="exportToExcel();" id="expExcel"
 									>
 									Export To Excel</button>
-						<!-- 	</div>
+						 	</div>
 
 
 							<div class="col-md-3">
- -->
+ 
 								<button type="button" class="btn btn-primary" onclick="genPdf()"
 									id="PDFButton"
 									>
@@ -809,7 +809,7 @@ table, th, td {
 																.append($(
 																		'<td class="col-md-1" style="text-align:right;"></td>')
 																		.html(
-																				regOpStockValue));
+																				regOpStockValue.toFixed(2)));
 													} else
 
 													{
@@ -1285,7 +1285,7 @@ table, th, td {
 																	.append($(
 																			'<td class="col-md-1" style="text-align:right;"></td>')
 																			.html(
-																					regOpStockValue)
+																					regOpStockValue.toFixed(2))
 																			.toFixed(
 																					2));
 														} else
