@@ -202,7 +202,7 @@ input:checked+.slider:before {
 						<c:choose>
 
 							<c:when test="${count == 0}">
-								<div class="colOuter">
+								<div class="">
 									<div>
 										<center>
 											<input name="" class="buttonsaveorder" value="Start Day"
