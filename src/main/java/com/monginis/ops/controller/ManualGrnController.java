@@ -6,8 +6,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.Year;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Calendar; 
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -269,7 +270,10 @@ public class ManualGrnController {
 			System.out.println("remark list " + getAllRemarks.toString());
 
 			modelAndView.addObject("remarkList", getAllRemarks);
-
+			
+			int isOpen = checktime();
+			 //System.err.println("isOpen " + isOpen); 
+			 modelAndView.addObject("isOpen", isOpen);
 		} catch (Exception e) {
 			System.out.println("show gvn error " + e.getMessage());
 			e.printStackTrace();
@@ -279,6 +283,49 @@ public class ManualGrnController {
 
 	}
 	
+	private int checktime() {
+
+		
+		int flag = 0;
+		
+		try {
+			
+			
+			String string1 = "17:00:00";
+		    java.util.Date time1 = new SimpleDateFormat("HH:mm:ss").parse(string1);
+		    Calendar calendar1 = Calendar.getInstance();
+		    calendar1.setTime(time1);
+		    calendar1.add(Calendar.DATE, 1);
+
+
+		    String string2 = "22:00:00";
+		    java.util.Date time2 = new SimpleDateFormat("HH:mm:ss").parse(string2);
+		    Calendar calendar2 = Calendar.getInstance();
+		    calendar2.setTime(time2);
+		    calendar2.add(Calendar.DATE, 1);
+
+		    SimpleDateFormat localDateFormat = new SimpleDateFormat("HH:mm:ss"); 
+		    String someRandomTime = localDateFormat.format(new java.util.Date());
+		    java.util.Date d = new SimpleDateFormat("HH:mm:ss").parse(someRandomTime);
+		    Calendar calendar3 = Calendar.getInstance();
+		    calendar3.setTime(d);
+		    calendar3.add(Calendar.DATE, 1);
+
+		    java.util.Date x = calendar3.getTime();
+		     
+		    if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
+		        //checkes whether the current time is between 14:49:00 and 20:11:13.
+		        //System.err.println("you can't do ");
+		        flag=1;
+		    }/*else {
+		    	 System.err.println("you can do ");
+		    }*/
+		}catch(Exception e) {
+			
+		}
+		return flag;
+		
+	}
 	
 	List<GrnGvnHeader> grnHeaderList=new ArrayList<>();
 	
@@ -291,6 +338,12 @@ System.err.println("Inside Manual Grn POST method ");
         int flag=0;
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		int fraId = frDetails.getFrId();
+		
+		int isOpen = checktime();
+		
+		if(isOpen==0) {
+			
+		
 		try {
 
 			java.sql.Date grnGvnDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
@@ -723,7 +776,7 @@ System.err.println("Inside Manual Grn POST method ");
 			System.out.println(e.getMessage());
 
 		}
-
+		}
 		return "redirect:/displayGrn";
 
 	}
