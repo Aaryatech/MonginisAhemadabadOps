@@ -301,6 +301,8 @@ a:hover {
 																	<td class="col-md-1"><c:out
 																			value='${items.itemMrp1}' /></td>
 
+
+
 																	<td class="col-md-1"><c:out
 																			value='${items.itemRate1}' /></td>
 																	<c:set var="rate" value="${items.itemRate1}" />
