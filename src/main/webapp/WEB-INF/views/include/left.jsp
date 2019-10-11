@@ -679,7 +679,7 @@
 								
 								<a
 								href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
-								class="fa fa-files-o icon"></i>Datewise HSN Sale Report</a>
+								class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a>
 								
 								
 						</div>

@@ -184,17 +184,18 @@ jQuery(document).ready(function(){
 					</div>
 
 				</div>
-			
+
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" >
-							<div id="faux-table" class="faux-table" aria="hidden"style="display: none;"></div>
+						<div id="table-scroll">
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;"></div>
 							<div class="table-wrap">
-								<table id="table_grid"  class="responsive-table">
+								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
 
@@ -204,8 +205,8 @@ jQuery(document).ready(function(){
 											<th class="col-md-1" style="text-align: center;">Bill
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Bill No</th>
-											<th class="col-md-1" style="text-align: center;">Party
-												Name</th>
+											<!-- <th class="col-md-1" style="text-align: center;">Party
+												Name</th> -->
 											<th class="col-md-2" style="text-align: center;">Item
 												Name</th>
 											<th class="col-md-1" style="text-align: center;">Expiry
@@ -425,14 +426,14 @@ jQuery(document).ready(function(){
 																	.html(
 																			itemWiseTaxData.billNo));
 
-													tr
+													/* tr
 															.append($(
 																	'<td  class="col-md-1"></td>')
 																	.html(
-																			partyname));
+																			partyname)); */
 													tr
 															.append($(
-																	'<td  class="col-md-2"></td>')
+																	'<td  class="col-md-2"  style="text-align:left;"></td>')
 																	.html(
 																			itemWiseTaxData.itemName));
 													tr
@@ -484,8 +485,7 @@ jQuery(document).ready(function(){
 										.append($(
 												'<td class="col-md-1" style="font-weight:bold;"></td>')
 												.html("Total"));
-								tr.append($('<td  class="col-md-1"></td>')
-										.html(""));
+
 								tr.append($('<td  class="col-md-1"></td>')
 										.html(""));
 								tr.append($('<td  class="col-md-1"></td>')

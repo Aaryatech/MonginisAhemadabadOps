@@ -69,6 +69,11 @@
 	background: transparent;
 }
 </style>
+<style>
+table, th, td {
+	border: 1px solid #9da88d;
+}
+</style>
 <!DOCTYPE html>
 <html>
 
@@ -141,7 +146,7 @@
 
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 
-					
+
 
 
 						<div class="row">
@@ -150,17 +155,17 @@
 							<div class="form-group">
 								<div class="col-sm-3 col-lg-2	">From Date</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal"
-										placeholder="From Date" id="fromDate" name="fromDate"
-										size="30" type="text" value="${todaysDate}" />
+									<input class="texboxitemcode texboxcal" placeholder="From Date"
+										id="fromDate" name="fromDate" size="30" type="text"
+										value="${todaysDate}" />
 								</div>
 
 
 								<div class="col-sm-3 col-lg-2	">To Date</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
-									<input class="texboxitemcode texboxcal"
-										placeholder="To Date" id="toDate" name="toDate" size="30"
-										type="text" value="${todaysDate}" />
+									<input class="texboxitemcode texboxcal" placeholder="To Date"
+										id="toDate" name="toDate" size="30" type="text"
+										value="${todaysDate}" />
 								</div>
 							</div>
 
@@ -188,14 +193,13 @@
 
 							<div class="col-md-3" style="text-align: center;">
 								<input type="button" id="submit" class="btn btn-primary"
-									value="Search Report" onclick="searchReport()">
-							
-								<button class="btn btn-primary" value="PDF" id="PDFButton"
-									onclick="genPdf()">PDF</button>
+									value="Search Report" onclick="searchReport()"> <input
+									class="btn btn-primary" value="PDF" id="PDFButton"
+									onclick="genPdf()" value="PDF" type="button">
 							</div>
 						</div>
 
-					
+
 					</form>
 
 					<!-- form -->
@@ -208,8 +212,9 @@
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll" >
-								<div > <!-- class="table-wrap" -->
+							<div id="table-scroll">
+								<div>
+									<!-- class="table-wrap" -->
 
 									<table id="table_grid" class="responsive-table">
 										<thead>
@@ -352,7 +357,6 @@
 							},
 							function(data) {
 
-
 								if (data == "") {
 									alert("No records found !!");
 									document.getElementById("expExcel").disabled = true;
@@ -383,7 +387,7 @@
 
 													tr
 															.append($(
-																	'<td class="col-md-3"></td>')
+																	'<td class="col-md-3" style=text-align:left;></td>')
 																	.html(
 																			sellBillData.subCatName));
 													tr
@@ -429,7 +433,7 @@
 
 								var tr = "<tr>";
 								var blank = "<td class='col-md-1'></td>";
-								var total = "<td class='col-md-3'><b> Total</b></td>";
+								var total = "<td class='col-md-3' style=text-align:left; ><b> Total</b></td>";
 
 								var totalQty = "<td class='col-md-2' style=text-align:right;><b>"
 										+ (qtyTotal) + "</b></td>";
@@ -496,13 +500,14 @@
 			var to_date = $("#toDate").val();
 
 			window
-					.open('${pageContext.request.contextPath}/pdfForReport?url=pdf/showSubCatDateWiseSellReportPdf/'
+					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showSubCatDateWiseSellReportPdf/'
 							+ from_date
 							+ '/'
 							+ to_date
 							+ '/'
 							+ frId
-							+ '/' + selectedCat);
+							+ '/'
+							+ selectedCat);
 
 		}
 	</script>

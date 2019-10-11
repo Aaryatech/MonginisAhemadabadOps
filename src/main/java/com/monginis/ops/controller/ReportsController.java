@@ -1206,7 +1206,7 @@ public class ReportsController {
 		rowData.add("Sr. No.");
 		rowData.add("Bill Date");
 		rowData.add("Purchase Bill No");
-		rowData.add("Item Id");
+		//rowData.add("Item Id");
 		rowData.add("Item Name");
 		rowData.add("Rate");
 		rowData.add("Quantity");
@@ -1225,7 +1225,7 @@ public class ReportsController {
 			rowData.add("" + itemWiseDetailReportList.get(i).getBillDate());
 			rowData.add("" + itemWiseDetailReportList.get(i).getBillNo());
 
-			rowData.add("" + itemWiseDetailReportList.get(i).getItemId());
+			//rowData.add("" + itemWiseDetailReportList.get(i).getItemId());
 			rowData.add("" + itemWiseDetailReportList.get(i).getItemName());
 			rowData.add("" + itemWiseDetailReportList.get(i).getRate());
 

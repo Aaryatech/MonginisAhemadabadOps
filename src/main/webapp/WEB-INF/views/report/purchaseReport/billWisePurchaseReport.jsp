@@ -464,7 +464,7 @@ jQuery(document).ready(function(){
 
 <script>
 	function genPdfSingle(billNo) {
-		alert(billNo);
+		//alert(billNo);
 		//alert("Inside Gen Pdf ");
 		//alert("Inside Gen Pdf " + selArray);
 
