@@ -441,12 +441,12 @@ function showChart(){
 									    
 									    var monthNames = ['0','Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-								 
+									    //alert(monthNumber);
 										var amt=item.cash + item.card + item.other;
 
 									   dataTable.addRows([
 
-									             [monthNames[monthNumber], amt]
+									             [item.month, amt]
 
 									           ]);
 									   

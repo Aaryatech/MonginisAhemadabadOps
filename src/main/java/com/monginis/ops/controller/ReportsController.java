@@ -2457,6 +2457,12 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float totalMonthSale=0;
+		float totalCash=0;
+		float totalCard=0;
+		float totalOther=0;
+		
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
@@ -2470,6 +2476,11 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getMonth());
 			float totalAmt = getRepFrDatewiseSellResponse.get(i).getCash()
 					+ getRepFrDatewiseSellResponse.get(i).getCard() + getRepFrDatewiseSellResponse.get(i).getOther();
+			totalMonthSale=totalMonthSale+totalAmt;
+			totalCash=totalCash+getRepFrDatewiseSellResponse.get(i).getCash();
+			totalCard=totalCard+getRepFrDatewiseSellResponse.get(i).getCard();
+			totalOther=totalOther+getRepFrDatewiseSellResponse.get(i).getOther();
+			
 			rowData.add("" + totalAmt);
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCash());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCard());
@@ -2479,6 +2490,18 @@ public class ReportsController {
 			exportToExcelList.add(expoExcel);
 
 		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>(); 
+		rowData.add("");
+		rowData.add("");
+		rowData.add("Total"); 
+		rowData.add("" + totalMonthSale);
+		rowData.add("" + totalCash);
+		rowData.add("" + totalCard);
+		rowData.add("" + totalOther); 
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
