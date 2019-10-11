@@ -10,7 +10,6 @@
 table, th, td {
 	border: 1px solid #9da88d;
 }
-
 </style>
 <body>
 
@@ -76,15 +75,17 @@ table, th, td {
 						<div align="center">
 							<div class="col1">
 								<div class="col1title">
-									<span class="frm_txt">From</span> <input
-										id="fromdatepicker" placeholder="From Date" class="texboxitemcode texboxcal float_l"
-										name="from_Date" type="text" autocomplete="off"  size="35">
+									<span class="frm_txt">From</span> <input id="fromdatepicker"
+										placeholder="From Date"
+										class="texboxitemcode texboxcal float_l" name="from_Date"
+										type="text" autocomplete="off" size="35">
 								</div>
 							</div>
 							<div class="col2">
 								<div class="col1title">
-									<span class="frm_txt">To</span> <input
-										id="todatepicker" placeholder="To Date" name="to_Date" 	class="texboxitemcode texboxcal float_l" autocomplete="off" 
+									<span class="frm_txt">To</span> <input id="todatepicker"
+										placeholder="To Date" name="to_Date"
+										class="texboxitemcode texboxcal float_l" autocomplete="off"
 										type="text" size="35">
 								</div>
 							</div>
@@ -93,7 +94,8 @@ table, th, td {
 
 
 						<div align="center" class="right_btn">
-							<button class="btn search_btn" onclick="searchSellBill()">HTML View</button>
+							<button class="btn search_btn" onclick="searchSellBill()">HTML
+								View</button>
 
 							<%--  <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
 							<button class="btn btn-primary" value="PDF" id="PDFButton"
@@ -111,27 +113,24 @@ table, th, td {
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll"  class="table-scroll responsive-table-one">
+							<div id="table-scroll" class="table-scroll responsive-table-one">
 								<div id="faux-table" class="faux-table" aria="hidden">
 									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="bgpink">
 
-												<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-												<th class="col-md-2" style="text-align: center;">Invoice
-													No</th>
-												<th class="col-md-3" style="text-align: center;">Franchise
-													Name</th>
-												<th class="col-md-1" style="text-align: center;">Bill
-													Date</th>
-												<th class="col-md-1" style="text-align: center;">Amount</th>
-												<th class="col-md-2" style="text-align: center;">Payment
-													Mode</th>
-
-												<th class="col-md-2" style="text-align: center;">BillType</th>
-
-												<!-- 	<th class="col-md-1">Card</th>
-									<th class="col-md-1">Other</th> -->
+												<th style="text-align: center;">Sr.No.</th>
+												<th style="text-align: center;">Invoice No</th>
+												<th style="text-align: center;">Bill Date</th>
+												<th style="text-align: center;">Disc%</th>
+												<th style="text-align: center;">Taxable</th>
+												<th style="text-align: center;">Total Tax</th>
+												<th style="text-align: center;">Grand Total</th>
+												<th style="text-align: center;">Payable AMT</th>
+												<th style="text-align: center;">Paid AMT</th>
+												<th style="text-align: center;">Remaining AMT</th>
+												<th style="text-align: center;">Payment Mode</th>
+												<th style="text-align: center;">BillType</th>
 
 											</tr>
 										</thead>
@@ -141,28 +140,23 @@ table, th, td {
 										</tbody>
 									</table>
 								</div>
-								<div >
+								<div>
 									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="bgpink">
 
-												<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-												<!-- <th class="col-sm-1" style="text-align: center;">Bill
-													No</th> -->
-												<th class="col-md-2" style="text-align: center;">Invoice
-													No</th>
-												<th class="col-md-3" style="text-align: center;">Franchisee
-													Name</th>
-												<th class="col-md-1" style="text-align: center;">Bill
-													Date</th>
-												<th class="col-md-1" style="text-align: center;">Amount</th>
-												<th class="col-md-2" style="text-align: center;">Payment
-													Mode</th>
-
-												<th class="col-md-2" style="text-align: center;">BillType</th>
-
-												<!-- 	<th class="col-md-1">Card</th>
-									<th class="col-md-1">Other</th> -->
+												<th style="text-align: center;">Sr.No.</th>
+												<th style="text-align: center;">Invoice No</th>
+												<th style="text-align: center;">Bill Date</th>
+												<th style="text-align: center;">Disc%</th>
+												<th style="text-align: center;">Taxable</th>
+												<th style="text-align: center;">Total Tax</th>
+												<th style="text-align: center;">Grand Total</th>
+												<th style="text-align: center;">Payable AMT</th>
+												<th style="text-align: center;">Paid AMT</th>
+												<th style="text-align: center;">Remaining AMT</th>
+												<th style="text-align: center;">Payment Mode</th>
+												<th style="text-align: center;">BillType</th>
 
 											</tr>
 										</thead>
@@ -244,6 +238,11 @@ table, th, td {
 									//	var cashTotal=0;
 									//	var cardTotal=0;
 									var amtTotal = 0;
+									var taxableTotal = 0;
+									var taxTotal = 0;
+									var payableTotal = 0;
+									var paidTotal = 0;
+									var remainingTotal = 0;
 									//var otherTotal=0;
 									$
 											.each(
@@ -257,45 +256,80 @@ table, th, td {
 
 														var tr = $('<tr class="responsive-table"></tr>');
 
-														tr
-																.append($(
-																		'<td class="col-sm-1"></td>')
-																		.html(
-																				key + 1));
+														tr.append($(
+																'<td  ></td>')
+																.html(key + 1));
 
-													/* 	tr
-																.append($(
-																		'<td class="col-sm-1"></td>')
-																		.html(
-																				sellBillData.sellBillNo)); */
 														tr
 																.append($(
-																		'<td class="col-md-2"></td>')
+																		'<td   ></td>')
 																		.html(
 																				sellBillData.invoiceNo));
-														tr
-																.append($(
-																		'<td class="col-md-3"></td>')
-																		.html(
-																				sellBillData.frName));
 
 														tr
 																.append($(
-																		'<td class="col-md-1"></td>')
+																		'<td ></td>')
 																		.html(
 																				sellBillData.billDate));
 
-														//var amt=sellBillData.cash + sellBillData.card + sellBillData.other;
 														tr
 																.append($(
-																		'<td class="col-md-1" style="text-align:right;"></td>')
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				sellBillData.discountPer
+																						.toFixed(2)));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				sellBillData.taxableAmt
+																						.toFixed(2)));
+														tr
+																.append($(
+																		'<td style="text-align:right;"></td>')
+																		.html(
+																				sellBillData.totalTax
+																						.toFixed(2)));
+
+														tr
+																.append($(
+																		'<td   style="text-align:right;"></td>')
 																		.html(
 																				(sellBillData.grandTotal)
+																						.toFixed(2)));
+														tr
+																.append($(
+																		'<td  style="text-align:right;"></td>')
+																		.html(
+																				(sellBillData.payableAmt)
+																						.toFixed(2)));
+
+														tr
+																.append($(
+																		'<td   style="text-align:right;"></td>')
+																		.html(
+																				(sellBillData.paidAmt)
+																						.toFixed(2)));
+
+														tr
+																.append($(
+																		'<td   style="text-align:right;"></td>')
+																		.html(
+																				(sellBillData.remainingAmt)
 																						.toFixed(2)));
 
 														amtTotal = amtTotal
 																+ sellBillData.grandTotal;
-
+														taxableTotal = taxableTotal
+																+ sellBillData.taxableAmt;
+														taxTotal = taxTotal
+																+ sellBillData.totalTax;
+														payableTotal = payableTotal
+																+ sellBillData.payableAmt;
+														paidTotal = paidTotal
+																+ sellBillData.paidAmt;
+														remainingTotal = remainingTotal
+																+ sellBillData.remainingAmt;
 														//	amtTotal=amtTotal + sellBillData.cash + sellBillData.card + sellBillData.other;
 
 														var paymentMode = sellBillData.paymentMode;
@@ -303,120 +337,43 @@ table, th, td {
 
 														if (paymentMode == 1) {
 															mode = "Cash";
-															//cashTotal==cashTotal + sellBillData.paidAmt;
+
 														} else if (paymentMode == 2) {
 															mode = "Card";
-															//	cardTotal==cardTotal + sellBillData.paidAmt;
+
 														} else if (paymentMode == 3) {
 															mode = "Other";
-															//otherTotal==otherTotal + sellBillData.paidAmt;
+
 														}
 
 														tr
 																.append($(
-																		'<td class="col-md-2" style="text-align:center;"></td>')
+																		'<td  style="text-align:center;"></td>')
 																		.html(
 																				mode));
 
-														
 														var billType;
-														
-														if(sellBillData.billType=='E'){
-															billType="Express";
-														}else 
-															if(sellBillData.billType=='R'){
-																billType="Regular B2C";
-															}
-															else 
-																if(sellBillData.billType=='S'){
-																	billType="Special Cake";
-																}
-															else 
-																if(sellBillData.billType=='B'){
-																	billType="Regular B2B";
-																}else if(sellBillData.billType=='G'){
-																	billType="Against GRN";
-																}
-															
+
+														if (sellBillData.billType == 'E') {
+															billType = "Express";
+														} else if (sellBillData.billType == 'R') {
+															billType = "Regular B2C";
+														} else if (sellBillData.billType == 'S') {
+															billType = "Special Cake";
+														} else if (sellBillData.billType == 'B') {
+															billType = "Regular B2B";
+														} else if (sellBillData.billType == 'G') {
+															billType = "Against GRN";
+														} 
+
 														tr
-														.append($(
-																'<td class="col-md-2" style="text-align:center;"></td>')
-																.html(
-																		billType));
+																.append($(
+																		'<td   style="text-align:center;"></td>')
+																		.html(
+																				billType));
 
 														$('#table_grid tbody')
 																.append(tr);
-
-														/* 
-																		var index = key + 1;
-
-																		var tr = "<tr>";
-
-																		var srNo = "<td>&nbsp;&nbsp;&nbsp;"
-																			+ index
-																			+ "</td>";
-
-																		var sellBillNo = "<td>&nbsp;&nbsp;&nbsp;"
-																				+ sellBillData.sellBillNo
-																				+ "</td>";
-																			
-																					var billDate = "<td>&nbsp;&nbsp;&nbsp;"
-																						+ sellBillData.billDate
-																						+ "</td>";
-																						
-																						var grandTotal = "<td>&nbsp;&nbsp;&nbsp;"
-																							+ sellBillData.grandTotal
-																							+ "</td>";
-																							amtTotal=amtTotal + sellBillData.grandTotal;
-																								
-																							var paymentMode = sellBillData.paymentMode;
-																								var mode;
-																								
-																								if(paymentMode==1)
-																									{
-																									mode="Cash";
-																									//cashTotal==cashTotal + sellBillData.paidAmt;
-																									}
-																								else if(paymentMode==2)
-																								{
-																									mode="Card";
-																								//	cardTotal==cardTotal + sellBillData.paidAmt;
-																								}
-																								else if(paymentMode==3)
-																								{
-																									mode="Other";
-																									//otherTotal==otherTotal + sellBillData.paidAmt;
-																								}
-
-																								var paidMode = "<td>&nbsp;&nbsp;&nbsp;"
-																									+ mode
-																									+ "</td>";
-																							
-
-
-
-																		
-
-																		var trclosed = "</tr>";
-
-																		$('#table_grid tbody')
-																				.append(tr);
-																		$('#table_grid tbody')
-																		.append(srNo);
-																		$('#table_grid tbody')
-																				.append(sellBillNo);
-																	
-																		$('#table_grid tbody')
-																		.append(billDate);
-																		
-																		$('#table_grid tbody')
-																		.append(grandTotal);
-																		$('#table_grid tbody')
-																		.append(paidMode);
-																		
-																		
-																		$('#table_grid tbody')
-																		.append(trclosed); */
 
 													})
 
@@ -426,29 +383,40 @@ table, th, td {
 									var totalAmt = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
 											+ (amtTotal).toFixed(2);
 									+"</b></td>";
+
+									var taxable = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+											+ (taxableTotal).toFixed(2);
+									+"</b></td>";
+
+									var tax = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+											+ (taxTotal).toFixed(2);
+									+"</b></td>";
+
+									var payable = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+											+ (payableTotal).toFixed(2);
+									+"</b></td>";
+									var paid = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+											+ (paidTotal).toFixed(2);
+									+"</b></td>";
+									var remaining = "<td style=text-align:right;>&nbsp;&nbsp;&nbsp;<b>"
+											+ (remainingTotal).toFixed(2);
+									+"</b></td>";
+
 									var td = "<td></td>";
-									/* var cash = "<td>&nbsp;&nbsp;&nbsp;"
-										+  cashTotal
-										+ "</td>";
-									var card = "<td>&nbsp;&nbsp;&nbsp;"
-										+ cardTotal
-										+ "</td>";
-									var other = "<td>&nbsp;&nbsp;&nbsp;"
-										+ otherTotal
-										+ "</td>"; */
 
 									var trclosed = "</tr>";
 
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(tr);
 									$('#table_grid tbody').append(total);
+									$('#table_grid tbody').append(taxable);
+									$('#table_grid tbody').append(tax);
 									$('#table_grid tbody').append(totalAmt);
+									$('#table_grid tbody').append(payable);
+									$('#table_grid tbody').append(paid);
+									$('#table_grid tbody').append(remaining);
 									$('#table_grid tbody').append(td);
 									$('#table_grid tbody').append(td);
-									/*$('#table_grid tbody')
-									.append(card);
-									$('#table_grid tbody')
-									.append(other); */
 									$('#table_grid tbody').append(trclosed);
 									$('#table_grid tbody').append(trclosed);
 								});

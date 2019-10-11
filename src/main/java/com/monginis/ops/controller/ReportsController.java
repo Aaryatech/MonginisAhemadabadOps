@@ -2123,7 +2123,7 @@ public class ReportsController {
 
 		rowData.add("Sr. No");
 		rowData.add("Invoice No");
-		rowData.add("Franchisee Name");
+		//rowData.add("Franchisee Name");
 		rowData.add("Bill Date");
 		rowData.add("Discount Per");
 		rowData.add("Taxable Amt");
@@ -2134,6 +2134,7 @@ public class ReportsController {
 		rowData.add("Remaining Amt");
 
 		rowData.add("Payment Mode");
+		rowData.add("Bill Type");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
@@ -2143,7 +2144,7 @@ public class ReportsController {
 
 			rowData.add("" + (i + 1));
 			rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
-			rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+			//rowData.add("" + getSellBillHeaderList.get(i).getFrName());
 			rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
 			rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
 			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
@@ -2161,6 +2162,24 @@ public class ReportsController {
 
 			} else if (getSellBillHeaderList.get(i).getPaymentMode() == 3) {
 				rowData.add("other");
+			}
+			
+			if (getSellBillHeaderList.get(i).getBillType() == 'E') {
+				rowData.add("Express");
+
+			} else if (getSellBillHeaderList.get(i).getBillType() == 'R') {
+				rowData.add("Regular B2C");
+
+			} else if (getSellBillHeaderList.get(i).getBillType() == 'B') {
+				
+				rowData.add("Regular B2B");
+				
+			}else if (getSellBillHeaderList.get(i).getBillType() == 'S') {
+				
+				rowData.add("Special Cake");
+				
+			}else if (getSellBillHeaderList.get(i).getBillType() == 'G') {
+				rowData.add("Against GRN");
 			}
 
 			expoExcel.setRowData(rowData);
@@ -3408,6 +3427,15 @@ public class ReportsController {
 
 			map = new LinkedMultiValueMap<String, Object>();
 
+			Collections.sort(getSellBillHeaderList, new Comparator<GetSellBillHeader>() {
+				public int compare(GetSellBillHeader c1, GetSellBillHeader c2) {
+
+					String s1 = c1.getInvoiceNo();
+					String s2 = c2.getInvoiceNo();
+					return s1.compareToIgnoreCase(s2);
+				}
+			});
+			
 			map.add("frId", frId);
 			Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
 					Franchisee.class, frId);
