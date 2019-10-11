@@ -2301,6 +2301,11 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float totalDaySale=0;
+		float totalCash=0;
+		float totalCard=0;
+		
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
@@ -2316,6 +2321,10 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getBillDate());
 			float totalAmt = getRepFrDatewiseSellResponse.get(i).getCash()
 					+ getRepFrDatewiseSellResponse.get(i).getCard() + getRepFrDatewiseSellResponse.get(i).getOther();
+			totalDaySale=totalDaySale+totalAmt;
+			totalCash=totalCash+getRepFrDatewiseSellResponse.get(i).getCash();
+			totalCard=totalCard+getRepFrDatewiseSellResponse.get(i).getCard();
+			
 			rowData.add("" + totalAmt);
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCash());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCard());
@@ -2325,6 +2334,21 @@ public class ReportsController {
 			exportToExcelList.add(expoExcel);
 
 		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		rowData.add("Total ");
+
+		rowData.add("" );
+		rowData.add("" );
+		  
+		rowData.add("" + totalDaySale);
+		rowData.add("" + totalCash);
+		rowData.add("" + totalCard);
+		  
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
