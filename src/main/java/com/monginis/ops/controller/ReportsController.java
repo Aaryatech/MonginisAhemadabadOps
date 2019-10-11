@@ -2817,26 +2817,41 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float qtyTotal=0;
+		float amtTotal=0;
+		
 		for (int i = 0; i < getRepFrItemwiseSellResponseList.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
-			rowData.add("" + (i + 1));
-			/* rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getSellBillNo()); */
-			/* rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrId()); */
+			rowData.add("" + (i + 1)); 
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrName());
-			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getBillDate());
-
-			/* rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemId()); */
-			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName());
-			/* rowData.add(""+getRepFrItemwiseSellResponseList.get(i).getCatId()); */
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getBillDate()); 
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName()); 
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatName());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getQty());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getAmount());
 
+			qtyTotal=qtyTotal+getRepFrItemwiseSellResponseList.get(i).getQty();
+			amtTotal=amtTotal+getRepFrItemwiseSellResponseList.get(i).getAmount();
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
 		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add(""); 
+		rowData.add("");
+		rowData.add(""); 
+		rowData.add("Total"); 
+		rowData.add("");
+		rowData.add("" + qtyTotal);
+		rowData.add("" + amtTotal);
+ 
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
