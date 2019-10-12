@@ -52,7 +52,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 import org.zefer.pd4ml.PD4PageMark;
- 
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -185,7 +185,7 @@ public class ReportsController {
 
 		rowData.add("Sr. No");
 		rowData.add("Customer Name");
-		//rowData.add("Mobile No");
+		// rowData.add("Mobile No");
 		rowData.add("Item Name");
 		rowData.add("Flavour");
 		rowData.add("KG");
@@ -207,11 +207,11 @@ public class ReportsController {
 
 			rowData.add("" + (i + 1));
 			rowData.add("" + advList.get(i).getCustName());
-			//rowData.add("" + advList.get(i).getSpCustMobNo());
+			// rowData.add("" + advList.get(i).getSpCustMobNo());
 			rowData.add("" + advList.get(i).getItemName());
 			rowData.add("" + advList.get(i).getSpfName());
 			rowData.add("" + advList.get(i).getWeight());
-			rowData.add("" + advList.get(i).getOrderDate()); 
+			rowData.add("" + advList.get(i).getOrderDate());
 			rowData.add("" + roundUp(advList.get(i).getTotalMrp()));
 			rowData.add("" + roundUp(advList.get(i).getAdvAmt()));
 			rowData.add("" + advList.get(i).getDelDate());
@@ -250,6 +250,36 @@ public class ReportsController {
 
 	}
 
+	@RequestMapping(value = "pdf/getSpAdvPdfPd/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView getSpAdvPdfPd(@PathVariable String fromDate, @PathVariable String toDate,
+			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/getSpAdvPdfPd");
+
+		RestTemplate restTemplate = new RestTemplate();
+
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("fromDate", DateConvertor.convertToYMD(fromDate));
+			map.add("toDate", DateConvertor.convertToYMD(toDate));
+			map.add("frId", frId);
+
+			GetSpAdvanceReportList spAdv = restTemplate.postForObject(Constant.URL + "spProduction/getSpAdvanceReport",
+					map, GetSpAdvanceReportList.class);
+
+			// model.addObject("frName", franchisee.getFrName());
+			model.addObject("reportList", spAdv.getSpAdvanceReport());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		model.addObject("fromDate", fromDate);
+		model.addObject("toDate", toDate);
+
+		return model;
+	}
+
 	@RequestMapping(value = "/getSpAdvPdf", method = RequestMethod.GET)
 	public void advList(HttpServletRequest request, HttpServletResponse response) {
 
@@ -278,7 +308,7 @@ public class ReportsController {
 		try {
 			System.out.println("Inside PDF Table try");
 			table.setWidthPercentage(100);
-			table.setWidths(new float[] { 0.5f, 2.2f, 1.8f, 2.2f, 1.8f,1.2f, 1.2f, 1.0f, 1.2f, 1.2f });
+			table.setWidths(new float[] { 0.5f, 2.2f, 1.8f, 2.2f, 1.8f, 1.2f, 1.2f, 1.0f, 1.2f, 1.2f });
 			Font headFont = new Font(FontFamily.HELVETICA, 10, Font.NORMAL, BaseColor.BLACK);
 			Font headFont1 = new Font(FontFamily.HELVETICA, 10, Font.BOLD, BaseColor.BLACK);
 			Font f = new Font(FontFamily.TIMES_ROMAN, 12.0f, Font.UNDERLINE, BaseColor.BLUE);
@@ -291,7 +321,7 @@ public class ReportsController {
 			hcell = new PdfPCell(new Phrase("Customer Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Mobile no", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
@@ -299,11 +329,11 @@ public class ReportsController {
 			hcell = new PdfPCell(new Phrase("Item Name", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Flavour", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("KG", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
@@ -319,7 +349,7 @@ public class ReportsController {
 			hcell = new PdfPCell(new Phrase("Advance Amt", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
-			
+
 			hcell = new PdfPCell(new Phrase("Del Date", headFont1));
 			hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
 			table.addCell(hcell);
@@ -342,7 +372,7 @@ public class ReportsController {
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(advance.getSpCustMobNo(), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
@@ -354,13 +384,13 @@ public class ReportsController {
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(String.valueOf(advance.getSpfName()), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_LEFT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(String.valueOf(advance.getWeight()), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
@@ -384,13 +414,13 @@ public class ReportsController {
 				cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
-				
+
 				cell = new PdfPCell(new Phrase(String.valueOf(advance.getDelDate()), headFont));
 				cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
 				cell.setHorizontalAlignment(Element.ALIGN_CENTER);
 				cell.setPaddingRight(5);
 				table.addCell(cell);
-				
+
 				totalMrp = totalMrp + advance.getTotalMrp();
 				totalAmt = totalAmt + advance.getAdvAmt();
 
@@ -1182,17 +1212,16 @@ public class ReportsController {
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			int frId = frDetails.getFrId();
-			
 
 			String values = request.getParameter("values");
 			System.out.println("values" + values);
-			
+
 			map.add("frId", frId);
 			map.add("fromDate", Main.formatDate(fromDate));
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
 			map.add("itemIds", values);
-			
+
 			itemWiseDetailReportList = new ArrayList<ItemWiseDetail>();
 
 			ItemWiseDetailList itemWiseDetailList = restTemplate
@@ -1216,7 +1245,7 @@ public class ReportsController {
 		rowData.add("Sr. No.");
 		rowData.add("Bill Date");
 		rowData.add("Purchase Bill No");
-		//rowData.add("Item Id");
+		// rowData.add("Item Id");
 		rowData.add("Item Name");
 		rowData.add("Rate");
 		rowData.add("Quantity");
@@ -1235,7 +1264,7 @@ public class ReportsController {
 			rowData.add("" + itemWiseDetailReportList.get(i).getBillDate());
 			rowData.add("" + itemWiseDetailReportList.get(i).getBillNo());
 
-			//rowData.add("" + itemWiseDetailReportList.get(i).getItemId());
+			// rowData.add("" + itemWiseDetailReportList.get(i).getItemId());
 			rowData.add("" + itemWiseDetailReportList.get(i).getItemName());
 			rowData.add("" + itemWiseDetailReportList.get(i).getRate());
 
@@ -1288,46 +1317,44 @@ public class ReportsController {
 		return itemWiseDetailReportList;
 
 	}
-	
+
 	@RequestMapping(value = "/getItemListBycatId", method = RequestMethod.GET)
-	public @ResponseBody List<Item> getItemListBycatId(HttpServletRequest request,
-			HttpServletResponse response) {
-		 
+	public @ResponseBody List<Item> getItemListBycatId(HttpServletRequest request, HttpServletResponse response) {
+
 		ArrayList<Item> itemList = new ArrayList<Item>();
-		
+
 		try {
-			
-			int  catId = Integer.parseInt(request.getParameter("catId"));
+
+			int catId = Integer.parseInt(request.getParameter("catId"));
 			RestTemplate restTemplate = new RestTemplate();
-			
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>(); 
-			map.add("itemGrp1", catId); 
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("itemGrp1", catId);
 			Item[] item = restTemplate.postForObject(Constant.URL + "getItemsByCatId", map, Item[].class);
 			itemList = new ArrayList<Item>(Arrays.asList(item));
-			
-		}catch(Exception e) {
-			
+
+		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
 
 		return itemList;
 
 	}
-	
+
 	@RequestMapping(value = "/getSpcakeList", method = RequestMethod.GET)
-	public @ResponseBody List<SpecialCake> getSpcakeList(HttpServletRequest request,
-			HttpServletResponse response) {
-		 
-		List<SpecialCake>itemList = new ArrayList<SpecialCake>();
-		
+	public @ResponseBody List<SpecialCake> getSpcakeList(HttpServletRequest request, HttpServletResponse response) {
+
+		List<SpecialCake> itemList = new ArrayList<SpecialCake>();
+
 		try {
 			RestTemplate restTemplate = new RestTemplate();
-			SpCakeResponse spCakeResponse = restTemplate
-					.getForObject(Constant.URL + "showSpecialCakeListOrderBySpCode", SpCakeResponse.class); 
-			itemList=spCakeResponse.getSpecialCake();
-			
-		}catch(Exception e) {
-			
+			SpCakeResponse spCakeResponse = restTemplate.getForObject(Constant.URL + "showSpecialCakeListOrderBySpCode",
+					SpCakeResponse.class);
+			itemList = spCakeResponse.getSpecialCake();
+
+		} catch (Exception e) {
+
 			e.printStackTrace();
 		}
 
@@ -1358,7 +1385,7 @@ public class ReportsController {
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			int typeId = Integer.parseInt(request.getParameter("typeId"));
-			
+
 			RestTemplate restTemplate = new RestTemplate();
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -1372,8 +1399,8 @@ public class ReportsController {
 			map.add("typeId", typeId);
 			itemWiseReportList = new ArrayList<ItemWiseReport>();
 
-			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReportByTypeId", map,
-					ItemWiseReportList.class);
+			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReportByTypeId",
+					map, ItemWiseReportList.class);
 
 			itemWiseReportList = itemWiseList.getItemWiseReportList();
 
@@ -1392,7 +1419,7 @@ public class ReportsController {
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Sr.No");
-		//rowData.add("Party Name");
+		// rowData.add("Party Name");
 		rowData.add("Item Name");
 		rowData.add("Rate");
 
@@ -1409,7 +1436,7 @@ public class ReportsController {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			rowData.add("" + (i + 1));
-			//rowData.add(Constant.FACTORYNAME);
+			// rowData.add(Constant.FACTORYNAME);
 
 			/* rowData.add("" + itemWiseReportList.get(i).getItemId()); */
 			rowData.add("" + itemWiseReportList.get(i).getItemName());
@@ -1432,7 +1459,7 @@ public class ReportsController {
 
 		rowData.add("");
 		rowData.add("Total");
-		//rowData.add("");
+		// rowData.add("");
 		rowData.add("");
 
 		rowData.add("" + roundUp(totalQty));
@@ -1611,10 +1638,9 @@ public class ReportsController {
 
 				for (int j = 0; j < grn.getBillWiseTaxReportList().size(); j++) {
 
-					purchase.getBillWiseTaxReportList().add(grn.getBillWiseTaxReportList().get(j)); 
+					purchase.getBillWiseTaxReportList().add(grn.getBillWiseTaxReportList().get(j));
 				}
-				
-				
+
 				Collections.sort(purchase.getBillWiseTaxReportList(), new Comparator<BillWiseTaxReport>() {
 					public int compare(BillWiseTaxReport c1, BillWiseTaxReport c2) {
 						if (c1.getTaxRate() > c2.getTaxRate())
@@ -1624,7 +1650,7 @@ public class ReportsController {
 						return 0;
 					}
 				});
-				
+
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
 
@@ -1644,7 +1670,7 @@ public class ReportsController {
 				rowData.add("" + roundUp(grandTotal));
 				rowData.add("" + roundUp(grandTotalG));
 				rowData.add("" + roundUp(grandTotala));
-				
+
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
 
@@ -2133,7 +2159,7 @@ public class ReportsController {
 
 		rowData.add("Sr. No");
 		rowData.add("Invoice No");
-		//rowData.add("Franchisee Name");
+		// rowData.add("Franchisee Name");
 		rowData.add("Bill Date");
 		rowData.add("Discount Per");
 		rowData.add("Taxable Amt");
@@ -2154,7 +2180,7 @@ public class ReportsController {
 
 			rowData.add("" + (i + 1));
 			rowData.add("" + getSellBillHeaderList.get(i).getInvoiceNo());
-			//rowData.add("" + getSellBillHeaderList.get(i).getFrName());
+			// rowData.add("" + getSellBillHeaderList.get(i).getFrName());
 			rowData.add("" + getSellBillHeaderList.get(i).getBillDate());
 			rowData.add("" + getSellBillHeaderList.get(i).getDiscountPer());
 			rowData.add("" + roundUp(getSellBillHeaderList.get(i).getTaxableAmt()));
@@ -2173,7 +2199,7 @@ public class ReportsController {
 			} else if (getSellBillHeaderList.get(i).getPaymentMode() == 3) {
 				rowData.add("other");
 			}
-			
+
 			if (getSellBillHeaderList.get(i).getBillType() == 'E') {
 				rowData.add("Express");
 
@@ -2181,14 +2207,14 @@ public class ReportsController {
 				rowData.add("Regular B2C");
 
 			} else if (getSellBillHeaderList.get(i).getBillType() == 'B') {
-				
+
 				rowData.add("Regular B2B");
-				
-			}else if (getSellBillHeaderList.get(i).getBillType() == 'S') {
-				
+
+			} else if (getSellBillHeaderList.get(i).getBillType() == 'S') {
+
 				rowData.add("Special Cake");
-				
-			}else if (getSellBillHeaderList.get(i).getBillType() == 'G') {
+
+			} else if (getSellBillHeaderList.get(i).getBillType() == 'G') {
 				rowData.add("Against GRN");
 			}
 
@@ -2311,11 +2337,11 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		
-		float totalDaySale=0;
-		float totalCash=0;
-		float totalCard=0;
-		
+
+		float totalDaySale = 0;
+		float totalCash = 0;
+		float totalCard = 0;
+
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
@@ -2331,10 +2357,10 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getBillDate());
 			float totalAmt = getRepFrDatewiseSellResponse.get(i).getCash()
 					+ getRepFrDatewiseSellResponse.get(i).getCard() + getRepFrDatewiseSellResponse.get(i).getOther();
-			totalDaySale=totalDaySale+totalAmt;
-			totalCash=totalCash+getRepFrDatewiseSellResponse.get(i).getCash();
-			totalCard=totalCard+getRepFrDatewiseSellResponse.get(i).getCard();
-			
+			totalDaySale = totalDaySale + totalAmt;
+			totalCash = totalCash + getRepFrDatewiseSellResponse.get(i).getCash();
+			totalCard = totalCard + getRepFrDatewiseSellResponse.get(i).getCard();
+
 			rowData.add("" + totalAmt);
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCash());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCard());
@@ -2344,19 +2370,19 @@ public class ReportsController {
 			exportToExcelList.add(expoExcel);
 
 		}
-		
+
 		expoExcel = new ExportToExcel();
 		rowData = new ArrayList<String>();
 		rowData.add("");
 		rowData.add("Total ");
 
-		rowData.add("" );
-		rowData.add("" );
-		  
+		rowData.add("");
+		rowData.add("");
+
 		rowData.add("" + totalDaySale);
 		rowData.add("" + totalCash);
 		rowData.add("" + totalCard);
-		  
+
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 
@@ -2467,12 +2493,12 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		
-		float totalMonthSale=0;
-		float totalCash=0;
-		float totalCard=0;
-		float totalOther=0;
-		
+
+		float totalMonthSale = 0;
+		float totalCash = 0;
+		float totalCard = 0;
+		float totalOther = 0;
+
 		for (int i = 0; i < getRepFrDatewiseSellResponse.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
@@ -2486,11 +2512,11 @@ public class ReportsController {
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getMonth());
 			float totalAmt = getRepFrDatewiseSellResponse.get(i).getCash()
 					+ getRepFrDatewiseSellResponse.get(i).getCard() + getRepFrDatewiseSellResponse.get(i).getOther();
-			totalMonthSale=totalMonthSale+totalAmt;
-			totalCash=totalCash+getRepFrDatewiseSellResponse.get(i).getCash();
-			totalCard=totalCard+getRepFrDatewiseSellResponse.get(i).getCard();
-			totalOther=totalOther+getRepFrDatewiseSellResponse.get(i).getOther();
-			
+			totalMonthSale = totalMonthSale + totalAmt;
+			totalCash = totalCash + getRepFrDatewiseSellResponse.get(i).getCash();
+			totalCard = totalCard + getRepFrDatewiseSellResponse.get(i).getCard();
+			totalOther = totalOther + getRepFrDatewiseSellResponse.get(i).getOther();
+
 			rowData.add("" + totalAmt);
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCash());
 			rowData.add("" + getRepFrDatewiseSellResponse.get(i).getCard());
@@ -2500,16 +2526,16 @@ public class ReportsController {
 			exportToExcelList.add(expoExcel);
 
 		}
-		
+
 		expoExcel = new ExportToExcel();
-		rowData = new ArrayList<String>(); 
+		rowData = new ArrayList<String>();
 		rowData.add("");
 		rowData.add("");
-		rowData.add("Total"); 
+		rowData.add("Total");
 		rowData.add("" + totalMonthSale);
 		rowData.add("" + totalCash);
 		rowData.add("" + totalCard);
-		rowData.add("" + totalOther); 
+		rowData.add("" + totalOther);
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 
@@ -2827,39 +2853,39 @@ public class ReportsController {
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
-		
-		float qtyTotal=0;
-		float amtTotal=0;
-		
+
+		float qtyTotal = 0;
+		float amtTotal = 0;
+
 		for (int i = 0; i < getRepFrItemwiseSellResponseList.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
-			rowData.add("" + (i + 1)); 
+			rowData.add("" + (i + 1));
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getFrName());
-			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getBillDate()); 
-			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName()); 
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getBillDate());
+			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getItemName());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getCatName());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getQty());
 			rowData.add("" + getRepFrItemwiseSellResponseList.get(i).getAmount());
 
-			qtyTotal=qtyTotal+getRepFrItemwiseSellResponseList.get(i).getQty();
-			amtTotal=amtTotal+getRepFrItemwiseSellResponseList.get(i).getAmount();
-			
+			qtyTotal = qtyTotal + getRepFrItemwiseSellResponseList.get(i).getQty();
+			amtTotal = amtTotal + getRepFrItemwiseSellResponseList.get(i).getAmount();
+
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
 		}
-		
+
 		expoExcel = new ExportToExcel();
 		rowData = new ArrayList<String>();
-		rowData.add(""); 
 		rowData.add("");
-		rowData.add(""); 
-		rowData.add("Total"); 
+		rowData.add("");
+		rowData.add("");
+		rowData.add("Total");
 		rowData.add("");
 		rowData.add("" + qtyTotal);
 		rowData.add("" + amtTotal);
- 
+
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 
@@ -3507,7 +3533,7 @@ public class ReportsController {
 					return s1.compareToIgnoreCase(s2);
 				}
 			});
-			
+
 			map.add("frId", frId);
 			Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
 					Franchisee.class, frId);
@@ -3696,7 +3722,8 @@ public class ReportsController {
 
 	@RequestMapping(value = "pdf/showPurchaseItemwiseReportpPdf/{fromDate}/{toDate}/{frId}/{catId}/{typeId}", method = RequestMethod.GET)
 	public ModelAndView showPurchaseItemwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId, @PathVariable int catId, @PathVariable int typeId , HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, @PathVariable int catId, @PathVariable int typeId, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseReportPdf");
 		RestTemplate restTemplate = new RestTemplate();
@@ -3710,8 +3737,8 @@ public class ReportsController {
 			map.add("typeId", typeId);
 			itemWiseReportList = new ArrayList<ItemWiseReport>();
 
-			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReportByTypeId", map,
-					ItemWiseReportList.class);
+			ItemWiseReportList itemWiseList = restTemplate.postForObject(Constant.URL + "/showItemWiseReportByTypeId",
+					map, ItemWiseReportList.class);
 
 			itemWiseReportList = itemWiseList.getItemWiseReportList();
 			map = new LinkedMultiValueMap<String, Object>();
@@ -3731,7 +3758,8 @@ public class ReportsController {
 
 	@RequestMapping(value = "pdf/showPurchaseItemwiseDetailPdf/{fromDate}/{toDate}/{frId}/{catId}/{values}", method = RequestMethod.GET)
 	public ModelAndView showPurchaseItemwiseDetailpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId, @PathVariable int catId,@PathVariable String values, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, @PathVariable int catId, @PathVariable String values, HttpServletRequest request,
+			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseDetailPdf");
 		try {
@@ -3744,7 +3772,7 @@ public class ReportsController {
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
 			map.add("itemIds", values);
-			
+
 			itemWiseDetailReportList = new ArrayList<ItemWiseDetail>();
 
 			ItemWiseDetailList itemWiseDetailList = restTemplate

@@ -66,7 +66,8 @@
 
 						<div class="col-md-1">
 							<button type="button" class="btn  buttonsaveorder" id='pdf'
-								onclick="genPdf()" disabled> Pdf</button>
+								onclick="genPdf()" disabled>Pdf</button>
+							<input type="hidden" name="frId" id="frId" value="${frId}">
 						</div>
 					</div>
 
@@ -386,19 +387,46 @@ jQuery(document).ready(function() {
 
 
 	</script>
+<script type="text/javascript">
+	function genPdf() {
+		var isValid = validate();
+		if (isValid == true) {
+			var fromDate = document.getElementById("datepicker").value;
+			var toDate = document.getElementById("datepicker2").value;
+			var frId = document.getElementById("frId").value;
+			window
+					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getSpAdvPdfPd/'
+							+ fromDate + '/' + toDate + '/' + frId);
+		}
+	}
+	function validate() {
 
+		var fromDate = document.getElementById("datepicker").value;
+		var toDate = document.getElementById("datepicker2").value;
+
+		var isValid = true;
+
+		if (fromDate == "" || fromDate == null) {
+
+			isValid = false;
+			alert("Please select From Date");
+		} else if (toDate == "" || toDate == null) {
+
+			isValid = false;
+			alert("Please select To Date");
+		}
+		return isValid;
+
+	}
+</script>
 <script>
 
-function genPdf() {
-		//alert("Inside Gen Pdf ");
-
-		
-
-	// window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1+'/'+type);
+/* function genPdf() {
+		 
 		    
 		    window.open('${pageContext.request.contextPath}/getSpAdvPdf');
 		   
-	}
+	} */
 	
 function exportToExcel() {
 
