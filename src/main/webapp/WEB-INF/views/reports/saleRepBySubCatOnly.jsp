@@ -101,7 +101,8 @@
 
 
 						<div id="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;">
 								<table id="table_grid1" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
@@ -244,7 +245,8 @@
 
 				tr.append($('<td></td>').html(key + 1));
 
-				tr.append($('<td></td>').html(report.subCatName));
+				tr.append($('<td style="text-align:left;"></td>').html(
+						report.subCatName));
 
 				tr.append($('<td style="text-align:right;"></td>').html(
 						report.soldQty.toFixed(2)));
@@ -279,7 +281,8 @@
 
 			tr.append($('<td  ></td>').html(" "));
 
-			tr.append($('<td style="font-weight:bold;"></td>').html("Total"));
+			tr.append($('<td style="font-weight:bold;" style="text-align:left;"></td>').html("Total"));
+			
 			tr.append($('<td style="text-align:right;"></td>').html(
 					totalSoldQty.toFixed(2)));
 			tr.append($('<td style="text-align:right;"></td>').html(
