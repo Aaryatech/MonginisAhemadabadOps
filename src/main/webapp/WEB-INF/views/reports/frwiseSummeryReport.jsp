@@ -177,11 +177,11 @@ jQuery(document).ready(function(){
 									<tr class="bgpink">
 
 										<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
-										<th class="col-sm-2" style="text-align: center;">Date</th>
+										<th class="col-md-1" style="text-align: center;">Date</th>
 										<th class="col-sm-1" style="text-align: center;">Type</th>
-										<th class="col-sm-1" style="text-align: center;">Invoice
+										<th class="col-md-2" style="text-align: center;">Invoice
 											No</th>
-										<th class="col-md-2" style="text-align: center;">Document</th>
+										<th style="text-align: center;">Document</th>
 										<th class="col-md-1" style="text-align: center;">Dr Amt</th>
 										<th class="col-md-1" style="text-align: center;">Cr Amt</th>
 										<th class="col-md-1" style="text-align: center;">Balance</th>
@@ -283,8 +283,11 @@ jQuery(document).ready(function(){
 												tr.append($('<td></td>').html(
 														report.invoiceNo));
 
-												tr.append($('<td></td>').html(
-														report.orderRef));
+												tr
+														.append($(
+																'<td style="text-align:left;"></td>')
+																.html(
+																		report.orderRef));
 
 												if (report.type == 'INV') {
 													totalArAmt = totalArAmt
