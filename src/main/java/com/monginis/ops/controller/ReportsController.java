@@ -1382,7 +1382,7 @@ public class ReportsController {
 		List<String> rowData = new ArrayList<String>();
 
 		rowData.add("Sr.No");
-		rowData.add("Party Name");
+		//rowData.add("Party Name");
 		rowData.add("Item Name");
 		rowData.add("Rate");
 
@@ -1399,7 +1399,7 @@ public class ReportsController {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			rowData.add("" + (i + 1));
-			rowData.add(Constant.FACTORYNAME);
+			//rowData.add(Constant.FACTORYNAME);
 
 			/* rowData.add("" + itemWiseReportList.get(i).getItemId()); */
 			rowData.add("" + itemWiseReportList.get(i).getItemName());
@@ -1422,7 +1422,7 @@ public class ReportsController {
 
 		rowData.add("");
 		rowData.add("Total");
-		rowData.add("");
+		//rowData.add("");
 		rowData.add("");
 
 		rowData.add("" + roundUp(totalQty));
