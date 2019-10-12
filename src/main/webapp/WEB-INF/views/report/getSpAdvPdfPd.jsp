@@ -28,7 +28,7 @@ th {
 </style>
 </head>
 <body onload="myFunction()">
-	<h4 align="center">Billwise Purchase Report</h4>
+	<h4 align="center">Sp Advance Report</h4>
 	<div align="center">
 		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
 			&nbsp;To &nbsp; ${toDate}</h6>
