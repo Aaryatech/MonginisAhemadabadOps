@@ -780,11 +780,14 @@ public class SalesReportController3 {
 			System.out.println("Inside get Sale Bill Wise");
 			frId = Integer.parseInt(request.getParameter("frId"));
 			String selectedSubCatIdList = request.getParameter("subCat_id_list");
+			String selectedCatIdList = request.getParameter("cat_id_list");
+
 			fromDate = request.getParameter("fromDate");
 			toDate = request.getParameter("toDate");
 			selectedType = request.getParameter("selectedType");
 
-			System.err.println("SC ************************************************** " + selectedSubCatIdList);
+			// System.err.println("SC ************************************************** " +
+			// selectedSubCatIdList);
 
 			selectedSubCatIdList = selectedSubCatIdList.substring(1, selectedSubCatIdList.length() - 1);
 			selectedSubCatIdList = selectedSubCatIdList.replaceAll("\"", "");
@@ -792,7 +795,14 @@ public class SalesReportController3 {
 			List<Integer> scIds = Stream.of(selectedSubCatIdList.split(",")).map(Integer::parseInt)
 					.collect(Collectors.toList());
 
-			System.err.println("SC LIST************************************************** " + scIds);
+			// System.err.println("SC LIST**************************************************
+			// " + scIds);
+
+			selectedCatIdList = selectedCatIdList.substring(1, selectedCatIdList.length() - 1);
+			selectedCatIdList = selectedCatIdList.replaceAll("\"", "");
+
+			List<Integer> cIds = Stream.of(selectedCatIdList.split(",")).map(Integer::parseInt)
+					.collect(Collectors.toList());
 
 			if (scIds.contains(-1)) {
 				// subCatIdList.clear();
@@ -800,9 +810,17 @@ public class SalesReportController3 {
 
 				if (subCatAList != null) {
 
-					for (int i = 0; i < subCatAList.size(); i++) {
-						tempScIdList.add(String.valueOf(subCatAList.get(i).getSubCatId()));
+					for (int j = 0; j < cIds.size(); j++) {
+
+						for (int i = 0; i < subCatAList.size(); i++) {
+
+							if (cIds.get(j) == subCatAList.get(i).getCatId()) {
+								tempScIdList.add(String.valueOf(subCatAList.get(i).getSubCatId()));
+							}
+
+						}
 					}
+
 				}
 				System.err.println("SUB CAT ID ARRAY --------- " + tempScIdList);
 				selectedSubCatIdList = tempScIdList.toString().substring(1, tempScIdList.toString().length() - 1);
@@ -810,7 +828,8 @@ public class SalesReportController3 {
 
 			}
 
-			System.out.println("selectedFrAfter------------------" + selectedSubCatIdList);
+			// System.out.println("selectedFrAfter------------------" +
+			// selectedSubCatIdList);
 
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			RestTemplate restTemplate = new RestTemplate();
@@ -828,6 +847,8 @@ public class SalesReportController3 {
 			map.add("toDate", toDt);
 			map.add("frIdList", "" + frId);
 			map.add("subCatIdList", selectedSubCatIdList);
+
+			System.out.println(map);
 
 			ParameterizedTypeReference<List<YearlySaleData>> typeRef = new ParameterizedTypeReference<List<YearlySaleData>>() {
 			};
@@ -2891,7 +2912,7 @@ public class SalesReportController3 {
 			rowData.add("Taxable Amount");
 			rowData.add("Tax Amount");
 			rowData.add("Total Amount");
-			
+
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -2925,7 +2946,7 @@ public class SalesReportController3 {
 
 			rowData.add("TOTAL");
 
-			float sumQty = 0, sumAmt = 0,sumTaxableAmt = 0,sumTaxAmt = 0;
+			float sumQty = 0, sumAmt = 0, sumTaxableAmt = 0, sumTaxAmt = 0;
 			for (int i = 0; i < reportList.size(); i++) {
 
 				SubCatDateWiseSellData data = reportList.get(i);
@@ -2963,39 +2984,40 @@ public class SalesReportController3 {
 		return reportList;
 	}
 
-	
-	//--------PDF-------------------
-	
+	// --------PDF-------------------
+
 	@RequestMapping(value = "pdf/showSubCatDateWiseSellReportPdf/{fromDate}/{toDate}/{frId}/{selectedCat}", method = RequestMethod.GET)
 	public ModelAndView showSubCatDateWiseSellReportPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId,@PathVariable String selectedCat, HttpServletRequest request, HttpServletResponse response) {
+			@PathVariable int frId, @PathVariable String selectedCat, HttpServletRequest request,
+			HttpServletResponse response) {
 		System.out.println("BILL LIST pdf");
 
 		ModelAndView model = new ModelAndView("reports/sales/subCatDateWiseSellPdf");
-		
+
 		List<SubCatDateWiseSellData> getSellBillHeaderList = new ArrayList<SubCatDateWiseSellData>();
 		try {
 			System.out.println("BILL LIST try");
-			
+
 			System.err.println("CAT ID ARRAY -----1---- " + selectedCat);
 
-			
 			RestTemplate restTemplate = new RestTemplate();
-			
-			/*selectedCat = selectedCat.substring(1, selectedCat.length() - 1);
-			selectedCat = selectedCat.replaceAll("\"", "");
-			
-			System.err.println("CAT ID ARRAY ----2----- " + selectedCat);*/
+
+			/*
+			 * selectedCat = selectedCat.substring(1, selectedCat.length() - 1); selectedCat
+			 * = selectedCat.replaceAll("\"", "");
+			 * 
+			 * System.err.println("CAT ID ARRAY ----2----- " + selectedCat);
+			 */
 
 			if (selectedCat.equalsIgnoreCase("-1")) {
-				
+
 				CategoryListResponse categoryListResponse;
 
 				categoryListResponse = restTemplate.getForObject(Constant.URL + "showAllCategory",
 						CategoryListResponse.class);
 
 				mCategoryList = categoryListResponse.getmCategoryList();
-				
+
 				// subCatIdList.clear();
 				List<String> tempcIdList = new ArrayList();
 
@@ -3010,30 +3032,29 @@ public class SalesReportController3 {
 				selectedCat = selectedCat.replaceAll(" ", "");
 
 			}
-			
+
 			String frDt = "", toDt = "";
 			try {
 				frDt = DateConvertor.convertToYMD(fromDate);
 				toDt = DateConvertor.convertToYMD(toDate);
 			} catch (Exception e) {
 			}
-			
-			System.err.println("FROM DATE - "+frDt);
-			System.err.println("TO DATE - "+toDt);
-			System.err.println("FRID - "+frId);
-			System.err.println("CAT - "+selectedCat);
-			
+
+			System.err.println("FROM DATE - " + frDt);
+			System.err.println("TO DATE - " + toDt);
+			System.err.println("FRID - " + frId);
+			System.err.println("CAT - " + selectedCat);
+
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frId);
 			map.add("fromDate", frDt);
 			map.add("toDate", toDt);
 			map.add("catIdList", selectedCat);
-			
 
 			ParameterizedTypeReference<List<SubCatDateWiseSellData>> typeRef = new ParameterizedTypeReference<List<SubCatDateWiseSellData>>() {
 			};
-			ResponseEntity<List<SubCatDateWiseSellData>> responseEntity = restTemplate
-					.exchange(Constant.URL + "getSubCatDateWiseSellReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+			ResponseEntity<List<SubCatDateWiseSellData>> responseEntity = restTemplate.exchange(
+					Constant.URL + "getSubCatDateWiseSellReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
 			getSellBillHeaderList = responseEntity.getBody();
 			System.out.println("BILL LIST" + getSellBillHeaderList.toString());
@@ -3055,267 +3076,258 @@ public class SalesReportController3 {
 		model.addObject("reportList", getSellBillHeaderList);
 		return model;
 	}
-	
-	//------------HSN REPORT--------------------
-	
-		@RequestMapping(value = "/showHsnDateWiseSellReport", method = RequestMethod.GET)
-		public ModelAndView showHsnDateWiseSellReport(HttpServletRequest request, HttpServletResponse response) {
 
-			ModelAndView model = null;
+	// ------------HSN REPORT--------------------
 
-			model = new ModelAndView("reports/sales/hsnDateWiseSellReport");
+	@RequestMapping(value = "/showHsnDateWiseSellReport", method = RequestMethod.GET)
+	public ModelAndView showHsnDateWiseSellReport(HttpServletRequest request, HttpServletResponse response) {
 
-			try {
-				ZoneId z = ZoneId.of("Asia/Calcutta");
+		ModelAndView model = null;
 
-				LocalDate date = LocalDate.now(z);
-				DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d-MM-uuuu");
-				todaysDate = date.format(formatters);
+		model = new ModelAndView("reports/sales/hsnDateWiseSellReport");
 
-				RestTemplate restTemplate = new RestTemplate();
+		try {
+			ZoneId z = ZoneId.of("Asia/Calcutta");
 
-				model.addObject("todaysDate", todaysDate);
+			LocalDate date = LocalDate.now(z);
+			DateTimeFormatter formatters = DateTimeFormatter.ofPattern("d-MM-uuuu");
+			todaysDate = date.format(formatters);
 
-				HttpSession ses = request.getSession();
-				Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-				model.addObject("frId", frDetails.getFrId());
+			RestTemplate restTemplate = new RestTemplate();
 
-			} catch (Exception e) {
+			model.addObject("todaysDate", todaysDate);
 
-				System.out.println("Exc in showHsnDateWiseSellReport--  " + e.getMessage());
-				e.printStackTrace();
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			model.addObject("frId", frDetails.getFrId());
 
-			}
-			return model;
+		} catch (Exception e) {
+
+			System.out.println("Exc in showHsnDateWiseSellReport--  " + e.getMessage());
+			e.printStackTrace();
 
 		}
-		
-		
+		return model;
 
-		// ------AJAX------
+	}
 
-		@RequestMapping(value = "/getHsnDateWiseDataAjax", method = RequestMethod.GET)
-		public @ResponseBody List<HsnDateWiseSellData> getHsnDateWiseDataAjax(HttpServletRequest request,
-				HttpServletResponse response) {
+	// ------AJAX------
 
-			List<HsnDateWiseSellData> reportList = new ArrayList<>();
+	@RequestMapping(value = "/getHsnDateWiseDataAjax", method = RequestMethod.GET)
+	public @ResponseBody List<HsnDateWiseSellData> getHsnDateWiseDataAjax(HttpServletRequest request,
+			HttpServletResponse response) {
 
-			String fromDate = "";
-			String toDate = "";
-			int frId;
+		List<HsnDateWiseSellData> reportList = new ArrayList<>();
+
+		String fromDate = "";
+		String toDate = "";
+		int frId;
+		try {
+			System.out.println("Inside ITEM WISE SELL REPORT");
+			frId = Integer.parseInt(request.getParameter("frId"));
+			fromDate = request.getParameter("fromDate");
+			toDate = request.getParameter("toDate");
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			RestTemplate restTemplate = new RestTemplate();
+
+			String frDt = "", toDt = "";
 			try {
-				System.out.println("Inside ITEM WISE SELL REPORT");
-				frId = Integer.parseInt(request.getParameter("frId"));
-				fromDate = request.getParameter("fromDate");
-				toDate = request.getParameter("toDate");
-
-
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				RestTemplate restTemplate = new RestTemplate();
-
-				String frDt = "", toDt = "";
-				try {
-					frDt = DateConvertor.convertToYMD(fromDate);
-					toDt = DateConvertor.convertToYMD(toDate);
-				} catch (Exception e) {
-				}
-
-				map.add("fromDate", frDt);
-				map.add("toDate", toDt);
-				map.add("frId", frId);
-
-				ParameterizedTypeReference<List<HsnDateWiseSellData>> typeRef = new ParameterizedTypeReference<List<HsnDateWiseSellData>>() {
-				};
-				ResponseEntity<List<HsnDateWiseSellData>> responseEntity = restTemplate.exchange(
-						Constant.URL + "getHsnDateWiseSellReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
-
-				reportList = responseEntity.getBody();
-
-				System.err.println("REPORT ------------------- " + reportList);
-
+				frDt = DateConvertor.convertToYMD(fromDate);
+				toDt = DateConvertor.convertToYMD(toDate);
 			} catch (Exception e) {
-				System.out.println("get SEll Report  " + e.getMessage());
-				e.printStackTrace();
-
 			}
 
-			try {
+			map.add("fromDate", frDt);
+			map.add("toDate", toDt);
+			map.add("frId", frId);
 
-				List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
+			ParameterizedTypeReference<List<HsnDateWiseSellData>> typeRef = new ParameterizedTypeReference<List<HsnDateWiseSellData>>() {
+			};
+			ResponseEntity<List<HsnDateWiseSellData>> responseEntity = restTemplate.exchange(
+					Constant.URL + "getHsnDateWiseSellReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
-				ExportToExcel expoExcel = new ExportToExcel();
-				List<String> rowData = new ArrayList<String>();
+			reportList = responseEntity.getBody();
 
-				rowData.add("Invoice No");
-				rowData.add("Invoice Date");
-				rowData.add("Party Name");
-				rowData.add("Gst No");
-				rowData.add("HSN Code");
-				rowData.add("Billed Qty");
-				rowData.add("Taxable Amt");
-				rowData.add("Cgst % ");
-				rowData.add("Cgst Amt");
-				rowData.add("Sgst %");
-				rowData.add("Sgst Amt");
-				rowData.add("Total");
-				rowData.add("Bill Amt");
-				
-				
-				expoExcel.setRowData(rowData);
-				exportToExcelList.add(expoExcel);
+			System.err.println("REPORT ------------------- " + reportList);
 
-				if (reportList != null) {
-					if (reportList.size() > 0) {
+		} catch (Exception e) {
+			System.out.println("get SEll Report  " + e.getMessage());
+			e.printStackTrace();
 
-						for (int i = 0; i < reportList.size(); i++) {
+		}
 
-							HsnDateWiseSellData data = reportList.get(i);
+		try {
 
-							expoExcel = new ExportToExcel();
-							rowData = new ArrayList<String>();
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
-							rowData.add("" + data.getInvoiceNo());
-							rowData.add("" + data.getBillDate());
-							rowData.add("" + data.getUserName());
-							rowData.add("" + data.getUserGstNo());
-							rowData.add("" + data.getHsnCode());
-							rowData.add("" + data.getQty());
-							rowData.add("" + data.getTaxableAmt());
-							rowData.add("" + data.getCgstPer());
-							rowData.add("" + data.getCgstRs());
-							rowData.add("" + data.getSgstPer());
-							rowData.add("" + data.getSgstRs());
-							rowData.add("" + data.getTotal());
-							rowData.add("" + data.getBillTotal());
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
 
-							expoExcel.setRowData(rowData);
-							exportToExcelList.add(expoExcel);
+			rowData.add("Invoice No");
+			rowData.add("Invoice Date");
+			rowData.add("Party Name");
+			rowData.add("Gst No");
+			rowData.add("HSN Code");
+			rowData.add("Billed Qty");
+			rowData.add("Taxable Amt");
+			rowData.add("Cgst % ");
+			rowData.add("Cgst Amt");
+			rowData.add("Sgst %");
+			rowData.add("Sgst Amt");
+			rowData.add("Total");
+			rowData.add("Bill Amt");
 
-						}
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			if (reportList != null) {
+				if (reportList.size() > 0) {
+
+					for (int i = 0; i < reportList.size(); i++) {
+
+						HsnDateWiseSellData data = reportList.get(i);
+
+						expoExcel = new ExportToExcel();
+						rowData = new ArrayList<String>();
+
+						rowData.add("" + data.getInvoiceNo());
+						rowData.add("" + data.getBillDate());
+						rowData.add("" + data.getUserName());
+						rowData.add("" + data.getUserGstNo());
+						rowData.add("" + data.getHsnCode());
+						rowData.add("" + data.getQty());
+						rowData.add("" + data.getTaxableAmt());
+						rowData.add("" + data.getCgstPer());
+						rowData.add("" + data.getCgstRs());
+						rowData.add("" + data.getSgstPer());
+						rowData.add("" + data.getSgstRs());
+						rowData.add("" + data.getTotal());
+						rowData.add("" + data.getBillTotal());
+
+						expoExcel.setRowData(rowData);
+						exportToExcelList.add(expoExcel);
 
 					}
 
-				} // if
-
-				expoExcel = new ExportToExcel();
-				rowData = new ArrayList<String>();
-
-				rowData.add("TOTAL");
-				rowData.add(" ");
-				rowData.add(" ");
-				rowData.add(" ");
-				rowData.add(" ");
-
-				float sumQty = 0, sumTotal = 0,sumTaxableAmt = 0,sumBillAmt = 0,sumCgstRs = 0,sumSgstRs = 0,sumCgstPer=0,sumSgstPer=0;
-				for (int i = 0; i < reportList.size(); i++) {
-
-					HsnDateWiseSellData data = reportList.get(i);
-
-					sumQty = sumQty + data.getQty();
-					sumTotal = sumTotal + data.getTotal();
-					sumTaxableAmt = sumTaxableAmt + data.getTaxableAmt();
-					sumBillAmt = sumBillAmt + data.getBillTotal();
-					sumCgstRs = sumCgstRs + data.getCgstRs();
-					sumSgstRs = sumSgstRs + data.getSgstRs();
-
-					sumCgstPer = sumCgstPer + data.getSgstPer();
-					sumSgstPer = sumSgstPer + data.getSgstPer();
-
-					
 				}
 
-				rowData.add("" + sumQty);
-				rowData.add("" + sumTaxableAmt);
-				rowData.add("" + sumCgstPer);
-				rowData.add("" + sumCgstRs);
-				
-				rowData.add("" + sumSgstPer);
-				rowData.add("" + sumSgstRs);
-				
-				rowData.add("" + sumTotal);
-				rowData.add("" + sumBillAmt);
+			} // if
 
-				expoExcel.setRowData(rowData);
-				exportToExcelList.add(expoExcel);
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
 
-				// rowData.add("" + roundUp(drTotalAmt - crTotalAmt));
+			rowData.add("TOTAL");
+			rowData.add(" ");
+			rowData.add(" ");
+			rowData.add(" ");
+			rowData.add(" ");
 
-				HttpSession session = request.getSession();
-				session.setAttribute("exportExcelListNew", exportToExcelList);
-				session.setAttribute("excelNameNew", "HSN_Date_Wise_Sell_Report");
-				session.setAttribute("reportNameNew", "HSN Date Wise Sell Report");
-				session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-				session.setAttribute("mergeUpto1", "$A$1:$M$1");
-				session.setAttribute("mergeUpto2", "$A$2:$M$2");
+			float sumQty = 0, sumTotal = 0, sumTaxableAmt = 0, sumBillAmt = 0, sumCgstRs = 0, sumSgstRs = 0,
+					sumCgstPer = 0, sumSgstPer = 0;
+			for (int i = 0; i < reportList.size(); i++) {
 
-			} catch (Exception e) {
-				System.err.println("--------------EXC - ");
-				e.printStackTrace();
+				HsnDateWiseSellData data = reportList.get(i);
+
+				sumQty = sumQty + data.getQty();
+				sumTotal = sumTotal + data.getTotal();
+				sumTaxableAmt = sumTaxableAmt + data.getTaxableAmt();
+				sumBillAmt = sumBillAmt + data.getBillTotal();
+				sumCgstRs = sumCgstRs + data.getCgstRs();
+				sumSgstRs = sumSgstRs + data.getSgstRs();
+
+				sumCgstPer = sumCgstPer + data.getSgstPer();
+				sumSgstPer = sumSgstPer + data.getSgstPer();
+
 			}
 
-			return reportList;
-		}
-		
-		
-		//--------PDF-------------------
-		
-		@RequestMapping(value = "pdf/showHsnDateWiseSellReportPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
-		public ModelAndView showHsnDateWiseSellReportPdf(@PathVariable String fromDate, @PathVariable String toDate,
-				@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
-			System.out.println("BILL LIST pdf");
+			rowData.add("" + sumQty);
+			rowData.add("" + sumTaxableAmt);
+			rowData.add("" + sumCgstPer);
+			rowData.add("" + sumCgstRs);
 
-			ModelAndView model = new ModelAndView("reports/sales/hsnDateWiseSellReportPdf");
-			
-			List<HsnDateWiseSellData> getSellBillHeaderList = new ArrayList<HsnDateWiseSellData>();
+			rowData.add("" + sumSgstPer);
+			rowData.add("" + sumSgstRs);
+
+			rowData.add("" + sumTotal);
+			rowData.add("" + sumBillAmt);
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
+
+			// rowData.add("" + roundUp(drTotalAmt - crTotalAmt));
+
+			HttpSession session = request.getSession();
+			session.setAttribute("exportExcelListNew", exportToExcelList);
+			session.setAttribute("excelNameNew", "HSN_Date_Wise_Sell_Report");
+			session.setAttribute("reportNameNew", "HSN Date Wise Sell Report");
+			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
+			session.setAttribute("mergeUpto1", "$A$1:$M$1");
+			session.setAttribute("mergeUpto2", "$A$2:$M$2");
+
+		} catch (Exception e) {
+			System.err.println("--------------EXC - ");
+			e.printStackTrace();
+		}
+
+		return reportList;
+	}
+
+	// --------PDF-------------------
+
+	@RequestMapping(value = "pdf/showHsnDateWiseSellReportPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView showHsnDateWiseSellReportPdf(@PathVariable String fromDate, @PathVariable String toDate,
+			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("BILL LIST pdf");
+
+		ModelAndView model = new ModelAndView("reports/sales/hsnDateWiseSellReportPdf");
+
+		List<HsnDateWiseSellData> getSellBillHeaderList = new ArrayList<HsnDateWiseSellData>();
+		try {
+			System.out.println("BILL LIST try");
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			String frDt = "", toDt = "";
 			try {
-				System.out.println("BILL LIST try");
-				
-				
-				
-				RestTemplate restTemplate = new RestTemplate();
-				
-						
-				String frDt = "", toDt = "";
-				try {
-					frDt = DateConvertor.convertToYMD(fromDate);
-					toDt = DateConvertor.convertToYMD(toDate);
-				} catch (Exception e) {
-				}
-				
-				System.err.println("FROM DATE - "+frDt);
-				System.err.println("TO DATE - "+toDt);
-				System.err.println("FRID - "+frId);
-				
-				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-				map.add("frId", frId);
-				map.add("fromDate", frDt);
-				map.add("toDate", toDt);
-				
-				ParameterizedTypeReference<List<HsnDateWiseSellData>> typeRef = new ParameterizedTypeReference<List<HsnDateWiseSellData>>() {
-				};
-				ResponseEntity<List<HsnDateWiseSellData>> responseEntity = restTemplate
-						.exchange(Constant.URL + "getHsnDateWiseSellReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
-
-				getSellBillHeaderList = responseEntity.getBody();
-				System.out.println("BILL LIST" + getSellBillHeaderList.toString());
-
-				map = new LinkedMultiValueMap<String, Object>();
-
-				map.add("frId", frId);
-				Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
-						Franchisee.class, frId);
-				model.addObject("frName", franchisee.getFrName());
-
-				model.addObject("fromDate", fromDate);
-				model.addObject("toDate", toDate);
+				frDt = DateConvertor.convertToYMD(fromDate);
+				toDt = DateConvertor.convertToYMD(toDate);
 			} catch (Exception e) {
-				e.printStackTrace();
-				System.out.println(e.getMessage());
 			}
 
-			model.addObject("reportList", getSellBillHeaderList);
-			return model;
+			System.err.println("FROM DATE - " + frDt);
+			System.err.println("TO DATE - " + toDt);
+			System.err.println("FRID - " + frId);
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			map.add("fromDate", frDt);
+			map.add("toDate", toDt);
+
+			ParameterizedTypeReference<List<HsnDateWiseSellData>> typeRef = new ParameterizedTypeReference<List<HsnDateWiseSellData>>() {
+			};
+			ResponseEntity<List<HsnDateWiseSellData>> responseEntity = restTemplate.exchange(
+					Constant.URL + "getHsnDateWiseSellReport", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getSellBillHeaderList = responseEntity.getBody();
+			System.out.println("BILL LIST" + getSellBillHeaderList.toString());
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frId);
+			Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+					Franchisee.class, frId);
+			model.addObject("frName", franchisee.getFrName());
+
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
-	
-	
+
+		model.addObject("reportList", getSellBillHeaderList);
+		return model;
+	}
+
 }
