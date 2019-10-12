@@ -145,11 +145,12 @@ jQuery(document).ready(function(){
 				<div class="row">
 					<div class="clearfix"></div>
 
- 
-					<div id="table-scroll" >
-						<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+
+					<div id="table-scroll">
+						<div id="faux-table" class="faux-table" aria="hidden"
+							style="display: none;">
 							<div class="table-wrap">
-								<table id="table_grid" class="main-table" >
+								<table id="table_grid" class="main-table">
 									<thead>
 										<tr class="bgpink">
 
@@ -284,6 +285,7 @@ jQuery(document).ready(function(){
 
 												tr.append($('<td></td>').html(
 														report.orderRef));
+
 												if (report.type == 'INV') {
 													totalArAmt = totalArAmt
 															+ report.grandTotal;
@@ -293,35 +295,62 @@ jQuery(document).ready(function(){
 																	.html(
 																			report.grandTotal
 																					.toFixed(2)));
-													balAmt = balAmt + report.grandTotal;
-													
-												} else {
 													tr
 															.append($(
 																	'<td style="text-align:right;"></td>')
 																	.html(0));
-												}
+													balAmt = balAmt
+															+ report.grandTotal;
 
-												if (report.type == 'RET') {
+												} else if (report.type == 'RET') {
 													totalCrAmt = totalCrAmt
 															+ report.grandTotal;
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(0));
 													tr
 															.append($(
 																	'<td style="text-align:right;"></td>')
 																	.html(
 																			report.grandTotal
 																					.toFixed(2)));
-													balAmt = balAmt - report.grandTotal;
-													
+													balAmt = balAmt
+															- report.grandTotal;
+
+												} else if (report.type == 'VER') {
+													totalCrAmt = totalCrAmt
+															+ report.grandTotal;
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(0));
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(
+																			report.grandTotal
+																					.toFixed(2)));
+													balAmt = balAmt
+															- report.grandTotal;
+
 												} else {
+													tr
+															.append($(
+																	'<td style="text-align:right;"></td>')
+																	.html(0));
 													tr
 															.append($(
 																	'<td style="text-align:right;"></td>')
 																	.html(0));
 												}
 
-												tr.append($('<td style="text-align:right;"></td>').html(
-														balAmt.toFixed(2)));
+												tr
+														.append($(
+																'<td style="text-align:right;"></td>')
+																.html(
+																		balAmt
+																				.toFixed(2)));
 
 												$('#table_grid tbody').append(
 														tr);
