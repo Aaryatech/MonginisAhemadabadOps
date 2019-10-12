@@ -185,10 +185,14 @@ public class ReportsController {
 
 		rowData.add("Sr. No");
 		rowData.add("Customer Name");
+		//rowData.add("Mobile No");
 		rowData.add("Item Name");
+		rowData.add("Flavour");
+		rowData.add("KG");
 		rowData.add("Order Date");
 		rowData.add("MRP");
 		rowData.add("Adavnce Amt");
+		rowData.add("Del Date");
 
 		expoExcel.setRowData(rowData);
 
@@ -203,12 +207,14 @@ public class ReportsController {
 
 			rowData.add("" + (i + 1));
 			rowData.add("" + advList.get(i).getCustName());
+			//rowData.add("" + advList.get(i).getSpCustMobNo());
 			rowData.add("" + advList.get(i).getItemName());
-			rowData.add("" + advList.get(i).getOrderDate());
-
+			rowData.add("" + advList.get(i).getSpfName());
+			rowData.add("" + advList.get(i).getWeight());
+			rowData.add("" + advList.get(i).getOrderDate()); 
 			rowData.add("" + roundUp(advList.get(i).getTotalMrp()));
 			rowData.add("" + roundUp(advList.get(i).getAdvAmt()));
-
+			rowData.add("" + advList.get(i).getDelDate());
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
@@ -223,8 +229,12 @@ public class ReportsController {
 		rowData.add("Total");
 		rowData.add("");
 		rowData.add("");
+		rowData.add("");
+		rowData.add("");
+		rowData.add("");
 		rowData.add("" + roundUp(baseMrp));
 		rowData.add("" + roundUp(advAmt));
+		rowData.add("");
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 

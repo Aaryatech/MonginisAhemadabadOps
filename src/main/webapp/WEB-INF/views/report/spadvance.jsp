@@ -51,7 +51,7 @@
 								placeholder="From Date">
 						</div>
 
-						<div class="col-md-1">TO </div>
+						<div class="col-md-1">TO</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" autocomplete="off" name="to_Date" type="text"
@@ -66,7 +66,7 @@
 
 						<div class="col-md-1">
 							<button type="button" class="btn  buttonsaveorder" id='pdf'
-								onclick="genPdf()" disabled>Generate Pdf</button>
+								onclick="genPdf()" disabled> Pdf</button>
 						</div>
 					</div>
 
@@ -77,7 +77,8 @@
 						<!--tabMenu-->
 
 						<div id="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;">
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table" border="1">
 										<thead>
@@ -271,10 +272,10 @@
 				
 								
 						tr.append($('<td   ></td>').html(key+1));
-						tr.append($('<td  ></td>').html(spAdv.custName));
-						tr.append($('<td  ></td>').html(spAdv.spCustMobNo));
-						tr.append($('<td  ></td>').html(spAdv.itemName));
-						tr.append($('<td  ></td>').html(spAdv.spfName));
+						tr.append($('<td  style="text-align:left;"></td>').html(spAdv.custName));
+						tr.append($('<td  style="text-align:center;"></td>').html(spAdv.spCustMobNo));
+						tr.append($('<td  style="text-align:left;"></td>').html(spAdv.itemName));
+						tr.append($('<td  style="text-align:left;"></td>').html(spAdv.spfName));
 						tr.append($('<td  style="text-align:right;"></td>').html(spAdv.weight));
 						tr.append($('<td  ></td>').html(spAdv.orderDate));
 						tr.append($('<td   style="text-align:right;"></td>').html(spAdv.totalMrp.toFixed(2)));
