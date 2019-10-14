@@ -46,13 +46,14 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 import org.zefer.pd4ml.PD4PageMark;
-
+ 
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -82,6 +83,7 @@ import com.monginis.ops.model.GetRepMenuwiseSellResponse;
 import com.monginis.ops.model.GetRepTaxSell;
 import com.monginis.ops.model.GetSellBillHeader;
 import com.monginis.ops.model.Item;
+import com.monginis.ops.model.ItemRes;
 import com.monginis.ops.model.ItemWiseDetail;
 import com.monginis.ops.model.ItemWiseDetailList;
 import com.monginis.ops.model.ItemWiseReport;
@@ -1204,6 +1206,7 @@ public class ReportsController {
 			System.out.println("toDate" + toDate);
 
 			int catId = Integer.parseInt(request.getParameter("catId"));
+			int subCat = Integer.parseInt(request.getParameter("subCat"));
 
 			HttpSession ses = request.getSession();
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
@@ -1221,7 +1224,7 @@ public class ReportsController {
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
 			map.add("itemIds", values);
-
+			map.add("subCat", subCat);
 			itemWiseDetailReportList = new ArrayList<ItemWiseDetail>();
 
 			ItemWiseDetailList itemWiseDetailList = restTemplate
@@ -1315,6 +1318,35 @@ public class ReportsController {
 		session.setAttribute("mergeUpto2", "$A$2:$L$2");
 
 		return itemWiseDetailReportList;
+
+	}
+	
+	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.GET)
+	public @ResponseBody List<ItemRes> getItemsResBySubCatId(HttpServletRequest request,
+			HttpServletResponse response) {
+
+		List<ItemRes> items = new ArrayList<ItemRes>();
+		try {
+
+			int catId = Integer.parseInt(request.getParameter("catId"));
+			 
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>(); 
+			map.add("subCatId", catId); 
+			  
+			ItemRes[] ItemRes = restTemplate
+					.postForObject(Constant.URL + "/getItemsResBySubCatId", map, ItemRes[].class);
+			
+			items=new ArrayList<>(Arrays.asList(ItemRes));
+
+		} catch (Exception e) {
+			items = new ArrayList<>();
+			e.printStackTrace();
+
+		}
+		return items;
 
 	}
 

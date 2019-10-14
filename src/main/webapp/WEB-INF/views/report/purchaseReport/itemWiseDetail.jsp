@@ -77,8 +77,9 @@ jQuery(document).ready(function(){
 <c:url var="getItemWiseDetailReport" value="/findItemWiseDetailReport" />
 <c:url var="getItemListBycatId" value="/getItemListBycatId" />
 <c:url var="getSpcakeList" value="/getSpcakeList" />
+<c:url var="getGroup2ByCatId" value="/getSubCatListByCatId"></c:url>
 <div class="sidebarOuter"></div>
-
+<c:url var="getItemsResBySubCatId" value="/getItemsResBySubCatId"></c:url>
 <div class="wrapper">
 
 	<!--topHeader-->
@@ -128,12 +129,24 @@ jQuery(document).ready(function(){
 
 					<div class="col-md-3">
 						<select name="catId" id="catId" class="form-control chosen"
-							required onchange="getItemList()">
+							required onchange="getSubCategoriesByCatId()">
 							<option value="" selected>Select Group</option>
 
 							<c:forEach items="${catList}" var="catList">
 								<option value="${catList.catId}">${catList.catName}</option>
 							</c:forEach>
+						</select>
+					</div>
+
+
+					<div class="col-md-1 pull-left">
+						<h4 class="pull-left">Sub-Cat:-</h4>
+					</div>
+					<div class="col-md-3">
+						<select name="item_grp2" id="item_grp2"
+							data-placeholder="Choose Items..." class="chosen-select"
+							style="text-align: left;" required onchange="getItemList()">
+
 						</select>
 					</div>
 
@@ -296,13 +309,16 @@ jQuery(document).ready(function(){
 
 		} else {
 
-			$.getJSON('${getItemListBycatId}', {
-				catId : catId,
+			var subCat = document.getElementById("item_grp2").value;
+			
+			 $.getJSON('${getItemsResBySubCatId}', {
+				catId : subCat,
 				ajax : 'true'
 			}, function(data) {
 
 				var len = data.length;
 
+				//alert(len);
 				$('#itemId').find('option').remove().end()
 				$("#itemId").append(
 						$("<option align=left; selected></option>").attr(
@@ -334,6 +350,7 @@ jQuery(document).ready(function(){
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var catId = document.getElementById("catId").value;
+			var subCat = document.getElementById("item_grp2").value;
 			var factoryName = document.getElementById("factoryName").value;
 			var fld = document.getElementById('itemId');
 			var values = -1;
@@ -364,6 +381,7 @@ jQuery(document).ready(function(){
 								toDate : toDate,
 								catId : catId,
 								values : values,
+								subCat : subCat,
 								ajax : 'true',
 
 							},
@@ -515,97 +533,6 @@ jQuery(document).ready(function(){
 					);
 		}
 	}
-	/* function(data) {
-
-		//$('#table_grid td').remove();
-		
-		
-
-		if (data == "") {
-			alert("No records found !!");
-
-		}
-		alert(data);
-
-		
-		$.each(data,function(key, itemWiseTaxData) {
-
-							var index = key + 1;
-							
-	                        var partyname="GFPL";
-	                        
-							var tr = "<tr>";
-
-							var itemName = "<td>&nbsp;&nbsp;&nbsp;"
-								+ itemWiseTaxData.itemName
-								+ "</td>";
-
-								var partyName = "<td>&nbsp;&nbsp;&nbsp;"
-									+ partyname
-									+ "</td>";
-									
-							   var billNo = "<td>&nbsp;&nbsp;&nbsp;"
-									+ itemWiseTaxData.billNo
-									+ "</td>";
-									
-										var billDate = "<td>&nbsp;&nbsp;&nbsp;"
-											+ itemWiseTaxData.billDate
-											+ "</td>";
-
-											var qty = "<td>&nbsp;&nbsp;&nbsp;"
-												+ itemWiseTaxData.qty
-												+ "</td>";
-												
-												var rate = "<td>&nbsp;&nbsp;&nbsp;"
-													+ itemWiseTaxData.rate
-													+ "</td>";
-
-												
-											var grandTotal = "<td>&nbsp;&nbsp;&nbsp;"
-												+ itemWiseTaxData.total
-												+ "</td>";
-
-												var grnType = "<td>&nbsp;&nbsp;&nbsp;"
-													+ itemWiseTaxData.grnType
-													+ "</td>";
-													
-													
-
-							var trclosed = "</tr>";
-
-							$('#table_grid tbody')
-									.append(tr);
-							$('#table_grid tbody')
-									.append(itemName);
-							$('#table_grid tbody')
-							.append(partyName);
-							$('#table_grid tbody')
-							.append(billNo);
-							$('#table_grid tbody')
-							.append(billDate);
-							$('#table_grid tbody')
-							.append(qty);
-							$('#table_grid tbody')
-							.append(rate);
-							
-							$('#table_grid tbody')
-							.append(grandTotal);
-							
-							$('#table_grid tbody')
-							.append(grnType);
-							
-							$('#table_grid tbody')
-							.append(trclosed);
-							
-							
-
-						})
-							
-
-	});
-
-	}
-	} */
 </script>
 <script type="text/javascript">
 	function validate() {
@@ -647,6 +574,45 @@ jQuery(document).ready(function(){
 		document.getElementById("expExcel").disabled = true;
 	}
 </script>
+
+<script type="text/javascript">
+	function getSubCategoriesByCatId() {
+		var catId = $("#catId").val();
+
+		$
+				.getJSON(
+						'${getGroup2ByCatId}',
+						{
+							catId : JSON.stringify(catId),
+							ajax : 'true'
+						},
+						function(data) {
+							var html = '<option multiple="multiple" value="">Sub Category</option>';
+
+							var len = data.length;
+
+							$('#item_grp2').find('option').remove().end()
+
+							/* $("#item_grp2")
+									.append(
+											$("<option ></option>").attr(
+													"value", "").text(
+													"Select Sub Category")); */
+							/* $("#item_grp2").append(
+									$("<option></option>").attr("value", -1)
+											.text("ALL")); */
+							for (var i = 0; i < len; i++) {
+								$("#item_grp2").append(
+										$("<option ></option>").attr("value",
+												data[i].subCatId).text(
+												data[i].subCatName));
+							}
+							$("#item_grp2").trigger("chosen:updated");
+							getItemList();
+						});
+	}
+</script>
+
 <script type="text/javascript">
 	function genPdf() {
 		var isValid = validate();
