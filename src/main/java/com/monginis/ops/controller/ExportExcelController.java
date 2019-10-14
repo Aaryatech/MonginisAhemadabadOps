@@ -373,6 +373,106 @@ public class ExportExcelController {
 		}
 		return wb;
 	}
+	
+	@RequestMapping(value = "/exportToExcelplain", method = RequestMethod.GET)
+	@ResponseBody
+	public void exportToExcelplain(HttpServletResponse response, HttpServletRequest request) throws Exception {
+		XSSFWorkbook wb = null;
+		HttpSession session = request.getSession();
+		try {
+
+			exportToExcelListNew = (List) session.getAttribute("exportExcelListNew");
+			System.out.println("Excel List :" + exportToExcelListNew.toString());
+
+			String excelName = (String) session.getAttribute("excelNameNew");
+			String reportName = (String) session.getAttribute("reportNameNew");
+			String searchBy = (String) session.getAttribute("searchByNew");
+			String mergeUpto1 = (String) session.getAttribute("mergeUpto1");
+			String mergeUpto2 = (String) session.getAttribute("mergeUpto2");
+			wb = plainBook(reportName, searchBy, mergeUpto1, mergeUpto2);
+			autoSizeColumns(wb, 2);
+			response.setContentType("application/vnd.ms-excel");
+			String date = new SimpleDateFormat("yyyy-MM-dd").format(new Date());
+			response.setHeader("Content-disposition", "attachment; filename=" + excelName + "-" + date + ".xlsx");
+			wb.write(response.getOutputStream());
+
+		} catch (IOException ioe) {
+			throw new RuntimeException("Error writing spreadsheet to output stream");
+		} finally {
+			if (wb != null) {
+				wb.close();
+			}
+		}
+		session.removeAttribute("exportExcelListNew");
+		System.out.println("Session List" + session.getAttribute("exportExcelListNew"));
+	}
+	
+	private XSSFWorkbook plainBook(String reportName, String searchBy, String mergeUpto1, String mergeUpto2)
+			throws IOException {
+		XSSFWorkbook wb = new XSSFWorkbook();
+		XSSFSheet sheet = wb.createSheet("Sheet1");
+		sheet.createFreezePane(0, 3);
+
+		CellStyle style = wb.createCellStyle();
+		// style.setFillForegroundColor(IndexedColors.PINK.getIndex());"$A$1:$L$1"
+		// style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+		// style.setVerticalAlignment(HSSFCellStyle.VERTICAL_CENTER);
+		style.setAlignment(CellStyle.ALIGN_CENTER);
+
+		Row titleRow = sheet.createRow(0);
+		titleRow.setHeightInPoints(25);
+		titleRow.setRowStyle(style);
+		Cell titleCell = titleRow.createCell(0);
+
+		// titleCell.setAlignment(CellStyle.ALIGN_CENTER);
+
+		titleCell.setCellValue("" + reportName);
+		titleCell.setCellStyle(createHeaderStyleHeaderFont(wb, 255, 243, 235, 0));
+		sheet.addMergedRegion(CellRangeAddress.valueOf(mergeUpto1));
+
+		Row searchByRow = sheet.createRow(1);
+		searchByRow.setHeightInPoints(25);
+		searchByRow.setRowStyle(style);
+		Cell searchByCell = searchByRow.createCell(0);
+
+		// titleCell.setAlignment(CellStyle.ALIGN_CENTER);
+
+		searchByCell.setCellValue("Search By.." + searchBy);
+		searchByCell.setCellStyle(createHeaderStyleHeaderFont(wb, 255, 243, 235, 0));
+		// titleCell.setCellStyle(styles.get("title"));
+		sheet.addMergedRegion(CellRangeAddress.valueOf(mergeUpto2));
+		/*
+		 * writeHeaders(wb, sheet); writeHeaders(wb, sheet); writeHeaders(wb, sheet);
+		 */
+		 XSSFCellStyle cellStyle = wb.createCellStyle();
+
+		for (int rowIndex = 0; rowIndex < exportToExcelListNew.size(); rowIndex++) {
+			XSSFRow row = sheet.createRow(rowIndex + 2);
+			for (int j = 0; j < exportToExcelListNew.get(rowIndex).getRowData().size(); j++) {
+
+				XSSFCell cell = row.createCell(j);
+
+				try 
+		        { 
+		            // checking valid integer using parseInt() method 
+					cell.setCellValue(exportToExcelListNew.get(rowIndex).getRowData().get(j));
+					cell.setCellStyle(cellStyle);
+		        }  
+		        catch (NumberFormatException e)  
+		        { 
+		        	  
+		               
+		        } 
+				 
+				if ((rowIndex + 2) == 2)
+					cell.setCellStyle(createHeaderStyleNew(wb));
+
+			}
+			// if((rowIndex+1)==1)
+			// row.setRowStyle(createHeaderStyleNew(wb));
+		}
+		return wb;
+	}
 
 	private XSSFCellStyle createHeaderStyleNew(XSSFWorkbook workbook) {
 		XSSFCellStyle style = workbook.createCellStyle();

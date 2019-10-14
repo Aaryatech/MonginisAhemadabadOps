@@ -68,13 +68,33 @@ table, th, td {
 				</div>
 
 
-
+				<input type="hidden" name="frId" id="frId" value="${frId}">
 				<div class="row">
 					<div class="clearfix"></div>
 
+					<div class="row">
 
-					<div id="table-scroll" >
-						<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+
+						<div class="form-group">
+
+							<div class="col-md-12"
+								style="margin-top: 3px; text-align: center;">
+
+
+								<button class="btn btn-primary" value="PDF" id="PDFButton"
+									onclick="genPdf()">PDF</button>
+
+								<input type="button" id="expExcel" class="btn btn-primary"
+									value="EXPORT TO Excel" onclick="exportToExcel();">
+
+							</div>
+
+						</div>
+
+					</div>
+					<div id="table-scroll">
+						<div id="faux-table" class="faux-table" aria="hidden"
+							style="display: none;">
 							<!-- <table id="table2" class="main-table" border="1">
 								<thead>
 									<tr class="bgpink">
@@ -127,8 +147,7 @@ table, th, td {
 											<td style="text-align: right"><c:out
 													value="${custList.userPhone}" /></td>
 
-											<td style="text-align: right"><c:out
-													value="${custList.userGstNo}" /></td>
+											<td><c:out value="${custList.userGstNo}" /></td>
 
 
 										</tr>
@@ -170,31 +189,11 @@ table, th, td {
 <script>
 	function genPdf() {
 		//alert("Inside Gen Pdf ");
-		checkboxes = document.getElementsByName('select_to_agree');
-		//alert(checkboxes.length);
-
-		var selArray = 0;
-
-		for (var x = 0; x < checkboxes.length; x++) {
-			if (document.getElementById("select_to_agree" + x).checked == true) {
-				if (x == 0) {
-
-					selArray = document.getElementById("select_to_agree" + x).value;
-					//alert(selArray);
-				} else {
-					selArray = selArray
-							+ ","
-							+ document.getElementById("select_to_agree" + x).value;
-					//alert(selArray);
-				}
-			}
-
-		}
-		//	alert(selArray);
-
+		var frId = $("#frId").val();
+		alert(frId);
 		window
-				.open('${pageContext.request.contextPath}/pdf?url=pdf/getCrnCheckedHeadersNew/'
-						+ selArray);
+				.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getcustomerListPdf/'
+						+ frId);
 
 	}
 </script>
@@ -335,7 +334,7 @@ table, th, td {
 </script>
 
 <script>
-	function genPdfSingle(selArray) {
+	function genPdfSingle() {
 		//alert("Inside Gen Pdf ");
 		//alert("Inside Gen Pdf " + selArray);
 
@@ -389,7 +388,7 @@ table, th, td {
 
 	function exportToExcel() {
 
-		window.open("${pageContext.request.contextPath}/exportToExcel");
+		window.open("${pageContext.request.contextPath}/exportToExcelplain");
 		document.getElementById("expExcel").disabled = true;
 	}
 </script>

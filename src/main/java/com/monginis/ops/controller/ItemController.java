@@ -50,6 +50,7 @@ import com.monginis.ops.common.Firebase;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustList;
 import com.monginis.ops.model.CustomerBillItem;
+import com.monginis.ops.model.ExportToExcel;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetFrItem;
@@ -59,6 +60,13 @@ import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LoginInfo;
 import com.monginis.ops.model.Orders;
 import com.monginis.ops.model.TabTitleData;
+import com.monginis.ops.model.creditnote.CreditNoteHeaderPrint;
+import com.monginis.ops.model.creditnote.CreditPrintBean;
+import com.monginis.ops.model.creditnote.CrnDetailsSummary;
+import com.monginis.ops.model.creditnote.CrnSrNoDateBean;
+import com.monginis.ops.model.creditnote.GetCreditNoteHeadersList;
+import com.monginis.ops.model.creditnote.GetCrnDetails;
+import com.monginis.ops.model.creditnote.GetCrnDetailsList;
 import com.monginis.ops.model.setting.NewSetting;
 
 @Controller
@@ -97,17 +105,78 @@ public class ItemController {
 			CustList[] custList1 = restTemplate.postForObject(Constant.URL + "getCutslListFroFranchasee", map,
 					CustList[].class);
 			List<CustList> custList = new ArrayList<CustList>(Arrays.asList(custList1));
-
-			System.out.println("custListcustListcustListcustList" + custList.toString());
-
+ 
 			mav.addObject("custList", custList);
+			mav.addObject("frId", frDetails.getFrId());
+			
+			
+			List<ExportToExcel> exportToExcelList = new ArrayList<ExportToExcel>();
 
+			ExportToExcel expoExcel = new ExportToExcel();
+			List<String> rowData = new ArrayList<String>();
+
+			rowData.add("Sr. No");
+			rowData.add("Customer");
+			rowData.add("Mobile no");
+			rowData.add("GST No."); 
+			expoExcel.setRowData(rowData); 
+			exportToExcelList.add(expoExcel);
+
+			 
+			for (int i = 0; i < custList.size(); i++) {
+				expoExcel = new ExportToExcel();
+				rowData = new ArrayList<String>();
+
+				rowData.add("" + (i + 1));
+				rowData.add("" + custList.get(i).getUserName());
+				rowData.add("" + custList.get(i).getUserPhone());
+				rowData.add("" + custList.get(i).getUserGstNo()); 
+
+				expoExcel.setRowData(rowData);
+				exportToExcelList.add(expoExcel);
+
+				 
+			}
+
+			session = request.getSession();
+			session.setAttribute("exportExcelListNew", exportToExcelList);
+			session.setAttribute("excelNameNew", "CustomerList");
+			session.setAttribute("reportNameNew", "Customer List"); 
+			session.setAttribute("mergeUpto1", "$A$1:$D$1");
+			session.setAttribute("mergeUpto2", "$A$2:$D$2");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 		return mav;
 
+	}
+	
+	@RequestMapping(value = "pdf/getcustomerListPdf/{frId}", method = RequestMethod.GET)
+	public ModelAndView getCrnCheckedHeadersNew(@PathVariable int frId,HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/getcustomerListPdf");
+
+		try {
+			RestTemplate restTemplate = new RestTemplate();
+
+			MultiValueMap<String, Object> map  = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			 
+			CustList[] custList1 = restTemplate.postForObject(Constant.URL + "getCutslListFroFranchasee", map,
+					CustList[].class);
+			List<CustList> custList = new ArrayList<CustList>(Arrays.asList(custList1));
+ 
+			model.addObject("custList", custList); 
+
+		} catch (Exception e) {
+			System.err.println("Exce Occured ");
+			System.err.println(e.getMessage());
+			e.printStackTrace();
+		}
+
+		return model;
 	}
 
 	@RequestMapping(value = "/showSavouries/{index}", method = RequestMethod.GET)

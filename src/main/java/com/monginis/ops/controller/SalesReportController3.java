@@ -1,12 +1,16 @@
 package com.monginis.ops.controller;
 
 import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -1351,6 +1355,39 @@ public class SalesReportController3 {
 			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
 			model.addObject("frId", frDetails.getFrId());
 
+			SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date1 = new Date(); // your date
+			// Choose time zone in which you want to interpret your Date
+			Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("Asia/Calcutta"));
+			cal.setTime(date1);
+			int year = cal.get(Calendar.YEAR);
+			int month = (cal.get(Calendar.MONTH)) + 1;
+			int day = cal.get(Calendar.DAY_OF_MONTH);
+
+			String toDays = day + "-" + month + "-" + year;
+			String year1stdate = "01" + "-" + "04" + "-" + year;
+
+			Date today = sf.parse(toDays);
+			Date yeardate = sf.parse(year1stdate);
+			
+			if(today.compareTo(yeardate)<0) {
+				cal.add(Calendar.YEAR, -1);
+				year = cal.get(Calendar.YEAR);
+				year1stdate = "01" + "-" + "04" + "-" + year; 
+				yeardate = sf.parse(year1stdate);
+				
+				model.addObject("fromDate", sf.format(yeardate));
+				model.addObject("toDate", sf.format(today));
+				
+				System.out.println(today + "  year date big  " + yeardate);
+			}else {
+				
+				model.addObject("fromDate", sf.format(yeardate));
+				model.addObject("toDate", sf.format(today));
+				System.out.println(today + "  To day big  " + yeardate);
+			}
+
+			
 		} catch (Exception e) {
 
 			System.out.println("Exc in showYearlySellReport--  " + e.getMessage());
@@ -1376,6 +1413,14 @@ public class SalesReportController3 {
 			System.out.println("Inside get Sale Bill Wise");
 			frId = Integer.parseInt(request.getParameter("frId"));
 			String selectedSubCatIdList = request.getParameter("subCat_id_list");
+			String selectedCatIdList = request.getParameter("cat_id_list");
+			
+			selectedCatIdList = selectedCatIdList.substring(1, selectedCatIdList.length() - 1);
+			selectedCatIdList = selectedCatIdList.replaceAll("\"", "");
+
+			List<Integer> cIds = Stream.of(selectedCatIdList.split(",")).map(Integer::parseInt)
+					.collect(Collectors.toList());
+			
 			fromDate = request.getParameter("fromDate");
 			toDate = request.getParameter("toDate");
 
@@ -1395,9 +1440,17 @@ public class SalesReportController3 {
 
 				if (subCatAList != null) {
 
-					for (int i = 0; i < subCatAList.size(); i++) {
-						tempScIdList.add(String.valueOf(subCatAList.get(i).getSubCatId()));
+					for (int j = 0; j < cIds.size(); j++) {
+
+						for (int i = 0; i < subCatAList.size(); i++) {
+
+							if (cIds.get(j) == subCatAList.get(i).getCatId()) {
+								tempScIdList.add(String.valueOf(subCatAList.get(i).getSubCatId()));
+							}
+
+						}
 					}
+
 				}
 				System.err.println("SUB CAT ID ARRAY --------- " + tempScIdList);
 				selectedSubCatIdList = tempScIdList.toString().substring(1, tempScIdList.toString().length() - 1);
