@@ -53,7 +53,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.zefer.pd4ml.PD4Constants;
 import org.zefer.pd4ml.PD4ML;
 import org.zefer.pd4ml.PD4PageMark;
- 
+
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -1320,26 +1320,24 @@ public class ReportsController {
 		return itemWiseDetailReportList;
 
 	}
-	
+
 	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.GET)
-	public @ResponseBody List<ItemRes> getItemsResBySubCatId(HttpServletRequest request,
-			HttpServletResponse response) {
+	public @ResponseBody List<ItemRes> getItemsResBySubCatId(HttpServletRequest request, HttpServletResponse response) {
 
 		List<ItemRes> items = new ArrayList<ItemRes>();
 		try {
 
 			int catId = Integer.parseInt(request.getParameter("catId"));
-			 
 
 			RestTemplate restTemplate = new RestTemplate();
 
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>(); 
-			map.add("subCatId", catId); 
-			  
-			ItemRes[] ItemRes = restTemplate
-					.postForObject(Constant.URL + "/getItemsResBySubCatId", map, ItemRes[].class);
-			
-			items=new ArrayList<>(Arrays.asList(ItemRes));
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("subCatId", catId);
+
+			ItemRes[] ItemRes = restTemplate.postForObject(Constant.URL + "/getItemsResBySubCatId", map,
+					ItemRes[].class);
+
+			items = new ArrayList<>(Arrays.asList(ItemRes));
 
 		} catch (Exception e) {
 			items = new ArrayList<>();
@@ -2606,6 +2604,43 @@ public class ReportsController {
 		return model;
 	}
 
+	@RequestMapping(value = "pdf/showSellCategoryWiseReportpPdf/{fromDate}/{toDate}/{frId}", method = RequestMethod.GET)
+	public ModelAndView showSellItemwiseReportpPdf(@PathVariable String fromDate, @PathVariable String toDate,
+			@PathVariable int frId, HttpServletRequest request, HttpServletResponse response) {
+
+		ModelAndView model = new ModelAndView("report/sellReport/sellReportPdf/showSellCategoryWiseReportpPdf");
+		RestTemplate restTemplate = new RestTemplate();
+		try {
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frId);
+			map.add("fromDate", fromDate);
+			map.add("toDate", toDate);
+
+			getRepFrMenuwiseSellResponseList = new ArrayList<GetRepMenuwiseSellResponse>();
+
+			ParameterizedTypeReference<List<GetRepMenuwiseSellResponse>> typeRef = new ParameterizedTypeReference<List<GetRepMenuwiseSellResponse>>() {
+			};
+			ResponseEntity<List<GetRepMenuwiseSellResponse>> responseEntity = restTemplate
+					.exchange(Constant.URL + "getRepMenuwiseSell", HttpMethod.POST, new HttpEntity<>(map), typeRef);
+
+			getRepFrMenuwiseSellResponseList = responseEntity.getBody();
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("frId", frId);
+			Franchisee franchisee = restTemplate.getForObject(Constant.URL + "getFranchisee?frId={frId}",
+					Franchisee.class, frId);
+			model.addObject("frName", franchisee.getFrName());
+			model.addObject("reportList", getRepFrMenuwiseSellResponseList);
+			model.addObject("fromDate", fromDate);
+			model.addObject("toDate", toDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
+		}
+		return model;
+	}
+
 	@RequestMapping(value = "/getMenuwiselReport", method = RequestMethod.GET)
 	public @ResponseBody List<GetRepMenuwiseSellResponse> getMenuwisellReport(HttpServletRequest request,
 			HttpServletResponse response) {
@@ -2660,6 +2695,9 @@ public class ReportsController {
 		rowData.add("Quantity");
 		rowData.add("Amount");
 
+		float qtyTotal=0;
+		float amtTotal=0;
+		
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
 		for (int i = 0; i < getRepFrMenuwiseSellResponseList.size(); i++) {
@@ -2673,11 +2711,27 @@ public class ReportsController {
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getQty());
 			rowData.add("" + getRepFrMenuwiseSellResponseList.get(i).getAmount());
 
+			qtyTotal=qtyTotal+getRepFrMenuwiseSellResponseList.get(i).getQty();
+			amtTotal=amtTotal+getRepFrMenuwiseSellResponseList.get(i).getAmount();
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
 		}
 
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+
+		rowData.add("");
+		rowData.add("");
+
+		rowData.add("Total");
+		rowData.add("" + qtyTotal);
+		rowData.add("" + amtTotal);
+  
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "MenuWiseSummarySell");
