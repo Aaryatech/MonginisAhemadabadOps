@@ -3136,47 +3136,69 @@ public class ReportsController {
 		/*
 		 * rowData.add("Sell Bill No"); rowData.add("Franchise Id");
 		 */
-		rowData.add("Franchise Name");
-		/* rowData.add("Bill Date"); */
+		rowData.add("Franchise Name"); 
 		rowData.add("Tax %");
+		rowData.add("Taxable Amount");
 		rowData.add("CGST");
-		rowData.add("SGST");
-
-		rowData.add("IGST");
-
-		rowData.add("CESS");
-		/* rowData.add("GST"); */
-		rowData.add("Tax Amount");
+		rowData.add("SGST"); 
+		rowData.add("IGST"); 
+		rowData.add("CESS"); 
 		rowData.add("Bill Amount");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float taxableTotal=0;
+		float cgstTotal=0;
+		float sgstTotal=0;
+		float igstTotal=0;
+		float cessTotal=0;
+		float billTotal=0;
+		
+		
 		for (int i = 0; i < getRepTaxSell.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			rowData.add("" + (i + 1));
-			/*
-			 * rowData.add("" + getRepTaxSell.get(i).getSellBillNo()); rowData.add("" +
-			 * getRepTaxSell.get(i).getFrId());
-			 */
+			 
 			rowData.add("" + getRepTaxSell.get(i).getFrName());
-			/*
-			 * rowData.add("" + getRepTaxSell.get(i).getBillDate());
-			 */
+			 
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_per()));
+			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getSgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
-			/* rowData.add("" + getRepTaxSell.get(i).getGstn()); */
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
+			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));  
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
-
+			
+			taxableTotal=taxableTotal+getRepTaxSell.get(i).getTax_amount();
+			cgstTotal=cgstTotal+getRepTaxSell.get(i).getCgst();
+			sgstTotal=sgstTotal+getRepTaxSell.get(i).getSgst();
+			igstTotal=igstTotal+getRepTaxSell.get(i).getIgst();
+			cessTotal=cessTotal+getRepTaxSell.get(i).getCess();
+			billTotal=billTotal+getRepTaxSell.get(i).getBill_amount();
+			
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
 
 		}
 
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		 
+		rowData.add("Total" ); 
+		rowData.add("");
+		rowData.add("" + roundUp(taxableTotal));
+		rowData.add("" + roundUp(cgstTotal));
+		rowData.add("" + roundUp(sgstTotal));
+		rowData.add("" + roundUp(igstTotal));
+		rowData.add("" + roundUp(cessTotal));  
+		rowData.add("" + roundUp(billTotal));
+		 
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
+		
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);
 		session.setAttribute("excelName", "TaxReportSell");
@@ -3229,14 +3251,14 @@ public class ReportsController {
 
 			getRepTaxSell = responseEntity.getBody();
 
-			Collections.sort(getRepTaxSell, new Comparator<GetRepTaxSell>() {
+			/*Collections.sort(getRepTaxSell, new Comparator<GetRepTaxSell>() {
 				public int compare(GetRepTaxSell c1, GetRepTaxSell c2) {
 
 					String s1 = c1.getSellBillNo();
 					String s2 = c2.getSellBillNo();
 					return s1.compareToIgnoreCase(s2);
 				}
-			});
+			});*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());
@@ -3251,45 +3273,72 @@ public class ReportsController {
 		ExportToExcel expoExcel = new ExportToExcel();
 		List<String> rowData = new ArrayList<String>();
 		rowData.add("Sr.No");
-		rowData.add("Sell Bill No");
-		// rowData.add("Franchise Id");
+		rowData.add("Sell Bill No"); 
 		rowData.add("Franchise Name");
-		rowData.add("Bill Date");
+		/*rowData.add("Bill Date");*/
+		rowData.add("Taxable Amount");
 		rowData.add("Tax %");
 		rowData.add("cgst");
-		rowData.add("sgst");
-
-		rowData.add("igst");
-
+		rowData.add("sgst"); 
+		rowData.add("igst"); 
 		rowData.add("cess");
-		rowData.add("Gst");
-		rowData.add("Tax Amount");
+		/*rowData.add("Gst"); */
 		rowData.add("Bill Amount");
 
 		expoExcel.setRowData(rowData);
 		exportToExcelList.add(expoExcel);
+		
+		float taxableAmt=0;
+		float cgstAmt=0;
+		float sgstAmt=0;
+		float igstAmt=0;
+		float cessAmt=0;
+		float billAmt=0;
+		
 		for (int i = 0; i < getRepTaxSell.size(); i++) {
 			expoExcel = new ExportToExcel();
 			rowData = new ArrayList<String>();
 			rowData.add("" + (i + 1));
-			rowData.add("" + getRepTaxSell.get(i).getSellBillNo());
-			// rowData.add("" + getRepTaxSell.get(i).getFrId());
+			rowData.add("" + getRepTaxSell.get(i).getSellBillNo()); 
 			rowData.add("" + getRepTaxSell.get(i).getFrName());
-			rowData.add("" + getRepTaxSell.get(i).getBillDate());
-
+			/*rowData.add("" + getRepTaxSell.get(i).getBillDate());*/
+			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_per()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getCgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getSgst()));
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getIgst()));
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));
-			rowData.add("" + getRepTaxSell.get(i).getGstn());
-			rowData.add("" + roundUp(getRepTaxSell.get(i).getTax_amount()));
+			rowData.add("" + roundUp(getRepTaxSell.get(i).getCess()));  
 			rowData.add("" + roundUp(getRepTaxSell.get(i).getBill_amount()));
 
 			expoExcel.setRowData(rowData);
 			exportToExcelList.add(expoExcel);
+			
+			taxableAmt = taxableAmt+getRepTaxSell.get(i).getTax_amount();
+			cgstAmt = cgstAmt+getRepTaxSell.get(i).getCgst();
+			sgstAmt = sgstAmt+getRepTaxSell.get(i).getSgst();
+			igstAmt = igstAmt+getRepTaxSell.get(i).getIgst();
+			cessAmt = cessAmt+getRepTaxSell.get(i).getCess();
+			billAmt = billAmt+getRepTaxSell.get(i).getBill_amount();
+			
 
 		}
+		
+		expoExcel = new ExportToExcel();
+		rowData = new ArrayList<String>();
+		rowData.add("");
+		rowData.add(""); 
+		rowData.add("Total");
+		/*rowData.add("" + getRepTaxSell.get(i).getBillDate());*/
+		rowData.add("" + roundUp(taxableAmt));
+		rowData.add("");
+		rowData.add("" + roundUp(cgstAmt));
+		rowData.add("" + roundUp(sgstAmt));
+		rowData.add("" + roundUp(igstAmt));
+		rowData.add("" + roundUp(cessAmt));
+		rowData.add("" + roundUp(billAmt));    
+
+		expoExcel.setRowData(rowData);
+		exportToExcelList.add(expoExcel);
 
 		HttpSession session = request.getSession();
 		session.setAttribute("exportExcelList", exportToExcelList);

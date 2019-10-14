@@ -70,14 +70,15 @@
 						<div class="col1">
 							<div class="col1title">
 								<b><span class="frm_txt">From</span></b> <input
-									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal float_l"
-									placeholder="From Date" name="from_Date" type="text"
-									size="35">
+									id="fromdatepicker" autocomplete="off"
+									class="texboxitemcode texboxcal float_l"
+									placeholder="From Date" name="from_Date" type="text" size="35">
 							</div>
 						</div>
 						<div class="col2">
 							<div class="col1title">
-								<b><span class="frm_txt">From</span></b> <input id="todatepicker" class="texboxitemcode texboxcal float_l"
+								<b><span class="frm_txt">From</span></b> <input
+									id="todatepicker" class="texboxitemcode texboxcal float_l"
 									autocomplete="off" placeholder="To Date" name="to_Date"
 									type="text" size="35">
 							</div>
@@ -104,7 +105,8 @@
 
 
 						<div id="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;">
 								<table id="table_grid1" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
@@ -123,7 +125,7 @@
 											<th class="col-md-1" align="center">IGST</th>
 											<th class="col-md-1" align="center">CGST</th>
 											<th class="col-md-1" align="center">SGST</th>
-											
+
 										</tr>
 									</thead>
 
@@ -134,7 +136,7 @@
 								</table>
 							</div>
 							<div>
-								<table id="table_grid"  class="responsive-table" border="1">
+								<table id="table_grid" class="responsive-table" border="1">
 									<thead>
 										<tr class="bgpink">
 
@@ -152,7 +154,7 @@
 											<th class="col-md-1" align="center">IGST</th>
 											<th class="col-md-1" align="center">CGST</th>
 											<th class="col-md-1" align="center">SGST</th>
-											
+
 										</tr>
 									</thead>
 
@@ -258,7 +260,7 @@
 															.append($(
 																	'<td class="col-md-2"></td>')
 																	.html(
-																			sellTaxData.sellBillNo));	
+																			sellTaxData.sellBillNo));
 
 													tr
 															.append($(
@@ -269,26 +271,34 @@
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html((sellTaxData.bill_amount).toFixed(2)));
+																	.html(
+																			(sellTaxData.bill_amount)
+																					.toFixed(2)));
 													billTotal = billTotal
 															+ sellTaxData.bill_amount;
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html((sellTaxData.tax_amount).toFixed(2)));
+																	.html(
+																			(sellTaxData.tax_amount)
+																					.toFixed(2)));
 													taxTotal = taxTotal
 															+ sellTaxData.tax_amount;
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html((sellTaxData.tax_per).toFixed(2)));
+																	.html(
+																			(sellTaxData.tax_per)
+																					.toFixed(2)));
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html((sellTaxData.igst).toFixed(2)));
+																	.html(
+																			(sellTaxData.igst)
+																					.toFixed(2)));
 
 													igstTotal = igstTotal
 															+ sellTaxData.igst;
@@ -296,18 +306,21 @@
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html((sellTaxData.cgst).toFixed(2)));
+																	.html(
+																			(sellTaxData.cgst)
+																					.toFixed(2)));
 													cgstTotal = cgstTotal
 															+ sellTaxData.cgst;
 
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right;"></td>')
-																	.html((sellTaxData.sgst).toFixed(2)));
+																	.html(
+																			(sellTaxData.sgst)
+																					.toFixed(2)));
 													sgstTotal = sgstTotal
 															+ sellTaxData.sgst;
 
-													
 													$('#table_grid tbody')
 															.append(tr);
 
@@ -322,7 +335,7 @@
 								var totalTax = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ taxTotal.toFixed(2);
 								+"</b></td>";
-								
+
 								var igst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 										+ igstTotal.toFixed(2);
 								+"</b></td>";
@@ -332,7 +345,7 @@
 								var sgst = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
 										+ sgstTotal.toFixed(2);
 								+"</b></td>";
-								
+								var blank = "<td style='text-align:right'> </td>";
 
 								var trclosed = "</tr>";
 
@@ -345,8 +358,7 @@
 								$('#table_grid tbody').append(igst);
 								$('#table_grid tbody').append(cgst);
 								$('#table_grid tbody').append(sgst);
-								
-								
+								$('#table_grid tbody').append(trclosed);
 
 							});
 

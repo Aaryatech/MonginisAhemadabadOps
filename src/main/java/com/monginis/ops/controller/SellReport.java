@@ -88,13 +88,19 @@ public class SellReport {
 			rowData.add("CGST");
 			rowData.add("SGST");
 			rowData.add("IGST");
-			rowData.add("Taxable Amt");
-			rowData.add("Tax Amt");
+			rowData.add("Taxable Amt"); 
 			rowData.add("Grand Total");
-			expoExcel.setRowData(rowData);
-
+			
+			expoExcel.setRowData(rowData); 
 			exportToExcelList.add(expoExcel);
-
+			
+			float cgstTotal=0;
+			float sgstTotal=0;
+			float igstTotal=0;
+			float taxableTotal=0;
+			float billTotal=0;
+			
+			
 			for (int i = 0; i < tSellReport.size(); i++) {
 				expoExcel = new ExportToExcel();
 				rowData = new ArrayList<String>();
@@ -105,14 +111,32 @@ public class SellReport {
 				rowData.add("" + roundUp(tSellReport.get(i).getCgst()));
 				rowData.add("" + roundUp(tSellReport.get(i).getSgst()));
 				rowData.add("" + roundUp(tSellReport.get(i).getIgst()));
-				rowData.add("" + roundUp(tSellReport.get(i).getTaxableAmt()));
-				rowData.add("" + roundUp(tSellReport.get(i).getTotalTax()));
+				rowData.add("" + roundUp(tSellReport.get(i).getTaxableAmt())); 
 				rowData.add("" + roundUp(tSellReport.get(i).getGrandTotal()));
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
-
+				cgstTotal=cgstTotal+tSellReport.get(i).getCgst();
+				sgstTotal=sgstTotal+tSellReport.get(i).getSgst();
+				igstTotal=igstTotal+tSellReport.get(i).getIgst();
+				taxableTotal=taxableTotal+tSellReport.get(i).getTaxableAmt();
+				billTotal=billTotal+tSellReport.get(i).getGrandTotal();
 			}
+			
+			expoExcel = new ExportToExcel();
+			rowData = new ArrayList<String>();
+
+			rowData.add("");
+			rowData.add("Total ");
+			rowData.add("");
+			rowData.add("" + roundUp(cgstTotal));
+			rowData.add("" + roundUp(sgstTotal));
+			rowData.add("" + roundUp(igstTotal));
+			rowData.add("" + roundUp(taxableTotal)); 
+			rowData.add("" + roundUp(billTotal));
+
+			expoExcel.setRowData(rowData);
+			exportToExcelList.add(expoExcel);
 
 			HttpSession session = request.getSession();
 			session.setAttribute("exportExcelList", exportToExcelList);
