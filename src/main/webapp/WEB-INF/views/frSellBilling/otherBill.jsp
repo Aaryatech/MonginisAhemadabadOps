@@ -315,12 +315,12 @@ body {
 								</div>
 
 											<div>
-												<div class="shInnerwidth">
-													<table width="100%" border="0" cellspacing="0"
+												<div class="other_billone">
+													<table width="150%" border="0" cellspacing="0"
 														cellpadding="0" class="table" class="responsive-table">
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
-																<table width="100%" border="0" cellspacing="0"
+																<table width="150%" border="0" cellspacing="0"
 																	cellpadding="0">
 																	<tr class="bgpink">
 																		<td>Item Code</td>

@@ -213,6 +213,13 @@ body {
 	padding: 5px 10px;
 	cursor: pointer
 }
+
+@media screen and (max-width:700px){
+	
+	.dialog-ovelay .dialog {width: 90%; height: auto; border-radius: 10px;}
+	.dialog-ovelay .dialog header{border-radius:10px 10px 0 0;}
+}	
+
 </style>
 <style>
 .switch {
@@ -361,13 +368,18 @@ label:before{
 										<div class="control-label">
 
 											<div>
-												<div class="shInnerwidth">
+												<div id="table-scroll">
+												<div class="table-wrap table-wrap-custbill">
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="table">
+														cellpadding="0" class="responsive-table">
+														
+														
+														
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
-																	cellpadding="0">
+																	cellpadding="0" class="table responsive-table signle_table">
+																	<thead>
 																	<tr class="bgpink">
 																		<td>Barcode</td>
 																		<td>Item Name</td>
@@ -375,12 +387,14 @@ label:before{
 																		<td>Rate</td>
 																		
 																	</tr>
+																	</thead>
+																	
 																	<tr>
 																		<td><input type="text" class="form-control"
 																			id="barcode1" name="barcode1"
 																			placeholder="Enter Barcode" onchange="selectItem(1)"
 																			onkeypress="onBarcode(event,1)"></td>
-																		<td><select class="chosen-select" 
+																		<td><select class="chosen-select"  style="max-width:150px;"
 																			data-live-search="true" title="Please Select Item"
 																			name="itemName1" id="itemName1"
 																			data-rule-required="true">
@@ -406,7 +420,7 @@ label:before{
 																		</select> <input name="item_name1" id="item_name1"
 																			type="hidden" value="" /></td>
 																		<td><input type="number" min="0" max="500"
-																			class="form-control" name="qty1" id="qty1" value="1"
+																			class="form-control qty_tbl" name="qty1" id="qty1" value="1"
 																			onkeypress="onQty(event,1)" onblur="onTab(1)"
 																			oninput="validity.valid||(value='');"></td>
 																		<td id="rateTdVal1">00</td>
@@ -419,6 +433,7 @@ label:before{
 														</tr>
 
 													</table>
+												</div>
 												</div>
 											</div>
 										</div>

@@ -134,6 +134,7 @@ border-radius:50%;}
 .table td{ padding:8px 13px; text-align:center;}
 .table td:nth-child(1){ text-align:left;}
 .table td:nth-child(2){ text-align:left;}
+table.responsive-table.signle_table{margin:0;}
 
 .table {font-size:18px; color:#333;}
 .table tr:nth-child(even) {background:#f5f5f5;}
@@ -458,6 +459,7 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 .right_btn{float: left; margin:9px 0 0 0;}
 
 .ui-datepicker .ui-datepicker-prev span, .ui-datepicker .ui-datepicker-next span{display: none !important;}
+.signout{display: none;}
 
 /*--css-divices--*/
 @media screen and (max-width:1366px){
@@ -521,7 +523,14 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 }
 
 @media screen and (max-width:700px){
-	.texboxitemcode{position: relative; z-index:999999;}
+	.signout{float: right; margin: 15px; font-size: 25px; color:#ec268f; display: block;}
+	.other_billone{width: 100%; overflow-x: scroll;}
+	.dialog-ovelay .dialog {width: 90%; height: auto; border-radius: 10px;}
+	.dialog-ovelay .dialog header{border-radius:10px 10px 0 0;}
+	.form-control.qty_tbl{width: 50px;}
+	/* .sidenav .closebtn{position: fixed; top:80px;} */
+	
+	.texboxitemcode{position: relative; z-index:10 /*999999*/;}
 	.right_btn{float: none; margin:0;}
 	.frm_txt {width: 100%; float: none; margin: 0 0 5px 0; text-align: left; display: block;}
 	.wrapperIn2.single {padding-top: 41px;}
@@ -555,7 +564,9 @@ table.responsive-table {width:100%; border-collapse: collapse; overflow-x: auto;
 .homesliderImg img{ max-width:95%;}
 .homesliderTitle{ font-size:16px; text-align:center;}
 .listarea li{ width:100%; padding:15px 0px;}
-.sidenav{ overflow-y:auto; max-height:460px;}
+/* .sidenav{ overflow-y:auto; max-height:460px;} */
+.sidenav{overflow-y: auto; max-height: 100% ; height: 100%; top: 0 !important; position: fixed; z-index: 999999;}
+
 .topSlide2{ padding:40px 10px 20px 10px;}
 .latestNewsTitle{ float:left; margin-top:-44px;
 -webkit-border-radius:4px 4px 0px 0px;-moz-border-radius:4px 4px 0px 0px;
@@ -582,7 +593,7 @@ table.responsive-table{display: block;}
 .table .bgpink,.table{font-size: 15px;}
 #frm_search{margin: 0 15px;}
 #group{margin:0 0 15px 0;}
-.buttonsaveorder{margin: 15px 0 0 0;}
+.buttonsaveorder{margin: 15px 0 0 0; position: relative; z-index: 10 /*999999*/;}
 #orderHistory{margin: 0 15px;}
 .h4, h4 {font-size: 16px !important;}
 
@@ -633,10 +644,4 @@ table.responsive-table{display: block;}
 	.checkbox {float: none; text-align: left; position: relative; width: 100%; margin: 30px 0 0 0;}
 	.sidebarhome li{ width:50% /*25%*/; float:left;}
 	.sidebarhome li a{ padding:10px; width:100%; min-height:95px;}
-}
-@media screen and (max-width: 700px){
-.btn {
-      position: relative;  
-    z-index: 999999;
-}
 }

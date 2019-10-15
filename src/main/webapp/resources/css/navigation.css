@@ -299,7 +299,7 @@ body{font-family:'MyriadPro-Regular'!important;}
 	margin-left:2px; display:block;
 }
 .menuzord-responsive.menuzord {
-	padding: 20px 0 0 0;
+	padding: 20px 0 0 0; display: none;
 }
 .menuzord-responsive .menuzord-brand {
 	margin: 8px 30px 10px 20px;
