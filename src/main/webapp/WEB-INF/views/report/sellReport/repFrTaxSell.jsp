@@ -60,6 +60,11 @@ jQuery(document).ready(function(){
 		});
 	});
 </script>
+<style>
+table, th, td {
+	border: 1px solid #9da88d;
+}
+</style>
 <!--datepicker-->
 
 
@@ -101,24 +106,24 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h3 class="pageTitle">View Sell Tax Report Summary </h3>
+						<h3 class="pageTitle">View Sell Tax Report Summary</h3>
 					</div>
 				</div>
 				<div class="colOuter">
 					<div align="center">
 						<div class="col1">
 							<div class="col1title">
-								<b>From&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input
-									id="fromdatepicker" autocomplete="off"
-									placeholder="Delivery Date" name="from_Date" type="text" class="texboxitemcode texboxcal"
-									size="35">
+								<b><span class="frm_txt">From</span></b> <input
+									id="fromdatepicker" autocomplete="off" placeholder="From Date"
+									name="from_Date" type="text"
+									class="texboxitemcode texboxcal float_l" size="35">
 							</div>
 						</div>
 						<div class="col2">
 							<div class="col1title">
-								<b>TO&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b> <input id="todatepicker" class="texboxitemcode texboxcal"
-									autocomplete="off" placeholder="Delivery Date" name="to_Date"
-									type="text" size="35">
+								<b><span class="frm_txt">TO</span></b> <input id="todatepicker"
+									class="texboxitemcode texboxcal float_l" autocomplete="off"
+									placeholder="To Date" name="to_Date" type="text" size="35">
 							</div>
 						</div>
 						<input type="hidden" name="frId" id="frId" value="${frId}">
@@ -126,7 +131,7 @@ jQuery(document).ready(function(){
 					</div>
 
 
-					<div align="center">
+					<div align="center" class="right_btn">
 						<button class="btn search_btn" onclick="searchSellBill()">HTML
 							View</button>
 						<button class="btn search_btn" onclick="showChart()">Graph</button>
@@ -147,12 +152,12 @@ jQuery(document).ready(function(){
 						<div id="table-scroll">
 							<div id="faux-table" class="faux-table" aria="hidden"></div>
 							<div class="table-wrap">
-								<table id="table_grid" class="responsive-table" border="1" style="display: none;">
+								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<!-- <th class="col-md-1">Bill No</th> -->
+
 											<th class="col-md-1" style="text-align: center;">Tax %</th>
 											<th class="col-md-1" style="text-align: center;">Taxable
 												Amt</th>
@@ -186,9 +191,7 @@ jQuery(document).ready(function(){
 				</div>
 
 				<div id="chart">
-					<br>
-					<br>
-					<br>
+					<br> <br> <br>
 					<hr>
 					<div>
 

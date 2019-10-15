@@ -2,10 +2,9 @@ package com.monginis.ops.constant;
 
 public class Constant {
 
-	// public static final String URL =
-	// "http://97.74.228.55:8080/webapi/";//http://mongiwebapi.ap-south-1.elasticbeanstalk.com/
+	public static final String URL = "http://97.74.228.55:8080/webapi/";//http://mongiwebapi.ap-south-1.elasticbeanstalk.com/
 	// public static final String URL = "http://192.168.2.17:8080/";
-	public static final String URL = "http://localhost:8097/";
+	// public static final String URL = "http://localhost:8097/";
 	public static final String ITEM_IMAGE_URL = "http://97.74.228.55:8080/uploads/ITEM/";
 	public static final String SP_CAKE_FOLDER = "http://97.74.228.55:8080/uploads/SPCAKE/";
 	public static final String SPCAKE_IMAGE_URL = "http://97.74.228.55:8080/uploads/MSPCAKE/";

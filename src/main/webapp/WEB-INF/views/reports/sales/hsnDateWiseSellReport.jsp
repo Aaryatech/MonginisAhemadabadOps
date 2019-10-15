@@ -69,6 +69,12 @@
 	background: transparent;
 }
 </style>
+<style>
+table, th, td {
+	border: 1px solid #9da88d;
+}
+</style>
+
 <!DOCTYPE html>
 <html>
 
@@ -134,14 +140,14 @@
 
 						<div class="row">
 							<div class="col-md-12">
-								<h2 class="pageTitle">HSN Date Wise Sell Report</h2>
+								<h2 class="pageTitle">Bill wise HSN Wise Report</h2>
 							</div>
 						</div>
 
 
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 
-						<br> <br>
+
 
 
 						<div class="row">
@@ -163,7 +169,8 @@
 										type="text" value="${todaysDate}" />
 								</div>
 
-								<div class="col-md-3" style="margin-top:3px;  text-align: right;">
+								<div class="col-md-3"
+									style="margin-top: 3px; text-align: right;">
 									<input type="button" id="submit" class="btn btn-primary"
 										value="Search Report" onclick="searchReport()">
 
@@ -177,7 +184,7 @@
 
 						</div>
 
-						<br> <br>
+
 
 					</form>
 
@@ -189,64 +196,81 @@
 						<div class="col-md-12">
 							<!--table-->
 							<div class="clearfix"></div>
-							
+
 							<div class="table-responsive">
 
 
-							<div id="table-scroll" >
-								<div >
+								<div id="table-scroll">
+									<div>
 
-									<table id="table_grid" class="responsive-table">
-										<thead>
-											<tr>
+										<table id="table_grid" class="responsive-table">
+											<thead>
+												<tr>
 
-												<th class="col-sm-1" style="text-align: center; background:#ec268f; color:white;">Sr.No.</th>
-												<th class="col-md-3" style="text-align: center; background:#ec268f; color:white;">Invoice
-													No</th>
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Invoice
-													Date</th>
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Party
-													Name</th>
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">GST No</th>
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">HSN
-													Code</th>
+													<th class="col-sm-1"
+														style="text-align: center; background: #ec268f; color: white;">Sr.No.</th>
+													<th class="col-md-3"
+														style="text-align: center; background: #ec268f; color: white;">Invoice
+														No</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Invoice
+														Date</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Party
+														Name</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">GST
+														No</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">HSN
+														Code</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Billed
-													Qty</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Billed
+														Qty</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">
-													Taxable Amt</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">
+														Taxable Amt</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Cgst %
-												</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Cgst
+														%</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Cgst
-													Amt</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Cgst
+														Amt</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Sgst %</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Sgst
+														%</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Sgst
-													Amt</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Sgst
+														Amt</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Total</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Total</th>
 
-												<th class="col-md-2" style="text-align: center; background:#ec268f; color:white;">Bill
-													Amt</th>
+													<th class="col-md-2"
+														style="text-align: center; background: #ec268f; color: white;">Bill
+														Amt</th>
 
 
 
-											</tr>
-										</thead>
+												</tr>
+											</thead>
 
-										<tbody>
+											<tbody>
 
-										</tbody>
+											</tbody>
 
-									</table>
+										</table>
+
+									</div>
 
 								</div>
-
-							</div></div>
+							</div>
 							<br>
 
 							<div class="form-group" style="display: none;" id="range">
@@ -359,7 +383,6 @@
 							},
 							function(data) {
 
-
 								if (data == "") {
 									alert("No records found !!");
 									document.getElementById("expExcel").disabled = true;
@@ -395,30 +418,30 @@
 
 													tr
 															.append($(
-																	'<td class="col-md-3"></td>')
+																	'<td class="col-md-3" style=text-align:left;></td>')
 																	.html(
 																			sellBillData.invoiceNo));
 													tr
 															.append($(
-																	'<td class="col-md-2" ></td>')
+																	'<td class="col-md-2" style=text-align:center;></td>')
 																	.html(
 																			sellBillData.billDate));
 
 													tr
 															.append($(
-																	'<td class="col-md-2" ></td>')
+																	'<td class="col-md-2" style=text-align:left;></td>')
 																	.html(
 																			sellBillData.userName));
 
 													tr
 															.append($(
-																	'<td class="col-md-2" ></td>')
+																	'<td class="col-md-2" style=text-align:left;></td>')
 																	.html(
 																			sellBillData.userGstNo));
 
 													tr
 															.append($(
-																	'<td class="col-md-2" ></td>')
+																	'<td class="col-md-2" style=text-align:left;></td>')
 																	.html(
 																			sellBillData.hsnCode));
 
@@ -587,12 +610,8 @@
 			var to_date = $("#toDate").val();
 
 			window
-					.open('${pageContext.request.contextPath}/pdfForReport?url=pdf/showHsnDateWiseSellReportPdf/'
-							+ from_date
-							+ '/'
-							+ to_date
-							+ '/'
-							+ frId);
+					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showHsnDateWiseSellReportPdf/'
+							+ from_date + '/' + to_date + '/' + frId);
 
 		}
 	</script>

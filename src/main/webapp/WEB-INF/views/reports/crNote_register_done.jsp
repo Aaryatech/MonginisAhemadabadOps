@@ -82,7 +82,7 @@ table, th, td {
 							name="fromDate" type="text" value="${todaysDate}">
 					</div>
 					<div class="col-md-1">
-						<h4 class="pull-left">To Date:-</h4>
+						<h4 class="pull-left">To </h4>
 					</div>
 					<div class="col-md-2 ">
 						<input id="todatepicker" autocomplete="off"

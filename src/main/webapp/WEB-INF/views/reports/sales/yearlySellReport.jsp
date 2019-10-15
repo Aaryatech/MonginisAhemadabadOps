@@ -21,7 +21,7 @@ table, th, td {
 	<!--datepicker-->
 	<script type="text/javascript"
 		src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
-	
+
 	<script>
 		$(function() {
 			$("#toDate").datepicker({
@@ -49,9 +49,9 @@ table, th, td {
 
 	<c:url var="getBillList" value="/getFrSubCatYearlySellReport"></c:url>
 	<c:url var="getItemList" value="/getItemYearlySellReport"></c:url>
-	
-	
-	
+
+
+
 	<c:url var="getGroup2ByCatId" value="/getSubCatListByCatId"></c:url>
 
 	<c:url var="getFrListofAllFr" value="/getAllFrList"></c:url>
@@ -116,7 +116,7 @@ table, th, td {
 					</div> -->
 
 
-<br> <br>
+						<br> <br>
 						<div class="row">
 
 
@@ -125,7 +125,7 @@ table, th, td {
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDate" name="fromDate"
-										size="30" type="text" value="${todaysDate}" />
+										size="30" type="text" value="${fromDate}" />
 								</div>
 
 								<!-- </div>
@@ -136,7 +136,7 @@ table, th, td {
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="toDate" name="toDate" size="30"
-										type="text" value="${todaysDate}" />
+										type="text" value="${toDate}" />
 								</div>
 							</div>
 
@@ -147,11 +147,11 @@ table, th, td {
 						<div class="row">
 							<div class="col-md-2">Select Category</div>
 							<div class="col-md-4" style="text-align: left;">
-								<select data-placeholder="Select Group"
-									 name="item_grp1" tabindex="-1"
-									onchange="getSubCategoriesByCatId()" id="item_grp1"
-									data-rule-required="true"data-placeholder="Choose Menus..." class="chosen-select"
-							style="text-align: left;" required multiple="multiple">
+								<select data-placeholder="Select Group" name="item_grp1"
+									tabindex="-1" onchange="getSubCategoriesByCatId()"
+									id="item_grp1" data-rule-required="true"
+									data-placeholder="Choose Menus..." class="chosen-select"
+									style="text-align: left;" required multiple="multiple">
 
 									<option value="-1">Select All</option>
 
@@ -166,20 +166,20 @@ table, th, td {
 
 							<div class="col-sm-2 col-lg-2 ">Sub Category</div>
 							<div class="col-md-4">
-								<select data-placeholder="Select Sub Category" 
-								class="chosen-select" name="item_grp2"  id="item_grp2"
-							style="text-align: left;" required multiple="multiple">
+								<select data-placeholder="Select Sub Category"
+									class="chosen-select" name="item_grp2" id="item_grp2"
+									style="text-align: left;" required multiple="multiple">
 
-								
+
 
 								</select>
 							</div>
 
 						</div>
 						<br> <br>
-						
 
-						
+
+
 
 						<div class="row">
 							<div class="form-group">
@@ -194,16 +194,14 @@ table, th, td {
 							</div>
 						</div>
 
-<br> <br>
+						<br> <br>
 
 					</form>
 
 					<!-- form -->
 
 
-					<form id="submitItemForm"
-						action="#"
-						method="get">
+					<form id="submitItemForm" action="#" method="get">
 
 						<div class="row">
 							<div class="col-md-12">
@@ -212,8 +210,8 @@ table, th, td {
 						</div>
 
 
-					
-<br> <br>
+
+						<br> <br>
 
 
 
@@ -225,15 +223,15 @@ table, th, td {
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
 										placeholder="DD-MM-YYYY" id="fromDateItem" name="fromDateItem"
-										size="30" type="text" value="${todaysDate}" />
+										size="30" type="text" value="${fromDate}" />
 								</div>
 
-								
+
 								<div class="col-sm-3 col-lg-2	">To Date</div>
 								<div class="col-sm-6 col-lg-4 controls date_select">
 									<input class="texboxitemcode texboxcal"
-										placeholder="DD-MM-YYYY" id="toDateItem" name="toDateItem" size="30"
-										type="text" value="${todaysDate}" />
+										placeholder="DD-MM-YYYY" id="toDateItem" name="toDateItem"
+										size="30" type="text" value="${toDate}" />
 								</div>
 							</div>
 
@@ -244,10 +242,11 @@ table, th, td {
 						<div class="row">
 							<div class="col-md-2">Select Category</div>
 							<div class="col-md-4" style="text-align: left;">
-								<select data-placeholder="Select Group"  id="item_grp1Item"
-									 name="item_grp1Item" tabindex="-1"data-placeholder="Choose Category" class="chosen-select"
-							style="text-align: left;" required multiple="multiple">
-									 
+								<select data-placeholder="Select Group" id="item_grp1Item"
+									name="item_grp1Item" tabindex="-1"
+									data-placeholder="Choose Category" class="chosen-select"
+									style="text-align: left;" required multiple="multiple">
+
 									<option value="-1">Select All</option>
 
 									<c:forEach items="${mCategoryList}" var="mCategoryList">
@@ -261,9 +260,9 @@ table, th, td {
 
 
 						</div>
-						
+
 						<br> <br>
-						
+
 						<div class="row">
 							<div class="form-group">
 
@@ -301,11 +300,11 @@ table, th, td {
 		src="https://www.gstatic.com/charts/loader.js"></script> -->
 	<!--easyTabs-->
 
-<script
-	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
-<script
-	src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
-<!--easyTabs-->
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen.jquery.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/dropdownmultiple/chosen-active.js"></script>
+	<!--easyTabs-->
 
 
 	<script type="text/javascript">
@@ -401,16 +400,15 @@ table, th, td {
 			window.open("${pageContext.request.contextPath}/exportToExcelNew");
 			document.getElementById("expExcel").disabled = true;
 		}
-		
-		
+
 		function exportToExcelItem() {
 
 			window.open("${pageContext.request.contextPath}/exportToExcelNew");
 			document.getElementById("expExcel").disabled = true;
 		}
 	</script>
-	
-	
+
+
 
 
 
@@ -418,7 +416,6 @@ table, th, td {
 	<script type="text/javascript">
 		function searchItemReport() {
 			//	var isValid = validate();
-			
 
 			var frId = document.getElementById("frId").value;
 			var selectedCat = $("#item_grp1Item").val();
@@ -427,7 +424,6 @@ table, th, td {
 			var to_date = $("#toDateItem").val();
 
 			$('#loader').show();
-			
 
 			$.getJSON('${getItemList}',
 
@@ -507,8 +503,7 @@ table, th, td {
 													"value", data[i].subCatId)
 													.text(data[i].subCatName));
 								}
-							    $('.chosen-select').trigger('chosen:updated');
-
+								$('.chosen-select').trigger('chosen:updated');
 
 							});
 		}

@@ -134,7 +134,8 @@ public class SalesReportController2 {
 		exportToExcelList.add(expoExcel);
 		float drTotalAmt = 0.0f;
 		float crTotalAmt = 0.0f;
-
+		float bal = 0.0f;
+		
 		for (int i = 0; i < saleList.size(); i++) {
 
 			expoExcel = new ExportToExcel();
@@ -148,19 +149,32 @@ public class SalesReportController2 {
 
 			if (saleList.get(i).getType().equals("INV")) {
 
+				bal = bal + saleList.get(i).getGrandTotal();
+				
 				drTotalAmt = drTotalAmt + saleList.get(i).getGrandTotal();
-				rowData.add("" + roundUp(saleList.get(i).getGrandTotal()));
-			} else {
+				rowData.add("" +saleList.get(i).getGrandTotal());
 				rowData.add("0");
-			}
-
-			if (saleList.get(i).getType().equals("RET")) {
+				
+			}else if (saleList.get(i).getType().equals("RET")) {
+				
+				bal = bal - saleList.get(i).getGrandTotal();
 				crTotalAmt = crTotalAmt + saleList.get(i).getGrandTotal();
-				rowData.add("" + roundUp(saleList.get(i).getGrandTotal()));
+				rowData.add("0");
+				rowData.add("" +saleList.get(i).getGrandTotal());
+				
+			}else if (saleList.get(i).getType().equals("VER")) {
+				
+				bal = bal - saleList.get(i).getGrandTotal();
+				crTotalAmt = crTotalAmt + saleList.get(i).getGrandTotal();
+				rowData.add("0");
+				rowData.add("" +saleList.get(i).getGrandTotal());
+				
 			} else {
+				rowData.add("0");
 				rowData.add("0");
 			}
 
+			rowData.add("" +bal);
 			srno = srno + 1;
 
 			expoExcel.setRowData(rowData);

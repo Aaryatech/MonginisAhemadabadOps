@@ -1,25 +1,26 @@
- <%@page import="java.util.List"%>
+
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/css/tableSearch.css">
 <style type="text/css">
 label::before {
-    width: 0px;
-    height: 0px;
-    border: 0px;
-    }
-    
- .main-table tbody > tr:hover{
-  background-color: #ffa;
+	width: 0px;
+	height: 0px;
+	border: 0px;
 }
 
+.main-table tbody>tr:hover {
+	background-color: #ffa;
+}
 </style>
 <style>
 table, th, td {
-    border: 1px solid #9da88d;
+	border: 1px solid #9da88d;
 }
 </style>
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
@@ -57,28 +58,29 @@ table, th, td {
 			<div class="sidebarright">
 
 				<div class="row">
-				<!-- 	<div class="col-md-3">
+					<!-- 	<div class="col-md-3">
 						<h6 class="pageTitle">Request Manual GRN</h6>
 					</div>
 					 -->
 					<div class="col-md-3">
 
-						<button type="button" class="buttonsaveorder" style="display: none;" id='searchButton'							onclick="getViewOption()" style="width: 100px; height: 40px">Search
-							</button>
+						<button type="button" class="buttonsaveorder"
+							style="display: none;" id='searchButton'
+							onclick="getViewOption()" style="width: 100px; height: 40px">Search
+						</button>
 						<!--<button type="button" class="btn">Cancel</button>-->
 
 					</div>
 
-				<!-- </div>
+					<!-- </div>
 
 				<div class="row"> -->
 					<div class="col-md-12">
 						<!--table-->
-						<form
-							action="${pageContext.request.contextPath}/getGrnBillDetail"
+						<form action="${pageContext.request.contextPath}/getGrnBillDetail"
 							name="grn" id="grn" method="get">
 
-				<%-- 			<div class="row">
+							<%-- 			<div class="row">
 							<div class="col-md-2">
 						<h2 class="pageTitle"> </h2>
 					</div>
@@ -121,23 +123,27 @@ table, th, td {
 					<!-- 						</form>
  -->
 					<form action="${pageContext.request.contextPath}/postManualGrn"
-					onsubmit="return confirm('Do you really want to save ?');"
+						onsubmit="return confirm('Do you really want to save ?');"
 						name="grn_add" id="grn_add" method="post">
-						
+
 						<div class="col-md-9">
-						<h6 class="pageTitle">Request GRN</h6>
-					</div>
-					<label for="search" class="col-md-3" id="search">
-    <i class="fa fa-search" style="font-size:20px"></i>
-									<input type="text" style="border-radius:25px;" id="myInput" onkeyup="myFunction()" placeholder="Search items by name.." title="Type in a name">
-										</label>  
-						
+							<h6 class="pageTitle">Request GRN</h6>
+						</div>
+						<label for="search" class="col-md-3" id="search"> <i
+							class="fa fa-search" style="font-size: 20px"></i> <input
+							type="text" style="border-radius: 25px;" id="myInput"
+							onkeyup="myFunction()" placeholder="Search items by name.."
+							title="Type in a name">
+						</label>
+
 
 						<div class="clearfix"></div>
 
-						<div id="table-scroll" > <!-- class="table-scroll" -->
-							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;" >
-				 	<table id="table_grid1" class="main-table">
+						<div id="table-scroll">
+							<!-- class="table-scroll" -->
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;">
+								<table id="table_grid1" class="main-table">
 									<thead>
 										<tr class="bgpink">
 											<!--	<th class="col-md-1">Sr No.</th>
@@ -158,13 +164,13 @@ table, th, td {
 										<th class="col-md-1">Remark</th>
 -->
 										</tr>
-										
+
 									</thead>
-							</table> 
-							 
-							
-							
-							
+								</table>
+
+
+
+
 							</div>
 							<div class="table-wrap">
 								<table id="table_grid" class="responsive-table">
@@ -173,117 +179,134 @@ table, th, td {
 											<!-- 	<th class="col-md-1">Sr No.</th>
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
-<th class="col-md-1">SELECT</th>
-											<th class="col-md-1" style="text-align: center;">Invoice No</th>
-											<th class="col-md-2" style="text-align: center;">Invoice Date</th>
-										<th class="col-md-2"  style="text-align: center;">Name</th>
-										<th class="col-md-1"  style="text-align: center;">Type</th>
-										<th class="col-md-2"  style="text-align: center;">Pur Qty</th>
-										<th class="col-md-1"  style="text-align: center;">Rate</th>
-									<!-- 	<th class="col-md-1">Grn Rate</th> -->
-										<th class="col-md-1"  style="text-align: center;">Qty</th>
-										<th class="col-md-1"  style="text-align: center;">Tax %</th>
-										<th class="col-md-2"  style="text-align: center;">Taxable Amt</th>
-										<th class="col-md-1"  style="text-align: center;">Tax Amt</th>
-										<th class="col-md-2"  style="text-align: center;">Amount</th>
-										<th class="col-md-1" style="text-align: center;">Remark</th>
+											<th class="col-md-1">SELECT</th>
+											<th class="col-md-1" style="text-align: center;">Invoice
+												No</th>
+											<th class="col-md-2" style="text-align: center;">Invoice
+												Date</th>
+											<th class="col-md-2" style="text-align: center;">Name</th>
+											<th class="col-md-1" style="text-align: center;">Type</th>
+											<th class="col-md-2" style="text-align: center;">Pur Qty</th>
+											<th class="col-md-1" style="text-align: center;">Rate</th>
+											<!-- 	<th class="col-md-1">Grn Rate</th> -->
+											<th class="col-md-1" style="text-align: center;">Qty</th>
+											<th class="col-md-1" style="text-align: center;">Tax %</th>
+											<th class="col-md-2" style="text-align: center;">Taxable
+												Amt</th>
+											<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+											<th class="col-md-2" style="text-align: center;">Amount</th>
+											<th class="col-md-1" style="text-align: center;">Remark</th>
 
 										</tr>
-										
+
 									</thead>
 									<tbody>
 
 										<c:forEach items="${grnConfList}" var="grnConfList"
-										varStatus="count">
-										<tr id="row${grnConfList.billDetailNo}">
+											varStatus="count">
+											<tr id="row${grnConfList.billDetailNo}">
 
-											<td class="col-md-1" style="text-align: center;"><input type="checkbox" 
-													name="select_to_grn" id="${grnConfList.billDetailNo}"
+												<td class="col-md-1" style="text-align: center;"><input
+													type="checkbox" name="select_to_grn"
+													id="${grnConfList.billDetailNo}"
 													value="${grnConfList.billDetailNo}" /></td>
-<td class="col-md-2"  style="text-align: center;"><fmt:formatDate pattern="dd-MM-yyyy" value="${grnConfList.billDate}" />
-</td>
-											<td class="col-md-1"  style="text-align: center;"><c:out
-													value="${grnConfList.invoiceNo}"></c:out></td>
-											<td class="col-md-2"  style="text-align: center;"><c:out
-													value="${grnConfList.itemName}"></c:out></td>
-											<c:choose>
-												<c:when test="${grnConfList.grnType==0}">
-													<td class="col-md-1"  style="text-align: center;"><c:out value="GRN 1(85%)"></c:out></td>
-												</c:when>
-												<c:when test="${grnConfList.grnType==1}">
-													<td class="col-md-1"  style="text-align: center;"><c:out value="GRN 2(75%)"></c:out></td>
-												</c:when>
-												<c:when test="${grnConfList.grnType==2}">
-													<td class="col-md-1"  style="text-align: center;"><c:out value="GRN 3(100%)"></c:out></td>
-												</c:when>
-												<c:when test="${grnConfList.grnType==3}">
-													<td class="col-md-1" style="text-align: center;"><c:out value="No GRN"></c:out></td>
-												</c:when>
+												<td class="col-md-2" style="text-align: center;"><fmt:formatDate
+														pattern="dd-MM-yyyy" value="${grnConfList.billDate}" /></td>
+												<td class="col-md-1" style="text-align: center;"><c:out
+														value="${grnConfList.invoiceNo}"></c:out></td>
+												<td class="col-md-2" style="text-align: center;"><c:out
+														value="${grnConfList.itemName}"></c:out></td>
+												<c:choose>
+													<c:when test="${grnConfList.grnType==0}">
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="GRN 1(85%)"></c:out></td>
+													</c:when>
+													<c:when test="${grnConfList.grnType==1}">
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="GRN 2(75%)"></c:out></td>
+													</c:when>
+													<c:when test="${grnConfList.grnType==2}">
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="GRN 3(100%)"></c:out></td>
+													</c:when>
+													<c:when test="${grnConfList.grnType==3}">
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="No GRN"></c:out></td>
+													</c:when>
 
-												<c:when test="${grnConfList.grnType==4}">
-													<td class="col-md-1" style="text-align: center;"><c:out value="GRN 3(100%)"></c:out></td>
-												</c:when>
-												<c:otherwise>
-													<c:out value="No GRN"></c:out>
-												</c:otherwise>
+													<c:when test="${grnConfList.grnType==4}">
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="GRN 3(100%)"></c:out></td>
+													</c:when>
+													<c:otherwise>
+														<c:out value="No GRN"></c:out>
+													</c:otherwise>
 
-											</c:choose>
-										
-											<td class="col-md-1" style="text-align: center;"><c:out
-													value="${grnConfList.billQty}"></c:out> <input
-												type="hidden" name="grnqty${grnConfList.billDetailNo}"
-												id="grnqty${grnConfList.billDetailNo}" size="3"
-												readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
+												</c:choose>
 
-											<td class="col-md-1"  style="text-align: center;" id="grn_rate${grnConfList.billDetailNo}"><c:out
-													value="${grnConfList.rate}"></c:out></td>
-											
+												<td class="col-md-1" style="text-align: center;"><c:out
+														value="${grnConfList.billQty}"></c:out> <input
+													type="hidden" name="grnqty${grnConfList.billDetailNo}"
+													id="grnqty${grnConfList.billDetailNo}" size="3"
+													readonly="readonly" value="${grnConfList.autoGrnQty}" /></td>
 
-											<td class="col-md-1"><input type="text"
-												name="grnqtyauto${grnConfList.billDetailNo}"
-												value="0" 
-												id='grnqtyauto${grnConfList.billDetailNo}' size="3"  style="text-align: center;"
-												onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
+												<td class="col-md-1" style="text-align: center;"
+													id="grn_rate${grnConfList.billDetailNo}"><c:out
+														value="${grnConfList.rate}"></c:out></td>
+
+
+												<td class="col-md-1"><input type="text"
+													name="grnqtyauto${grnConfList.billDetailNo}" value="0"
+													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
+													style="text-align: center;"
+													onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
 																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.billQty},${grnConfList.billDetailNo},${grnConfList.discPer})" />
 
 
-											</td>
+												</td>
 
-											<td class="col-md-1"  style="text-align: center;" id="tax_per${grnConfList.billDetailNo}"><c:out
-													value="${grnConfList.taxPer}"></c:out></td>
+												<td class="col-md-1" style="text-align: center;"
+													id="tax_per${grnConfList.billDetailNo}"><c:out
+														value="${grnConfList.taxPer}"></c:out></td>
 
-											<fmt:formatNumber var="taxableAmt" type="number"
-												minFractionDigits="2" maxFractionDigits="2"
-												value="${grnConfList.taxableAmt}" />
+												<fmt:formatNumber var="taxableAmt" type="number"
+													minFractionDigits="2" maxFractionDigits="2"
+													value="${grnConfList.taxableAmt}" />
 
-											<c:set var="taxableAmt" value="${taxableAmt}" />
+												<c:set var="taxableAmt" value="${taxableAmt}" />
 
-											<td id='taxable_amt${grnConfList.billDetailNo}'  style="text-align: center;" class="col-md-1"><c:out value="${taxableAmt}"></c:out></td>
+												<td id='taxable_amt${grnConfList.billDetailNo}'
+													style="text-align: center;" class="col-md-1"><c:out
+														value="${taxableAmt}"></c:out></td>
 
 
-											<td id='tax_amt${grnConfList.billDetailNo}' class="col-md-1"><c:out value="${grnConfList.taxAmt}"></c:out></td>
+												<td id='tax_amt${grnConfList.billDetailNo}' class="col-md-1"><c:out
+														value="${grnConfList.taxAmt}"></c:out></td>
 
-											<fmt:formatNumber var="grnAmt" type="number"
-												minFractionDigits="2" maxFractionDigits="2"
-												value="${grnConfList.grnAmt}" />
+												<fmt:formatNumber var="grnAmt" type="number"
+													minFractionDigits="2" maxFractionDigits="2"
+													value="${grnConfList.grnAmt}" />
 
-											<c:set var="grnAmt" value="${grnAmt}" />
+												<c:set var="grnAmt" value="${grnAmt}" />
 
-											<td class="col-md-2" id="grn_amt${grnConfList.billDetailNo}"><c:out
-													value="${grnAmt}"></c:out></td>
+												<td class="col-md-2" id="grn_amt${grnConfList.billDetailNo}"><c:out
+														value="${grnAmt}"></c:out></td>
 
-											<td class="col-md-1"><select
-												name="grn_remark${grnConfList.billDetailNo}" style="width: 200px" required="required"
-												id="grn_remark${grnConfList.billDetailNo}" class="form-control" onchange="changeQty(${grnConfList.billDetailNo},${grnConfList.autoGrnQty})">
-													<option selected value="0">Goods Expired</option>
-													<c:forEach items="${remarkList}" var="remarkList">
+												<td class="col-md-1"><select
+													name="grn_remark${grnConfList.billDetailNo}"
+													style="width: 200px" required="required"
+													id="grn_remark${grnConfList.billDetailNo}"
+													class="form-control"
+													onchange="changeQty(${grnConfList.billDetailNo},${grnConfList.autoGrnQty})">
+														<option selected value="0">Goods Expired</option>
+														<c:forEach items="${remarkList}" var="remarkList">
 																${remarkList.remark}
 																<option value="${remarkList.remark}">${remarkList.remark}</option>
-													</c:forEach>
-											</select></td>
+														</c:forEach>
+												</select></td>
 
-										</tr>
-									</c:forEach>
+											</tr>
+										</c:forEach>
 									</tbody>
 								</table>
 							</div>
@@ -291,9 +314,20 @@ table, th, td {
 
 						<div class="form-group">
 
-							<button type="submit" class="buttonsaveorder">
-								<i class="fa fa-check"></i> Save
-							</button>
+							<c:choose>
+								<c:when test="${isOpen==1}">
+									<button type="submit" class="buttonsaveorder" disabled>
+										<i class="fa fa-check"></i> Save
+									</button>
+
+								</c:when>
+								<c:otherwise>
+									<button type="submit" class="buttonsaveorder">
+										<i class="fa fa-check"></i> Save
+									</button>
+								</c:otherwise>
+							</c:choose>
+
 							<!--<button type="button" class="btn">Cancel</button>-->
 
 						</div>
@@ -331,7 +365,7 @@ table, th, td {
   fauxTable.appendChild(clonedElement2);
 });
 
-	</script>	
+	</script>
 <script>
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "100%";

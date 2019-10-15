@@ -44,14 +44,14 @@
 					<div class="colOuter">
 						<!-- copy div kalpesh -->
 
-						<div class="col-md-1">From Date :</div>
+						<div class="col-md-1">From Date</div>
 						<div class="col-md-2">
 							<input id="datepicker" class="texboxitemcode texboxcal"
 								value="${cDate}" autocomplete="off" name="from_Date" type="text"
 								placeholder="From Date">
 						</div>
 
-						<div class="col-md-1">TO Date :</div>
+						<div class="col-md-1">TO</div>
 						<div class="col-md-2">
 							<input id="datepicker2" class="texboxitemcode texboxcal"
 								value="${cDate}" autocomplete="off" name="to_Date" type="text"
@@ -66,7 +66,8 @@
 
 						<div class="col-md-1">
 							<button type="button" class="btn  buttonsaveorder" id='pdf'
-								onclick="genPdf()" disabled>Generate Pdf</button>
+								onclick="genPdf()" disabled>Pdf</button>
+							<input type="hidden" name="frId" id="frId" value="${frId}">
 						</div>
 					</div>
 
@@ -77,7 +78,8 @@
 						<!--tabMenu-->
 
 						<div id="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden" style="display: none;">
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;">
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table" border="1">
 										<thead>
@@ -271,10 +273,10 @@
 				
 								
 						tr.append($('<td   ></td>').html(key+1));
-						tr.append($('<td  ></td>').html(spAdv.custName));
-						tr.append($('<td  ></td>').html(spAdv.spCustMobNo));
-						tr.append($('<td  ></td>').html(spAdv.itemName));
-						tr.append($('<td  ></td>').html(spAdv.spfName));
+						tr.append($('<td  style="text-align:left;"></td>').html(spAdv.custName));
+						tr.append($('<td  style="text-align:center;"></td>').html(spAdv.spCustMobNo));
+						tr.append($('<td  style="text-align:left;"></td>').html(spAdv.itemName));
+						tr.append($('<td  style="text-align:left;"></td>').html(spAdv.spfName));
 						tr.append($('<td  style="text-align:right;"></td>').html(spAdv.weight));
 						tr.append($('<td  ></td>').html(spAdv.orderDate));
 						tr.append($('<td   style="text-align:right;"></td>').html(spAdv.totalMrp.toFixed(2)));
@@ -385,19 +387,46 @@ jQuery(document).ready(function() {
 
 
 	</script>
+<script type="text/javascript">
+	function genPdf() {
+		var isValid = validate();
+		if (isValid == true) {
+			var fromDate = document.getElementById("datepicker").value;
+			var toDate = document.getElementById("datepicker2").value;
+			var frId = document.getElementById("frId").value;
+			window
+					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getSpAdvPdfPd/'
+							+ fromDate + '/' + toDate + '/' + frId);
+		}
+	}
+	function validate() {
 
+		var fromDate = document.getElementById("datepicker").value;
+		var toDate = document.getElementById("datepicker2").value;
+
+		var isValid = true;
+
+		if (fromDate == "" || fromDate == null) {
+
+			isValid = false;
+			alert("Please select From Date");
+		} else if (toDate == "" || toDate == null) {
+
+			isValid = false;
+			alert("Please select To Date");
+		}
+		return isValid;
+
+	}
+</script>
 <script>
 
-function genPdf() {
-		//alert("Inside Gen Pdf ");
-
-		
-
-	// window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1+'/'+type);
+/* function genPdf() {
+		 
 		    
 		    window.open('${pageContext.request.contextPath}/getSpAdvPdf');
 		   
-	}
+	} */
 	
 function exportToExcel() {
 

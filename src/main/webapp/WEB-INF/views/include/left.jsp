@@ -71,6 +71,17 @@
 
 				</c:choose>
 			</c:forEach>
+			<c:set var="flagForPhyStk" value="${0}"></c:set>
+			<c:forEach items="${setList}" var="setting" varStatus="count">
+				<c:choose>
+
+					<c:when test="${setting.settingKey eq 'Bill As Per Physical Stock'}">
+						<c:set var="flagForPhyStk" value="${1}"></c:set>
+					</c:when>
+
+
+				</c:choose>
+			</c:forEach>
 			<c:if test="${  flag==1 }">
 				<li><a
 					href="${pageContext.request.contextPath}/showCustomerBill"><div
@@ -81,28 +92,8 @@
 						<div class="title">
 							Customer Bill <span></span>
 						</div></a></li>
-				<li><a href="${pageContext.request.contextPath}/viewBill"><div
-							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
-						</div>
-						<div class="title">
-							View Bills <span></span>
-						</div></a></li>
-			</c:if>
-				<c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
-				<c:choose>
-
-					<c:when test="${setting.settingKey eq 'Bill As Per Physical Stock'}">
-						<c:set var="flag" value="${1}"></c:set>
-					</c:when>
-
-
-				</c:choose>
-			</c:forEach>
-			<c:if
-				test="${(info.accessRight==1 or info.accessRight==2) && flag==1}">
+							<c:if
+				test="${(info.accessRight==1 or info.accessRight==2) && flagForPhyStk==1}">
 				<li><a
 					href="${pageContext.request.contextPath}/showStockMatchUtility"><div
 							class="img">
@@ -114,6 +105,17 @@
 							Bill As Per <span>Physical Stock </span>
 						</div></a></li>
 			</c:if>
+				<li><a href="${pageContext.request.contextPath}/viewBill"><div
+							class="img">
+							<i class="fa fa-file-pdf-o icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">
+							View Sell Bills <span></span>
+						</div></a></li>
+			</c:if>
+				
+		
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -185,26 +187,7 @@
 			</c:if>
 
 
-			<c:set var="flag" value="${0}"></c:set>
-			<c:forEach items="${setList}" var="setting" varStatus="count">
-				<c:choose>
-
-					<c:when test="${setting.settingKey eq 'Other Item Stock'}">
-						<c:set var="flag" value="${1}"></c:set>
-					</c:when>
-
-
-				</c:choose>
-			</c:forEach>
-			<c:if test="${flag==1}">
-				<li><a
-					href="${pageContext.request.contextPath}/showOthItemStock"><div
-							class="img">
-							<i class="fa fa-file-pdf-o icon"
-								style="font-size: 22px !important;"></i>
-						</div>
-						<div class="title">Other Item Stock</div></a></li>
-			</c:if>
+			
 
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
@@ -225,7 +208,26 @@
 						</div>
 						<div class="title">Other Purchase Bill</div></a></li>
 			</c:if>
+          <c:set var="flag" value="${0}"></c:set>
+			<c:forEach items="${setList}" var="setting" varStatus="count">
+				<c:choose>
 
+					<c:when test="${setting.settingKey eq 'Other Item Stock'}">
+						<c:set var="flag" value="${1}"></c:set>
+					</c:when>
+
+
+				</c:choose>
+			</c:forEach>
+			<c:if test="${flag==1}">
+				<li><a
+					href="${pageContext.request.contextPath}/showOthItemStock"><div
+							class="img">
+							<i class="fa fa-file-pdf-o icon"
+								style="font-size: 22px !important;"></i>
+						</div>
+						<div class="title">Other Item Stock</div></a></li>
+			</c:if>
 			<c:set var="flag" value="${0}"></c:set>
 			<c:forEach items="${setList}" var="setting" varStatus="count">
 				<c:choose>
@@ -677,7 +679,7 @@
 								
 								<a
 								href="${pageContext.request.contextPath}/showHsnDateWiseSellReport"><i
-								class="fa fa-files-o icon"></i>Datewise HSN Sale Report</a>
+								class="fa fa-files-o icon"></i>Bill wise HSN wise Report</a>
 								
 								
 						</div>
@@ -754,9 +756,9 @@
 							</div>
 
 							<a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
-								class="fa fa-files-o icon"></i>SP Advance Report</a> <a
+								class="fa fa-files-o icon"></i>SP Advance Report</a><%--  <a
 								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
-								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> <a
+								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> --%> <a
 								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
 								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
 								href="${pageContext.request.contextPath}/showCumulativeCrnNotes"><i
@@ -817,6 +819,8 @@
 						<a href="${pageContext.request.contextPath}/viewFrDatewiseTaxSellBill"><i class="fa fa-calendar icon"></i> Date Report (Sale) </a>
 						<a href="${pageContext.request.contextPath}/viewFrBillwiseTaxSellBill"><i class="fa fa-files-o icon"></i> Bill Report (Sale)</a>
 						<a href="${pageContext.request.contextPath}/hsnWiseReport"><i class="fa fa-files-o icon"></i> HSN Code wise Report (Sale)</a>
+						
+						<a href="${pageContext.request.contextPath}/viewDailySalesReport"><i class="fa fa-files-o icon"></i> Daily Sales Report</a>
 						</div>
 						
 						</li>

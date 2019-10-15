@@ -147,7 +147,8 @@ table, th, td {
 
 
 						<div id="table-scroll">
-							<div id="faux-table" class="faux-table" aria="hidden"style="display: none;">
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;">
 								<div class="table-wrap">
 									<table id="table_grid" class="main-table">
 										<thead>
@@ -155,11 +156,13 @@ table, th, td {
 
 
 
-												<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-												<th class="col-md-1" style="text-align: center;">Party
-													Name</th>
-												<th class="col-md-2" style="text-align: center;">Item
-													Name</th>
+												<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
+												<!-- <th class="col-md-1" style="text-align: center;">Party
+													Name</th> -->
+												<th style="text-align: center;">Item Name</th>
+												<th class="col-md-1" style="text-align: center;">GRN
+													Type</th>
+												<th class="col-md-1" style="text-align: center;">Rate</th>
 												<th class="col-md-1" style="text-align: center;">QTY</th>
 												<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
 												<th class="col-md-1" style="text-align: center;">Amount</th>
@@ -173,17 +176,19 @@ table, th, td {
 								</div>
 							</div>
 							<div class="table-wrap">
-								<table id="table_grid"  class="responsive-table">
+								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
 
 
 
-											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-1" style="text-align: center;">Party
-												Name</th>
-											<th class="col-md-2" style="text-align: center;">Item
-												Name</th>
+											<th class="col-sm-1" style="text-align: center;">Sr.No.</th>
+											<!-- <th class="col-md-1" style="text-align: center;">Party
+												Name</th> -->
+											<th style="text-align: center;">Item Name</th>
+											<th class="col-md-1" style="text-align: center;">GRN
+												Type</th>
+											<th class="col-md-1" style="text-align: center;">Rate</th>
 											<th class="col-md-1" style="text-align: center;">QTY</th>
 											<!-- <th class="col-md-1" style="text-align: center;">Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Amount</th>
@@ -246,124 +251,91 @@ table, th, td {
 			var factoryName = document.getElementById("factoryName").value;
 			var typeId = document.getElementById("typeId").value;
 
-			$
-					.getJSON(
-							'${getItemWiseReport}',
-							{
+			$.getJSON('${getItemWiseReport}', {
 
-								fromDate : fromDate,
-								toDate : toDate,
-								catId : catId,
-								typeId : typeId,
-								ajax : 'true',
+				fromDate : fromDate,
+				toDate : toDate,
+				catId : catId,
+				typeId : typeId,
+				ajax : 'true',
 
-							},
-							function(data) {
+			}, function(data) {
 
-								var qtyTotal = 0;
-								var amtTotal = 0;
+				var qtyTotal = 0;
+				var amtTotal = 0;
 
-								$('#loader').hide();
-								var len = data.length;
-								if (data == "") {
-									alert("No records found !!");
-									document.getElementById("expExcel").disabled = true;
-								}
+				$('#loader').hide();
+				var len = data.length;
+				if (data == "") {
+					alert("No records found !!");
+					document.getElementById("expExcel").disabled = true;
+				}
 
-								$('#table_grid td').remove();
+				$('#table_grid td').remove();
 
-								$
-										.each(
-												data,
-												function(key, itemWiseTaxData) {
+				$.each(data, function(key, itemWiseTaxData) {
 
-													document
-															.getElementById("expExcel").disabled = false;
-													document
-															.getElementById('range').style.display = 'block';
+					document.getElementById("expExcel").disabled = false;
+					document.getElementById('range').style.display = 'block';
 
-													var partyname = factoryName;
+					var partyname = factoryName;
 
-													var tr = $('<tr></tr>');
+					var tr = $('<tr></tr>');
 
-													tr
-															.append($(
-																	'<td class="col-md-1"></td>')
-																	.html(
-																			key + 1));
+					tr.append($('<td></td>').html(key + 1));
 
-													tr
-															.append($(
-																	'<td class="col-md-1"style="text-align:center;"></td>')
-																	.html(
-																			partyname));
+					/* tr
+							.append($(
+									'<td class="col-md-1"style="text-align:center;"></td>')
+									.html(
+											partyname)); */
 
-													tr
-															.append($(
-																	'<td class="col-md-2"></td>')
-																	.html(
-																			itemWiseTaxData.itemName));
+					tr.append($('<td style="text-align:left;"></td>').html(
+							itemWiseTaxData.itemName));
+					tr.append($('<td style="text-align:left;"></td>').html(
+							itemWiseTaxData.grnType));
+					tr.append($('<td style="text-align:right;"></td>').html(
+							(itemWiseTaxData.rate).toFixed(2)));
+					tr.append($('<td style="text-align:right;"></td>').html(
+							(itemWiseTaxData.qty).toFixed(2)));
 
-													tr
-															.append($(
-																	'<td class="col-md-1"style="text-align:right;"></td>')
-																	.html(
-																			(itemWiseTaxData.qty)
-																					.toFixed(2)));
+					/* tr
+							.append($(
+									'<td class="col-md-1"style="text-align:right;"></td>')
+									.html(
+											(itemWiseTaxData.rate)
+													.toFixed(2))); */
 
-													/* tr
-															.append($(
-																	'<td class="col-md-1"style="text-align:right;"></td>')
-																	.html(
-																			(itemWiseTaxData.rate)
-																					.toFixed(2))); */
+					tr.append($('<td style="text-align:right;"></td>').html(
+							(itemWiseTaxData.total).toFixed(2)));
 
-													tr
-															.append($(
-																	'<td class="col-md-1"style="text-align:right;"></td>')
-																	.html(
-																			(itemWiseTaxData.total)
-																					.toFixed(2)));
+					qtyTotal = qtyTotal + itemWiseTaxData.qty;
+					amtTotal = amtTotal + itemWiseTaxData.total;
 
-													qtyTotal = qtyTotal
-															+ itemWiseTaxData.qty;
-													amtTotal = amtTotal
-															+ itemWiseTaxData.total;
+					$('#table_grid tbody').append(tr);
 
-													$('#table_grid tbody')
-															.append(tr);
+				});
 
-												});
+				var tr = $('<tr></tr>');
 
-								var tr = $('<tr></tr>');
+				tr.append($('<td   style="font-weight:bold;"></td>').html(
+						"Total"));
+				tr.append($('<td  ></td>').html(""));
+				tr.append($('<td  ></td>').html(""));
+				tr.append($('<td  ></td>').html(""));
+				tr.append($('<td    style="text-align:right;"></td>').html(
+						qtyTotal.toFixed(2)));
 
-								tr
-										.append($(
-												'<td class="col-md-1" style="font-weight:bold;"></td>')
-												.html("Total"));
+				/* tr.append($('<td  class="col-md-1"></td>')
+						.html("")); */
 
-								tr.append($('<td  class="col-md-1"></td>')
-										.html(""));
-								tr.append($('<td  class="col-md-2"></td>')
-										.html(""));
+				tr.append($('<td    style="text-align:right;"></td>').html(
+						amtTotal.toFixed(2)));
 
-								tr
-										.append($(
-												'<td  class="col-md-1" style="text-align:right;"></td>')
-												.html(qtyTotal.toFixed(2)));
+				$('#table_grid tbody').append(tr);
+			}
 
-								/* tr.append($('<td  class="col-md-1"></td>')
-										.html("")); */
-
-								tr
-										.append($(
-												'<td  class="col-md-1" style="text-align:right;"></td>')
-												.html(amtTotal.toFixed(2)));
-
-								$('#table_grid tbody').append(tr);
-							}
-
-					);
+			);
 		}
 	}
 </script>

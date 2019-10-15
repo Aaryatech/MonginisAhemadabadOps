@@ -95,22 +95,27 @@ th {
 							<td width="80" align="right"><fmt:formatNumber type="number"
 									maxFractionDigits="2" minFractionDigits="2"
 									value="${report.grandTotal}" /></td>
-
+							<td width="80" align="right"><fmt:formatNumber type="number"
+									maxFractionDigits="2" minFractionDigits="2" value="${0}" /></td>
 
 							<c:set var="totalDrAMt"
 								value="${totalDrAMt + report.grandTotal }" />
 							<c:set var="bal" value="${bal+report.grandTotal}" />
 						</c:when>
-						<c:otherwise>
+						<c:when test="${report.type eq 'RET'}">
 							<td width="80" align="right"><fmt:formatNumber type="number"
 									maxFractionDigits="2" minFractionDigits="2" value="${0}" /></td>
-						</c:otherwise>
-					</c:choose>
+							<td width="80" align="right"><fmt:formatNumber type="number"
+									maxFractionDigits="2" minFractionDigits="2"
+									value="${report.grandTotal}" /></td>
+							<c:set var="bal" value="${bal-report.grandTotal}" />
 
-					<c:choose>
-
-						<c:when test="${report.type eq 'RET'}">
-
+							<c:set var="totalCrAMt"
+								value="${totalCrAMt + report.grandTotal }" />
+						</c:when>
+						<c:when test="${report.type eq 'VER'}">
+							<td width="80" align="right"><fmt:formatNumber type="number"
+									maxFractionDigits="2" minFractionDigits="2" value="${0}" /></td>
 							<td width="80" align="right"><fmt:formatNumber type="number"
 									maxFractionDigits="2" minFractionDigits="2"
 									value="${report.grandTotal}" /></td>
@@ -122,8 +127,12 @@ th {
 						<c:otherwise>
 							<td width="80" align="right"><fmt:formatNumber type="number"
 									maxFractionDigits="2" minFractionDigits="2" value="${0}" /></td>
+							<td width="80" align="right"><fmt:formatNumber type="number"
+									maxFractionDigits="2" minFractionDigits="2" value="${0}" /></td>
 						</c:otherwise>
 					</c:choose>
+
+					 
 					<td width="80" align="right"><fmt:formatNumber type="number"
 							maxFractionDigits="2" minFractionDigits="2" value="${bal}" /></td>
 				</tr>

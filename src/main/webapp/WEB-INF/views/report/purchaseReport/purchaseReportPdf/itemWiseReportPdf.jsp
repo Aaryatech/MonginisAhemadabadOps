@@ -32,7 +32,7 @@ th {
 <body onload="myFunction()">
 	<h4 align="center">Itemwise Purchase Report</h4>
 	<div align="center">
-		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp; ${fromDate}
+		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
 			&nbsp;To &nbsp; ${toDate}</h6>
 	</div>
 	<table width="100%" border="1" cellspacing="0" cellpadding="1"
@@ -40,8 +40,9 @@ th {
 		<thead>
 			<tr class="bgpink">
 				<th style="text-align: center;">Sr.No.</th>
-				<th style="text-align: center;">Party Name</th>
+				<!-- <th style="text-align: center;">Party Name</th> -->
 				<th style="text-align: center;">Item Name</th>
+				<th style="text-align: center;">GRN Type</th>
 				<th style="text-align: center;">QTY</th>
 				<!-- <th style="text-align:center;">Rate</th> -->
 				<th style="text-align: center;">Amount</th>
@@ -58,9 +59,9 @@ th {
 				<tr>
 					<td align="center"><c:out value="${count.index+1}" /></td>
 
-					<td>${Constant.FACTORYNAME}</td>
+					<%-- <td>${Constant.FACTORYNAME}</td> --%>
 					<td><c:out value="${reportList.itemName}" /></td>
-
+					<td><c:out value="${reportList.grnType}" /></td>
 					<td style="text-align: right;"><c:out
 							value="${reportList.qty}" /></td>
 					<c:set var="totalQty" value="${totalQty+reportList.qty}" />
@@ -73,7 +74,7 @@ th {
 				</tr>
 			</c:forEach>
 			<tr>
-				<td colspan='3'><b>Total</b></td>
+				<td colspan='2'><b>Total</b></td>
 				<td style="text-align: right;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${totalQty}" /></b></td>
