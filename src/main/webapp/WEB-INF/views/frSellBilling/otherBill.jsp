@@ -320,14 +320,15 @@ body {
 														cellpadding="0" class="table" class="responsive-table">
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
-																<table width="150%" border="0" cellspacing="0"
-																	cellpadding="0">
+																<table width="135%" border="0" cellspacing="0"
+																	cellpadding="0" >
 																	<tr class="bgpink">
 																		<td>Item Code</td>
 																		<td>Item Name</td>
 																		<td>Qty</td>
 																		<td>Rate</td>
 																		<td>Discount</td>
+																		<td></td>
 																	</tr>
 																	<tr>
 																		<td><input type="text" class="form-control"

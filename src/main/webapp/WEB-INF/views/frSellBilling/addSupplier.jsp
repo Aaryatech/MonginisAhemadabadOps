@@ -161,7 +161,7 @@
 						</div>
 						<div class="col-md-3">
 							<input id="gstnNo" class="form-control"
-								placeholder="GSTN No" name="gstnNo" type="text"  autocomplete="off" required>
+								placeholder="GSTN No" name="gstnNo" type="text"  autocomplete="off">
 
 						</div>
 						<div class="col-md-1">
@@ -173,7 +173,7 @@
 						</div>
 						<div class="col-md-3">
 							<input id="panNo" class="form-control"
-								placeholder="Pan No" name="panNo" type="text"  autocomplete="off" required>
+								placeholder="Pan No" name="panNo" type="text"  autocomplete="off">
 
 						</div>
 				 

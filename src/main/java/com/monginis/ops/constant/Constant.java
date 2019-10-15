@@ -15,12 +15,12 @@ public class Constant {
 	public static final String ReportURL = "http://97.74.228.55:8080/ops/";
 	public static final String MESSAGE_IMAGE_URL = "http://97.74.228.55:8080/uploads/MSG/";
 	public static final String LOGIS_BILL_URL = "http://97.74.228.55:8080/uploads/MSPCAKE/";
-	// public static final String REPORT_SAVE = "/home/ats-12/Report.pdf";
+	 public static final String REPORT_SAVE = "//home/lenovo/ats-12/Report.pdf";
 	public static final String BILL_REPORT_PATH = "/opt/apache-tomcat-8.5.37/webapps/uploads/reportbill.pdf";
 	public static final String CRN_REPORT_PATH = "/opt/apache-tomcat-8.5.37/webapps/uploads/crn.pdf";
 	public static final String SELL_REPORT_PATH = "/opt/apache-tomcat-8.5.37/webapps/uploads/sellreport.pdf";
 
-	public static final String REPORT_SAVE = "/opt/apache-tomcat-8.5.37/webapps/uploads/Reports.pdf";
+	///public static final String REPORT_SAVE = "/opt/apache-tomcat-8.5.37/webapps/uploads/Reports.pdf";
 	public static final String FACTORYNAME = "Siddharth Foods";
 	public static final String FACTORYADDRESS = "C-2, A/8, Plot No. 183/1, Phase - 1 ,GIDC Naroda, Ahmedabad - 382330";
 	public static final String FACTORYGSTIN = "-";

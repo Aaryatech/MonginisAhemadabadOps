@@ -184,6 +184,7 @@ table, th, td {
 
 						</select>
 					</div>
+					<div id="crnt_stk_btn">
 					<div class="col-md-2">
 						<input name="search_stock" class="buttonsaveorder" value="Search"
 							type="button" onclick="searchStock()">
@@ -191,7 +192,8 @@ table, th, td {
 
 					<div class="col-md-1">
 						<button type="button" class="btn  buttonsaveorder" id='pdf'
-							onclick="genPdf()" disabled>Generate Pdf</button>
+							onclick="genPdf()" disabled>PDF</button>
+					</div>
 					</div>
 
 
@@ -248,6 +250,16 @@ table, th, td {
 						<input id="todatepicker" class="texboxitemcode texboxcal"
 							autocomplete="off" placeholder="To Date" name="to_datepicker"
 							type="text">
+					</div>
+					
+					<div class="col-md-2">
+						<input name="search_stock" class="buttonsaveorder" value="Search"
+							type="button" onclick="searchStock()">
+					</div>
+
+					<div class="col-md-1">
+						<button type="button" class="btn  buttonsaveorder" id='date_pdf'
+							onclick="genPdf()" disabled>PDF</button>
 					</div>
 
 				</div>
@@ -507,9 +519,11 @@ table, th, td {
 			//document.getElementById('select_month_year').style = "display:none";
 			document.getElementById('select_date').style = "display:none";
 			document.getElementById('monthEnd').style = "display:none";
+			document.getElementById('crnt_stk_btn').style.display = "block";
 		} else if (elem.value == 3) {
-			document.getElementById('select_date').style.display = "block";
 			//document.getElementById('select_month_year').style = "display:none";
+			document.getElementById('select_date').style.display = "block";			
+			document.getElementById('crnt_stk_btn').style = "display:none";			
 			document.getElementById('monthEnd').style = "display:none";
 
 		}
@@ -560,6 +574,7 @@ table, th, td {
 								 
 								  document.getElementById("expExcel").disabled=false;
 								document.getElementById("pdf").disabled = false;
+								document.getElementById("date_pdf").disabled = false;
 
 							}
 							$
@@ -711,8 +726,15 @@ table, th, td {
 		//alert("Inside Gen Pdf ");
 
 		// window.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/getGrnPdf/'+fromDate+'/'+'/'+toDate+'/'+headerId+'/'+1+'/'+type);
-
-		window.open('${pageContext.request.contextPath}/getOtherItemStockPdf');
+		var fromDate = document.getElementById("fromdatepicker").value;
+		var toDate = document.getElementById("todatepicker").value;
+		
+		if(fromDate!=null && fromDate!="" && toDate!=null && toDate!=""){		
+			window.open('${pageContext.request.contextPath}/getOtherItemStockPdf/'+ fromDate + '/' + toDate);
+		}else{
+			
+			window.open('${pageContext.request.contextPath}/getOtherItemStockPdf');
+		}
 
 	}
 	

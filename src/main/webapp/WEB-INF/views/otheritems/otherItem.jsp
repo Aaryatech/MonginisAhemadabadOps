@@ -3,7 +3,11 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-
+<style>
+.form-control {
+    text-align: left !important;
+}
+</style>
 </head>
 <body>
 
@@ -142,7 +146,7 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title" align="left">Sale Rate*: </div>
+							<div class="col1title" align="left">Sale Rate(Inclusive Tax)*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="saleRate" class="form-control"
@@ -225,8 +229,9 @@
 						</div>
 							<div class="colOuter">
 						<div align="center">
-							<input name="submit" class="buttonsaveorder" value="Submit"
-								type="submit" align="center">
+						<!-- <button type="submit" name="submit" class="buttonsaveorder" id="submtbtn" disabled="disabled">Submit</button> -->
+							 <input name="submit" class="buttonsaveorder" value="Submit"
+								type="submit" align="center" id="submtbtn"> 
 						</div>
 				 
 					</div>
@@ -332,6 +337,105 @@
 <!--easyTabs-->
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
+<script>
+$('#hsnCode').on('input', function() {
+	 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+	});
+
+$('#purchaseRate').on('input', function() {
+	 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+	});
+
+$('#sgstPer').on('input', function() {
+	 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#saleRate').on('input', function() {
+	 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#cgstPer').on('input', function() {
+	 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#igstPer').on('input', function() {
+	 this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+	});
+		$(document)
+			.ready(
+				function($) {
+		
+								$("#frm_search")
+										.submit(
+													function(e) {
+																	var isError = false;
+																	var errMsg = "";
+																	
+		
+																	if (!$("#itemCode").val()) {
+																		
+																		isError = true;
+																	}
+																	
+																	if (!$("#itemUom").val()) {
+																		
+																		isError = true;
+																	}
+																	if (!$("#purchaseRate").val()) {
+																		
+																		isError = true;
+																	}
+																	
+																	if (!$("#sgstPer").val()) {
+																		
+																		isError = true;
+																	}
+																	
+																	if (!$("#igstPer").val()) {
+																		
+																		isError = true;
+																	}
+																	
+																	if (!$("#itemName").val()) {
+																		
+																		isError = true;
+																	}
+																	if (!$("#hsnCode").val()) {
+																		
+																		isError = true;
+																	}
+																	if (!$("#itemCode").val()) {
+																		
+																		isError = true;
+																	}
+																	if (!$("#saleRate").val()) {
+																		
+																		isError = true;
+																	}
+																	if (!$("#cgstPer").val()) {
+																		
+																		isError = true;
+																	}
+																	else{
+																		
+																		isError = false;
+																	}
+																	if (!isError) {
+																	
+																	var x = true;
+																	if (x == true) {
+																	
+																	document.getElementById("submtbtn").disabled = true;
+																	
+																	return true;
+																	}
+																	//end ajax send this to php page
+																}
+																	return false;
+										});
+		});
+//
+</script>
 
 
 <script>
