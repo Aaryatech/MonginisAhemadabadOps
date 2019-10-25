@@ -190,8 +190,8 @@ a:hover {
 										<table id="table_grid1" class="responsive-table">
 											<thead >
 												<tr class="bgpink"style="background-color: #ee578f;color:#ffffff;">
-												 <td class="col-md-1">Sr.No</td>
-                                                 <td class="col-md-2">Item Name</td>
+												 <td class="col-md-1" style="text-align: left;">Sr.No</td>
+                                                 <td class="col-md-2" style="text-align: left;" >Item Name</td>
                                                  <td class="col-md-1">Current Stock</td>
                                                  <td class="col-md-1">Physical Qty</td>
                                                  <td class="col-md-1">Bill Qty</td>
@@ -212,8 +212,8 @@ a:hover {
                                              	<c:set var="btnDisplayStyle" value="block" />
                                              	</c:if>
                                        		 	<tr class="bgpink" style="color:${color}">
-												 <td class="col-md-1">${(loop.index)+1}</td>
-                                                 <td class="col-md-2">${stockDetailList.itemName}</td>
+												 <td class="col-md-1" style="text-align: left;">${(loop.index)+1}</td>
+                                                 <td class="col-md-2" style="text-align: left;">${stockDetailList.itemName}</td>
                                                  <td class="col-md-1">${stockDetailList.currentRegStock}</td>
                                                  <td class="col-md-1"><c:choose>
                                                  <c:when test="${flag==0}">

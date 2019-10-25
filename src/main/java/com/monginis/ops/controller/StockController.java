@@ -1495,7 +1495,7 @@ public class StockController {
 					map.add("year", yearFormat.format(todaysDate));
 					map.add("catId", catId);
 					map.add("itemIdList", itemShow);
-
+					System.out.println("itemShow : " + itemShow.toString());
 					ParameterizedTypeReference<List<GetCurrentStockDetails>> typeRef = new ParameterizedTypeReference<List<GetCurrentStockDetails>>() {
 					};
 					ResponseEntity<List<GetCurrentStockDetails>> responseEntity = restTemplate
@@ -1529,7 +1529,7 @@ public class StockController {
             	   {
             		   for(Item item:itemListRes)
             		   {
-            			   if(currentStockDetailList.get(i).getItemId().equals(""+item.getId()))
+            			   if(currentStockDetailList.get(i).getId()==item.getId())
             			   {
             				   currentStockDetailList.get(i).setSubCatId(item.getItemGrp2());
             			   }
@@ -1537,14 +1537,11 @@ public class StockController {
             	   }
 					System.out.println("Current Stock Details : " + currentStockDetailList.toString());
 					stockMatchList=currentStockDetailList;
-   			/*	CurrentStockResponse currentStockResponse = new CurrentStockResponse();
-   				currentStockResponse.setMonthClosed(isMonthCloseApplicable);
-   				currentStockResponse.setCurrentStockDetailList(currentStockDetailList);
-   			*/	model.addObject("stockDetailList", currentStockDetailList);
+   			    System.err.println("currentStockDetailList"+currentStockDetailList.toString());
+   			    System.err.println("subCatListWithQtyTotal"+subCatListWithQtyTotal.toString());
+				model.addObject("stockDetailList", currentStockDetailList);
 				model.addObject("subCatListTitle", subCatListWithQtyTotal);
-				
-				model.addObject("subCatListTitle", subCatListWithQtyTotal);
-		 }
+						 }
 
 		 model.addObject("catId", catId);
 		}catch(Exception e)
