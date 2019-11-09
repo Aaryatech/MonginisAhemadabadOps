@@ -104,8 +104,8 @@ table, th, td {
 
 
 					<div id="table-scroll">
-						<div id="faux-table" class="faux-table" aria="hidden">
-							<!-- <table id="table2" class="main-table" border="1">
+						<!-- <div id="faux-table" class="faux-table" aria="hidden">
+							<table id="table2" class="main-table" border="1">
 								<thead>
 									<tr class="bgpink">
 										<th>Sr No.</th>
@@ -127,8 +127,8 @@ table, th, td {
 
 								</thead>
 								<tbody>
-							</table> -->
-						</div>
+							</table>
+						</div> -->
 						<div>
 							<table id="table1" class="responsive-table" border="1">
 								<thead>

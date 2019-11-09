@@ -180,7 +180,7 @@ input:checked+.slider:before {
 	<c:url var="getSpOrder" value="/getSpOrder" />
 	<c:url var="dayClose" value="/dayClose" />
 	<c:url var="getSpBill" value="/getSpBill" />
-	
+
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/include/logo.jsp"></jsp:include>
 		<!--rightContainer-->
@@ -196,7 +196,8 @@ input:checked+.slider:before {
 				<!------------ Place Actual content of page inside this div ----------->
 				<div class="sidebarright">
 					<div class="col-md-2">
-						<h2 class="pageTitle" style="color: #e53878;">Express Bill</h2>
+						<h2 class="pageTitle" style="color: #e53878;">Express
+							Billdddd</h2>
 					</div>
 					<div class="col-md-12 text-left bill-date">
 						<c:choose>
@@ -225,7 +226,7 @@ input:checked+.slider:before {
 					</div>
 					<div class="col-md-2">
 						<span
-							style="padding-top: 0px; float: left; margin-top: 13px; font-size: 16px;width:100px;">Single
+							style="padding-top: 0px; float: left; margin-top: 13px; font-size: 16px; width: 100px;">Single
 							Print</span><label class="switch"> <input type="checkbox"
 							id="id"> <span class="slider round"></span>
 					</div>
@@ -233,7 +234,7 @@ input:checked+.slider:before {
 					<div class="row">
 						<div class="col-md-2">
 							<span
-								style="padding-top: 0px; float: left; margin-top: 13px; font-size: 14px;width:100px;">SP</span>
+								style="padding-top: 0px; float: left; margin-top: 13px; font-size: 14px; width: 100px;">SP</span>
 							<label class="switch"> <input type="checkbox" id="sp"
 								name="sp"> <span class="slider round"></span>
 							</label>
@@ -316,10 +317,11 @@ input:checked+.slider:before {
 											<th class="col-md-1" style="text-align: center;">Delivery
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Rate</th>
-										<!-- 	<th class="col-md-1" style="text-align: center;">Add On
+											<!-- 	<th class="col-md-1" style="text-align: center;">Add On
 												Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Total</th>
 											<th class="col-md-1" style="text-align: center;">Advance</th>
+											<th class="col-md-1" style="text-align: center;">Remaining</th>
 											<th class="col-md-1" style="text-align: center;">Memo &
 												Bill</th>
 
@@ -365,8 +367,9 @@ input:checked+.slider:before {
 														</c:forEach>
 													</datalist></td>
 												<td>&nbsp;&nbsp;<input type="text" name="rateTdVal1"
-													id="rateTdVal1" value="00" oninput="onRateChange(this.value)"
-													style="width: 65px; border-radius: 18px; text-align: center;"  />
+													id="rateTdVal1" value="00"
+													oninput="onRateChange(this.value)"
+													style="width: 65px; border-radius: 18px; text-align: center;" />
 												</td>
 											</tr>
 										</table>
@@ -443,7 +446,7 @@ input:checked+.slider:before {
 								</c:forEach>
 							</table>
 						</div>
- 
+
 
 						<!-- Loader Div -->
 						<div align="center" id="loader" style="display: none">
@@ -458,15 +461,16 @@ input:checked+.slider:before {
 
 						<!--End of  Loader Div -->
 					</div>
-					   <c:set var="dayCloseStyleDisplay" value="disabled"/>
+					<c:set var="dayCloseStyleDisplay" value="disabled" />
 					<c:choose>
-					<c:when test="${sellBillDetails.size()>0}">
-                    <c:set var="dayCloseStyleDisplay" value=""/>
-					</c:when>
+						<c:when test="${sellBillDetails.size()>0}">
+							<c:set var="dayCloseStyleDisplay" value="" />
+						</c:when>
 					</c:choose>
 					<center>
 						<input type="button" class="btn btn-primary"
-							onclick="todaysDayClose()" value="DAY CLOSE" id="dayClose1" ${dayCloseStyleDisplay}/>
+							onclick="todaysDayClose()" value="DAY CLOSE" id="dayClose1"
+							${dayCloseStyleDisplay} />
 					</center>
 					<!--here input para was bill No  -->
 					<!-- </li> -->
@@ -478,8 +482,8 @@ input:checked+.slider:before {
 							<div class="table">
 								<div class="shInnerwidth">
 
-									<table class="responsive-table table-bordered" width="100%" border="0"
-										cellspacing="0" cellpadding="0 " id="table_grid">
+									<table class="responsive-table table-bordered" width="100%"
+										border="0" cellspacing="0" cellpadding="0 " id="table_grid">
 										<tr class="bgpink">
 											<th>Bill No.</th>
 											<th>Bill Date</th>
@@ -597,7 +601,8 @@ input:checked+.slider:before {
 														onkeypress="onQty(event)" value="1"></td>
 													<td>&nbsp;&nbsp;<input type="text" name="rateTdVal1"
 														id="rateTdVal1" value="00"
-														style="width: 65px; border-radius: 18px; text-align: center;" oninput="onRateChange(this.value)" /></td>
+														style="width: 65px; border-radius: 18px; text-align: center;"
+														oninput="onRateChange(this.value)" /></td>
 												</tr>
 											</table>
 										</td>
@@ -708,7 +713,7 @@ function  hideMe(startId){
 }
 
 </script>
-<script type="text/javascript">
+	<script type="text/javascript">
 function onRateChange(rate)
 {
    if(rate>0)
@@ -1205,11 +1210,11 @@ $('#sp').change(function() {
 									var spName="";
 									if((order.spBookForMobNo).length==1)
 									{
-									tr.append($('<td class="col-md-2"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill'"+order.spOrderNo+"  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
+									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp; <button class='btn btn-info' value='Generate' id='genBill'"+order.spOrderNo+"  onclick='genBill("+order.spOrderNo+")'>Generate</button>"));
 									spName=order.spName+"&nbsp;&nbsp;&nbsp;	<a href='editSpOrder/"+order.spOrderNo+"'  ><span	class='fa fa-pencil'></span></a>";
 									}else
 										{
-										tr.append($('<td class="col-md-2"></td>').html(order.spBookForMobNo));
+										tr.append($('<td class="col-md-1"></td>').html(order.spBookForMobNo));
 										spName=order.spName;   
 										}
 									tr.append($('<td class="col-md-1"></td>').html(order.spDeliveryPlace));
@@ -1222,6 +1227,7 @@ $('#sp').change(function() {
 								/* 	tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spTotalAddRate)); */
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spGrandTotal));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spAdvance));
+									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spGrandTotal-order.spAdvance));
 									if((order.spBookForMobNo).length>1)
 									{
 									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showSpCakeOrderHisPDF/"+order.spOrderNo+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/printSpCkBill/"+order.spOrderNo+"' target='_blank'><abbr title='Bill'><i class='fa fa-file-pdf-o'></i></abbr></a>"));
@@ -1248,6 +1254,7 @@ $('#sp').change(function() {
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(0));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.rspSubTotal));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.rspAdvanceAmt));
+									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.rspSubTotal-order.rspAdvanceAmt));
 									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showRegCakeOrderHisPDF/"+order.rspId+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>"));
 									$('#table_history tbody').append(tr);
 
@@ -1301,6 +1308,7 @@ $('#sp').change(function() {
 									/* tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spTotalAddRate)); */
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spGrandTotal));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spAdvance));
+									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.spGrandTotal-order.spAdvance));
 									if((order.spBookForMobNo).length>1)
 									{
 									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showSpCakeOrderHisPDF/"+order.spOrderNo+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/printSpCkBill/"+order.spOrderNo+"' target='_blank'><abbr title='Bill'><i class='fa fa-file-pdf-o'></i></abbr></a>"));
@@ -1327,6 +1335,7 @@ $('#sp').change(function() {
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(0));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.rspSubTotal));
 									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.rspAdvanceAmt));
+									tr.append($('<td class="col-md-1" style="text-align:right;"></td>').html(order.rspSubTotal-order.rspAdvanceAmt));
 									tr.append($('<td class="col-md-1"></td>').html("&nbsp;&nbsp;&nbsp;&nbsp;<a href='${pageContext.request.contextPath}/showRegCakeOrderHisPDF/"+order.rspId+"' target='_blank' >	<abbr title='Order Memo'><i class='fa fa-file-pdf-o'></i></abbr></a>"));
 									$('#table_history tbody').append(tr);
 
