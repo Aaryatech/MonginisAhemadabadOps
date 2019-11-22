@@ -642,6 +642,7 @@ jQuery(document).ready(function(){
 			var fromDate = document.getElementById("fromdatepicker").value;
 			var toDate = document.getElementById("todatepicker").value;
 			var frId = document.getElementById("frId").value;
+			var subCat = document.getElementById("item_grp2").value;
 			window
 					.open('${pageContext.request.contextPath}/pdf?reportURL=pdf/showPurchaseItemwiseDetailPdf/'
 							+ fromDate
@@ -650,7 +651,7 @@ jQuery(document).ready(function(){
 							+ '/'
 							+ frId
 							+ '/'
-							+ catId + '/' + values);
+							+ catId + '/' + values+ '/' + subCat);
 		}
 	}
 </script>

@@ -3891,9 +3891,9 @@ public class ReportsController {
 		return model;
 	}
 
-	@RequestMapping(value = "pdf/showPurchaseItemwiseDetailPdf/{fromDate}/{toDate}/{frId}/{catId}/{values}", method = RequestMethod.GET)
+	@RequestMapping(value = "pdf/showPurchaseItemwiseDetailPdf/{fromDate}/{toDate}/{frId}/{catId}/{values}/{subCat}", method = RequestMethod.GET)
 	public ModelAndView showPurchaseItemwiseDetailpPdf(@PathVariable String fromDate, @PathVariable String toDate,
-			@PathVariable int frId, @PathVariable int catId, @PathVariable String values, HttpServletRequest request,
+			@PathVariable int frId, @PathVariable int catId, @PathVariable String values,@PathVariable String subCat, HttpServletRequest request,
 			HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("report/purchaseReport/purchaseReportPdf/itemWiseDetailPdf");
@@ -3907,6 +3907,7 @@ public class ReportsController {
 			map.add("toDate", Main.formatDate(toDate));
 			map.add("catId", catId);
 			map.add("itemIds", values);
+			map.add("subCat", subCat);
 
 			itemWiseDetailReportList = new ArrayList<ItemWiseDetail>();
 

@@ -134,8 +134,8 @@
 
 											<th>Sr.No.</th>
 											<th>Sub Category Name</th>
-											<th>Sold Qty</th>
-											<th>Sold Amt</th>
+											<th>Pur Qty</th>
+											<th>Pur Amt</th>
 											<th>Var Qty</th>
 											<th>Var Amt</th>
 											<th>Ret Qty</th>

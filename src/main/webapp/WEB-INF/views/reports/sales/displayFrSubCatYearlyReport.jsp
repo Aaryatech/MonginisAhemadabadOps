@@ -96,8 +96,8 @@ table, th, td {
 													<c:forEach var="report" items="${reportList}"
 														varStatus="cnt">
 
-														<th>Sold Qty</th>
-														<th>Sold Amt</th>
+														<th>Pur Qty</th>
+														<th>Pur Amt</th>
 														<th>Var Qty</th>
 														<th>Var Amt</th>
 														<th>Ret Qty</th>
@@ -134,8 +134,8 @@ table, th, td {
 												<c:forEach var="report" items="${reportList}"
 													varStatus="cnt">
 
-													<th>Sold Qty</th>
-													<th>Sold Amt</th>
+													<th>Pur Qty</th>
+													<th>Pur Amt</th>
 													<th>Var Qty</th>
 													<th>Var Amt</th>
 													<th>Ret Qty</th>
