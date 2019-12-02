@@ -355,7 +355,7 @@ a:hover {
 			//calculate total value  
 			var qty = $('#physicalQty'+id).val();
 			
-			if(qty<stkQty){
+			if(qty<=stkQty){
 				var insertQty=stkQty-qty;
 				
 			    var total = rate * insertQty;
