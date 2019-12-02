@@ -1725,25 +1725,9 @@ public class StockController {
 			System.out.println("Payable amt  : " + payableAmt);
 			sellBillHeader.setTotalTax(sumTotalTax);
 			sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
-
-			float calRemainingTotal = (payableAmt - payableAmt);
-
-			if (calRemainingTotal < 0) {
-				sellBillHeader.setRemainingAmt(0);
-
-			} else {
-
-				sellBillHeader.setRemainingAmt(calRemainingTotal);
-			}
-			if (calRemainingTotal <= 0) {
-
-				sellBillHeader.setStatus(1);
-			} else if (calRemainingTotal == payableAmt) {
-				sellBillHeader.setStatus(2);
-
-			} else if (payableAmt > calRemainingTotal) {
-				sellBillHeader.setStatus(3);
-			}
+            sellBillHeader.setRemainingAmt(0);
+			sellBillHeader.setStatus(1);
+			
 
 			sellBillHeader.setSellBillDetailsList(sellBillDetailList);
 			System.out.println("Sell Bill Detail: " + sellBillHeader.toString());
