@@ -198,7 +198,7 @@ input:checked+.slider:before {
 				<div class="sidebarright">
 					<div class="col-md-2">
 						<h2 class="pageTitle" style="color: #e53878;">Express
-							Billdddd</h2>
+							Bill</h2>
 					</div>
 					<div class="col-md-12 text-left bill-date">
 						<c:choose>
@@ -386,6 +386,13 @@ input:checked+.slider:before {
 							<center>
 								<button class="btn btn-primary" onclick="insertItem1()"
 									disabled="disabled" id="insertItemButton">Submit Item</button>
+
+								<label style="margin-left: 40px;">Total : <input
+									type="text" id="total" name="total" readonly="readonly"
+									value="${itemTotal}"></label>
+
+
+
 								<button style="float: right; margin-top: 13px;" type="button"
 									class="btn btn-primary" onclick="printExBill()" disabled
 									id="printExBill">Print</button>
@@ -417,6 +424,9 @@ input:checked+.slider:before {
 									<th>AMT</th>
 									<th>ACTION</th>
 								</tr>
+
+								<c:set var="total" value="${0}" />
+
 								<c:forEach items="${sellBillDetails}" var="sellBillDetails"
 									varStatus="count">
 									<tr>
@@ -443,6 +453,11 @@ input:checked+.slider:before {
 											class="action_btn"
 											onclick="deleteItem(${sellBillDetails.sellBillDetailNo},${sellBillDetails.qty},${sellBillDetails.itemId})"><abbr
 												title="Delete"><i class="fa fa-trash"></i></abbr></a></td>
+
+
+										<c:set var="total"
+											value="${total + sellBillDetails.grandTotal}" />
+
 									</tr>
 								</c:forEach>
 							</table>
@@ -857,6 +872,8 @@ function onRateChange(rate)
 				var len = data.length;
 
 				$('#table_grid1 td').remove();
+				
+				var total=0;
 
 				$.each(data,function(key, item) {
 					key=len;
@@ -888,8 +905,13 @@ function onRateChange(rate)
 				
 				tr.append($('<td style="text-align:center;"><a href="#" class="action_btn" onclick="deleteItem('+item.sellBillDetailNo+','+item.qty+','+item.itemId+')"><abbr title="Delete"><i class="fa fa-trash"></i></abbr></a></td>'));
 				$('#table_grid1 tbody').append(tr);
+				
+				total=total+item.grandTotal;
 
 			});
+				
+				document.getElementById("total").value=total.toFixed(1);
+				
 				var rowCount = document.getElementById('table_grid1').rows.length;
 				if(rowCount>=1)
 					{
@@ -1017,6 +1039,8 @@ function myFunction1() {
 
                       }
 					$('#table_grid1 td').remove();
+					
+					var total=0;
 
 					$.each(data,function(key, item) {
 
@@ -1049,8 +1073,12 @@ function myFunction1() {
 
 
 					$('#table_grid1 tbody').append(tr);
+					
+					total=total+item.grandTotal;
 
 				});
+					
+					document.getElementById("total").value=total.toFixed(1);
 				
 		         });
 				

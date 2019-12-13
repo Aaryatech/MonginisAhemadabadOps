@@ -50,7 +50,7 @@ th {
 			</tr>
 		</thead>
 
-		<tbody>
+		
 		<tbody>
 
 			<c:set var="totalQty" value="${0 }" />

@@ -60,7 +60,7 @@ import com.monginis.ops.model.frsetting.FrSetting;
 
 @Controller
 @Scope("session")
-public class ExpressBillController {
+public class ExpressBillController { 
 
 	public List<GetCurrentStockDetails> currentStockDetailList = new ArrayList<GetCurrentStockDetails>();
 	public List<CustomerBillItem> customerBillItemList = new ArrayList<CustomerBillItem>();
@@ -324,6 +324,15 @@ public class ExpressBillController {
 					model.addObject("listSize", sellBillDetails.size());
 
 					model.addObject("sellBillHeader", sellBillHeader);
+					
+					float total=0;
+					if(sellBillDetails!=null) {
+						for(int i=0;i<sellBillDetails.size();i++) {
+							total=total+sellBillDetails.get(i).getGrandTotal();
+						}
+					}
+					
+					model.addObject("itemTotal", String.format("%.1f",total));
 
 				} else if (billDate.before(currentDate)) {
 				map = new LinkedMultiValueMap<String, Object>();
@@ -342,6 +351,15 @@ public class ExpressBillController {
 					model.addObject("count", 3);
 					model.addObject("sellBillHeader", sellBillHeader);
 					/*model.addObject("menuList", menuList);*/
+					
+					float total=0;
+					if(sellBillDetails!=null) {
+						for(int i=0;i<sellBillDetails.size();i++) {
+							total=total+sellBillDetails.get(i).getGrandTotal();
+						}
+					}
+					
+					model.addObject("itemTotal", String.format("%.1f",total));
 				}
 			} else {
 				model.addObject("count", count);
