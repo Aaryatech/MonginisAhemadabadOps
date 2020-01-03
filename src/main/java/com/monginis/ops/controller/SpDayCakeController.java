@@ -441,7 +441,7 @@ public class SpDayCakeController {
 				order.setEditQty(frItem.getItemQty());
 				order.setFrId(frDetails.getFrId());
 				order.setIsEdit(0);
-				order.setIsPositive(1);
+				order.setIsPositive(0);
 				order.setItemId(frItem.getId().toString());
 				order.setMenuId(menuId);
 				order.setOrderDate(Common.stringToSqlDate(orderDate));
