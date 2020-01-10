@@ -24,6 +24,11 @@ public class CrnDetailsSummary{
     private float igstPer;
 	
 	private float igstRs;
+	
+	private float cessPer;
+		
+	private float cessRs;
+
 
 	public String getItemHsncd() {
 		return itemHsncd;
@@ -104,13 +109,30 @@ public class CrnDetailsSummary{
 	public void setIgstRs(float igstRs) {
 		this.igstRs = igstRs;
 	}
+    
+	public float getCessPer() {
+		return cessPer;
+	}
+
+	public void setCessPer(float cessPer) {
+		this.cessPer = cessPer;
+	}
+
+	public float getCessRs() {
+		return cessRs;
+	}
+
+	public void setCessRs(float cessRs) {
+		this.cessRs = cessRs;
+	}
 
 	@Override
 	public String toString() {
 		return "CrnDetailsSummary [itemHsncd=" + itemHsncd + ", itemHsncdesc=" + itemHsncdesc + ", grnGvnQty="
 				+ grnGvnQty + ", taxableAmt=" + taxableAmt + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
-				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs + "]";
+				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs
+				+ ", cessPer=" + cessPer + ", cessRs=" + cessRs + "]";
 	}
-	
+
 	
 }

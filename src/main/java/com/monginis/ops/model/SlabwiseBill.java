@@ -17,6 +17,8 @@ public class SlabwiseBill{
 	
 	private float sgstAmt;
 	
+	private float cessAmt;
+	
 	private float totalTax;
 	
 	private float grandTotal;
@@ -25,6 +27,14 @@ public class SlabwiseBill{
 	
 	
 	
+	public float getCessAmt() {
+		return cessAmt;
+	}
+
+	public void setCessAmt(float cessAmt) {
+		this.cessAmt = cessAmt;
+	}
+
 	public int getBillDetailNo() {
 		return billDetailNo;
 	}
@@ -100,10 +110,7 @@ public class SlabwiseBill{
 	@Override
 	public String toString() {
 		return "SlabwiseBill [itemHsncd=" + itemHsncd + ", taxPer=" + taxPer + ", billQty=" + billQty + ", taxableAmt="
-				+ taxableAmt + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", totalTax=" + totalTax
-				+ ", grandTotal=" + grandTotal + ", billDetailNo=" + billDetailNo + "]";
+				+ taxableAmt + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", cessAmt=" + cessAmt + ", totalTax="
+				+ totalTax + ", grandTotal=" + grandTotal + ", billDetailNo=" + billDetailNo + "]";
 	}
-
-	
-	
 }

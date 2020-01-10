@@ -24,7 +24,7 @@
 			<tr>
 				<td width="100%" colspan="12" align="left"
 					style="border-top: 1px solid #313131; padding: 4px; font-size: 16px; font-weight: bold;"><img
-					src="${pageContext.request.contextPath}/resources/images/monginislogo.png"
+					src="${pageContext.request.contextPath}/resources/img/monginislogo.png"
 					alt="logo" width="70px" height="37px"></img>&nbsp;&nbsp;&nbsp;${Constant.FACTORYNAME}</td>
 
 			</tr>
@@ -168,6 +168,8 @@
 					CGST</td>
 				<td align="center" width="10%" colspan="2"
 					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">SGST</td>
+				<td align="center" width="10%" colspan="2"
+					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">CESS</td>	
 			</tr>
 			<tr bgcolor="lightgrey">
 				<td align="center"
@@ -179,13 +181,17 @@
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Rate%</td>
 				<td align="center"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+					<td align="center"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Rate%</td>
+				<td align="center"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>	
 			</tr>
 
 			<c:set var="totalQty" value="0" />
 			<c:set var="totalAmt" value="0" />
 			<c:set var="totalCgst" value="0" />
 			<c:set var="totalSgst" value="0" />
-
+            <c:set var="totalCess" value="0" />
 			<c:forEach items="${headerH.creditHeader.srNoDateList}" var="srNos">
 				<tr>
 					<td
@@ -220,6 +226,10 @@
 						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 0px;">-</td>
 					<td align="right"
 						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 0px;">-</td>
+					<td align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 0px;">-</td>
+					<td align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 0px;">-</td>	
 				</tr>
 				<c:forEach items="${headerH.creditHeader.crnDetails}"
 					var="crnDetail" varStatus="count1">
@@ -294,7 +304,15 @@
 										minFractionDigits="2" value="${crnDetail.sgstRs}" /></td>
 
 								<c:set var="totalSgst" value="${totalSgst+crnDetail.sgstRs}" />
-
+	           <td align="right"
+									style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+										type="number" groupingUsed="false" maxFractionDigits="2"
+										minFractionDigits="2" value="${crnDetail.cessPer}" /></td>
+		        <td align="right"
+									style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+										type="number" groupingUsed="false" maxFractionDigits="2"
+										minFractionDigits="2" value="${crnDetail.cessRs}" /></td>				
+					<c:set var="totalCess" value="${totalCess+crnDetail.cessRs}" />									
 							</tr>
 						</c:when>
 						<%--   <c:otherwise>
@@ -355,6 +373,12 @@
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 							type="number" groupingUsed="false" maxFractionDigits="2"
 							minFractionDigits="2" value="${totalSgst}" /></b></td>
+				<td align="center"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: white; font-size: 10px;">-</td>
+				<td align="right"
+					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
+							type="number" groupingUsed="false" maxFractionDigits="2"
+							minFractionDigits="2" value="${totalCess}" /></b></td>			
 			</tr>
 			<tr>
 
@@ -374,18 +398,18 @@
 				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
 				<td
 					style="border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
-				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
+				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>	<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>	<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
 				<td style="border-bottom: 1px solid #313131; font-size: 12px;"><b>Gross
 						Value:</b></td>
 				<td align="right"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 							type="number" groupingUsed="false" minFractionDigits="2"
-							maxFractionDigits="2" value="${totalAmt+totalCgst+totalSgst}" /></b></td>
+							maxFractionDigits="2" value="${totalAmt+totalCgst+totalSgst+totalCess}" /></b></td>
 			</tr>
 			<tr>
 				<fmt:formatNumber type="number" groupingUsed="false"
 					minFractionDigits="0" maxFractionDigits="0"
-					value="${totalAmt+totalCgst+totalSgst}" var="grossValue" />
+					value="${totalAmt+totalCgst+totalSgst+totalCess}" var="grossValue" />
 				<td align="right"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: white; font-size: 10px;">-</td>
 				<td align="right"
@@ -402,14 +426,14 @@
 				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
 				<td
 					style="border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
-				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
+				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>	<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>	<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
 				<td style="border-bottom: 1px solid #313131; font-size: 12px;"><b>Round
 						Off:</b></td>
 				<td align="right"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" groupingUsed="false"
 							maxFractionDigits="2"
-							value="${grossValue-(totalAmt+totalCgst+totalSgst)}" /></b></td>
+							value="${grossValue-(totalAmt+totalCgst+totalSgst+totalCess)}" /></b></td>
 				<%-- ${grossValue-(totalAmt+totalCgst+totalSgst)} --%>
 			</tr>
 			<tr>
@@ -430,13 +454,14 @@
 				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
 				<td
 					style="border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 0px;">-</td>
-				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
+				<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>	<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>	<td style="border-bottom: 1px solid #313131; font-size: 0px;">-</td>
 				<td style="border-bottom: 1px solid #313131; font-size: 12px;"><b>Net
 						Value:</b></td>
 				<td align="right"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 12px;"><b><fmt:formatNumber
 							type="number" minFractionDigits="0" maxFractionDigits="0"  groupingUsed="false"
-							var="netValueFinal" value="${totalAmt+totalCgst+totalSgst}" />${netValueFinal}</b></td>
+							var="netValueFinal" value="${totalAmt+totalCgst+totalSgst+totalCess}" />
+						${netValueFinal}</b></td>
 			</tr>
 
 		</table>
@@ -460,11 +485,13 @@
 				<td align="center" width="10%" rowspan="2"
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px;">Taxable
 					Value</td>
-				<td align="center" width="20%" colspan="2"
+				<td align="center" width="15%" colspan="2"
 					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">
 					CGST</td>
-				<td align="center" width="20%" colspan="2"
+				<td align="center" width="15%" colspan="2"
 					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">SGST</td>
+				<td align="center" width="15%" colspan="2"
+					style="border-left: 1px solid #313131; padding: 10px; color: #000; font-size: 10px; text-align: center;">CESS</td>	
 				<td align="center" width="25%" rowspan="2"
 					style="border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">HSN
 					Total</td>
@@ -480,11 +507,16 @@
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Rate%</td>
 				<td align="center"
 					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
+			<td align="center"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Rate%</td>
+				<td align="center"
+					style="border-top: 1px solid #313131; border-left: 1px solid #313131; border-bottom: 1px solid #313131; padding: 4px; color: #000; font-size: 10px;">Amount</td>
 			</tr>
 			<c:set var="hsnQty" value="0" />
 			<c:set var="hsnTaxableAmt" value="0" />
 			<c:set var="hsnTotalCgst" value="0" />
 			<c:set var="hsnTotalSgst" value="0" />
+			<c:set var="hsnTotalCess" value="0" />
 			<c:set var="hsnTotal" value="0" />
 			<c:forEach items="${headerH.creditHeader.crnDetailsSummaryList}"
 				var="crnDetailsSummaryList" varStatus="cnt">
@@ -530,10 +562,20 @@
 					<td align="right"
 						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
 							type="number" groupingUsed="false" maxFractionDigits="2"
+							minFractionDigits="2" value="${crnDetailsSummaryList.cessPer}" /></td>		
+					<td align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+							type="number" groupingUsed="false" maxFractionDigits="2"
+							minFractionDigits="2" value="${crnDetailsSummaryList.cessRs}" /></td>	
+					<c:set var="hsnTotalCess"
+						value="${hsnTotalCess+crnDetailsSummaryList.cessRs}" />			
+					<td align="right"
+						style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><fmt:formatNumber
+							type="number" groupingUsed="false" maxFractionDigits="2"
 							minFractionDigits="2"
-							value="${crnDetailsSummaryList.taxableAmt+crnDetailsSummaryList.cgstRs+crnDetailsSummaryList.sgstRs}" /></td>
+							value="${crnDetailsSummaryList.taxableAmt+crnDetailsSummaryList.cgstRs+crnDetailsSummaryList.sgstRs+crnDetailsSummaryList.cessRs}" /></td>
 					<c:set var="hsnTotal"
-						value="${hsnTotal+crnDetailsSummaryList.taxableAmt+crnDetailsSummaryList.cgstRs+crnDetailsSummaryList.sgstRs}" />
+						value="${hsnTotal+crnDetailsSummaryList.taxableAmt+crnDetailsSummaryList.cgstRs+crnDetailsSummaryList.sgstRs+crnDetailsSummaryList.cessRs}" />
 					<c:set var="hsnTotalSgst"
 						value="${hsnTotalSgst+crnDetailsSummaryList.sgstRs}" />
 
@@ -567,6 +609,12 @@
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><b><fmt:formatNumber
 							type="number" groupingUsed="false" maxFractionDigits="2"
 							minFractionDigits="2" value="${hsnTotalSgst}" /></b></td>
+				<td align="right"
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 0px;">-</td>				
+					<td align="right"
+					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><b><fmt:formatNumber
+							type="number" groupingUsed="false" maxFractionDigits="2"
+							minFractionDigits="2" value="${hsnTotalCess}" /></b></td>			
 				<td align="right"
 					style="border-bottom: 1px solid #313131; border-left: 1px solid #313131; padding: 3px 5px; color: #000; font-size: 10px;"><b><fmt:formatNumber
 							type="number" groupingUsed="false" maxFractionDigits="2"
