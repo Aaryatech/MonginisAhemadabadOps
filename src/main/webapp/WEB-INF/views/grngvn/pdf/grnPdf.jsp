@@ -133,13 +133,15 @@
 										cellspacing="0" cellpadding="1" class="tbl-inner"><!--cellpading was 5   -->
 										<tbody>
 											<tr>
-												<th width="30%" align="left" bgcolor="#ECECEC">HsnCode-itemName</th>
+												<th width="25%" align="left" bgcolor="#ECECEC">HsnCode-itemName</th>
 												<!-- <th width="30%" bgcolor="#ECECEC">Particular</th> -->
-												<th width="14%" bgcolor="#ECECEC">Type-InvoiceNo</th>
-												<th width="13%" bgcolor="#ECECEC">Rate-Qty</th>
-												<th width="13%" align="right" bgcolor="#ECECEC">Cgst %-Rs
+												<th width="13%" bgcolor="#ECECEC">Type-InvoiceNo</th>
+												<th width="12%" bgcolor="#ECECEC">Rate-Qty</th>
+												<th width="12%" align="right" bgcolor="#ECECEC">Cgst %-Rs
 													</th>
-												<th width="13%" align="right" bgcolor="#ECECEC">Sgst %-Rs
+												<th width="12%" align="right" bgcolor="#ECECEC">Sgst %-Rs
+													</th>
+												<th width="12%" align="right" bgcolor="#ECECEC">Cess %-Rs
 													</th>
 												<th width="17%" bgcolor="#ECECEC">Amt</th>
 											</tr>
@@ -148,7 +150,7 @@
 												varStatus="count">
 												<tr>
 												
-																									<c:set var="taxableSum" value="${taxableSum+detail.taxableAmt}"></c:set>
+													<c:set var="taxableSum" value="${taxableSum+detail.taxableAmt}"></c:set>
 												
 													<c:set var="qtySum" value="${qtySum+detail.grnGvnQty}"></c:set>
 													<c:set var="totalSum" value="${totalSum+ detail.grnGvnAmt}"></c:set>
@@ -156,7 +158,9 @@
 														value="${detail.taxableAmt * detail.cgstPer/100}"></c:set>
 													<c:set var="sgstRs"
 														value="${detail.taxableAmt * detail.sgstPer/100}"></c:set>
-
+                                                    <c:set var="cessRs"
+														value="${detail.taxableAmt * detail.cessPer/100}"></c:set>
+												<c:set var="cessValue" value="${cessValue+ cessRs}"></c:set>		
 													<c:set var="cgstValue" value="${cgstValue+cgstRs}"></c:set>
 													<c:set var="sgstValue" value="${sgstValue+ sgstRs}"></c:set>
 
@@ -209,7 +213,11 @@
 															<fmt:formatNumber type="number" maxFractionDigits="2"
 																value="${detail.taxableAmt * detail.sgstPer/100}" />
 														</p></td>
-
+                                                     <td align="center"><p style="font-size: 10px">${detail.cessPer}</p>
+														<p style="font-size: 10px">
+															<fmt:formatNumber type="number" maxFractionDigits="2"
+																value="${detail.taxableAmt * detail.cessPer/100}" />
+														</p></td>
 													<td align="right"><p style="font-size: 10px"><fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" value="${detail.grnGvnAmt}" /></p></td>
 												</tr>
 											</c:forEach>
@@ -241,6 +249,12 @@
 														Sgst Value:</span></td>
 												<td align="right"><span class="style7"><fmt:formatNumber
 															type="number" maxFractionDigits="2" value="${sgstValue}" /></span></td>
+											</tr>
+											<tr>
+												<td colspan="5" align="right"><span class="style7">
+														Cess Value:</span></td>
+												<td align="right"><span class="style7"><fmt:formatNumber
+															type="number" maxFractionDigits="2" value="${cessValue}" /></span></td>
 											</tr>
 											<tr>
 										<!-- 	<td rowspan="3">&nbsp;</td> -->

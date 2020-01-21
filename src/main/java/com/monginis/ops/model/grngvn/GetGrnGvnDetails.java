@@ -78,6 +78,8 @@ public class GetGrnGvnDetails {
 	private float cgstPer;
 
 	private float igstPer;
+	
+	private float cessPer;//new1
 
 	private float taxableAmt;
 
@@ -107,15 +109,32 @@ public class GetGrnGvnDetails {
 	float aprTotalTax;
 	float aprSgstRs;
 	float aprCgstRs;
+	float aprCessRs;//new1
 	float aprIgstRs;
 	float aprGrandTotal;
 	float aprROff;
 
 	int isSameState;
 	// 23 FEB new Fields to handle qty variation between entry(insert) and dispatch
-
+    
 	public int getGrnGvnId() {
 		return grnGvnId;
+	}
+
+	public float getCessPer() {
+		return cessPer;
+	}
+
+	public void setCessPer(float cessPer) {
+		this.cessPer = cessPer;
+	}
+
+	public float getAprCessRs() {
+		return aprCessRs;
+	}
+
+	public void setAprCessRs(float aprCessRs) {
+		this.aprCessRs = aprCessRs;
 	}
 
 	public void setGrnGvnId(int grnGvnId) {
@@ -585,13 +604,16 @@ public class GetGrnGvnDetails {
 				+ grnApprovedDateTimeAcc + ", approvedRemarkAcc=" + approvedRemarkAcc + ", delStatus=" + delStatus
 				+ ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", itemName=" + itemName + ", frName=" + frName
 				+ ", isTallySync=" + isTallySync + ", baseRate=" + baseRate + ", sgstPer=" + sgstPer + ", cgstPer="
-				+ cgstPer + ", igstPer=" + igstPer + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax
-				+ ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + ", isCreditNote=" + isCreditNote
-				+ ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", refInvoiceDate="
-				+ refInvoiceDate + ", aprQtyGate=" + aprQtyGate + ", aprQtyStore=" + aprQtyStore + ", aprQtyAcc="
-				+ aprQtyAcc + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax=" + aprTotalTax + ", aprSgstRs="
-				+ aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs + ", aprGrandTotal="
-				+ aprGrandTotal + ", aprROff=" + aprROff + ", isSameState=" + isSameState + "]";
+				+ cgstPer + ", igstPer=" + igstPer + ", cessPer=" + cessPer + ", taxableAmt=" + taxableAmt
+				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + ", isCreditNote="
+				+ isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo
+				+ ", refInvoiceDate=" + refInvoiceDate + ", aprQtyGate=" + aprQtyGate + ", aprQtyStore=" + aprQtyStore
+				+ ", aprQtyAcc=" + aprQtyAcc + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax=" + aprTotalTax
+				+ ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprCessRs=" + aprCessRs + ", aprIgstRs="
+				+ aprIgstRs + ", aprGrandTotal=" + aprGrandTotal + ", aprROff=" + aprROff + ", isSameState="
+				+ isSameState + "]";
 	}
+
+    
 
 }

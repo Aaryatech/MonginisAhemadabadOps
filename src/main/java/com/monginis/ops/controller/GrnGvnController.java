@@ -222,21 +222,7 @@ public class GrnGvnController {
 	public ModelAndView showBill(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("show Grn displayed");
 		ModelAndView modelAndView = new ModelAndView("grngvn/showgrn");
-		/*
-		 * java.util.Date date = new
-		 * SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(curDateTime);
-		 * 
-		 * Calendar caleInstance = Calendar.getInstance();
-		 * 
-		 * caleInstance.setTime(date);
-		 * 
-		 * caleInstance.set(Calendar.SECOND, (caleInstance.get(Calendar.SECOND) +5));
-		 * 
-		 * System.out.println("*****Calender Gettime == " + caleInstance.getTime());
-		 * 
-		 * 
-		 * System.out.println("*****Calender Gettime == " + caleInstance.getTime());
-		 */
+		
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
@@ -595,16 +581,16 @@ public class GrnGvnController {
 					objShowGrn.setMrp(grnConfList.get(i).getMrp());
 					objShowGrn.setRate(grnConfList.get(i).getRate());
 					objShowGrn.setSgstPer(grnConfList.get(i).getSgstPer());
-
+					objShowGrn.setCessPer(grnConfList.get(i).getCessPer());//new1
 					float calcBaseRate = grnConfList.get(i).getRate() * 100
-							/ (grnConfList.get(i).getSgstPer() + grnConfList.get(i).getCgstPer() + 100);
+							/ (grnConfList.get(i).getSgstPer() + grnConfList.get(i).getCgstPer() +grnConfList.get(i).getCessPer()+ 100);
 
 					objShowGrn.setCalcBaseRate(roundUp(calcBaseRate));
 
 					objShowGrn.setAutoGrnQty(grnConfList.get(i).getAutoGrnQty());
 
 					float baseRate = objShowGrn.getRate() * 100
-							/ (objShowGrn.getSgstPer() + objShowGrn.getCgstPer() + 100);
+							/ (objShowGrn.getSgstPer() + objShowGrn.getCgstPer()+objShowGrn.getCessPer() + 100);
 
 					float grnBaseRate = 0.0f;
 
@@ -635,7 +621,7 @@ public class GrnGvnController {
 
 					objShowGrn.setTaxableAmt(roundUp(taxableAmt));
 
-					float totalTax = (taxableAmt * (objShowGrn.getSgstPer() + objShowGrn.getCgstPer())) / 100;
+					float totalTax = (taxableAmt * (objShowGrn.getSgstPer() + objShowGrn.getCgstPer()+objShowGrn.getCessPer())) / 100;
 
 					float grandTotal = taxableAmt + totalTax;
 
@@ -643,7 +629,7 @@ public class GrnGvnController {
 
 					objShowGrn.setGrnAmt(roundUp(grandTotal));
 
-					float taxPer = objShowGrn.getSgstPer() + objShowGrn.getCgstPer();
+					float taxPer = objShowGrn.getSgstPer() + objShowGrn.getCgstPer()+ objShowGrn.getCessPer();
 
 					objShowGrn.setTaxPer(taxPer);
 
@@ -852,8 +838,8 @@ public class GrnGvnController {
 
 				DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				Calendar cal = Calendar.getInstance();
-				DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
-				Calendar calDate = Calendar.getInstance();
+				//DateFormat dateFormatDate = new SimpleDateFormat("yyyy-MM-dd");
+				//Calendar calDate = Calendar.getInstance();
 
 				String tempGrnQtyAuto = request
 						.getParameter("grnqtyauto" + objShowGrnList.get(i).getBillDetailNo() + "");
@@ -887,7 +873,7 @@ public class GrnGvnController {
 				GrnGvn postGrnGvn = new GrnGvn();
 
 				float baseRate = objShowGrnList.get(i).getRate() * 100
-						/ (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer() + 100);
+						/ (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer() +objShowGrnList.get(i).getCessPer() + 100);
 
 				float grnBaseRate = 0.0f;
 
@@ -918,7 +904,7 @@ public class GrnGvnController {
 				float discAmt = (taxableAmt * objShowGrnList.get(i).getDiscPer()) / 100;//4 Feb 2019
 				taxableAmt = taxableAmt - discAmt;
 				float totalTax = (taxableAmt
-						* (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer())) / 100;
+						* (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer()+objShowGrnList.get(i).getCessPer())) / 100;
 
 				float grandTotal = taxableAmt + totalTax;
 
@@ -985,7 +971,7 @@ public class GrnGvnController {
 				postGrnGvn.setSgstPer(objShowGrnList.get(i).getSgstPer());
 				postGrnGvn.setCgstPer(objShowGrnList.get(i).getCgstPer());
 				postGrnGvn.setIgstPer(objShowGrnList.get(i).getIgstPer());
-
+				postGrnGvn.setCessPer(objShowGrnList.get(i).getCessPer());//new1
 				postGrnGvn.setTaxableAmt(roundUp(taxableAmt));
 				postGrnGvn.setTotalTax(roundUp(totalTax));
 				postGrnGvn.setFinalAmt(roundUp(finalAmt));
@@ -1008,6 +994,7 @@ public class GrnGvnController {
 				postGrnGvn.setAprTotalTax(0);
 				postGrnGvn.setAprSgstRs(0);
 				postGrnGvn.setAprCgstRs(0);
+				postGrnGvn.setAprCessRs(0);//new1
 				postGrnGvn.setAprIgstRs(0);
 				postGrnGvn.setAprGrandTotal(0);
 				postGrnGvn.setAprROff(0);
@@ -1563,6 +1550,7 @@ public class GrnGvnController {
 				objShowGvn.setBillQty(grnConfList.get(i).getBillQty());
 				objShowGvn.setMenuId(grnConfList.get(i).getMenuId());//new jun
 				objShowGvn.setCgstPer(grnConfList.get(i).getCgstPer());
+				objShowGvn.setCessPer(grnConfList.get(i).getCessPer());//new1
 				objShowGvn.setFrId(grnConfList.get(i).getFrId());
 				objShowGvn.setGrnType(grnConfList.get(i).getGrnType());
 				objShowGvn.setIgstPer(grnConfList.get(i).getIgstPer());
@@ -1575,7 +1563,7 @@ public class GrnGvnController {
 				objShowGvn.setInvoiceNo(grnConfList.get(i).getInvoiceNo());
 				objShowGvn.setHsnCode(grnConfList.get(i).getHsnCode());//new for hsn code
 				float calcBaseRate = grnConfList.get(i).getRate() * 100
-						/ (grnConfList.get(i).getSgstPer() + grnConfList.get(i).getCgstPer() + 100);
+						/ (grnConfList.get(i).getSgstPer() + grnConfList.get(i).getCgstPer()+grnConfList.get(i).getCessPer() + 100);
 				
 				float discAmt=(calcBaseRate *grnConfList.get(i).getDiscPer())/100;//4 FEB 2019
 				
@@ -1763,7 +1751,7 @@ public class GrnGvnController {
 					GrnGvn postGrnGvn = new GrnGvn();
 
 					float baseRate = gvnList.get(i).getRate() * 100
-							/ (gvnList.get(i).getSgstPer() + gvnList.get(i).getCgstPer() + 100);
+							/ (gvnList.get(i).getSgstPer() + gvnList.get(i).getCgstPer()+gvnList.get(i).getCessPer() + 100);
 
 					float gvnAmt = gvnQty * baseRate;
 
@@ -1777,7 +1765,7 @@ public class GrnGvnController {
 					System.err.println("discAmt " +discAmt +"taxableAmt*** "+ taxableAmt);
 
 
-					float totalTax = (taxableAmt * (gvnList.get(i).getSgstPer() + gvnList.get(i).getCgstPer())) / 100;
+					float totalTax = (taxableAmt * (gvnList.get(i).getSgstPer() + gvnList.get(i).getCgstPer()+gvnList.get(i).getCessPer())) / 100;
 
 					float grandTotal = taxableAmt + totalTax;
 					
@@ -1853,7 +1841,7 @@ public class GrnGvnController {
 					postGrnGvn.setSgstPer(gvnList.get(i).getSgstPer());
 					postGrnGvn.setCgstPer(gvnList.get(i).getCgstPer());
 					postGrnGvn.setIgstPer(gvnList.get(i).getIgstPer());
-
+					postGrnGvn.setCessPer(gvnList.get(i).getCessPer());//new1
 					postGrnGvn.setTaxableAmt(roundUp(taxableAmt));
 					postGrnGvn.setTotalTax(roundUp(totalTax));
 					postGrnGvn.setFinalAmt(roundUp(finalAmt));
@@ -1876,6 +1864,7 @@ public class GrnGvnController {
 					postGrnGvn.setAprTotalTax(0);
 					postGrnGvn.setAprSgstRs(0);
 					postGrnGvn.setAprCgstRs(0);
+					postGrnGvn.setAprCessRs(0);//new1
 					postGrnGvn.setAprIgstRs(0);
 					postGrnGvn.setAprGrandTotal(0);
 					postGrnGvn.setAprROff(0);

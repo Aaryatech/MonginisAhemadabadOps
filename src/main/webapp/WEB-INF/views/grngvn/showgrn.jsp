@@ -185,14 +185,14 @@ table, th, td {
 													value="${grnConfList.autoGrnQty}"
 													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
 													onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.autoGrnQty},${grnConfList.billDetailNo},${grnConfList.discPer},this.value)" />
+																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.cessPer},${grnConfList.autoGrnQty},${grnConfList.billDetailNo},${grnConfList.discPer},this.value)" />
 
 
 												</td>
 
 												<td class="col-md-1" style="text-align: center;"
 													id="tax_per${grnConfList.billDetailNo}"><c:out
-														value="${grnConfList.taxPer}"></c:out></td>
+														value="${grnConfList.taxPer+grnConfList.cessPer}"></c:out></td>
 
 												<fmt:formatNumber var="taxableAmt" type="number"
 													minFractionDigits="2" maxFractionDigits="2"
@@ -329,10 +329,10 @@ table, th, td {
 
 <script type="text/javascript">
 	
-	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer,autoQty,billDetailNo,discPer,grnQty){
+	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer,cessPer,autoQty,billDetailNo,discPer,grnQty){
 		
 	
-		var baseRate=rate*100/(sgstPer+cgstPer+100);
+		var baseRate=rate*100/(sgstPer+cgstPer+cessPer+100);
 	
 		var grnBaseRate;
 		
@@ -415,14 +415,14 @@ table, th, td {
 				
 				}
 			
-		    var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
+		    var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer)+parseFloat(cessPer);
 			var taxableAmt=grnBaseRate*grnQty;
 			var discAmt=(taxableAmt*discPer)/100;
 			//alert("taxable " +taxableAmt + "discAmt " +discAmt);
 			
 			taxableAmt=taxableAmt-parseFloat(discAmt);
 			//alert("taxable new " +taxableAmt);
-			var totalTax=taxableAmt*(cgstPer+sgstPer)/100;
+			var totalTax=taxableAmt*(cgstPer+sgstPer+cessPer)/100;
 			
 			var grandTotal=taxableAmt+totalTax;
 			/* alert(taxableAmt);

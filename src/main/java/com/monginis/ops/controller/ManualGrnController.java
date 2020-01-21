@@ -112,44 +112,28 @@ public class ManualGrnController {
 
 		ModelAndView modelAndView = new ModelAndView("grngvn/manGrn");
 
-		// modelAndView.addObject("frBillList", frBillList);
-
 		try {
-
-			//int billNo = Integer.parseInt(request.getParameter("bill_no"));
-			//System.out.println("selected bill no " + billNo);
-
-			RestTemplate restTemplate = new RestTemplate();
-
+            RestTemplate restTemplate = new RestTemplate();
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 
 			HttpSession session = request.getSession();
 			Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 
 			int frId=frDetails.getFrId();
-			//map.add("billNo", billNo);
 			map.add("frId", frId);
 			grnGvnConfResponse = restTemplate.postForObject(Constant.URL + "getGrnItemConfig", map,
 					GetGrnGvnConfResponse.class);
 
 			grnConfList = new ArrayList<>();
-
 			grnConfList = grnGvnConfResponse.getGetGrnItemConfigs();
-		/*	if(grnConfList.isEmpty()==false || grnConfList!=null) {
-			System.out.println("gvn conf list " + grnConfList.toString());
-			}*/
-
+		
 			modelAndView.addObject("frBillList", frBillList);
-			//modelAndView.addObject("selctedBillNo", billNo);
-
 			objShowGrnList = new ArrayList<>();
 
 			ShowGrnBean objShowGrn = null;
-
 			for (int i = 0; i < grnConfList.size(); i++) {
 
 					objShowGrn = new ShowGrnBean();
-
 					objShowGrn.setDiscPer(grnConfList.get(i).getDiscPer());
 					objShowGrn.setHsnCode(grnConfList.get(i).getHsnCode());//new
 					objShowGrn.setBillDate(grnConfList.get(i).getBillDate());
@@ -166,16 +150,16 @@ public class ManualGrnController {
 					objShowGrn.setMrp(grnConfList.get(i).getMrp());
 					objShowGrn.setRate(grnConfList.get(i).getRate());
 					objShowGrn.setSgstPer(grnConfList.get(i).getSgstPer());
-
+					objShowGrn.setCessPer(grnConfList.get(i).getCessPer());//cess Per
 					float calcBaseRate = grnConfList.get(i).getRate() * 100
-							/ (grnConfList.get(i).getSgstPer() + grnConfList.get(i).getCgstPer() + 100);
+							/ (grnConfList.get(i).getSgstPer() + grnConfList.get(i).getCgstPer() + grnConfList.get(i).getCessPer()+ 100);
 
 					objShowGrn.setCalcBaseRate(roundUp(calcBaseRate));
 
 					objShowGrn.setAutoGrnQty(grnConfList.get(i).getAutoGrnQty());
 
 					float baseRate = objShowGrn.getRate() * 100
-							/ (objShowGrn.getSgstPer() + objShowGrn.getCgstPer() + 100);
+							/ (objShowGrn.getSgstPer() + objShowGrn.getCgstPer()+objShowGrn.getCessPer() + 100);
 
 					float grnBaseRate = 0.0f;
 
@@ -183,33 +167,25 @@ public class ManualGrnController {
 
 					if (objShowGrn.getGrnType() == 0) {
 						grnBaseRate = baseRate * 85 / 100;
-
-						// grnRate = (objShowGrn.getRate() * 85) / 100;
-
 						grnRate = (baseRate * 85) / 100;
 					}
 
 					if (objShowGrn.getGrnType() == 1) {
 						grnBaseRate = baseRate * 75 / 100;
-						// grnRate = (objShowGrn.getRate() * 75) / 100;
-
 						grnRate = (baseRate * 75) / 100;
 					}
 
 					if (objShowGrn.getGrnType() == 2 || objShowGrn.getGrnType() == 4) {
-
 						grnBaseRate = baseRate;
-						// grnRate = objShowGrn.getRate();
 						grnRate = baseRate;
 					}
-					// objShowGrn.setGrnRate(roundUp(grnRate));
 
 					float taxableAmt = grnRate * objShowGrn.getAutoGrnQty();
 					float discAmt=(taxableAmt*objShowGrn.getDiscPer()/100);
 					taxableAmt=taxableAmt-discAmt;
 					objShowGrn.setTaxableAmt(roundUp(taxableAmt));
 
-					float totalTax = (taxableAmt * (objShowGrn.getSgstPer() + objShowGrn.getCgstPer())) / 100;
+					float totalTax = (taxableAmt * (objShowGrn.getSgstPer() + objShowGrn.getCgstPer()+objShowGrn.getCessPer())) / 100;
 
 					float grandTotal = taxableAmt + totalTax;
 
@@ -217,38 +193,23 @@ public class ManualGrnController {
 
 					objShowGrn.setGrnAmt(roundUp(grandTotal));
 
-					float taxPer = objShowGrn.getSgstPer() + objShowGrn.getCgstPer();
+					float taxPer = objShowGrn.getSgstPer() + objShowGrn.getCgstPer()+objShowGrn.getCessPer();
 
 					objShowGrn.setTaxPer(taxPer);
-
 					objShowGrn.setMenuId(grnConfList.get(i).getMenuId());
 					objShowGrn.setCatId(grnConfList.get(i).getCatId());
 					objShowGrn.setInvoiceNo(grnConfList.get(i).getInvoiceNo());
 					objShowGrn.setBillDateTime(grnConfList.get(i).getBillDateTime());
-
 					objShowGrn.setTaxAmt(roundUp(totalTax));
 
 					System.out.println("OBJ SHOW GRN " + objShowGrn.toString());
 					objShowGrnList.add(objShowGrn);
 
-					// objShowGrnList.add(objShowGrn);
-
-					// objShowGrnList.add(objShowGrn);
-
-					// objShowGrnList.add(objShowGrn);
-
-			
-
 			} // End of For Loop
 
 			System.out.println("bean new " + objShowGrnList.toString());
-
 			modelAndView.addObject("grnConfList", objShowGrnList);
-			//modelAndView.addObject("billNo", billNo);
 			
-			
-			map = new LinkedMultiValueMap<String, Object>();
-
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("isFrUsed", 1);
 			map.add("moduleId", 1);
@@ -256,23 +217,13 @@ public class ManualGrnController {
 			getAllRemarksList = restTemplate.postForObject(Constant.URL + "/getAllRemarks", map,
 					GetAllRemarksList.class);
 
-			// allRemarksList = restTemplate.getForObject(Constants.url + "getAllRemarks",
-			// GetAllRemarksList.class);
-
 			getAllRemarks = new ArrayList<>();
 			getAllRemarks = getAllRemarksList.getGetAllRemarks();
-
-			// allRemarksList = restTemplate.getForObject(Constant.URL + "getAllRemarks",
-			// GetAllRemarksList.class);
-
-			// getAllRemarks = allRemarksList.getGetAllRemarks();
-
 			System.out.println("remark list " + getAllRemarks.toString());
 
 			modelAndView.addObject("remarkList", getAllRemarks);
 			
 			int isOpen = checktime();
-			 //System.err.println("isOpen " + isOpen); 
 			 modelAndView.addObject("isOpen", isOpen);
 		} catch (Exception e) {
 			System.out.println("show gvn error " + e.getMessage());
@@ -280,23 +231,15 @@ public class ManualGrnController {
 		}
 
 		return modelAndView;
-
 	}
-	
 	private int checktime() {
-
-		
 		int flag = 0;
-		
 		try {
-			
-			
 			String string1 = "17:00:00";
 		    java.util.Date time1 = new SimpleDateFormat("HH:mm:ss").parse(string1);
 		    Calendar calendar1 = Calendar.getInstance();
 		    calendar1.setTime(time1);
 		    calendar1.add(Calendar.DATE, 1);
-
 
 		    String string2 = "22:00:00";
 		    java.util.Date time2 = new SimpleDateFormat("HH:mm:ss").parse(string2);
@@ -314,17 +257,12 @@ public class ManualGrnController {
 		    java.util.Date x = calendar3.getTime();
 		     
 		    if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
-		        //checkes whether the current time is between 14:49:00 and 20:11:13.
-		        //System.err.println("you can't do ");
 		        flag=1;
-		    }/*else {
-		    	 System.err.println("you can do ");
-		    }*/
+		    }
 		}catch(Exception e) {
 			
 		}
 		return flag;
-		
 	}
 	
 	List<GrnGvnHeader> grnHeaderList=new ArrayList<>();
@@ -423,7 +361,7 @@ System.err.println("Inside Manual Grn POST method ");
 				}
 
 				float baseRate = objShowGrnList.get(i).getRate() * 100
-						/ (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer() + 100);
+						/ (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer() +objShowGrnList.get(i).getCessPer()+ 100);
 
 				float grnBaseRate = 0.0f;
 
@@ -453,7 +391,7 @@ System.err.println("Inside Manual Grn POST method ");
 				float discAmt=(taxableAmt*objShowGrnList.get(i).getDiscPer()/100);
 				taxableAmt=taxableAmt-discAmt;
 				float totalTax = (taxableAmt
-						* (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer())) / 100;
+						* (objShowGrnList.get(i).getSgstPer() + objShowGrnList.get(i).getCgstPer()+ objShowGrnList.get(i).getCessPer())) / 100;
 
 				float grandTotal = taxableAmt + totalTax;
 
@@ -521,7 +459,7 @@ System.err.println("Inside Manual Grn POST method ");
 					postGrnGvn.setSgstPer(objShowGrnList.get(i).getSgstPer());
 					postGrnGvn.setCgstPer(objShowGrnList.get(i).getCgstPer());
 					postGrnGvn.setIgstPer(objShowGrnList.get(i).getIgstPer());
-
+					postGrnGvn.setCessPer(objShowGrnList.get(i).getCessPer());//new1
 					postGrnGvn.setTaxableAmt(roundUp(taxableAmt));
 					postGrnGvn.setTotalTax(roundUp(totalTax));
 					postGrnGvn.setFinalAmt(roundUp(finalAmt));
@@ -545,6 +483,8 @@ System.err.println("Inside Manual Grn POST method ");
 					postGrnGvn.setAprSgstRs(0);
 					postGrnGvn.setAprCgstRs(0);
 					postGrnGvn.setAprIgstRs(0);
+					
+					postGrnGvn.setAprCessRs(0);//new1
 					postGrnGvn.setAprGrandTotal(0);
 					postGrnGvn.setAprROff(0);
 					postGrnGvn.setIsSameState(frDetails.getIsSameState());

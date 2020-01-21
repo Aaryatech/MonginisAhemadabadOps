@@ -260,7 +260,7 @@ table, th, td {
 													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
 													style="text-align: center;"
 													onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
-																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.billQty},${grnConfList.billDetailNo},${grnConfList.discPer})" />
+																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.cessPer},${grnConfList.billQty},${grnConfList.billDetailNo},${grnConfList.discPer})" />
 
 
 												</td>
@@ -410,12 +410,12 @@ table, th, td {
 
 <script type="text/javascript">
 	
-	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer,autoQty,detailId,discPer){
+	function calcGrn(grnType,rate,itemId,sgstPer,cgstPer,cessPer,autoQty,detailId,discPer){
 		
 		document.getElementById(""+detailId).checked = false;
 		document.getElementById("row"+detailId).style.backgroundColor="white";
 		
-		var baseRate=rate*100/(sgstPer+cgstPer+100);
+		var baseRate=rate*100/(sgstPer+cgstPer+cessPer+100);
 	
 		var grnBaseRate;
 		
@@ -508,11 +508,11 @@ table, th, td {
 				
 				}
 			
-		var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
+		var totTaxPer=parseFloat(sgstPer)+parseFloat(cgstPer)+parseFloat(cessPer);
 			var taxableAmt=grnBaseRate*grnQty;
 			var discAmt=(taxableAmt*discPer)/100;
 			taxableAmt=taxableAmt-discAmt;
-			var totalTax=taxableAmt*(cgstPer+sgstPer)/100;
+			var totalTax=taxableAmt*(cgstPer+sgstPer+cessPer)/100;
 			
 			var grandTotal=taxableAmt+totalTax;
 			/* alert(taxableAmt);

@@ -38,6 +38,8 @@ public class GrnGvnHeader {
 	float aprSgstRs;
 	float aprCgstRs;
 	float aprIgstRs;
+	
+	float aprCessRs;//new1
 	float aprGrandTotal;
 	
 	float aprROff;//new 
@@ -212,6 +214,14 @@ public class GrnGvnHeader {
 	public void setAprROff(float aprROff) {
 		this.aprROff = aprROff;
 	}
+    
+	public float getAprCessRs() {
+		return aprCessRs;
+	}
+
+	public void setAprCessRs(float aprCessRs) {
+		this.aprCessRs = aprCessRs;
+	}
 
 	@Override
 	public String toString() {
@@ -220,9 +230,11 @@ public class GrnGvnHeader {
 				+ taxAmt + ", totalAmt=" + totalAmt + ", grngvnStatus=" + grngvnStatus + ", apporvedAmt=" + apporvedAmt
 				+ ", isCreditNote=" + isCreditNote + ", creditNoteId=" + creditNoteId + ", approvedDatetime="
 				+ approvedDatetime + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax=" + aprTotalTax
-				+ ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs
-				+ ", aprGrandTotal=" + aprGrandTotal + ", aprROff=" + aprROff + ", grnGvn=" + grnGvn + "]";
+				+ ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs + ", aprCessRs="
+				+ aprCessRs + ", aprGrandTotal=" + aprGrandTotal + ", aprROff=" + aprROff + ", grnGvn=" + grnGvn + "]";
 	}
+
+	
 
 	
 }

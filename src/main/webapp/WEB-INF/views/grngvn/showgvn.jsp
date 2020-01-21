@@ -221,7 +221,7 @@ table, th, td {
 												<td class="col-md-1" style="text-align: center;"><input type="text"
 													name="gvn_qty${gvnConfList.billDetailNo}"
 													id='gvn_qty${gvnConfList.billDetailNo}' size="5" value="0" 
-													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer},${gvnConfList.billDetailNo})" /></td>
+													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer},${gvnConfList.cessPer},${gvnConfList.billDetailNo})" /></td>
 
 												<td class="col-md-1" style="text-align: right;">${gvnConfList.rate}</td>
 
@@ -327,7 +327,7 @@ table, th, td {
 </script>
 
 <script type="text/javascript">
-function calcGvn(baseRate,itemId,sgstPer,cgstPer,billDetailNo){
+function calcGvn(baseRate,itemId,sgstPer,cgstPer,cessPer,billDetailNo){
 
 	$("#"+billDetailNo).prop("checked", false);
 		document.getElementById("row"+billDetailNo).style.backgroundColor="white";
@@ -354,13 +354,13 @@ function calcGvn(baseRate,itemId,sgstPer,cgstPer,billDetailNo){
 
 	 var taxableAmt=baseRate*gvnQty;
 		
-		var totalTax=(taxableAmt*(sgstPer+cgstPer))/100;
+		var totalTax=(taxableAmt*(sgstPer+cgstPer+cessPer))/100;
 		
 		var grandTotal=taxableAmt+totalTax;
 		
 		$("#gvn_amt"+billDetailNo).html(grandTotal.toFixed(2));
 		
-		var taxPer=parseFloat(sgstPer)+parseFloat(cgstPer);
+		var taxPer=parseFloat(sgstPer)+parseFloat(cgstPer)+parseFloat(cessPer);
 		$("#tax_per"+billDetailNo).html(taxPer.toFixed(2));
 
 var x=$("#gvn_remark"+billDetailNo).val();
