@@ -71,29 +71,7 @@ jQuery(document).ready(function(){
     <input type="submit" value="Upload">
 </form> -->
 
-	<%
-						if (session.getAttribute("changePassword") != null) {
-					%>
-					
-						<p style="color: black;">Password Change Successfully</p>
-					
-					<%
-						}
 
-						session.removeAttribute("changePassword");
-					%>
-
-					<%
-						if (session.getAttribute("changePasswordFail") != null) {
-					%>
-				
-						<p style="color: black;">Password Not Changed</p>
-					
-					<%
-						}
-
-						session.removeAttribute("changePasswordFail");
-					%>
 <c:if test="${not empty message}">
    <!-- here would be a message with a result of processing -->
     <div class="messages messagesErr"> ${message} </div>
@@ -101,27 +79,21 @@ jQuery(document).ready(function(){
 </c:if>
 
 
-	<form id="form-login" action="loginProcess" method="post">
+	<!-- <form id="form-login" action="loginProcess" method="post"> -->
 <div class="loginInner">
-	<h2>Login to your <span>Account</span></h2>
+	<h2><span>Forget Password</span></h2>
 	<div class="loginBox">
 		<div class="loginUser"><img src="${pageContext.request.contextPath}/resources/images/loginuser.png" align="img"></div>
-			<form action="login" class="form-horizontal"
+			<form action="getFranchiseeInfo" class="form-horizontal"
 										id="validation-form" method="post">
 		
 		
-		<div class="loginfildset"><input class="texboxlogin" placeholder="Username" name="username" type="text"  data-rule-required="true"></div>
-		<div class="loginfildset"><input class="texboxlogin" placeholder="Password" name="password" type="password"  required></div>
+		<div class="loginfildset"><input class="texboxlogin" placeholder="Franchisee Code" name="username" type="text"  data-rule-required="true"></div>
 		
-		
-		
-		<div class="loginfildset"><input name="" class="buttonlogin" value="LOGIN" type="submit"></div>
+		<div class="loginfildset"><input name="" class="buttonlogin" value="Send OTP" type="submit"></div>
 		<div class="loginfildset">
-			<div class="logintexboxleft"><a href="${pageContext.request.contextPath}/forgetPwd"><i class="fa fa-lock"></i> Forgot your Password</a></div>
-			<div class="checkbox">
-			<input id="check1" type="checkbox" name="check" value="check1">
-			<label for="check1">Remember me</label>
-		</div>
+			<div class="logintexboxleft"><a href="${pageContext.request.contextPath}/"><i class="fa fa-lock"></i> Back To Login Page</a></div>
+			
 		</div>
 </form>	
 	</div>
