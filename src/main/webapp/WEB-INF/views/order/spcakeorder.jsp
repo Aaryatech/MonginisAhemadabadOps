@@ -560,7 +560,7 @@ select {
 	<div class="colOuter">
 	<div class="col1"><div class="col1title">DOB</div></div>
 		
-		<div class="col2full"><input id="datepicker4" class="texboxitemcode texboxcal" autocomplete="off" placeholder="<%=fDate %>" name="datepicker4" type="text"required></div>
+		<div class="col2full"><input id="datepicker4" class="texboxitemcode texboxcal" autocomplete="off" placeholder="<%=fDate %>" name="datepicker4" id="datepicker4" type="text"required></div>
       </div>
 	<div class="colOuter">
 			<div class="col1"><div class="col1title">Mobile</div></div>
@@ -584,7 +584,7 @@ select {
 	<div class="colOuter" >
 			<div class="col1"><div class="col1title" id="cktype">GST NO.</div></div>
 	
-			<div class="col2full"><input class="texboxitemcode"  placeholder="GST NO." name="gstin" type="text" id="gstin" required autocomplete="off"></div>
+			<div class="col2full"><input class="texboxitemcode"  placeholder="GST NO." name="gstin" type="text" id="gstin" maxlength="35" required autocomplete="off"></div>
 	
 	</div>
 <!-- 	<div class="colOuter">
@@ -686,7 +686,7 @@ select {
 				
 				<li class="advance">
 					<div class="priceLeft">Advance</div>
-					<div class="priceRight"><input name="adv" id="adv" value="00" class="tableInput" type="text" onkeyup="advanceFun()"></div>
+					<div class="priceRight"><input name="adv" id="adv" value="0" class="tableInput" type="text" onkeyup="advanceFun()"></div>
 					
 				</li>
 			</ul>
@@ -745,6 +745,34 @@ select {
 </div>
 
 <script>
+$('#sp_ex_charges').on('input', function() {
+	  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#sp_disc').on('input', function() {
+	  this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#sp_disc_rs').on('input', function() {
+	  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#adv').on('input', function() {
+	  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#datepicker').on('input', function() {
+	  this.value = this.value.replace(/[^0-9-]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#datepicker4').on('input', function() {
+	  this.value = this.value.replace(/[^0-9-]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#sp_cust_mobile_no').on('input', function() {
+	  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+	});
+
 $(function() {
     $('#sp_code').change(function(){
         $('.col').hide();
@@ -1013,6 +1041,16 @@ $(document).ready(function() {
 <script>
 
 function onChangeDiscRs() {
+	var disc_amt=parseFloat($("#sp_disc_rs").val());
+	var gtotal =parseFloat($("#total_amt").val());
+	
+if(disc_amt>0 && !isNaN(disc_amt)){
+if(gtotal<disc_amt){
+	document.getElementById("sp_disc").value=0;
+	chChange();
+		alert("Please enter valid discount amount.")
+		document.getElementById("sp_disc_rs").value=0;
+	}else{ 
 	var wt = $('#spwt').find(":selected").text();
 	var flavourAdonRate =$("#dbAdonRate").val();
 	var tax3 = parseFloat($("#tax3").val());
@@ -1021,7 +1059,6 @@ function onChangeDiscRs() {
 	document.getElementById("adv").value=0;
 	var sp_ex_charges= parseFloat($("#sp_ex_charges").val());
 	//alert("sp_ex_charges"+sp_ex_charges);
-	var disc_amt=parseFloat($("#sp_disc_rs").val());
 	//alert("sp_disc"+sp_disc);
 	var dbRate = $("#dbPrice").val();//dbRate
 	//alert("tax1:"+tax1+"tax2"+tax2+"tax3"+tax3);
@@ -1105,22 +1142,24 @@ function onChangeDiscRs() {
 	document.getElementById("t1amt").setAttribute('value',tax1Amt.toFixed(2));
 	
 	document.getElementById("t2amt").setAttribute('value',tax2Amt.toFixed(2));
-	
+	}
 }
-
+}
 
 </script>
 
 <script>
 
 function chChange() {
+	var sp_ex_charges= parseFloat($("#sp_ex_charges").val());
+	if(sp_ex_charges>=0 && !isNaN(sp_ex_charges)){
 	var wt = $('#spwt').find(":selected").text();
 	var flavourAdonRate =$("#dbAdonRate").val();
 	var tax3 = parseFloat($("#tax3").val());
 	var tax1 = parseFloat($("#tax1").val());
 	var tax2 = parseFloat($("#tax2").val());
 	document.getElementById("adv").value=0;
-	var sp_ex_charges= parseFloat($("#sp_ex_charges").val());
+	
 	//alert("sp_ex_charges"+sp_ex_charges);
 	var sp_disc=parseFloat($("#sp_disc").val());
 	//alert("sp_disc"+sp_disc);
@@ -1213,7 +1252,7 @@ function chChange() {
 	document.getElementById("t2amt").setAttribute('value',tax2Amt.toFixed(2));
 	
 }
-
+}
 
 </script>
 
@@ -1221,9 +1260,16 @@ function chChange() {
 <!------------------------------------REMAINING AMOUNT ONKEYUP FUNCTION------------------------------>	
 <script type="text/javascript">
 function advanceFun() {
-	var advance=$("#adv").val();
-	var rmamt =$("#total_amt").val();
-	$('#rmAmt').html(rmamt-advance);document.getElementById("rm_amount").setAttribute('value',rmamt-advance);
+	var advance=parseFloat($("#adv").val());
+	var rmamt =parseFloat($("#total_amt").val());
+	var rTot = 0;
+	if(rmamt<advance){
+		document.getElementById("adv").value=0;
+		advanceFun();
+	}else{					
+		$('#rmAmt').html(rmamt);
+		document.getElementById("rm_amount").setAttribute('value',rmamt);		
+	}
 }
 </script>
 <!------------------------------------------------END------------------------------------------------>

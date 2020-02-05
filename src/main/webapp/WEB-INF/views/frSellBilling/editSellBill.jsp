@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <jsp:include page="/WEB-INF/views/include/header.jsp" />
 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -184,8 +185,11 @@ jQuery(document).ready(function(){
 														value="${sellBill.sgstPer+sellBill.cgstPer}" /></td>
 												<td align="left" id="totalTax${sellBill.sellBillDetailNo}"><c:out value="${sellBill.totalTax}" /></td>
 												<td align="left" ><c:out value="${sellBill.mrp}" /></td>
-												<td align="left" id="grandTotal${sellBill.sellBillDetailNo}"><c:out value="${sellBill.grandTotal}" /></td>
-
+												<td align="left" id="grandTotal${sellBill.sellBillDetailNo}">
+													<fmt:formatNumber type="number" minFractionDigits="0"
+														maxFractionDigits="0" value="${sellBill.grandTotal}" />
+												</td>
+												<%-- <c:out value="${sellBill.grandTotal}" /> --%>
 												<c:set var="taxableSum"
 													value="${sellBill.taxableAmt +taxableSum}"></c:set>
 												<c:set var="taxSum" value="${sellBill.totalTax +taxSum}"></c:set>
@@ -226,20 +230,20 @@ jQuery(document).ready(function(){
 					</div>
 				</div>
 					<div class="row">
-					<div class="col-md-2"><b>PrevPaid Amt:</b>&nbsp;${sellBillHeader.paidAmt}
+					<div class="col-md-3"><b>Previous Paid Amt : </b>&nbsp;${sellBillHeader.paidAmt}
 				</div>
-				<div class="col-md-1"><b>Paid Amt</b>
+				<div class="col-md-2"><b>Paid Amt : </b>
 				</div>
 				<div class="col-md-2">
 					<input type="number" name="paidAmt" class="form-control"  id="paidAmt" value="${sellBillHeader.grandTotal}" min="0" onchange="onPaidAmt(${sellBillHeader.paidAmt},${sellBillHeader.remainingAmt},this.value)"/>
 				</div>
-				<div class="col-md-1"><b>Remaining Amt</b>
+				<div class="col-md-2"><b>Remaining Amt : </b>
 				</div>
 				<div class="col-md-1" id="remainingAmt">
 				       0.00
 				</div>
 				</div>
-				 <div align="center">
+				 <div align="center" style="margin-top: 2%;">
 				<input	name="submit" class="buttonsaveorder" value="Update" type="submit">
 				</div> 
 </form>
@@ -281,7 +285,7 @@ function onQtyChange(sellBillDetailNo,discountPer,mrpBaseRate,sgstPer,cgstPer,qt
 	
 	document.getElementById("taxableAmt"+sellBillDetailNo).innerHTML=taxableAmt.toFixed(2);
 	document.getElementById("totalTax"+sellBillDetailNo).innerHTML=totalTax.toFixed(2);
-	document.getElementById("grandTotal"+sellBillDetailNo).innerHTML=grandTotal.toFixed(2);
+	document.getElementById("grandTotal"+sellBillDetailNo).innerHTML=Math.round(grandTotal);
 	
 }
 </script>

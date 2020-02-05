@@ -504,7 +504,7 @@ input:checked+.slider:before {
 											<th>Bill No.</th>
 											<th>Bill Date</th>
 											<th style="width: 130px;">Taxable Amount</th>
-											<th>Payable amount</th>
+											<th>Payable Amount</th>
 											<th>Amount</th>
 											<th>Action</th>
 										</tr>

@@ -61,7 +61,7 @@
 
 
 								<div class="form-group col-md-9">
-									--> <label class=" col-md-2 control-label menu_label">Select
+								 <label class=" col-md-2 control-label menu_label">Select
 										Category</label>
 									<div class=" col-md-3 controls menu_select">
 
