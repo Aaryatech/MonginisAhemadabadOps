@@ -273,7 +273,9 @@ public class HomeController {
 
 		if (loginResponse.getLoginInfo().isError()) {
 
-			model.addObject("message", loginResponse.getLoginInfo().getMessage());
+			//model.addObject("message", loginResponse.getLoginInfo().getMessage());
+			session.setAttribute("userLog", "Login failed : Invalid username or password");
+		
 			return "redirect:/";
 
 		} else {
