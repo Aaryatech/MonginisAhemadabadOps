@@ -7,6 +7,10 @@
 .form-control {
     text-align: left !important;
 }
+
+table, th, td {
+	border: 1px solid #9da88d;
+}
 </style>
 </head>
 <body>
@@ -76,9 +80,16 @@
 							<div class="col1title" align="left">Item Code*: </div>
 						</div>
 						<div class="col-md-3">
+						<c:choose>
+						<c:when test="${isEdit==1}">
+							<input id="itemCode" class="form-control" readonly="readonly"
+								placeholder="Item Code" name="itemCode" autocomplete="off"  type="text" value="${itemSup.itemCode}" required>
+							</c:when>
+							<c:otherwise>
 							<input id="itemCode" class="form-control"
 								placeholder="Item Code" name="itemCode" autocomplete="off"  type="text" value="${code}" required>
-								
+							</c:otherwise>
+							</c:choose>
 						</div>
 						<div class="col-md-1">
 							 
@@ -242,16 +253,16 @@
 
 							<thead>
 								<tr class="bgpink">
-									<th class="col-sm-1">Sr No</th>
-									<th class="col-md-1">Item Code</th> 
-									<th class="col-md-1">Name</th>
-									<th class="col-md-1">Purchase Rate</th>
-									<th class="col-md-1">Sale Rate</th>
-									<th class="col-md-1">SGST Per</th>
-									<th class="col-md-1">CGST Per</th>
-									<th class="col-md-1">IGST Per</th>
-									<th class="col-md-1">Is Active</th>
-									<th class="col-md-1">Action</th>
+									<th class="col-sm-1" style="text-align: center;">Sr No</th>
+									<th class="col-md-1" style="text-align: center;">Item Code</th> 
+									<th class="col-md-1" style="text-align: center;">Name</th>
+									<th class="col-md-1" style="text-align: center;">Purchase Rate</th>
+									<th class="col-md-1" style="text-align: center;">Sale Rate</th>
+									<th class="col-md-1" style="text-align: center;">SGST Per</th>
+									<th class="col-md-1" style="text-align: center;">CGST Per</th>
+									<th class="col-md-1" style="text-align: center;">IGST Per</th>
+									<th class="col-md-1" style="text-align: center;">Is Active</th>
+									<th class="col-md-1" style="text-align: center;">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -268,10 +279,10 @@
 									</c:choose>
 									</c:if>
 									<tr style="${color}">
-										 <td class="col-sm-1"><c:out value="${count.index+1}" /></td>
+										 <td class="col-sm-1" style="text-align: center;"><c:out value="${count.index+1}" /></td>
 										<td class="col-md-1"><c:out
 												value="${itemList.itemId}" /></td>
-										<td class="col-md-2"><c:out
+										<td class="col-md-2" style="text-align: center;"><c:out
 												value="${itemList.itemName}" /></td>
 									
 										<td class="col-md-1"><c:out
@@ -284,7 +295,7 @@
 												value="${itemList.itemTax2}" /></td>
 												<td class="col-md-1"><c:out
 												value="${itemList.itemTax3}" /></td>
-										<td class="col-md-1">
+										<td class="col-md-1" style="text-align: center;">
 										<c:choose>
 													<c:when test="${itemList.itemIsUsed==1}">
  														Yes						
@@ -294,7 +305,7 @@
 												    </c:otherwise>
 										</c:choose>
 												</td>
-										<td class="col-md-1"><div >
+										<td class="col-md-1" style="text-align: center;"><div >
 					<a href="${pageContext.request.contextPath}/updateOtherItem/${itemList.id}"   >
 						<abbr title='Edit'><i  class='fa fa-edit'></i></abbr></a>
 												&nbsp;&nbsp;

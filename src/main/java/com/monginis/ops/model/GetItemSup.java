@@ -42,6 +42,7 @@ public class GetItemSup{
 	
 	
 	private String itemCode;
+	private float itemCess;
 	
 	
 	public int getCutSection() {
@@ -204,6 +205,14 @@ public class GetItemSup{
 		this.itemCode = itemCode;
 	}
 
+	public float getItemCess() {
+		return itemCess;
+	}
+
+	public void setItemCess(float itemCess) {
+		this.itemCess = itemCess;
+	}
+
 	@Override
 	public String toString() {
 		return "GetItemSup [error=" + error + ", message=" + message + ", id=" + id + ", itemId=" + itemId
@@ -211,7 +220,10 @@ public class GetItemSup{
 				+ ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight + ", inputPerQty=" + inputPerQty
 				+ ", isGateSale=" + isGateSale + ", trayType=" + trayType + ", noOfItemPerTray=" + noOfItemPerTray
 				+ ", isGateSaleDisc=" + isGateSaleDisc + ", isAllowBday=" + isAllowBday + ", cutSection=" + cutSection
-				+ ", delStatus=" + delStatus + ", shortName=" + shortName + ", itemCode=" + itemCode + "]";
+				+ ", delStatus=" + delStatus + ", shortName=" + shortName + ", itemCode=" + itemCode + ", itemCess="
+				+ itemCess + "]";
 	}
+
+	
 
 }
