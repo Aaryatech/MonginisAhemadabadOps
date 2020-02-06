@@ -142,7 +142,7 @@ a:hover {
 					<div class="ordermto20px">
 						<div class="order-price">Total Amount :</div>
 						<div class="order-amount">
-							INR :
+							
 							<fmt:formatNumber type="number" minFractionDigits="2"
 								maxFractionDigits="2" value="${grandTotal}" />
 						</div>
@@ -282,11 +282,18 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='1'}">
 																<tr>
 
-																	<td class="col-md-2">${items.itemName}<a
+																	<td class="col-md-2">
+																	<c:choose>
+																	<c:when test="${items.itemImage!=''}">
+																	<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1"><i
-																			class="fa fa-file-image-o"
-																			style="font-size: 16px; color: green"></i></a></td>
+																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;"   >${items.itemName}</a>
+																	</c:when>	
+																	<c:otherwise>
+																	${items.itemName}
+																	</c:otherwise>
+																	</c:choose>
+																		</td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 
@@ -343,11 +350,16 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='2'}">
 																<tr>
 
-																	<td class="col-md-1">${items.itemName}<a
+																	<td class="col-md-1"><c:choose>
+																	<c:when test="${items.itemImage!=''}">
+																	<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1"><i
-																			class="fa fa-file-image-o"
-																			style="font-size: 16px; color: green"></i></a></td>
+																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;">${items.itemName}</a>
+																	</c:when>	
+																	<c:otherwise>
+																	${items.itemName}
+																	</c:otherwise>
+																	</c:choose></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}'
@@ -398,11 +410,16 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='3'}">
 																<tr>
 
-																	<td class="col-md-1">${items.itemName}<a
+																	<td class="col-md-1"><c:choose>
+																	<c:when test="${items.itemImage!=''}">
+																	<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1"><i
-																			class="fa fa-file-image-o"
-																			style="font-size: 16px; color: green"></i></a></td>
+																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;">${items.itemName}</a>
+																	</c:when>	
+																	<c:otherwise>
+																	${items.itemName}
+																	</c:otherwise>
+																	</c:choose></td>
 																	<td class="col-md-1"><c:out
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1"><input name='${items.id}'

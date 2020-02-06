@@ -368,17 +368,17 @@ label:before{
 										<div class="control-label">
 
 											<div>
-												<div id="table-scroll">
-												<div class="table-wrap table-wrap-custbill">
+													<div class="shInnerwidth">
+												<div >
 													<table width="100%" border="0" cellspacing="0"
-														cellpadding="0" class="responsive-table">
+														cellpadding="0" class="table">
 														
 														
 														
 														<tr>
 															<td align="center" valign="middle" style="padding: 0px;">
 																<table width="100%" border="0" cellspacing="0"
-																	cellpadding="0" class="table responsive-table signle_table">
+																	cellpadding="0" >
 																	<thead>
 																	<tr class="bgpink">
 																		<td>Barcode</td>
@@ -394,7 +394,7 @@ label:before{
 																			id="barcode1" name="barcode1"
 																			placeholder="Enter Barcode" onchange="selectItem(1)"
 																			onkeypress="onBarcode(event,1)"></td>
-																		<td><select class="chosen-select"  style="max-width:150px;"
+																		<td><select class="chosen-select" 
 																			data-live-search="true" title="Please Select Item"
 																			name="itemName1" id="itemName1"
 																			data-rule-required="true">

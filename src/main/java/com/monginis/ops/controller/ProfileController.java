@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,34 +42,45 @@ public class ProfileController {
 
 	@RequestMapping(value = "/showeditprofile")
 	public ModelAndView displaySavouries(HttpServletRequest request,HttpServletResponse response) {
+	
 		ModelAndView model = new ModelAndView("profile");
+        int pestControlFlag=0;int aggrementFlag=0;int fbaFlag=0;
+		try {
+			HttpSession ses = request.getSession();
+			Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
+			String frImageName = (String) ses.getAttribute("frImage");
+			System.out.println("Franchisee Rsponse" + frDetails);
 
-	try {
-	System.out.println("I am here");
-	
-	HttpSession ses = request.getSession();
-	Franchisee frDetails = (Franchisee) ses.getAttribute("frDetails");
-	String frImageName = (String)ses.getAttribute("frImage");
-	System.out.println("Franchisee Rsponse"+frDetails);
-	
-	MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-	map.add("frId",frDetails.getFrId());
-	RestTemplate rest = new RestTemplate();
+			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+			map.add("frId", frDetails.getFrId());
+			RestTemplate rest = new RestTemplate();
 
-	FranchiseSup frSup= rest.postForObject(Constant.URL + "/getFrSupByFrId",
-			map, FranchiseSup.class);
-	System.out.println("Franchisee frSup Rsponse"+frSup.toString());
+			FranchiseSup frSup = rest.postForObject(Constant.URL + "/getFrSupByFrId", map, FranchiseSup.class);
 
-	model.addObject("frSup", frSup);
-	model.addObject("URL", Constant.FR_IMAGE_URL);
-	model.addObject("frImageName", frImageName);
-	}
-	catch (Exception e) {
-		e.printStackTrace();
-	}
-	return model;
-	
-	
+			Date currentDate = new Date();
+			Date pestControlDate = new SimpleDateFormat("dd-MM-yyyy").parse(frSup.getPestControlDate());
+			Date agrementDate = new SimpleDateFormat("dd-MM-yyyy").parse(frDetails.getFrAgreementDate());
+			Date fbaLicenseDate = new SimpleDateFormat("dd-MM-yyyy").parse(frDetails.getFbaLicenseDate());
+			if (pestControlDate.before(currentDate)) {
+				pestControlFlag=1;
+			}
+			if (agrementDate.before(currentDate)) {
+				aggrementFlag=1;
+			}
+			if (fbaLicenseDate.before(currentDate)) {
+				fbaFlag=1;
+			}
+			model.addObject("pestControlFlag", pestControlFlag);
+			model.addObject("aggrementFlag", aggrementFlag);
+			model.addObject("fbaFlag", fbaFlag);
+			model.addObject("frSup", frSup);
+			model.addObject("URL", Constant.FR_IMAGE_URL);
+			model.addObject("frImageName", frImageName);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return model;
+
 }
 	@RequestMapping(value = "/updateprofile", method = RequestMethod.POST)
 	public String editProfile(HttpServletRequest request,

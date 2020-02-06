@@ -117,7 +117,7 @@ jQuery(document).ready(function(){
 			<input id="todatepicker" class="texboxitemcode texboxcal"  autocomplete="off" placeholder="DD-MM-YYYY" name="toDate" type="text" value="<%=tDate%>">
 		</div>
 		<div class="col-md-2">
-		    <button class="btn search_btn pull-left" onclick="searchSellBill()">Search </button>
+		    <button class="buttonsaveorder" onclick="searchSellBill()">Search </button>
 		</div>
 		
     </div>

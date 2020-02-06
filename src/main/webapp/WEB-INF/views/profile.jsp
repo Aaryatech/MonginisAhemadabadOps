@@ -2,6 +2,8 @@
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
   <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
     
 <%-- <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -151,7 +153,7 @@
 									</div>
 									<img
 										src="${URL}${frImageName}"
-										alt="img" id="img">
+										alt="img" id="img" srcset="${pageContext.request.contextPath}/resources/images/user.png">
 								</div>
 							</div>
 						</div>
@@ -204,7 +206,11 @@
 						</div>
 						<div class="profile">
 							<div class="profilefildset">FDA License Date</div>
-							<div class="profileinput mardis">${frDetails.fbaLicenseDate}</div>
+							<c:set var="style" value=""/>
+							<c:if test="${fbaFlag==1}">
+							<c:set var="style" value="color:red;"/>
+							</c:if>
+							<div class="profileinput mardis" style="${style}">${frDetails.fbaLicenseDate}</div>
 							
 						</div>
 						
@@ -212,7 +218,7 @@
 							<div class="profilefildset">Edit Admin Password</div>
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="Enter new Password"
-									name="fr_password" type="password" onChange="checkPasswordMatch();"    value="${frDetails.frPassword}" id="txtNewPassword" disabled="disabled"
+									name="fr_password" type="password" oninput="checkPasswordMatch();"    value="${frDetails.frPassword}" id="txtNewPassword" disabled="disabled"
 									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;">
 							</div>
 						</div>  
@@ -253,8 +259,8 @@
 						<div class="profile">
 							<div class="profilefildset">Mobile No.</div>
 							<div class="profileinput">
-								<input class="texboxitemcode" placeholder="Mobile No."
-									name="fr_mobile" type="text" value="${frDetails.frMob}">
+								<input class="texboxitemcode" placeholder="Mobile No." maxlength="10"
+									name="fr_mobile"  id="fr_mobile" type="text" value="${frDetails.frMob}">
 							</div>
 						</div>
 
@@ -297,12 +303,22 @@
 						</div>
                         <div class="profile">
 							<div class="profilefildset">Agreement Date</div>
-							<div class="profileinput mardis">${frDetails.frAgreementDate}</div>
+							<c:set var="style" value=""/>
+							<c:if test="${aggrementFlag==1}">
+							<c:set var="style" value="color:red;"/>
+							</c:if>
+							<div class="profileinput mardis" style="${style}">${frDetails.frAgreementDate}</div>
 							
 						</div>
 						<div class="profile">
 							<div class="profilefildset">Pest Control Date</div>
-							<div class="profileinput mardis">${frSup.pestControlDate}</div>
+							<c:set var="style" value=""/>
+							<c:if test="${pestControlFlag==1}">
+							<c:set var="style" value="color:red;"/>
+							</c:if>
+							<div class="profileinput mardis" style="${style}">
+							${frSup.pestControlDate}
+							</div>
 							
 						</div>
 						<!--  <div class="profile">
@@ -316,7 +332,7 @@
 							<div class="profilefildset">Confirm Admin Password</div>
 							<div class="col2">
 								<input class="texboxitemcode" placeholder="Confirm new Password"
-									name="fr_password" type="password"  value="${frDetails.frPassword}" id="txtConfirmPassword" onChange="checkPasswordMatch();" disabled="disabled"
+									name="fr_password" type="password"  value="${frDetails.frPassword}" id="txtConfirmPassword" oninput="checkPasswordMatch();" disabled="disabled"
 									style="font-size: 16pt; height: 33px; width:130px; background-color:LightGrey;">
 								
 							</div>
@@ -357,16 +373,16 @@
 						 <div class="form-group">
 						
 								<input name="" class="btn btn-info" value="Submit"
-									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthority()">
+									type="button" id="btnupdate_profile1"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthority()">
 							
 						</div>
 						
                        </div> 
-                    <div id="updateDiv" class="colOuter"style="display: none;">
-						<div class="col3full">
+                    <div id="updateDiv" style="display: none;">
+					
 								<input name="updateAdminPwd" class="btn btn-primary" value="Update Password" onclick="updateAdminPassword()"
-									type="button" id="btnupdate_profile" >
-							</div>
+									type="button" id="btnupdate1" >
+							
 						</div>
 					
 					
@@ -382,7 +398,7 @@
 						 <div class="form-group">
 						
 								<input name="" class="btn btn-info" value="Submit"
-									type="button" id="btnupdate_profile"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthForPassChange()">
+									type="button" id="btnupdate_profile2"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthForPassChange()">
 							
 						</div>
 						
@@ -390,7 +406,7 @@
                     <div id="updateDiv1" class="colOuter"style="display: none;">
 						<div class="col3full">
 								<input name="updateUserPwd" class="btn btn-primary" value="Update Password"
-									type="button" id="btnupdate_profile" onclick="return updateUserPasswords()">
+									type="button" id="btnupdate2" onclick="return updateUserPasswords()">
 							</div>
 						</div>
 
@@ -438,18 +454,22 @@ function checkPasswordMatch() {
     	{
     	 document.getElementById("divCheckPasswordMatch").style.color = "#ff0000";
         $("#divCheckPasswordMatch").html("Passwords do not match!");
+		   document.getElementById('updateDiv').style.display = "none";
+
         document.getElementById("btnupdate_profile").disabled = true;
     	}
     else
     	{
     	document.getElementById("divCheckPasswordMatch").style.color = "green";
         $("#divCheckPasswordMatch").html("Passwords match.");
+		   document.getElementById('updateDiv').style.display = "block";
+
         document.getElementById("btnupdate_profile").disabled = false;
     	}
 }
 
 $(document).ready(function () {
-   $("#txtConfirmPassword").keyup(checkPasswordMatch);
+   $("#txtConfirmPassword").keydown(checkPasswordMatch);
 });
 
 </script>
@@ -457,14 +477,21 @@ $(document).ready(function () {
 function showDiv() {
 	   document.getElementById('adminDiv').style.display = "block";
 	   document.getElementById('adminDiv1').style.display = "none";
-
 	   document.getElementById('admin_password').value = "";
+	   document.getElementById('admin_password').focus();
+	   document.getElementById("btnupdate_profile").disabled = true;
+	   document.getElementById('changePwd1').style.display = "block";
+	   document.getElementById('changePwd2').style.display = "none";
 	}
 function showDiv1() {
 	   document.getElementById('adminDiv1').style.display = "block";
 	   document.getElementById('adminDiv').style.display = "none";
-
 	   document.getElementById('admin_password1').value = "";
+	   document.getElementById('admin_password1').focus();
+	   document.getElementById("btnupdate_profile").disabled = true;
+	   document.getElementById('changePwd2').style.display = "block";
+	   document.getElementById('changePwd1').style.display = "none";
+
 
 	}
 </script>
@@ -491,9 +518,12 @@ function checkAuthority() {
 					   document.getElementById('adminDiv').style.display = "none";
 					   document.getElementById('updateDiv').style.display = "block";
 
+
 					}
 				else
 				{
+					document.getElementById("admin_password").value="";
+					document.getElementById("admin_password").focus();
 				 alert("Invalid Credentials");
 
 				}
@@ -528,6 +558,8 @@ function checkAuthForPassChange() {
 					}
 				else
 					{
+					document.getElementById("admin_password1").value="";
+					document.getElementById("admin_password1").focus();
 					 alert("Invalid Credentials");
 
 					}
@@ -553,7 +585,8 @@ function updateUserPasswords() {
 	}, function(data) {
 		if(data.error==false)
 		{
-			
+			   document.getElementById("btnupdate_profile").disabled = false;
+
 			document.getElementById("changePwd2").removeAttribute('disabled');
 		//	document.getElementById('user1_password').disabled = true;
 			document.getElementById('user2_password').disabled = true;
@@ -563,7 +596,8 @@ function updateUserPasswords() {
 			  $('#user2_password').css('background-color' , 'LightGrey'); // change the background color
 			  $('#user3_password').css('background-color' , 'LightGrey');
 			   document.getElementById('updateDiv1').style.display = "none";
-
+			   document.getElementById('changePwd1').style.display = "block";
+			   document.getElementById('changePwd2').style.display = "block";
 			
 				 alert("User Passwords Updated Successfully");
 
@@ -591,11 +625,13 @@ function updateAdminPassword() {
 			document.getElementById('changePwd1').removeAttribute('disabled');
 			document.getElementById('txtNewPassword').disabled = true;
 			document.getElementById('txtConfirmPassword').disabled = true;
+			document.getElementById("btnupdate_profile").disabled = false;
 
 			  $('#txtNewPassword').css('background-color' , 'LightGrey'); // change the background color
 			  $('#txtConfirmPassword').css('background-color' , 'LightGrey'); // 
 			   document.getElementById('updateDiv').style.display = "none";
-
+			   document.getElementById('changePwd1').style.display = "block";
+			   document.getElementById('changePwd2').style.display = "block";
 			 alert("Admin Password Updated Successfully");
 			
 			}
@@ -605,6 +641,10 @@ function updateAdminPassword() {
 }
 </script>
 <script>
+$('#fr_mobile').on('input', function() {
+	 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+	});
+
  document.getElementById("fr_image").onchange = function () {
     var reader = new FileReader();
 

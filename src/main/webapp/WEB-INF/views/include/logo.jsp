@@ -47,7 +47,7 @@
                
                 <li><a href="#"><div class="usericon">${frDetails.frName} </div>
                  <div class="userimg">
-                <img src="${frDetails.frImage}"  height="70" width="70" this.src='${pageContext.request.contextPath}/resources/images/user.png';">
+                <img src="${frDetails.frImage}"  height="70" width="70" srcset="${pageContext.request.contextPath}/resources/images/user.png">
                 	</div> </a>
                 	<ul class="dropdown">
                        
