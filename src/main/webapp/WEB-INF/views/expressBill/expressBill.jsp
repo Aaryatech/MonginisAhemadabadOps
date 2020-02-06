@@ -342,10 +342,10 @@ input:checked+.slider:before {
 									<td align="center" valign="middle" style="padding: 0px;">
 										<table width="100%" border="0" cellspacing="0" cellpadding="0">
 											<tr class="bgpink">
-												<td>BARCODE</td>
-												<td>QTY</td>
-												<td>ITEM NAME</td>
-												<td>RATE</td>
+												<td>Barcode</td>
+												<td>Qty</td>
+												<td>Item Name</td>
+												<td>Rate</td>
 											</tr>
 											<tr>
 												<td><input type="text" class="form-control"
@@ -414,15 +414,15 @@ input:checked+.slider:before {
 							<table class="table table-bordered" width="100%" border="0"
 								cellspacing="0" cellpadding="0 " id="table_grid1">
 								<tr class="bgpink">
-									<th>PRINT</th>
+									<th>Print</th>
 									<th>Sr.</th>
-									<th>DETAIL ID</th>
-									<th>BARCODE</th>
-									<th>ITEM NAME</th>
-									<th style="width: 130px;">QTY</th>
-									<th>RATE</th>
-									<th>AMT</th>
-									<th>ACTION</th>
+									<th>Detail Id</th>
+									<th>Barcode</th>
+									<th>Item Name</th>
+									<th style="width: 130px;">Qty</th>
+									<th>Rate</th>
+									<th>Amt</th>
+									<th>Action</th>
 								</tr>
 
 								<c:set var="total" value="${0}" />
@@ -586,7 +586,7 @@ input:checked+.slider:before {
 											<table width="100%" border="0" cellspacing="0"
 												cellpadding="0">
 												<tr class="bgpink">
-													<td>Baarcode</td>
+													<td>Barcode</td>
 													<td>Item Name</td>
 													<td>Qty</td>
 													<td>Rate</td>
@@ -697,6 +697,10 @@ input:checked+.slider:before {
 	<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 	<!--easyTabs-->
 	<script type="text/javascript">
+	$('#rateTdVal1').on('input', function() {
+		  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+		});
+	
 function start(){
 	$("#loadmsg").show();
     //$("#div1").show();

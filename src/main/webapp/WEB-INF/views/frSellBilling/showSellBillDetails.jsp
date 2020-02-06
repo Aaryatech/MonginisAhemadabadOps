@@ -104,7 +104,8 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">View Bill Details</h2>
+						<!-- <h2 class="pageTitle">View Bill Details</h2> -->
+						<h2 class="pageTitle">Purchase Bill Details</h2>
 					</div>
 				</div>
 

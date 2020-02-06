@@ -191,11 +191,11 @@ table, th, td {
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
 
-											<th class="col-md-1" style="text-align: center;">SELECT</th>
+											<th class="col-md-1" style="text-align: center;">Select</th>
 											<th class="col-md-3" style="text-align: center;">Item Name</th>
 											<th class="col-md-2" style="text-align: center;">Purchase</th>
 
-											<th class="col-md-1" style="text-align: center;">Gvn Qty</th>
+											<th class="col-md-1" style="text-align: center;">GVN Qty</th>
 											<th class="col-md-1" style="text-align: center;">Rate</th>
 											<th class="col-md-2" style="text-align: center;">Tax %</th>
 											<th class="col-md-2" style="text-align: center;">Amount</th>

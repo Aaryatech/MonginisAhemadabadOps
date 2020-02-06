@@ -107,7 +107,7 @@ table, th, td {
 												No</th>
 											<th class="col-md-2" style="text-align: center;">Name</th>
 											<th class="col-md-2" style="text-align: center;">Type</th>
-											<th class="col-md-1" style="text-align: center;">QTY</th>
+											<th class="col-md-1" style="text-align: center;">Qty</th>
 											<th class="col-md-1" style="text-align: center;">Rate</th>
 											<!-- 	<th class="col-md-1">Grn Rate</th> -->
 											<th class="col-md-1" style="text-align: center;">Edit

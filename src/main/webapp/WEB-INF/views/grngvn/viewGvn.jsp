@@ -108,7 +108,7 @@ table, th, td {
 								<table id="table_grid" class="responsive-table">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-3" style="text-align: center;">GvnSr No</th>
+											<th class="col-md-3" style="text-align: center;">GVN Sr No</th>
 											<th  class="col-md-2" style="text-align: center;">Date</th>
 											<th class="col-md-2" style="text-align: center;">Taxable Amt</th>
 											<th class="col-md-2" style="text-align: center;">Tax Amt</th>

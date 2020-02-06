@@ -69,7 +69,7 @@ table, th, td {
 
 
 						<div class="col-sm-2">
-							<label>OR Grn Sr No</label>
+							<label>OR GRN Sr No</label>
 							<!-- <input type="checkbox" class="form-control" id="headerCheckBox"
 						 name="headerCheckBox" id="headerCheckBox"
 							/> -->
@@ -120,7 +120,7 @@ table, th, td {
 								<table id="table_grid" class="responsive-table">  <!-- class="main-table"  -->
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-3" style="text-align: center;">GrnSr No</th>
+											<th class="col-md-3" style="text-align: center;">GRN Sr No</th>
 											<th  class="col-md-2" style="text-align: center;">Date</th>
 											<th class="col-md-2" style="text-align: center;">Taxable Amt</th>
 											<th class="col-md-2" style="text-align: center;">Tax Amt</th>

@@ -575,11 +575,11 @@
 
 
 							<a href="${pageContext.request.contextPath}/getGrnBillDetail"><i
-								class="fa fa-plus-circle icon"></i> Grn Based on Expiry of
+								class="fa fa-plus-circle icon"></i> GRN Based on Expiry of
 								product </a>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/showGrn"><i
-								class="fa fa-plus-circle icon"></i> Grn Based on stock FIFO
+								class="fa fa-plus-circle icon"></i> GRN Based on stock FIFO
 								method </a>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/displayGrn"><i

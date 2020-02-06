@@ -1334,7 +1334,7 @@ public class SpCakeController {
 			date.getTime();
 
 			SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-			SimpleDateFormat formatTime = new SimpleDateFormat("hh-mm-ss a");
+			SimpleDateFormat formatTime = new SimpleDateFormat("hh:mm a");
 
 			System.out.println(cal.getTime());
 

@@ -179,7 +179,7 @@ table, th, td {
 											<!-- 	<th class="col-md-1">Sr No.</th>
 											<th class="col-md-1">Bill No</th>
 											<th class="col-md-1">Date</th> -->
-											<th class="col-md-1">SELECT</th>
+											<th class="col-md-1">Select</th>
 											<th class="col-md-1" style="text-align: center;">Invoice
 												No</th>
 											<th class="col-md-2" style="text-align: center;">Invoice

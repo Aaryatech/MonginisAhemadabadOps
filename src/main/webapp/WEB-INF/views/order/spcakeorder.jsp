@@ -761,18 +761,10 @@ $('#adv').on('input', function() {
 	  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
 	});
 	
-$('#datepicker').on('input', function() {
-	  this.value = this.value.replace(/[^0-9-]/g, '').replace(/(\..*)\./g, '$1');
-	});
-	
-$('#datepicker4').on('input', function() {
-	  this.value = this.value.replace(/[^0-9-]/g, '').replace(/(\..*)\./g, '$1');
-	});
-	
 $('#sp_cust_mobile_no').on('input', function() {
 	  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
 	});
-
+	
 $(function() {
     $('#sp_code').change(function(){
         $('.col').hide();
@@ -1260,15 +1252,17 @@ function chChange() {
 <!------------------------------------REMAINING AMOUNT ONKEYUP FUNCTION------------------------------>	
 <script type="text/javascript">
 function advanceFun() {
+	
 	var advance=parseFloat($("#adv").val());
 	var rmamt =parseFloat($("#total_amt").val());
 	var rTot = 0;
 	if(rmamt<advance){
 		document.getElementById("adv").value=0;
 		advanceFun();
-	}else{					
-		$('#rmAmt').html(rmamt);
-		document.getElementById("rm_amount").setAttribute('value',rmamt);		
+	}else{		
+		rTot = rmamt-advance;
+		$('#rmAmt').html(rTot);
+		document.getElementById("rm_amount").setAttribute('value',rTot);		
 	}
 }
 </script>

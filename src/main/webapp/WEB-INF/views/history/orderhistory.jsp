@@ -318,7 +318,7 @@ jQuery(document).ready(function(){
 							<div class="col-md-2">
 								<input id="datepicker" class="texboxitemcode texboxcal"
 									autocomplete="off" placeholder="Delivery Date"
-									name="datepicker" type="text" value="${spDeliveryDt}">
+									name="datepicker" id="datepicker" type="text" value="${spDeliveryDt}">
 							</div>
 							<!-- </div> -->
 
@@ -658,7 +658,8 @@ jQuery(document).ready(function(){
 	<script type="text/javascript">
 function genPdf()
 {		
-	window.open('${pageContext.request.contextPath}/pdf/showOrderHistoryPdf');
+	var delDate = $("#datepicker").val();	
+	window.open('${pageContext.request.contextPath}/pdf/showOrderHistoryPdf/'+delDate);
 }
 
 </script>

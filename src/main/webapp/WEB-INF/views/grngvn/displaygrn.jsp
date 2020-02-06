@@ -46,9 +46,9 @@
 
 							<table border="1">
 								<tr bgcolor="orange">
-									<th width="30%" align="left">Grn Date</th>
-									<th width="40%" align="left">Grn SrNo</th>
-									<th width="30%" align="left">Aprroved Amt</th>
+									<th width="30%" align="left">GRN Date</th>
+									<th width="40%" align="left">GRN SrNo</th>
+									<th width="30%" align="left">Approved Amt</th>
 								</tr>
 								<tbody>
 									<tr>
@@ -78,11 +78,11 @@
 										<th class="col-md-1">Type</th>
 										<th class="col-md-1">Bill Rate</th>
 										<th class="col-md-1">Refund Rate</th>
-										<th class="col-md-1">Qnty</th>
-										<th class="col-md-1">Tot Refund requested</th>
-										<th class="col-md-1">Approved Qnty</th>
+										<th class="col-md-1">Qty</th>
+										<th class="col-md-1">Tot Refund Requested</th>
+										<th class="col-md-1">Approved Qty</th>
 										<th class="col-md-1">Approved Tot Refund</th>
-										<th class="col-md-1">Approved BaseRate</th>
+										<th class="col-md-1">Approved Base Rate</th>
 										<th class="col-md-1">Approved Tax Amt</th>
 										<th class="col-md-1">Status</th>
 									</tr>

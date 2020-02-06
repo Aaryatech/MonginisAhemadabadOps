@@ -87,7 +87,7 @@
       <td style="font-size:9px">${spCakeOrder.spBookForMobNo}(${spCakeOrder.spOrderNo})</td>
       <td style="font-size:8px">Date:</td>
         
-      <td style="font-size:9px">${date} </td>
+      <td style="font-size:9px">${spCakeOrder.orderDate} </td>
     </tr >
      <tr>
       <td style="font-size:8px; padding-left: 5px; ">Order No</td>
