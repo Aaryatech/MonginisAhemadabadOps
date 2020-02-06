@@ -387,13 +387,13 @@ input:checked+.slider:before {
 								<button class="btn btn-primary" onclick="insertItem1()"
 									disabled="disabled" id="insertItemButton">Submit Item</button>
 
-								<label style="margin-left: 40px;">Total : <input
+								<label style="float: right;margin-top: 13px;margin-left: 40px;font-size: 18px;">Total : &nbsp;<input
 									type="text" id="total" name="total" readonly="readonly"
-									value="${itemTotal}"></label>
+									value="${itemTotal}" style="width:100px;border:0px;text-align: center;"></label>
 
 
 
-								<button style="float: right; margin-top: 13px;" type="button"
+								<button  type="button"
 									class="btn btn-primary" onclick="printExBill()" disabled
 									id="printExBill">Print</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="itemNameForZeroMrp"></label>
