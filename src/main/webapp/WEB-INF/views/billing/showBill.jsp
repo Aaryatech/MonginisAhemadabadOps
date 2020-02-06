@@ -5,7 +5,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
-
+<style>
+table, th, td {
+	border: 1px solid #9da88d;
+}
+</style>
 <%-- <!DOCTYPE html>
 <html>
 <head>
@@ -107,7 +111,7 @@
 					
 						<div class="col-md -3">
 							
-								<div class="col1title" align="left"><h3>View Bills</h3></div>
+								<div class="col1title" align="left"><h3>Purchase Bill Details</h3></div>
 						</div>
 					<div class="colOuter">
 						<div class="col-md-2">
@@ -160,16 +164,16 @@
 							<thead>
 								<tr class="bgpink">
 								
-									<th class="col-sm-1">Invoice No</th>
-									<th class="col-md-1">Date</th>
+									<th class="col-sm-1" style="text-align: center;">Invoice No</th>
+									<th class="col-md-1" style="text-align: center;">Date</th>
 
-									<th class="col-md-1">Taxable Amt</th>
-									<th class="col-md-1">Tax Amt</th>
-									<th class="col-md-1"> Total</th>
+									<th class="col-md-1" style="text-align: center;">Taxable Amt</th>
+									<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+									<th class="col-md-1" style="text-align: center;"> Total</th>
 
-									<th class="col-md-1">Status</th>
-									<th class="col-md-1">Remark</th>
-									<th class="col-md-1">Action</th>
+									<th class="col-md-1" style="text-align: center;">Status</th>
+									<th class="col-md-1" style="text-align: center;">Remark</th>
+									<th class="col-md-1" style="text-align: center;">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -178,8 +182,8 @@
 									varStatus="count">
 									<tr>
 									<%-- 	<td class="col-sm-1"><c:out value="${billHeader.billNo}" /></td> --%>
-										<td class="col-sm-1"><c:out value="${billHeader.invoiceNo}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-sm-1"style="text-align: center;"><c:out value="${billHeader.invoiceNo}" /></td>
+										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${billHeader.billDate}" /></td>
 										<td class="col-md-1"><c:out
 												value="${billHeader.taxableAmt}" /></td>
@@ -190,37 +194,51 @@
 										<%-- 	<td><c:out value="${billHeader.status}" /></td> --%>
 										<c:choose>
 											<c:when test="${billHeader.status==1}">
-												<td class="col-md-1"><c:out value="Pending"></c:out></td>
+												<td class="col-md-1" style=" text-align: center; ">
+												<span class="label label-danger"style="font-size: 14px;padding-top: 3px;">
+												<c:out value="Pending"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==2}">
-												<td class="col-md-1"><c:out value="Received"></c:out></td>
+												<td style=" text-align: center; ">
+												<span class="label label-success"style="font-size: 14px;padding-top: 3px;">
+												<c:out value="Received"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==3}">
-												<td class="col-md-1"><c:out value="GVN Apply"></c:out></td>
+												<td class="col-md-1" style=" text-align: center; ">
+												<span class="label label-default"style="font-size: 14px;padding-top: 3px;">
+												<c:out value="GVN Apply"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==4}">
-												<td class="col-md-1"><c:out value="GVN Approve"></c:out></td>
+												<td class="col-md-1" style=" text-align: center; ">
+												<span class="label label-primary"style="font-size: 14px;padding-top: 3px;">
+												<c:out value="GVN Approve"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==5}">
-												<td class="col-md-1"><c:out value="GRN Apply"></c:out></td>
+												<td class="col-md-1" style=" text-align: center; ">
+												<span class="label label-info"style="font-size: 14px;padding-top: 3px;">
+												<c:out value="GRN Apply"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==6}">
-												<td class="col-md-1"><c:out value="GRN Approve"></c:out></td>
+												<td class="col-md-1" style=" text-align: center; ">
+												<span class="label label-warning"style="font-size: 14px;padding-top: 3px;">
+												<c:out value="GRN Approve"></c:out></span></td>
 											</c:when>
 											<c:when test="${billHeader.status==7}">
-												<td class="col-md-1"><c:out value="Closed"></c:out></td>
+												<td class="col-md-1" style=" text-align: center; ">
+												<span class="label label-default"style="font-size: 14px;padding-top: 3px;">
+												<c:out value="Closed"></c:out></span></td>
 											</c:when>
 
 										</c:choose>
-										<td class="col-md-1"><c:out value="${billHeader.remark}" /></td>
-										<td class="col-md-1"><div >
+										<td class="col-md-1" style="text-align: left;"><c:out value="${billHeader.remark}" /></td>
+										<td class="col-md-1" style="text-align: center;">
 												<a
 													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}"
 													class="fa fa-info"></a>&nbsp;&nbsp;
 													 <a
 													href="${pageContext.request.contextPath}/billPdf?url=pdf/showBillPdf/By-Road/0/${billHeader.billNo}"	class="fa fa-file-pdf-o" target="_blank"></a>
 							 			<!--<input name="" class="buttonsaveorder" value="EXPORT TO EXCEL" type="button">-->
-											</div></td>
+											</td>
 										<c:set var="billNo" value="${billHeader.billNo}" />
 									</tr>
 								</c:forEach>

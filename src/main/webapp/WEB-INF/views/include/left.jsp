@@ -111,7 +111,7 @@
 								style="font-size: 22px !important;"></i>
 						</div>
 						<div class="title">
-							View Sell Bills <span></span>
+							View Sale Bills <span></span>
 						</div></a></li>
 			</c:if>
 				
@@ -681,7 +681,7 @@
 								
 								<a
 								href="${pageContext.request.contextPath}/showYearlySellReport"><i
-								class="fa fa-files-o icon"></i>Month Wise Sub Category Sell Report Or Month Wise Item Sell Report</a>
+								class="fa fa-files-o icon"></i>Month Wise Sub Category Sale Report Or Month Wise Item Sale Report</a>
 								
 								<a
 								href="${pageContext.request.contextPath}/showSubCatDateWiseSellReport"><i

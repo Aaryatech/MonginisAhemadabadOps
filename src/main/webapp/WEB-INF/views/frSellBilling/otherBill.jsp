@@ -499,6 +499,14 @@ body {
  
 
 	<script type="text/javascript">
+	$('#qty').on('input', function() {
+		  this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+		});
+	
+	$('#discPer').on('input', function() {
+		  this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		});
+	
 	
 	$(document).ready(
 			function() {
@@ -612,7 +620,13 @@ body {
 						  				document.getElementById("insert").disabled =false; 
 						  				
 						});
-
+		//
+		document.getElementById("itemName1").value = '';
+		document.getElementById("qty").value =1;
+		document.getElementById("discPer").value =0;
+		document.getElementById("barcode1").value = '';
+		document.getElementById("rateTdVal1").innerHTML =00;
+		
 			}
 		
 	
@@ -628,10 +642,18 @@ body {
 	}
 	function changeQty(key)
 	{ 
+		
 		var qty=document.getElementById("qty"+key).value;
+		qty = qty.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+		document.getElementById("qty"+key).value=qty;
+		
 		var baseRate=document.getElementById("itemBaseRate"+key).value; 
 		var taxRate=document.getElementById("taxRate"+key).value;
+		
 		var discPer=document.getElementById("discPer"+key).value;
+		discPer = discPer.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+		document.getElementById("discPer"+key).value=discPer;
+		
 		var value = qty*baseRate;
 		var discAmt=(discPer/100)*value;
 		document.getElementById("discAmt"+key).innerText=(discAmt).toFixed(2);
@@ -680,7 +702,7 @@ body {
 									tr.append($('<td></td>').html(key+1));
 								  	tr.append($('<td></td>').html(itemList.itemId));
 								  	tr.append($('<td></td>').html(itemList.itemName));
-								  	tr.append($('<td></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
+								  	tr.append($('<td></td>').html('<input type="number" min=0 id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
 								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.baseRate.toFixed(2)+'</h4>')); 
 								  	tr.append($('<td></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
 								  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt.toFixed(2)+'</h4> ')); 
@@ -705,6 +727,12 @@ body {
 				  				document.getElementById("grandTotalText").value = (total+taxAmt).toFixed(2);
 				  				document.getElementById("discTotal").innerText = (discTotal).toFixed(2);
 				  				document.getElementById("discTotalText").value = (discTotal).toFixed(2);
+				  				
+				  				document.getElementById("itemName1").value = '';
+				  				document.getElementById("qty").value =1;
+				  				document.getElementById("discPer").value =0;
+				  				document.getElementById("barcode1").value = '';
+				  				document.getElementById("rateTdVal1").innerHTML =00;
 					
 					
 					
@@ -754,7 +782,7 @@ body {
 									tr.append($('<td></td>').html(key+1));
 								  	tr.append($('<td></td>').html(itemList.itemId));
 								  	tr.append($('<td></td>').html(itemList.itemName));
-								  	tr.append($('<td></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
+								  	tr.append($('<td></td>').html('<input type="number" min=0 id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
 								  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.baseRate.toFixed(2)+'</h4>')); 
 								  	tr.append($('<td></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
 								  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt.toFixed(2)+'</h4> ')); 
