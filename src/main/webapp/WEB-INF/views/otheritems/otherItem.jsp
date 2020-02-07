@@ -136,7 +136,7 @@ table, th, td {
 						</div>
 						<div class="col-md-3">
 							<input type="text" name="hsnCode" autocomplete="off"  id="hsnCode" 
-											placeholder="HSN Code" class="form-control"
+							maxlength="6" placeholder="HSN Code" class="form-control"
 											required value="${itemSup.itemHsncd}"/>
 
 						</div>
@@ -177,11 +177,11 @@ table, th, td {
 
 						</div> --%>
 							<div class="col-md-2">
-							<div class="col1title" align="left">Sgst Per*: </div>
+							<div class="col1title" align="left">SGST Per*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="sgstPer" class="form-control"
-								placeholder="Sgst Per" autocomplete="off"  name="sgstPer" type="text" value="${item.itemTax1}" onkeyup="changeTax()" required>
+								placeholder="SGST Per" autocomplete="off"  name="sgstPer" type="text" value="${item.itemTax1}" onkeyup="changeTax()" required>
 
 						</div>
 						<div class="col-md-1">
@@ -189,11 +189,11 @@ table, th, td {
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title" align="left">Cgst Per*: </div>
+							<div class="col1title" align="left">CGST Per*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="cgstPer" class="form-control"
-								placeholder="Cgst Per" autocomplete="off"  name="cgstPer" type="text" value="${item.itemTax2}" onkeyup="changeTax()" required>
+								placeholder="CGST Per" autocomplete="off"  name="cgstPer" type="text" value="${item.itemTax2}" onkeyup="changeTax()" required>
 
 						</div>
 				 
@@ -202,11 +202,11 @@ table, th, td {
 					<div class="colOuter">
 					
 						<div class="col-md-2">
-							<div class="col1title" align="left">Igst Per*: </div>
+							<div class="col1title" align="left">IGST Per*: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="igstPer" class="form-control"
-								placeholder="Igst Per" autocomplete="off"  name="igstPer" type="text"  value="${item.itemTax3}"  required>
+								placeholder="IGST Per" autocomplete="off"  name="igstPer" type="text"  value="${item.itemTax3}"  required>
 
 						</div>
 				 
@@ -279,7 +279,7 @@ table, th, td {
 									</c:choose>
 									</c:if>
 									<tr style="${color}">
-										 <td class="col-sm-1" style="text-align: center;"><c:out value="${count.index+1}" /></td>
+										 <td class="col-sm-1" style="text-align: right;"><c:out value="${count.index+1}" /></td>
 										<td class="col-md-1"><c:out
 												value="${itemList.itemId}" /></td>
 										<td class="col-md-2" style="text-align: center;"><c:out

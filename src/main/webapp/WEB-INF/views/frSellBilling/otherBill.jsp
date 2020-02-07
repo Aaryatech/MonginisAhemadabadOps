@@ -391,18 +391,18 @@ body {
 										<table id="table_grid1" class="responsive-table">
 											<thead>
 												<tr class="bgpink">
-													<th class="col-sm-1">Sr no.</th>
-													<th class="col-md-1">Item Code</th>
-													<th class="col-md-2">Item Name</th>
-													<th class="col-md-1">Qty</th>
-													<th class="col-md-1">Rate</th>
-													<th class="col-md-1">Disc%</th>
-													<th class="col-md-1">Disc Amt</th>
-													<th class="col-md-1">Amount</th>
-													<th class="col-md-1">Tax%</th>
-													<th class="col-md-1">Tax Amt</th>
-													<th class="col-md-1">Total</th>
-													<th class="col-md-2">Action</th>
+													<th class="col-sm-1" style="text-align: center;">Sr no.</th>
+													<th class="col-md-1" style="text-align: center;">Item Code</th>
+													<th class="col-md-2" style="text-align: center;">Item Name</th>
+													<th class="col-md-1" style="text-align: center;">Qty</th>
+													<th class="col-md-1" style="text-align: center;">Rate</th>
+													<th class="col-md-1" style="text-align: center;">Disc%</th>
+													<th class="col-md-1" style="text-align: center;">Disc Amt</th>
+													<th class="col-md-1" style="text-align: center;">Amount</th>
+													<th class="col-md-1" style="text-align: center;">Tax%</th>
+													<th class="col-md-1" style="text-align: center;">Tax Amt</th>
+													<th class="col-md-1" style="text-align: center;">Total</th>
+													<th class="col-md-2" style="text-align: center;">Action</th>
 												</tr>
 											</thead>
 											<tbody>
@@ -589,21 +589,21 @@ body {
 
 											var tr = $('<tr></tr>');
 											 
-										  	tr.append($('<td></td>').html(key+1));
-										  	tr.append($('<td></td>').html(itemList.itemId));
-										  	tr.append($('<td></td>').html(itemList.itemName));
-										  	tr.append($('<td></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
-										  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.baseRate.toFixed(2)+'</h4>')); 
-										  	tr.append($('<td></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
-										  	tr.append($('<td ></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt.toFixed(2)+'</h4> ')); 
-										  	tr.append($('<td ></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt.toFixed(2)+'</h4> ')); 
+										  	tr.append($('<td style="text-align: right;"></td>').html(key+1));
+										  	tr.append($('<td style="text-align: center;"></td>').html(itemList.itemId));
+										  	tr.append($('<td style="text-align: center;"></td>').html(itemList.itemName));
+										  	tr.append($('<td style="text-align: center;"></td>').html('<input type="text" id="qty'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.qty+'" class="form-control" disabled="true">')); 
+										  	tr.append($('<td style="text-align: center;"></td>').html('<input type="hidden" value="'+itemList.baseRate+'" id="itemBaseRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.itemRate1.toFixed(2)+'</h4>')); /* <h4>'+itemList.baseRate.toFixed(2)+'</h4> */
+										  	tr.append($('<td style="text-align: center;"></td>').html('<input type="text" id="discPer'+key+'" onkeyup="changeQty('+key+');" value="'+itemList.discPer+'" class="form-control" disabled="true">')); 
+										  	tr.append($('<td style="text-align: center;"></td>').html('<h4 id="discAmt'+key+'" >'+itemList.discAmt.toFixed(2)+'</h4> ')); 
+										  	tr.append($('<td style="text-align: center;"></td>').html('<h4 id="total'+key+'" >'+itemList.taxableAmt.toFixed(2)+'</h4> ')); 
 										  	total=total+itemList.taxableAmt;
 										  	taxAmt=taxAmt+itemList.itemTax3rs;
 										  	discTotal=discTotal+itemList.discAmt;
-										  	tr.append($('<td></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.itemTax3.toFixed(2)+'</h4>'));
-										  	tr.append($('<td></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs.toFixed(2)+'</h4>'));
-										  	tr.append($('<td></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal.toFixed(2)+'</h4>'));
-										  	tr.append($('<td  class="col-md-2"></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+key+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="fa fa-save" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+key+')" class="fa fa-trash"></i></abbr>'));
+										  	tr.append($('<td style="text-align: center;"></td>').html('<input type="hidden" value="'+itemList.itemTax3+'" id="taxRate'+key+'" class="form-control" disabled="true"><h4>'+itemList.itemTax3.toFixed(2)+'</h4>'));
+										  	tr.append($('<td style="text-align: center;"></td>').html('<h4 id="taxRs'+key+'" >'+itemList.itemTax3rs.toFixed(2)+'</h4>'));
+										  	tr.append($('<td style="text-align: center;"></td>').html('<h4 id="grndTotal'+key+'" >'+itemList.grandTotal.toFixed(2)+'</h4>'));
+										  	tr.append($('<td class="col-md-2" style="text-align: right;"></td>').html('<abbr title="Edit"><i id="edit'+key+'" onclick="edit('+key+')" class="fa fa-edit"></i> </abbr><span style="visibility: hidden;" class="fa fa-save" onclick="submit('+key+');" id="ok'+key+'"></span><abbr title="Delete"><i onclick="del('+key+')" class="fa fa-trash"></i></abbr>'));
 										    $('#table_grid1 tbody').append(tr);
 
 											 
@@ -613,7 +613,7 @@ body {
 						  				document.getElementById("totalSumText").value = (total).toFixed(2);
 						  				document.getElementById("taxtotal").innerText = (taxAmt).toFixed(2);
 						  				document.getElementById("taxtotalText").value = (taxAmt).toFixed(2);
-						  				document.getElementById("grandTotal").innerText = (total+taxAmt).toFixed(2);
+						  				document.getElementById("grandTotal").innerText = Math. round((total+taxAmt).toFixed(2));
 						  				document.getElementById("grandTotalText").value = (total+taxAmt).toFixed(2);
 						  				document.getElementById("discTotal").innerText = (discTotal).toFixed(2);
 						  				document.getElementById("discTotalText").value = (discTotal).toFixed(2);
