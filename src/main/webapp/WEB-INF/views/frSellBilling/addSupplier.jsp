@@ -5,7 +5,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 
- 
+ <style>
+table, th, td {
+	border: 1px solid #9da88d;
+}
+
+</style>
 
 </head>
 <body>
@@ -148,7 +153,7 @@
 							<div class="col1title" align="left">E-Mail*: </div>
 						</div>
 						<div class="col-md-3">
-							<input id="email" class="form-control"
+							<input id="email" class="form-control" onblur="validateEmail(this.value)"
 								placeholder="Email" name="email" type="email"  autocomplete="off" required>
 
 						</div>
@@ -157,7 +162,7 @@
 					
 					<div class="colOuter">
 						<div class="col-md-2">
-							<div class="col1title" align="left">GSTN No*: </div>
+							<div class="col1title" align="left">GSTN No: </div>
 						</div>
 						<div class="col-md-3">
 							<input id="gstnNo" class="form-control"
@@ -169,10 +174,10 @@
 						</div>
 
 						<div class="col-md-2">
-							<div class="col1title" align="left">Pan No*: </div>
+							<div class="col1title" align="left">Pan No: </div>
 						</div>
 						<div class="col-md-3">
-							<input id="panNo" class="form-control"
+							<input id="panNo" class="form-control" maxlength="10" style="text-transform: uppercase;"
 								placeholder="Pan No" name="panNo" type="text"  autocomplete="off">
 
 						</div>
@@ -205,8 +210,9 @@
 					<div class="colOuter">
 						<div align="center">
 							<input name="submit" class="buttonsaveorder" value="Submit"
-								type="submit" align="center">
-								<input type="button" class="buttonsaveorder" value="Cancel" id="cancel" onclick="cancel1()" disabled>
+								type="submit" align="center" id="sub1">
+								<!-- <input type="button" class="buttonsaveorder" value="Cancel" id="cancel" onclick="cancel1()" disabled> -->
+								<a href="${pageContext.request.contextPath}/showOtherBill" class="buttonsaveorder" id="sub2">Cancel</a>
 						</div>
 				 
 					</div>
@@ -219,13 +225,13 @@
 							<thead>
 								<tr class="bgpink">
 								
-									<th class="col-sm-1">Sr No</th>
-									<th class="col-md-1">Name</th> 
-									<th class="col-md-1">Address</th>
-									<th class="col-md-1">City</th> 
-									<th class="col-md-1">Mobile</th>
-									<th class="col-md-1">Email</th>
-									<th class="col-md-1">Action</th>
+									<th class="col-sm-1" style="text-align: center;">Sr No</th>
+									<th class="col-md-1" style="text-align: center;">Name</th> 
+									<th class="col-md-1" style="text-align: center;">Address</th>
+									<th class="col-md-1" style="text-align: center;">City</th> 
+									<th class="col-md-1" style="text-align: center;">Mobile</th>
+									<th class="col-md-1" style="text-align: center;">Email</th>
+									<th class="col-md-1" style="text-align: center;">Action</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -233,18 +239,18 @@
 								<c:forEach items="${supplierList}" var="supplierList"
 									varStatus="count">
 									<tr>
-										 <td class="col-sm-1"><c:out value="${count.index+1}" /></td>
-										<td class="col-md-1"><c:out
+										 <td class="col-sm-1" style="text-align: right;"><c:out value="${count.index+1}" /></td>
+										<td class="col-md-1" style="text-align: center;"><c:out
 												value="${supplierList.suppName}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: center;"><c:out
 												value="${supplierList.suppAddr}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: center;"><c:out
 												value="${supplierList.suppCity}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: center;"><c:out
 												value="${supplierList.mobileNo}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: center;"><c:out
 												value="${supplierList.email}" /></td>
-										<td class="col-md-1"><div >
+										<td class="col-md-1" style="text-align: center;"><div >
 												<abbr title='Edit'><i onclick="edit(${supplierList.suppId})" class='fa fa-edit'></i> </abbr>
 						<a href="${pageContext.request.contextPath}/deleteSupplier/${supplierList.suppId}" onClick="return confirm('Are you sure want to delete this record');"   >
 						<abbr title='Delete'><i  class='fa fa-trash'></i></abbr></a>
@@ -286,6 +292,64 @@
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <!--easyTabs-->
 
+<script type="text/javascript">
+
+$('#mob').on('input', function() {
+	 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+	});
+	
+$('#creditDays').on('input', function() {
+		 this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');
+		});
+	
+function validateEmail(email) {
+	var eml = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+	if (eml.test($.trim(email)) == false) {
+		return false;
+	}
+	return true;
+}
+
+
+function validatePan(panNo) {
+	var pan = /^[A-Z]{5}\d{4}[A-Z]{1}$/;
+	if (pan.test($.trim(panNo)) == false) {
+		return false;
+	}
+	return true;
+}
+
+$( "form" ).submit(function( event ) {  
+
+	$('#sub1').hide();
+	$('#sub2').hide();
+	var email = $("#email").val(); 
+	var pan = $("#panNo").val();
+	
+	  if (!validateEmail(email)) {  
+		alert("Enter Valid Email");
+		 $('#sub1').show();
+		 $('#sub2').show();
+	    return false;
+	    event.preventDefault();  
+	   
+	  }  
+	  
+	  if(pan!=''){
+	  if(!validatePan(pan)){
+		  alert("Enter Valid PAN No.");
+		  $('#sub1').show();
+		  $('#sub2').show();
+		    return false;
+		    event.preventDefault();  
+		   
+		  } 
+	}
+	 
+	  return;	  
+	  
+	}); 
+</script>
 
 <script>
 function edit(suppId) {
@@ -339,7 +403,7 @@ function cancel1() {
 	document.getElementById("creditDays").value="";
 	document.getElementById("isSameState").value=""; 
 	document.getElementById("cancel").disabled=false;
-
+	
 }
 (function() {
   var fauxTable = document.getElementById("faux-table");
