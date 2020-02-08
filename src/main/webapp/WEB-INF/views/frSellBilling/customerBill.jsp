@@ -3109,8 +3109,11 @@ label:before{
 			var discountRs = $("#discountRs" + token).val();
             
 			var total = $("#tot" + token).val();
-
-            var	discPer=parseFloat(discountRs)/(total/100); 
+            
+            var	discPer=0;
+            if(discountRs>0){
+            discPer=discountRs/(total/100); 
+            }
             var grandAmt = total - discountRs;
             if(discountRs>=0 && !isNaN(discountRs) && discountRs<=grandAmt){
 			grandAmt = grandAmt.toFixed(2);
@@ -3137,7 +3140,7 @@ label:before{
             }else
             	{
             	alert("Please Enter Valid discount amount!!");
-            	$("#discountRs" + token).val("0");
+            	$("#discountRs" + token).val(0);
             	 disRsMinusTotal(token);
             	}
 		}
