@@ -21,9 +21,6 @@ jQuery(document).ready(function(){
 
 
 <style>
-table, th, td {
-	border: 1px solid #9da88d;
-}
 
 .myInput1 {
 	margin-top: 10px;
@@ -286,19 +283,19 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='1'}">
 																<tr>
 
-																	<td class="col-md-2" style="text-align: center;">
+																	<td class="col-md-2" style="text-align: left;">
 																	<c:choose>
 																	<c:when test="${items.itemImage!=''}">
 																	<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;"   >${items.itemName}</a>
+																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;color:#000000;"   >${items.itemName}</a>
 																	</c:when>	
 																	<c:otherwise>
 																	${items.itemName}
 																	</c:otherwise>
 																	</c:choose>
 																		</td>
-																	<td class="col-md-1" style="text-align: right;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 
 																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
@@ -309,15 +306,15 @@ a:hover {
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1" style="text-align: right;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.itemMrp1}' /></td>
 
 
-																	<td class="col-md-1" style="text-align: right ;"><c:out
+																	<td class="col-md-1" style="text-align: center ;"><c:out
 																			value='${items.itemRate1}' /></td>
 																	<c:set var="rate" value="${items.itemRate1}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}" style="text-align: right;"><fmt:formatNumber
+																	<td class="col-md-1" id="total${items.id}" style="text-align: center;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
 
@@ -354,17 +351,17 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='2'}">
 																<tr>
 
-																	<td class="col-md-1" style="text-align: center;"><c:choose>
+																	<td class="col-md-1" style="text-align: left;"><c:choose>
 																	<c:when test="${items.itemImage!=''}">
 																	<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;">${items.itemName}</a>
+																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;color:#000000;">${items.itemName}</a>
 																	</c:when>	
 																	<c:otherwise>
 																	${items.itemName}
 																	</c:otherwise>
 																	</c:choose></td>
-																	<td class="col-md-1" style="text-align: right ;"><c:out
+																	<td class="col-md-1" style="text-align: center ;"><c:out
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
@@ -373,14 +370,14 @@ a:hover {
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1" style="text-align: right;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.itemMrp2}' /></td>
 
-																	<td class="col-md-1" style="text-align: right;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.itemRate2}' /></td>
 																	<c:set var="rate" value="${items.itemRate2}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td id="total${items.id}" style="text-align: right;"><fmt:formatNumber
+																	<td id="total${items.id}" style="text-align: center;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
 																	<c:choose>
@@ -414,17 +411,17 @@ a:hover {
 															<c:when test="${frDetails.frRateCat=='3'}">
 																<tr>
 
-																	<td class="col-md-1" style="text-align: center;"><c:choose>
+																	<td class="col-md-1" style="text-align: left;"><c:choose>
 																	<c:when test="${items.itemImage!=''}">
 																	<a
 																		href="${url}${items.itemImage}"
-																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;">${items.itemName}</a>
+																		data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;color:#000000;">${items.itemName}</a>
 																	</c:when>	
 																	<c:otherwise>
 																	${items.itemName}
 																	</c:otherwise>
 																	</c:choose></td>
-																	<td class="col-md-1" style="text-align: right;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
@@ -433,14 +430,14 @@ a:hover {
 
 																		<input type="hidden" value="${items.minQty}"
 																		id="minqty${items.id}" /></td>
-																	<td class="col-md-1" style="text-align: right;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.itemMrp3}' /></td>
 
-																	<td class="col-md-1" style="text-align: right;"><c:out
+																	<td class="col-md-1" style="text-align: center;"><c:out
 																			value='${items.itemRate3}' /></td>
 																	<c:set var="rate" value="${items.itemRate3}" />
 																	<c:set var="qty" value="${items.itemQty}" />
-																	<td class="col-md-1" id="total${items.id}" style="text-align: right;"><fmt:formatNumber
+																	<td class="col-md-1" id="total${items.id}" style="text-align: center;"><fmt:formatNumber
 																			type="number" minFractionDigits="2"
 																			maxFractionDigits="2" value="${rate * qty}" /></td>
 

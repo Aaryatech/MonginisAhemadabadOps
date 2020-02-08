@@ -186,13 +186,13 @@ table, th, td {
 														<c:set var="month" value="July"></c:set>
 													</c:when>
 													<c:when test="${getMonthList.month==8}">
-														<c:set var="month" value="Augast"></c:set>
+														<c:set var="month" value="August"></c:set>
 													</c:when>
 													<c:when test="${getMonthList.month==9}">
 														<c:set var="month" value="September"></c:set>
 													</c:when>
 													<c:when test="${getMonthList.month==10}">
-														<c:set var="month" value="Octomber"></c:set>
+														<c:set var="month" value="October"></c:set>
 													</c:when>
 													<c:when test="${getMonthList.month==11}">
 														<c:set var="month" value="November"></c:set>

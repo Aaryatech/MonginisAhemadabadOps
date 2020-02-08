@@ -111,7 +111,7 @@
 						<form id="openingStockForm"
 							action="${pageContext.request.contextPath}/saveFrOpeningStockProcess"
 							method="post">
-							<div class=" box-content">
+							<div class="box-content">
 								<div class="row">
 									<div class="col-md-12 table-responsive">
 										<table class="table table-bordered table-striped fill-head "

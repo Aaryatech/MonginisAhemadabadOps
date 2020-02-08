@@ -139,25 +139,26 @@ jQuery(document).ready(function(){
 								<table width="100%" border="0" cellspacing="0" cellpadding="0"
 									id="table_grid6" class="table table-bordered">
 									<tr class="bgpink">
-										<th>Index</th>
+										<th>Sr.No</th>
 										<th>Print</th>
 										<th>Item Name
-										</td>
-										<th>Qty
-										</td>
-										<th>MRP Base Rate
-										</td>
-										<th>Taxable Amount
-										</td>
-										<th>Tax %
-										</td>
-										<th>Total Tax
-										</td>
+										</th>
 										<th>MRP
-										</td>
-
+										</th>
+										<th>Base Rate
+										</th>
+										<th>Qty
+										</th>
+										<th>Tax %
+										</th>
+										<th>Taxable Amt
+										</th>
+										
+										<th>Tax Amt
+										</th>
+									
 										<th>Total
-										</td>
+										</th>
 
 
 									</tr>
@@ -178,15 +179,18 @@ jQuery(document).ready(function(){
 													onchange="selectToPrint()" id="select_to_print"
 													value="${sellBill.sellBillDetailNo}"></td>
 
-												<td align="left"><c:out value="${sellBill.itemName}" /></td>
-												<td align="left"><c:out value="${sellBill.qty}" /></td>
-												<td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td>
-												<td align="left"><c:out value="${sellBill.taxableAmt}" /></td>
-												<td align="left"><c:out
+												<td align="left" style="text-align: left;"><c:out value="${sellBill.itemName}" /></td>
+												<td align="left" style="text-align: right;"><c:out value="${sellBill.mrp}" /></td>
+												<td align="left" style="text-align: right;"><c:out value="${sellBill.mrpBaseRate}" /></td>
+												
+												<td align="left" style="text-align: right;"><c:out value="${sellBill.qty}" /></td>
+												<td align="left" style="text-align: right;"><c:out
 														value="${sellBill.sgstPer+sellBill.cgstPer}" /></td>
-												<td align="left"><c:out value="${sellBill.totalTax}" /></td>
-												<td align="left"><c:out value="${sellBill.mrp}" /></td>
-												<td align="left"><c:out value="${sellBill.grandTotal}" /></td>
+												<td align="left" style="text-align: right;"><c:out value="${sellBill.taxableAmt}" /></td>
+												
+												<td align="left" style="text-align: right;"><c:out value="${sellBill.totalTax}" /></td>
+												
+												<td align="left" style="text-align: right;"><c:out value="${sellBill.grandTotal}" /></td>
 
 												<c:set var="taxableSum"
 													value="${sellBill.taxableAmt +taxableSum}"></c:set>
@@ -197,22 +201,22 @@ jQuery(document).ready(function(){
 
 											</tr>
 										</c:forEach>
-										<tr align="right" style="background: orange;">
+										<tr align="right" >
 											<td width="100" colspan='3' align="right"><b>Total</b></td>
-											
-											<td width="100" align="right"><b><fmt:formatNumber
+											<td></td><td></td>
+											<td width="100" style="text-align: right;"><b><fmt:formatNumber
 														type="number" maxFractionDigits="0" minFractionDigits="0"
 														value="${qtySum}" /></b></td>
-														<td></td>
-											<td width="100" align="right"><b><fmt:formatNumber
-														type="number" maxFractionDigits="0" minFractionDigits="0"
+											<td></td>			
+											<td width="100" style="text-align: right;"><b><fmt:formatNumber
+														type="number" maxFractionDigits="2" minFractionDigits="2"
 														value="${taxableSum}" /></b></td>
-											<td></td>
-											<td width="100" align="right"><b><fmt:formatNumber
+											
+											<td width="100" style="text-align: right;"><b><fmt:formatNumber
 														type="number" maxFractionDigits="2" minFractionDigits="2"
 														value="${taxSum}" /></b></td>
-											<td></td>
-											<td width="100" align="right"><b><fmt:formatNumber
+											
+											<td width="100" style="text-align: right;"><b><fmt:formatNumber
 														type="number" maxFractionDigits="0" minFractionDigits="0"
 														value="${totalSum}" /></b></td>
 										</tr>

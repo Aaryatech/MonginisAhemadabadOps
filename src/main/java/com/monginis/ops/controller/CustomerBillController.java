@@ -263,6 +263,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 		int sellBillNo=0;
 		String billDate="";
 		try {
+			System.err.println("sellBillEditBean"+sellBillEditBean.toString());
 			 sellBillNo=Integer.parseInt(request.getParameter("sellBillNo"));
 			 billDate=request.getParameter("billDate");
 			float paidAmt=Float.parseFloat(request.getParameter("paidAmt"));
@@ -352,6 +353,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				System.err.println(convertedDate);
 				sellBillEditBean.getSellBillHeader().setBillDate(convertedDate);
 				sellBillEditBean.getSellBillHeader().setPaidAmt(Math.round(paidAmt));
 				sellBillEditBean.getSellBillHeader().setTaxableAmt(sumTaxableAmt);
@@ -362,7 +364,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 				payableAmt = roundUp(payableAmt);
 
-				sellBillEditBean.getSellBillHeader().setDiscountAmt(sumMrp);
+				sellBillEditBean.getSellBillHeader().setDiscountAmt(sellBillEditBean.getSellBillHeader().getDiscountAmt());
 				sellBillEditBean.getSellBillHeader().setPayableAmt(Math.round(payableAmt));
 				sellBillEditBean.getSellBillHeader().setTotalTax(sumTotalTax);
 				sellBillEditBean.getSellBillHeader().setGrandTotal(Math.round(sumGrandTotal));
@@ -374,7 +376,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 				} else {
 
-					sellBillEditBean.getSellBillHeader().setRemainingAmt(calRemainingTotal);
+					sellBillEditBean.getSellBillHeader().setRemainingAmt(Math.round(calRemainingTotal));
 				}
 				if (calRemainingTotal <= 0) {
 
@@ -405,7 +407,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/editBillDetails?sellBillNo="+sellBillNo+"&billDate="+billDate;
+		return "redirect:/viewBill";
 	}
 
 	//print function

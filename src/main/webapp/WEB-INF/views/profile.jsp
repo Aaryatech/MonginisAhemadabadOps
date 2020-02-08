@@ -372,7 +372,7 @@
 						 
 						 <div class="form-group">
 						
-								<input name="" class="btn btn-info" value="Submit"
+								<input name="" class="btn btn-info" value="Submit" style="background-color: #ed568f;border-color: #ed568f;"
 									type="button" id="btnupdate_profile1"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthority()">
 							
 						</div>
@@ -397,7 +397,7 @@
 						 
 						 <div class="form-group">
 						
-								<input name="" class="btn btn-info" value="Submit"
+								<input name="" class="btn btn-info" value="Submit" style="background-color: #ed568f;border-color: #ed568f;"
 									type="button" id="btnupdate_profile2"style="font-size: 13pt; height: 33px; width:75px; "onclick="return checkAuthForPassChange()">
 							
 						</div>
@@ -414,8 +414,10 @@
 					
 					<div class="profile">
 							<div class="profileinput">
-								<input name="" class="btn additem_btn" value="SUBMIT"
+								<input name="" class="btn additem_btn" value="Save"
 									type="submit" id="btnupdate_profile">
+							<input name="" class="btn additem_btn" value="Cancel"
+									type="button" id="btnupdate_profile" onClick="window.location.reload();"> 
 							</div>
 						</div>
 						
@@ -571,7 +573,6 @@ function checkAuthForPassChange() {
 function updateUserPasswords() {
 	
 	//var pass1=document.getElementById('user1_password').value;
-
 	var pass2=document.getElementById('user2_password').value;
 
 	var pass3=document.getElementById('user3_password').value;
@@ -598,10 +599,7 @@ function updateUserPasswords() {
 			   document.getElementById('updateDiv1').style.display = "none";
 			   document.getElementById('changePwd1').style.display = "block";
 			   document.getElementById('changePwd2').style.display = "block";
-			
-				 alert("User Passwords Updated Successfully");
-
-			
+			   alert("User Passwords Updated Successfully");
 		}
 		
 		
@@ -633,7 +631,7 @@ function updateAdminPassword() {
 			   document.getElementById('changePwd1').style.display = "block";
 			   document.getElementById('changePwd2').style.display = "block";
 			 alert("Admin Password Updated Successfully");
-			
+			   $("#divCheckPasswordMatch").html("");
 			}
 		
 	}

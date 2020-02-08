@@ -2996,7 +2996,11 @@ label:before{
 			document.getElementById("paidAmount" + token).setAttribute('value',
 					grandAmt);
 			var paidAmount = $("#paidAmount" + token).val();
-			var grandMinusPaidAmt = grandAmt - paidAmount;
+			var grandMinusPaidAmt = 0;
+			if(grandAmt>0)
+				{
+				grandMinusPaidAmt=grandAmt - paidAmount;
+				}
 			$('#grandtotal' + token).html(grandAmt);
 			document.getElementById("grandtot" + token).setAttribute('value',
 					grandAmt);
@@ -3065,7 +3069,7 @@ label:before{
 		function disMinusTotal(token) {
 
 			var discount = $("#discount" + token).val();
-
+            if(discount>=0 && discount<=100 && !isNaN(discount)){
 			var total = $("#tot" + token).val();
 
             var discountInRs=(total * (discount / 100));
@@ -3093,17 +3097,22 @@ label:before{
 			//paidAmt(token);
 
 			//document.getElementById("remAmount"+token).setAttribute('value',00);
-
+            }else
+            	{
+            	  alert("Please Enter Valid Discount %.");
+            	  document.getElementById("discount" + token).value=0;
+            	  disMinusTotal(token); 
+            	}
 		}
 		function disRsMinusTotal(token) {
 
 			var discountRs = $("#discountRs" + token).val();
-
+            
 			var total = $("#tot" + token).val();
 
-            var	discPer=discountRs/(total/100); 
+            var	discPer=parseFloat(discountRs)/(total/100); 
             var grandAmt = total - discountRs;
-         
+            if(discountRs>=0 && !isNaN(discountRs) && discountRs<=grandAmt){
 			grandAmt = grandAmt.toFixed(2);
 			$('#grandtotal' + token).html(grandAmt);
 			document.getElementById("grandtot" + token).setAttribute('value',
@@ -3125,21 +3134,35 @@ label:before{
 			//paidAmt(token);
 
 			//document.getElementById("remAmount"+token).setAttribute('value',00);
-
+            }else
+            	{
+            	alert("Please Enter Valid discount amount!!");
+            	$("#discountRs" + token).val("0");
+            	 disRsMinusTotal(token);
+            	}
 		}
 		function paidAmt(token) {
 			var paidAmount = $("#paidAmount" + token).val();
-
-			var grandAmount = $("#grandtot" + token).val();
-			//alert(paidAmount);
-			//alert(grandAmount);
-
+			var grandAmount =$("#grandtot" + token).val();
+			 if(!isNaN(paidAmount)){
+				  paidAmount = parseFloat($("#paidAmount" + token).val());
+				  grandAmount =parseFloat($("#grandtot" + token).val());
+		  if(paidAmount<=grandAmount){
 			var remainingAmount = (grandAmount - paidAmount);
 			remainingAmount = remainingAmount.toFixed(2);
 			$('#remAmt' + token).html(remainingAmount);
 			document.getElementById("remAmount" + token).setAttribute('value',
 					remainingAmount);
-
+		  }else{
+			  alert("Paid Amount should be less than or equal to grandtotal!!")
+			  $("#paidAmount" + token).val(grandAmount);
+		  }
+			 }else
+				 {
+				 alert("Please enter valid paid amount!")
+				  $("#paidAmount" + token).val(grandAmount);
+				 paidAmt(token);
+				 }
 		}
 
 		function deleteOrder(token, key, itemId) {
@@ -3164,6 +3187,7 @@ label:before{
 				calTotal(allTotal, token);
 				  $('#discount' + token).val(0);
 				  $('#discountRs' + token).val(0);
+				  
 				  document.getElementById("itemName"+token).value="";
                   $('.chosen-select').trigger('chosen:updated');
 			});

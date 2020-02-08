@@ -130,6 +130,7 @@ jQuery(document).ready(function(){
 					action="${pageContext.request.contextPath}/editSellBill">
 			<input type="hidden" name="sellBillNo" id="sellBillNo" value="${sellBillNo}" />
 				<input type="hidden" name="billDate" id="billDate" value="${billDate}" />
+				<input type="hidden" name="totalAmount" id="totalAmount" />
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
@@ -178,16 +179,16 @@ jQuery(document).ready(function(){
 												<td><c:out value="${count.index+1}" /></td>
 											
 												<td align="left"><c:out value="${sellBill.itemName}" /></td><td align="left">${sellBill.qty}</td>
-												<td align="left"><input type="number" style="width:50px;" value="${sellBill.qty}" id="qty${sellBill.sellBillDetailNo}" name="qty${sellBill.sellBillDetailNo}"  onchange="onQtyChange(${sellBill.sellBillDetailNo},${sellBillHeader.discountPer},${sellBill.mrpBaseRate},${sellBill.sgstPer},${sellBill.cgstPer},this.value)"/></td>
+												<td align="left"><input type="number" min="0" class="form-control" style="width:90px;" value="${sellBill.qty}" id="qty${sellBill.sellBillDetailNo}" name="qty${sellBill.sellBillDetailNo}"  oninput="onQtyChange(${sellBill.sellBillDetailNo},${sellBillHeader.discountPer},${sellBill.mrpBaseRate},${sellBill.sgstPer},${sellBill.cgstPer},${sellBill.qty},this.value)"/></td>
 												<td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td>
 												<td align="left" id="taxableAmt${sellBill.sellBillDetailNo}"><c:out value="${sellBill.taxableAmt}" /></td>
 												<td align="left"><c:out
 														value="${sellBill.sgstPer+sellBill.cgstPer}" /></td>
 												<td align="left" id="totalTax${sellBill.sellBillDetailNo}"><c:out value="${sellBill.totalTax}" /></td>
 												<td align="left" ><c:out value="${sellBill.mrp}" /></td>
-												<td align="left" id="grandTotal${sellBill.sellBillDetailNo}">
+												<td align="left" id="grandTotal${sellBill.sellBillDetailNo}" class="sum">
 													<fmt:formatNumber type="number" minFractionDigits="0"
-														maxFractionDigits="0" value="${sellBill.grandTotal}" />
+														maxFractionDigits="0" value="${sellBill.grandTotal}" groupingUsed="false"/>
 												</td>
 												<%-- <c:out value="${sellBill.grandTotal}" /> --%>
 												<c:set var="taxableSum"
@@ -235,16 +236,18 @@ jQuery(document).ready(function(){
 				<div class="col-md-2"><b>Paid Amt : </b>
 				</div>
 				<div class="col-md-2">
-					<input type="number" name="paidAmt" class="form-control"  id="paidAmt" value="${sellBillHeader.grandTotal}" min="0" onchange="onPaidAmt(${sellBillHeader.paidAmt},${sellBillHeader.remainingAmt},this.value)"/>
+					<input type="number" name="paidAmt" class="form-control" min="0" id="paidAmt" value="${sellBillHeader.paidAmt}" min="0"   oninput="onPaidAmt(${sellBillHeader.paidAmt},${sellBillHeader.remainingAmt},this.value)"/>
 				</div>
 				<div class="col-md-2"><b>Remaining Amt : </b>
 				</div>
 				<div class="col-md-1" id="remainingAmt">
-				       0.00
+				      <fmt:formatNumber type="number" minFractionDigits="0"
+														maxFractionDigits="0" value="${sellBillHeader.remainingAmt}" groupingUsed="false" />
 				</div>
+				<input type="hidden" name="remAmt" class="form-control"  id="remAmt" value="${sellBillHeader.remainingAmt}"/>
 				</div>
 				 <div align="center" style="margin-top: 2%;">
-				<input	name="submit" class="buttonsaveorder" value="Update" type="submit">
+				<input	name="submit" class="buttonsaveorder" value="Update" id="updateBill" type="submit">
 				</div> 
 </form>
 				<%-- <div align="center">
@@ -261,15 +264,72 @@ jQuery(document).ready(function(){
 	<!--rightContainer-->
 </div>
 <script >
+	var number = document.getElementById('paidAmt');
+
+	number.onkeydown = function(e) {
+	    if(!((e.keyCode > 95 && e.keyCode < 106)
+	      || (e.keyCode > 47 && e.keyCode < 58) 
+	      || e.keyCode == 8)) {
+	        return false;
+	    }
+	}
+
 function onPaidAmt(paidAmt,remainingAmt,currentPaidAmt)
 {
-	var remAmt=remainingAmt-currentPaidAmt;
-	document.getElementById("remainingAmt").innerHTML=remAmt.toFixed(2);
+	
+	var totalAmount=document.getElementById("totalAmount").value;
+	if(parseFloat(currentPaidAmt)<=parseFloat(totalAmount)){
+	var remAmt=totalAmount-currentPaidAmt;
+	if(remAmt>totalAmount){
+	document.getElementById("remainingAmt").innerHTML=0;
+	document.getElementById("remAmt").value=0;
+	}else
+		{
+		document.getElementById("remainingAmt").innerHTML=remAmt.toFixed(2);
+		document.getElementById("remAmt").value=remAmt.toFixed(2);	
+		}
+	}else
+		{
+		alert("Paid amount should not be greator than total bill amount!");
+		document.getElementById("paidAmt").value=totalAmount;
+		onPaidAmt(paidAmt,remainingAmt,totalAmount);
+		document.getElementById("remainingAmt").innerHTML=0;
+		document.getElementById("remAmt").value=0;
+		}
+	
+	  if(document.getElementById("remAmt").value<0)
+  	{
+  	
+  	 document.getElementById("updateBill").style.display="none";
+  	}else
+  		{
+     	 document.getElementById("updateBill").style.display="block";
+
+  		}
+}
+$(document).ready(function() {
+    var sum = 0;
+    $('.sum').each(function() {
+        var tot = $(this);
+        sum += parseFloat(tot.text()) ;
+    });
+    document.getElementById("totalAmount").value=sum;
+});
+function calcSum() {
+    var sum = 0;
+    $('.sum').each(function() {
+        var tot = $(this);
+        sum += parseFloat(tot.text()) ;
+    });
+    
+    document.getElementById("totalAmount").value=sum;
+
 }
 </script>
 <script>
-function onQtyChange(sellBillDetailNo,discountPer,mrpBaseRate,sgstPer,cgstPer,qty){
-	
+function onQtyChange(sellBillDetailNo,discountPer,mrpBaseRate,sgstPer,cgstPer,prevQty,qty){
+	var paidAmount=document.getElementById('paidAmt').value;
+	if(parseFloat(qty)>=0){
 	var taxableAmt =parseFloat(mrpBaseRate * qty);
 
 	var discAmt = ((taxableAmt * discountPer) / 100);
@@ -286,7 +346,29 @@ function onQtyChange(sellBillDetailNo,discountPer,mrpBaseRate,sgstPer,cgstPer,qt
 	document.getElementById("taxableAmt"+sellBillDetailNo).innerHTML=taxableAmt.toFixed(2);
 	document.getElementById("totalTax"+sellBillDetailNo).innerHTML=totalTax.toFixed(2);
 	document.getElementById("grandTotal"+sellBillDetailNo).innerHTML=Math.round(grandTotal);
+	calcSum();
+	var paidAmt=document.getElementById("paidAmt").value;
+	var totalAmount=document.getElementById("totalAmount").value;
+	var remAmt=totalAmount-paidAmt;
 	
+		document.getElementById("remainingAmt").innerHTML=remAmt.toFixed(2);
+		document.getElementById("remAmt").value=remAmt.toFixed(2);
+		  if(remAmt<0)
+    	{
+    	
+    	 document.getElementById("updateBill").style.display="none";
+    	}else
+    		{
+       	 document.getElementById("updateBill").style.display="block";
+
+    		}
+	
+	}else
+		{
+		alert("Please enter valid quantity!!");
+		document.getElementById("qty"+sellBillDetailNo).value=prevQty;
+		onQtyChange(sellBillDetailNo,discountPer,mrpBaseRate,sgstPer,cgstPer,prevQty,prevQty);
+		}
 }
 </script>
 <!--wrapper-end-->
