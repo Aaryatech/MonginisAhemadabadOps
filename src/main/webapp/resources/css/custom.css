@@ -9,9 +9,9 @@
 	
 }
 abbr[title] {
-    cursor: pointer !important;
-    border-bottom: none !important;
-    text-decoration: none !important;
+    cursor: pointer;
+    border-bottom: none;
+    text-decoration: none;
 }
 
 .search_btn{

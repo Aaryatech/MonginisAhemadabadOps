@@ -178,7 +178,7 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', end
     width: auto;
   }*/
   .cd-tabs-content .table td{
-	  text-align:center !important;
+	  text-align:left !important;
   }
   .form-control{
 	  text-align:center;
