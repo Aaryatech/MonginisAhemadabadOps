@@ -135,7 +135,7 @@ table, th, td {
 							onkeyup="myFunction()" placeholder="Search items by name.."
 							title="Type in a name">
 						</label>
-
+<c:set var="flag" value="0" />
 
 						<div class="clearfix"></div>
 
@@ -172,6 +172,7 @@ table, th, td {
 
 
 							</div>
+							
 							<div class="table-wrap">
 								<table id="table_grid" class="responsive-table">
 									<thead>
@@ -204,6 +205,8 @@ table, th, td {
 
 										<c:forEach items="${grnConfList}" var="grnConfList"
 											varStatus="count">
+											<c:set var="flag" value="1" />
+											
 											<tr id="row${grnConfList.billDetailNo}">
 
 												<td class="col-md-1" style="text-align: center;"><input
@@ -258,7 +261,7 @@ table, th, td {
 												<td class="col-md-1"><input type="text"
 													name="grnqtyauto${grnConfList.billDetailNo}" value="0"
 													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
-													style="text-align: center;"
+													style="text-align: center;" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 													onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
 																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.cessPer},${grnConfList.billQty},${grnConfList.billDetailNo},${grnConfList.discPer})" />
 
@@ -315,7 +318,7 @@ table, th, td {
 						<div class="form-group">
 
 							<c:choose>
-								<c:when test="${isOpen==1}">
+								<c:when test="${isOpen==1 || flag==0}">
 									<button type="submit" class="buttonsaveorder" disabled>
 										<i class="fa fa-check"></i> Save
 									</button>

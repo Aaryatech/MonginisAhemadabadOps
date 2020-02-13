@@ -308,7 +308,7 @@ input:checked+.slider:before {
 								<table id="table_history" class="main-table" border="1px">
 									<thead>
 										<tr class="bgpink">
-											<th class="col-md-1" style="text-align: center;">BILL No</th>
+											<th class="col-md-1" style="text-align: center;">Bill No</th>
 											<th class="col-md-1" style="text-align: center;">Order
 												No</th>
 											<th class="col-md-2" style="text-align: center;">Item
@@ -367,10 +367,13 @@ input:checked+.slider:before {
 																data-id='${itemsList.itemName}'>${itemsList.itemName}</option>
 														</c:forEach>
 													</datalist></td>
-												<td>&nbsp;&nbsp;<input type="text" name="rateTdVal1"
+												<td >&nbsp;&nbsp;<input type="text" name="rateTdVal1"
 													id="rateTdVal1" value="00"
 													oninput="onRateChange(this.value)"
 													style="width: 65px; border-radius: 18px; text-align: center;" />
+													&nbsp;
+													<button class="btn btn-primary" onclick="insertItem1()"
+									disabled="disabled" id="insertItemButton"  >Submit</button>
 												</td>
 											</tr>
 										</table>
@@ -383,9 +386,8 @@ input:checked+.slider:before {
 					<input name="rate1" id="rate1" type="hidden" value="00" />
 					<div class="row">
 						<div class="col-md-12">
-							<center>
-								<button class="btn btn-primary" onclick="insertItem1()"
-									disabled="disabled" id="insertItemButton">Submit Item</button>
+						<%-- 	<center> --%>
+								
 
 								<label style="float: right;margin-top: 13px;margin-left: 40px;font-size: 18px;">Total : &nbsp;<input
 									type="text" id="total" name="total" readonly="readonly"
@@ -393,11 +395,11 @@ input:checked+.slider:before {
 
 
 
-								<button  type="button"
+								<button style="float:left;"  type="button"
 									class="btn btn-primary" onclick="printExBill()" disabled
 									id="printExBill">Print</button>
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <label id="itemNameForZeroMrp"></label>
-							</center>
+						<%-- 	</center> --%>
 							<div align="center" id="loader11"
 								style="display: none; color: BLUE; font-size: 20px;">
 

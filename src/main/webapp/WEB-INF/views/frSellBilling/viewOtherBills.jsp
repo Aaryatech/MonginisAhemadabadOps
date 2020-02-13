@@ -47,7 +47,7 @@
 
 				</div>
 				<div class="col1title" align="right"> 
-						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Purchase Bill" class="btn additem_btn">
 										</a>
 										</div>
 				<form id="validation-form">

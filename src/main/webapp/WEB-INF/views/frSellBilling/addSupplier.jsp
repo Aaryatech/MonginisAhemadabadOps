@@ -77,7 +77,7 @@ table, th, td {
 							
 								<div class="col1title" align="left"><h3>Add Supplier</h3></div>
 								<div class="col1title" align="right"> 
-						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn additem_btn">
 										</a>
 					</div>
 						</div>
@@ -240,15 +240,15 @@ table, th, td {
 									varStatus="count">
 									<tr>
 										 <td class="col-sm-1" style="text-align: right;"><c:out value="${count.index+1}" /></td>
-										<td class="col-md-1" style="text-align: center;"><c:out
+										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${supplierList.suppName}" /></td>
-										<td class="col-md-1" style="text-align: center;"><c:out
+										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${supplierList.suppAddr}" /></td>
-										<td class="col-md-1" style="text-align: center;"><c:out
+										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${supplierList.suppCity}" /></td>
-										<td class="col-md-1" style="text-align: center;"><c:out
+										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${supplierList.mobileNo}" /></td>
-										<td class="col-md-1" style="text-align: center;"><c:out
+										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${supplierList.email}" /></td>
 										<td class="col-md-1" style="text-align: center;"><div >
 												<abbr title='Edit'><i onclick="edit(${supplierList.suppId})" class='fa fa-edit'></i> </abbr>

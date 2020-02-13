@@ -4,6 +4,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 
 <style>
 table, th, td {
@@ -172,7 +173,7 @@ table, th, td {
 									<th class="col-md-1" style="text-align: center;"> Total</th>
 
 									<th class="col-md-1" style="text-align: center;">Status</th>
-									<th class="col-md-1" style="text-align: center;">Remark</th>
+									<th class="col-md-1" style="text-align: center;">Date & Time</th>
 									<th class="col-md-1" style="text-align: center;">Action</th>
 								</tr>
 							</thead>
@@ -185,11 +186,11 @@ table, th, td {
 										<td class="col-sm-1"style="text-align: center;"><c:out value="${billHeader.invoiceNo}" /></td>
 										<td class="col-md-1" style="text-align: left;"><c:out
 												value="${billHeader.billDate}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${billHeader.taxableAmt}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${billHeader.totalTax}" /></td>
-										<td class="col-md-1"><c:out
+										<td class="col-md-1" style="text-align: right;"><c:out
 												value="${billHeader.grandTotal}" /></td>
 										<%-- 	<td><c:out value="${billHeader.status}" /></td> --%>
 										<c:choose>
@@ -230,7 +231,10 @@ table, th, td {
 											</c:when>
 
 										</c:choose>
-										<td class="col-md-1" style="text-align: left;"><c:out value="${billHeader.remark}" /></td>
+										<td class="col-md-1" style="text-align: left;">
+										<fmt:parseDate var="parsedDate" value="${billHeader.remark}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                       <fmt:formatDate var="newFormattedDateString" value="${parsedDate}" pattern="dd-MM-yyyy hh:mm a"/>
+										<c:out value="${newFormattedDateString}" /></td>
 										<td class="col-md-1" style="text-align: center;">
 												<a
 													href="${pageContext.request.contextPath}/showBillDetailProcess/?billNo=${billHeader.billNo}&billDate=${billHeader.billDate}&billStatus=${billHeader.status}&grandTotal=${billHeader.grandTotal}&Inv=${billHeader.invoiceNo}"

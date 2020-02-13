@@ -131,11 +131,11 @@ jQuery(document).ready(function(){
 						<!--table-->
 						<div class="table-responsive">
 							<div class="shInnerwidth">
-
+	<c:if test="${billType eq 'E' }">
 								<button style="float: left; margin-top: 13px;" type="button"
 									class="btn btn-primary" onclick="printExBill()"
 									id="printExBill">Print</button>
-
+   </c:if>
 								<table width="100%" border="0" cellspacing="0" cellpadding="0"
 									id="table_grid6" class="table table-bordered">
 									<tr class="bgpink">
@@ -226,8 +226,10 @@ jQuery(document).ready(function(){
 								</table>
 
 							</div>
+							<c:if test="${billType eq 'E'}">
 							<button style="float: left; margin-top: 13px;" type="button"
 								class="btn btn-primary" onclick="printExBill()" id="printExBill">Print</button>
+								</c:if>
 						</div>
 						<!--table end-->
 

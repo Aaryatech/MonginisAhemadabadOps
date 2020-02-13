@@ -10,6 +10,8 @@
 .topSlide2 {
 	padding: 20px 60px 20px 20px;
 }
+abbr:hover {cursor: pointer;}
+
 </style>
 <div class="sidebarhome">
 	<div class="content mCustomScrollbar">

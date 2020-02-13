@@ -31,6 +31,41 @@ table, th, td {
 .closebtn:hover {
 	color: black;
 }
+/* new*/
+
+.labels_text {
+    background-color: transparent !important;
+    border: 1px solid #8039ff !important;
+    color: #8039ff;
+    padding-left: 1.3rem;
+    padding-right: 1.3rem;
+}
+
+.labels_text {
+    color: #fff;
+    background-color: #6c757d;
+    border-color: #6c757d;
+}
+.labels {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    margin-bottom: 5px;
+    font-size: 1.3rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
 </style>
 <%-- <!DOCTYPE html>
 <html>
@@ -142,18 +177,16 @@ table, th, td {
 				<div class="order-right" align="right">
 
 					<a href="${pageContext.request.contextPath}/showFrOpeningStock"><input
-						type="button" value="Add Opening Stock" class="btn btn-info">
+						type="button" value="Add Opening Stock" class="btn additem_btn">
 					</a>
 
 				</div>
 
-
-
 				<div class="colOuter">
-					<div class="col-md-2">
-						<div class="col1title">Current Month:</div>
+					<div class="col-md-2" style="padding-right: 2px;">
+						Current Month:
 					</div>
-					<div class="col-md-5">
+					<div class="col-md-10" style="padding-left: 2px;">
 
 						<c:forEach items="${category}" var="category" varStatus="count">
 							<c:forEach items="${getMonthList}" var="getMonthList"
@@ -203,8 +236,8 @@ table, th, td {
 													<c:otherwise>
 														<c:set var="month" value=""></c:set>
 													</c:otherwise>
-												</c:choose>
-												<strong> ${category.catName}</strong> : ${month}, 
+												</c:choose><span class="labels labels_text">
+												<strong > ${category.catName}</strong> : ${month} , </span>
 													 
 													 </c:when>
 										</c:choose>
@@ -212,14 +245,11 @@ table, th, td {
 								</c:choose>
 							</c:forEach>
 						</c:forEach>
-
-
 					</div>
-
 				</div>
 				<div class="colOuter">
 					<div class="col-md-1">
-						<div class="col1title">Select Category</div>
+						<div class="col1title">Category</div>
 					</div>
 					<div class="col-md-2">
 						<select name="select_category" class="form-control chosen"
@@ -240,11 +270,8 @@ table, th, td {
 
 						</select>
 					</div>
-
-
-
 					<div class="col-md-1">
-						<div class="col1title">Select View Option</div>
+						<div class="col1title">View Option</div>
 					</div>
 					<div class="col-md-2">
 						<select name="selectStock" class="form-control chosen"
@@ -271,8 +298,6 @@ table, th, td {
 
 						</select>
 					</div>
-
-
 					<div class="col-md-2">
 						<select name="select_rate" class="form-control chosen mob_marg"
 							tabindex="4" id="select_rate" onchange="searchStock()" required>
@@ -317,8 +342,8 @@ table, th, td {
 
 
 				<div class="colOuter" style="display: none" id=select_date>
-					<div class="col-md-2">
-						<div class="col1title">From Date:</div>
+					<div class="col-md-1">
+						<div class="col1title">From:</div>
 					</div>
 					<div class="col-md-2" align="left">
 
@@ -332,8 +357,8 @@ table, th, td {
 
 
 
-					<div class="col-md-2">
-						<div class="col1title">To Date:</div>
+					<div class="col-md-1">
+						<div class="col1title">To:</div>
 					</div>
 					<div class="col-md-2" align="left">
 						<input id="todatepicker" class="texboxitemcode texboxcal"
@@ -657,10 +682,9 @@ table, th, td {
 					});
 </script>
 <script>
-	function showDiv(elem) {
+	function showDiv(elem) {$("#select_date").hide();
 		if (elem.value == 1) {
-			document.getElementById('select_month_year').style = "display:none";
-			document.getElementById('select_date').style = "display:none";
+			document.getElementById('select_month_year').style.display = "none";
 		} else if (elem.value == 2) {
 			document.getElementById('select_month_year').style.display = "block";
 			document.getElementById('select_date').style = "display:none";

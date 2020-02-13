@@ -301,7 +301,7 @@ a:hover {
 																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
 																		class="tableInput" type="text"
-																		onkeydown="myFunction()"
+																		onkeydown="myFunction()" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 																		onchange="onChange('${items.itemRate1}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
@@ -365,7 +365,7 @@ a:hover {
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
-																		class="tableInput" type="text"
+																		class="tableInput" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 																		onchange="onChange('${items.itemRate2}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"
@@ -425,7 +425,7 @@ a:hover {
 																			value='${items.minQty}' /></td>
 																	<td class="col-md-1" style="text-align: center;"><input name='${items.id}'
 																		id='${items.id}' value='${items.itemQty}'
-																		class="tableInput" type="text"
+																		class="tableInput" type="text" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 																		onchange="onChange('${items.itemRate3}',${items.id})">
 
 																		<input type="hidden" value="${items.minQty}"

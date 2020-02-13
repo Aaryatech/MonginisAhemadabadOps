@@ -82,7 +82,7 @@
 								<td><fmt:formatDate pattern="dd-MM-yyyy" value="${dateparsed}" /></td>
 							</tr>
 							<tr>
-								<td>Name</td>
+								<td>Customer</td>
 								<td colspan="3">${billList[0].custName}</td>
 
 							</tr>

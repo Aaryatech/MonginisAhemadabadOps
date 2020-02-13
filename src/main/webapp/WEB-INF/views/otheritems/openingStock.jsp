@@ -9,10 +9,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-
 <title>Monginis</title>
-
-
 <link
 	href="${pageContext.request.contextPath}/resources/css/monginis.css"
 	rel="stylesheet" type="text/css" />
@@ -246,10 +243,10 @@ body {
 						<div class="order-right" align="right">
 
 							<a href="${pageContext.request.contextPath}/addSupplier"><input
-								type="button" value="Add Supplier" class="btn btn-info">
+								type="button" value="Add Supplier" class="btn additem_btn">
 							</a> <a href="${pageContext.request.contextPath}/viewOtherItemBill"><input
 								type="button" value="List Of Other Purchase Bill"
-								class="btn btn-info"> </a>
+								class="btn additem_btn"> </a>
 						</div>
 						<div class="col-md-2">
 							<div class="col1title">
@@ -262,18 +259,18 @@ body {
 						<!--tabNavigation-->
 						<div class="cd-tabs">
 							<!--tabMenu-->
-							<nav>
+						<!-- 	<nav>
 								<ul class="cd-tabs-navigation">
 
 								</ul>
-							</nav>
+							</nav> -->
 							<!--tabMenu-->
 							<ul class="cd-tabs-content">
 								<!--tab1-->
-								<li data-content="tab1" class="selected" onshow="onloadTab(1)">
-									<div class="row">
-										<div class="col-md-9">
-											<div class="control-label">
+								<li data-content="tab1" class="selected" onshow="onloadTab(1)" style="padding: 1px 26px 4px 27px;">
+									<!-- <div class="row"> -->
+									<!-- 	<div class="col-md-9"> -->
+									<!-- 		<div class="control-label"> -->
 
 												<%-- 										<div class="row">
 											<div class="col-md-4">
@@ -317,8 +314,8 @@ body {
 
 								</div> --%>
 
-											</div>
-										</div>
+											<!-- </div> -->
+									<!-- 	</div> -->
 
 
 
@@ -331,7 +328,7 @@ body {
 												id="b1">Add Item</button>
 										</center> --%>
 										</div>
-									</div>
+									<!-- </div> -->
 
 
 									<div class="clearfix"></div> <br /> <!-- Form End -->
@@ -373,20 +370,14 @@ body {
 									</div>
 
 
-
-									<center>
-										<input type="submit" class="btn additem_btn" id="insert"
+                                     <div  style="text-align: center;">
+										<input type="submit" class="btn buttonsaveorder" id="insert"
 											value="Submit">
-										<button type="button" class="btn  buttonsaveorder" id='pdf'
+										<button type="button" class="btn  btn btn-primary" id='pdf'
 											onclick="genPdf()">Generate Pdf</button>
-									</center> <input type="button" id="expExcel" class="btn btn-primary"
+									 <input type="button" id="expExcel" class="btn btn-primary"
 									value="EXPORT TO Excel" onclick="exportToExcel();">
-
-
-
-
-
-
+                                    </div>
 								</li>
 								<!--tab1-->
 
@@ -418,7 +409,11 @@ body {
 
 
 	<script type="text/javascript">
-	
+	$(".form-control").keypress(function(e) {
+		 if (String.fromCharCode(e.which).match(/[^0-9.]/)) {
+			    e.preventDefault();
+			  }
+		});
 		function changeQty(otherStockItemId)
 	{
 		

@@ -244,15 +244,15 @@ body {
 					</div>
 					<br>
 					<div class="col-md-12" align="right"  style="width:100%">
-					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn btn-info">
+					 <a href="${pageContext.request.contextPath}/addOtherItem"><input type="button" value="Add Item" class="btn additem_btn">
 										</a>
-					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn btn-info">
+					 <a href="${pageContext.request.contextPath}/showOthItemStock"><input type="button" value="Other Stock" class="btn additem_btn">
 										</a>
-					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="btn btn-info">
+					 <a href="${pageContext.request.contextPath}/toOtherStock"><input type="button" value="Other Op Stock" class="btn additem_btn">
 										</a>
-						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn additem_btn">
 										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/viewOtherBill"><input type="button" value="List Of Other Purchase Bill" class="btn additem_btn">
 										</a>
 					</div>
 
@@ -354,7 +354,7 @@ body {
 																			class="form-control" name="discPer" id="discPer" value="0"
 																			onkeypress="onQty(event,1)"
 																			oninput="validity.valid||(value='');"></td>
-																		 <td ><input type="button" class="btn additem_btn" value="Add Item" onclick="addItem();"
+																		 <td ><input type="button" class="buttonsaveorder" value="Add Item" onclick="addItem();"
 												id="b1"/> </td>
 																	</tr>
 																</table>
@@ -382,8 +382,6 @@ body {
 
 
 								<div class="clearfix"></div> <br /> <!-- Form End -->
-
-
 
 								<div id="table-scroll" > <!-- class="table-scroll" -->
 									<div id="faux-table" class="faux-table" aria="hidden" style="display: none;"></div>
@@ -463,7 +461,7 @@ body {
 
 
 								<center>
-									<input type="submit" class="btn additem_btn" id="insert"
+									<input type="submit" class="buttonsaveorder" id="insert"
 										 value="Submit" disabled>  
 								 
 								</center>  

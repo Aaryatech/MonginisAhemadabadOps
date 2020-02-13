@@ -192,14 +192,14 @@ select {
 						<div class="left">
 							<form action="${pageContext.request.contextPath}/searchSpCake"
 								method="post" class="form-horizontal" name="form" id="searchform"
-								onsubmit="return validateForm()">
+								>
 
 								<div class="fullform">
 									<div class="cackleft2">Item Code</div>
 									<div class="cackrighttexbox">
 										<input class="texboxitemcode" id="sp_code"
 											value="${specialCake.spCode}" name="sp_code" type="text"  
-											autocomplete="off" list="categories">
+											autocomplete="off" list="categories" required   oninvalid="this.setCustomValidity('Please Enter valid Item Code')">
 
 										<datalist id="categories">
 											<c:forEach items="${configuredSpCodeList}"

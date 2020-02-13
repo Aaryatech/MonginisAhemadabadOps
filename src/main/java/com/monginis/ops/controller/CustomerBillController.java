@@ -164,7 +164,7 @@ public class CustomerBillController {
 		return getSellBillHeaderList;
 
 	}
-String printInvoiceNo;
+String printInvoiceNo;String printBillType;
 String selBillDate;
 	@RequestMapping(value = "/viewBillDetails", method = RequestMethod.GET)
 	public ModelAndView viewBillDetails(HttpServletRequest request, HttpServletResponse response) {
@@ -190,6 +190,8 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 	if(Integer.parseInt(sellBill_no)==getSellBillHeaderList.get(i).getSellBillNo()) {
 		
 		printInvoiceNo=getSellBillHeaderList.get(i).getInvoiceNo();
+		
+		printBillType=getSellBillHeaderList.get(i).getBillType()+"";
 	}
 }
 		try {
@@ -209,7 +211,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 
 			List<SellBillDetail> sellBillDetails = sellBillDetailList.getSellBillDetailList();
 			selectedSellBillDetailList = sellBillDetails;
-			
+			model.addObject("billType", printBillType);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -217,7 +219,7 @@ for(int i=0;i<getSellBillHeaderList.size();i++) {
 			model.addObject("getSellBillDetailList", getSellBillDetailList);
 			model.addObject("sellBillNo", sellBillNo);
 			model.addObject("billDate", billDate);
-
+			model.addObject("billType", "R");
 		}
 
 		System.out.println("Sell Bill Detail " + getSellBillDetailList.toString());

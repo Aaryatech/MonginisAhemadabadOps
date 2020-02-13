@@ -214,13 +214,13 @@ table, th, td {
 											<tr id="row${gvnConfList.billDetailNo}">
 												<td class="col-md-1" style="text-align: center;"><input type="checkbox" 
 													name="select_to_gvn" id="${gvnConfList.billDetailNo}"
-													value="${gvnConfList.billDetailNo}" /></td>
+													value="${gvnConfList.billDetailNo}"  /></td>
 
 												<td class="col-md-3">${gvnConfList.itemName}</td>
 												<td class="col-md-2" style="text-align: right;">${gvnConfList.billQty}</td>
 												<td class="col-md-1" style="text-align: center;"><input type="text"
 													name="gvn_qty${gvnConfList.billDetailNo}"
-													id='gvn_qty${gvnConfList.billDetailNo}' size="5" value="0" 
+													id='gvn_qty${gvnConfList.billDetailNo}' size="5" value="0"  onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 													onkeyup="calcGvn(${gvnConfList.calcBaseRate},${gvnConfList.itemId},${gvnConfList.sgstPer},${gvnConfList.cgstPer},${gvnConfList.cessPer},${gvnConfList.billDetailNo})" /></td>
 
 												<td class="col-md-1" style="text-align: right;">${gvnConfList.rate}</td>
@@ -244,7 +244,7 @@ table, th, td {
                         <br>
 						<div class="form-group">
 
-							<button type="submit" class="buttonsaveorder">
+							<button type="button" class="buttonsaveorder" onclick="checkAnyRecordSelected()">
 								<i class="fa fa-check"></i> Proceed
 							</button>
 							<!--<button type="button" class="btn">Cancel</button>-->
@@ -457,6 +457,23 @@ function showDate(){
 		$('#table_grid td').remove();
 	}
 }
+function checkAnyRecordSelected()
+{
+        if($('#grn_add input:checked').length > 0){
+        	document.getElementById("grn_add").submit();
+
+        }
+        else {
+            alert("No records selected for GVN");
+        }
+}
+$('input[type="checkbox"]').on('click', function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    return false;
+    
+});
 </script>
 
 

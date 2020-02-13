@@ -147,7 +147,7 @@ table, th, td {
 				 <div class="order-right" align="right" style="padding-top:2%; padding-bottom: 2%;">
 
 					<a href="${pageContext.request.contextPath}/getPettyCashTransactions"><input
-						type="button" value="Petty Cash Details" class="btn btn-info">
+						type="button" value="Petty Cash Details" class="btn additem_btn">
 					</a>
 				</div> 
 		<form action="addPettyCash" method="post">
@@ -1444,6 +1444,12 @@ function getData(){
 		window.open("${pageContext.request.contextPath}/exportToExcel");
 		document.getElementById("expExcel").disabled = true;
 	}
+	$(function() {
+		  $('input').on('input', function() {
+		    match = (/(\d{0,9})[^.]*((?:\.\d{0,2})?)/g).exec(this.value.replace(/[^\d.]/g, ''));
+		    this.value = match[1] + match[2];
+		  });
+		});
 </script>
 
 

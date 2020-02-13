@@ -2364,7 +2364,7 @@ label:before{
 								if (data == "") {
 									alert("No records found !!");
 								}
-
+								document.getElementById("clear" + token).disabled = false;
 								var allTotal = 0;
 
 								//**----------Check first Special Opening Stock is gretor Show Prompt!!---------**
@@ -2894,7 +2894,8 @@ label:before{
 			document.getElementById("barcode" + token).value = "";
 			//document.getElementById("itemName" + token).value = "";
 	       // $("#itemName" + token).val("").change();
-
+                  document.getElementById("itemName"+token).value="";
+                    $('.chosen-select').trigger('chosen:updated');
 				
 			//	document.getElementById("generateBill"+token).focus();	
 		} //main function
@@ -2993,8 +2994,7 @@ label:before{
 			var discount = $("#discount" + token).val();
 			var grandAmt = allTotal - (allTotal * (discount / 100));
 
-			document.getElementById("paidAmount" + token).setAttribute('value',
-					grandAmt);
+			document.getElementById("paidAmount" + token).setAttribute('value',grandAmt);
 			var paidAmount = $("#paidAmount" + token).val();
 			var grandMinusPaidAmt = 0;
 			if(grandAmt>0)
@@ -3061,8 +3061,7 @@ label:before{
 		function editQty(key, token, rate) {
 
 			var qty = document.getElementById("billQty1" + token + "" + key).value;
-			document.getElementById("total" + token + "" + key).innerHTML = qty
-					* rate;
+			document.getElementById("total" + token + "" + key).innerHTML = qty* rate;
 
 		}
 
@@ -3274,8 +3273,7 @@ label:before{
 										$("#total" + token).html("0.0");
 										document.getElementById("tot" + token).value="0.0";
 
-										document.getElementById(
-												"paidAmount" + token).value="0.0";
+										document.getElementById("paidAmount" + token).value="0.0";
 
 										$('#grandtotal' + token).html("0.0");
 										document.getElementById(
@@ -3432,6 +3430,40 @@ function pdfPrint(token) {
 			//	document.getElementById("pdfBtn" + token).disabled = true;
 				document.getElementById("clear" + token).disabled = true;
 
+				$('#table_grid' + token + ' td').remove();
+				document.getElementById("discount"+token).value="0.0";
+
+				document.getElementById(
+						"barcode" + token).value="";
+
+				$("#rateTdVal" + token).html("0.0");
+
+				$("#total" + token).html("0.0");
+				document.getElementById("tot" + token).value="0.0";
+
+				
+				document.getElementById("paidAmount" + token).setAttribute('value',0);
+				$('#grandtotal' + token).html("0.0");
+				document.getElementById(
+						"grandtot" + token).value="0.0";
+
+				$('#remAmt' + token).html(0);
+				document.getElementById(
+						"remAmount" + token).value="0.0";
+				document.getElementById("discount"+token).value="0.0";
+				document.getElementById("discountRs"+token).value="0.0";
+
+				document.getElementById(
+						"barcode" + token).focus();
+				document.getElementById(
+						"gstNo"+token).value="";
+				document.getElementById(
+						"custName"+token).value="Cash";
+				document.getElementById(
+						"phoneNo"+token).value="";
+			       $("#rateTdVal"+token).html("0.0");
+			       document.getElementById("itemName"+token).value="";
+                    $('.chosen-select').trigger('chosen:updated');
 			});
 			document.getElementById("barcode" + token).focus();
 		}

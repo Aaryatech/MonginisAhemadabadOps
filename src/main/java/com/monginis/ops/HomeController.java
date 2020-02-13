@@ -111,7 +111,8 @@ public class HomeController {
 	public ModelAndView displayLogin(HttpServletRequest request, HttpServletResponse response) {
 
 		ModelAndView model = new ModelAndView("login");
-
+		//HttpSession session = request.getSession();
+		//session.setAttribute("message", "");
 		logger.info("/login request mapping.");
 
 		return model;
@@ -135,6 +136,7 @@ public class HomeController {
 		HttpSession session = request.getSession();
 		RestTemplate restTemplate = new RestTemplate();
 		try {
+			session.setAttribute("message", "");
 			ArrayList<SchedulerList> schedulerLists = (ArrayList<SchedulerList>) session.getAttribute("schedulerLists");
 			ArrayList<Message> msgList = (ArrayList<Message>) session.getAttribute("msgList");
 			int frId = (Integer) session.getAttribute("frId");
@@ -274,7 +276,7 @@ public class HomeController {
 		if (loginResponse.getLoginInfo().isError()) {
 
 			//model.addObject("message", loginResponse.getLoginInfo().getMessage());
-			session.setAttribute("userLog", "Login failed : Invalid username or password");
+			session.setAttribute("message", "Login failed : Invalid username or password");
 		
 			return "redirect:/";
 

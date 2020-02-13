@@ -113,48 +113,46 @@ table, th, td {
 							<div class="clearfix"></div>
 
 
-							<div id="table-scroll" class="table-scroll responsive-table-one">
-								<div id="faux-table" class="faux-table" aria="hidden">
+							<div id="table-scroll" class="responsive-table-one">
+								<!--  <div id="faux-table" class="faux-table" aria="hidden">
 									<table id="table_grid" class="responsive-table">
-										<thead>
+									<thead>
 											<tr class="bgpink">
 
-												<th style="text-align: center;">Sr.No.</th>
+												<th style="text-align: center;">Sr.</th>
 												<th style="text-align: center;">Invoice No</th>
 												<th style="text-align: center;">Bill Date</th>
 												<th style="text-align: center;">Disc%</th>
 												<th style="text-align: center;">Taxable</th>
 												<th style="text-align: center;">Total Tax</th>
 												<th style="text-align: center;">Grand Total</th>
-												<th style="text-align: center;">Payable AMT</th>
-												<th style="text-align: center;">Paid AMT</th>
-												<th style="text-align: center;">Remaining AMT</th>
+												<th style="text-align: center;">Payable Amt</th>
+												<th style="text-align: center;">Paid Amt</th>
+												<th style="text-align: center;">Remaining Amt</th>
 												<th style="text-align: center;">Payment Mode</th>
 												<th style="text-align: center;">BillType</th>
 
 											</tr>
 										</thead>
 
-										<tbody>
 
-										</tbody>
 									</table>
-								</div>
+								</div>  -->
 								<div>
 									<table id="table_grid" class="responsive-table">
 										<thead>
 											<tr class="bgpink">
 
-												<th style="text-align: center;">Sr.No.</th>
+												<th style="text-align: center;">Sr.</th>
 												<th style="text-align: center;">Invoice No</th>
 												<th style="text-align: center;">Bill Date</th>
 												<th style="text-align: center;">Disc%</th>
 												<th style="text-align: center;">Taxable</th>
-												<th style="text-align: center;">Total Tax</th>
-												<th style="text-align: center;">Grand Total</th>
-												<th style="text-align: center;">Payable AMT</th>
-												<th style="text-align: center;">Paid AMT</th>
-												<th style="text-align: center;">Remaining AMT</th>
+												<th style="text-align: center;">Tax Amt</th>
+												<th style="text-align: center;">Total</th>
+												<th style="text-align: center;">Payable Amt</th>
+												<th style="text-align: center;">Paid Amt</th>
+												<th style="text-align: center;">Remaining Amt</th>
 												<th style="text-align: center;">Payment Mode</th>
 												<th style="text-align: center;">BillType</th>
 
@@ -268,7 +266,7 @@ table, th, td {
 
 														tr
 																.append($(
-																		'<td ></td>')
+																		'<td class="col-md-2"></td>')
 																		.html(
 																				sellBillData.billDate));
 
@@ -364,6 +362,8 @@ table, th, td {
 															billType = "Regular B2B";
 														} else if (sellBillData.billType == 'G') {
 															billType = "Against GRN";
+														} else if (sellBillData.billType == 'P') {
+															billType = "Bill As Per Phy Stock";
 														} 
 
 														tr

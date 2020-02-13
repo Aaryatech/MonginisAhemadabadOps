@@ -107,17 +107,29 @@ public class OtherItemStockController {
 		int isMonthEndAppli = 0;
 		// System.err.println("stock month " +stockHeader.get(0).getMonth());
 		System.err.println("Month " + month);
-		if (stockHeader.size() > 0)
+		if (stockHeader.size() > 0) {
+			if(stockHeader.get(0).getYear()==Calendar.getInstance().get(Calendar.YEAR)) {
 			if (month > stockHeader.get(0).getMonth()) {
 				isMonthEndAppli = 1;
-			} else if (stockHeader.get(0).getMonth() == 12 && month == 1) {
-
+			} else if (stockHeader.get(0).getMonth() == 12 ) {
 				isMonthEndAppli = 1;
-
 			}
+			}else
+			{
+				isMonthEndAppli = 1;
+			}
+		}
 		System.err.println("isMonthEndAppli " + isMonthEndAppli);
 		model.addObject("isMonthEndAppli", isMonthEndAppli);
 		model.addObject("supplierList", supplierList);
+		if (stockHeader.size() > 0) {
+		model.addObject("monthName", stockHeader.get(0).getMonth());
+		model.addObject("year", stockHeader.get(0).getYear());
+		}else
+		{
+			model.addObject("monthName","");
+			model.addObject("year","");
+		}
 		return model;
 
 	}

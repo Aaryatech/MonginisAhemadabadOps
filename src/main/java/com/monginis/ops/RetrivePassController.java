@@ -36,7 +36,7 @@ public class RetrivePassController {
 		ModelAndView model = null;
 		
 	try{
-		
+		HttpSession session = request.getSession();
 		RestTemplate rest = new RestTemplate();
 		String frCode = request.getParameter("username");
 		System.out.println("frCode--------------------------"+frCode);
@@ -54,12 +54,14 @@ public class RetrivePassController {
 			
 			start = Instant.now();
 
-			;
+			session.setAttribute("message", "");
+
 		}else {
 			info.setError(true);
 			model = new ModelAndView("forgetPassUser");
 			info.setMessage("User Not Found");
 			System.err.println(info);
+			session.setAttribute("message", "Franchisee code is not valid!!");
 		}
 	}catch (Exception e) {
 		e.printStackTrace();		
@@ -74,10 +76,10 @@ public class RetrivePassController {
 	@RequestMapping(value = "/OpsOTPVerification", method = RequestMethod.POST)
 	public ModelAndView OTPVerificationByContact(HttpServletRequest request, HttpServletResponse response) {
 
-		System.err.println("Hiii  OpsOTPVerification  ");
+		//System.err.println("Hiii  OpsOTPVerification  ");
 		Info info = new Info();
 		ModelAndView model = null;
-
+		HttpSession session = request.getSession();
 		try {
 			RestTemplate rest = new RestTemplate();
 			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
@@ -91,8 +93,8 @@ public class RetrivePassController {
 
 			if (franchisee.getFrId() == 0) {
 				model = new ModelAndView("forgetPassUser");
-				model.addObject("msg", "Incorrect OTP");
-
+				//model.addObject("msg", "Incorrect OTP");
+				session.setAttribute("message", "Invalid otp!!");
 			} else {				
 				System.err.println("Franchisee----------------" + franchisee);
 				model = new ModelAndView("changePassword");
@@ -129,13 +131,13 @@ public class RetrivePassController {
 
 			if (inf.isError()) {
 				model = new ModelAndView("login");
-				session.setAttribute("changePasswordFail", "Password Not Change");
+				session.setAttribute("message", "Password Not Change");
 				info.setError(true);
 				info.setMessage("User Not Found");
 				System.err.println(info);
 			} else {
 				model = new ModelAndView("login");			
-				session.setAttribute("changePassword", "Password Change Sucessfully");
+				session.setAttribute("message", "Password Changed Sucessfully");
 				info.setError(false);
 				info.setMessage("User Found");
 				System.err.println(info);

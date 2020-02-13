@@ -70,7 +70,7 @@ table, th, td {
 							<input id="itemId" class="form-control"	  name="itemId" value="${itemSup.id}" type="hidden" >
 							<input id="id" class="form-control"	  name="id"  value="${item.id}" type="hidden" >	
 								<div class="col1title" align="right"> 
-						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/showOtherBill"><input type="button" value="Other Purchase Bill" class="btn additem_btn">
 							</a>
 					</div>
 						</div>

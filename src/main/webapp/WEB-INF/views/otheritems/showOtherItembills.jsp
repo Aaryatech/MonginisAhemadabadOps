@@ -251,9 +251,9 @@ body {
 					<br>
 					<div class="order-right" align="right">
 					 
-						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/addSupplier"><input type="button" value="Add Supplier" class="btn additem_btn">
 										</a>
-						<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input type="button" value="List Of Other Purchase Bill" class="btn btn-info">
+						<a href="${pageContext.request.contextPath}/viewOtherItemBill"><input type="button" value="List Of Other Purchase Bill" class="btn additem_btn">
 										</a>
 					</div>
 

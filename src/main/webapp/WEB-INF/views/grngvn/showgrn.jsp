@@ -69,7 +69,7 @@ table, th, td {
 					onsubmit="return confirm('Do you really want to save ?');"
 					name="validation_form" id="validation_form" method="post">
 
-
+<c:set var="flag" value="0" />
 
 					<div id="table-scroll">
 						<!-- class="table-scroll"> -->
@@ -132,8 +132,8 @@ table, th, td {
 
 										<c:forEach items="${grnConfList}" var="grnConfList"
 											varStatus="count">
+												<c:set var="flag" value="1" />
 											<tr>
-
 
 												<td class="col-md-1" style="text-align: center;"><fmt:formatDate
 														pattern="dd-MM-yyyy" value="${grnConfList.billDate}" /></td>
@@ -182,7 +182,7 @@ table, th, td {
 
 												<td class="col-md-1" style="text-align: center;"><input
 													type="text" name="grnqtyauto${grnConfList.billDetailNo}"
-													value="${grnConfList.autoGrnQty}"
+													value="${grnConfList.autoGrnQty}" onkeypress='return event.charCode >= 48 && event.charCode <= 57'
 													id='grnqtyauto${grnConfList.billDetailNo}' size="3"
 													onkeyup="calcGrn(${grnConfList.grnType},${grnConfList.rate},${grnConfList.itemId},
 																	${grnConfList.sgstPer},${grnConfList.cgstPer},${grnConfList.cessPer},${grnConfList.autoGrnQty},${grnConfList.billDetailNo},${grnConfList.discPer},this.value)" />
@@ -246,7 +246,7 @@ table, th, td {
 					</div>
 
 					<c:choose>
-						<c:when test="${isOpen==1}">
+						<c:when test="${isOpen==1 || flag==0}">
 							<input type="submit" class="btn btn-primary" id="submit"
 								value="Save" disabled>
 

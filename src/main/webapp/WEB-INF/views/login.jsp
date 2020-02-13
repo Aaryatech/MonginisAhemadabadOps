@@ -86,41 +86,8 @@
     <input type="submit" value="Upload">
 </form> -->
 
-				<%
-					if (session.getAttribute("changePassword") != null) {
-				%>
-
-				<div class="messages messagesErr">Password Change Successfully</div>
-
-				<%
-					}
-
-					session.removeAttribute("changePassword");
-				%>
-
-				<%
-					if (session.getAttribute("changePasswordFail") != null) {
-				%>
-
-				<div class="messages messagesErr">Password Not Changed</div>
-
-				<%
-					}
-
-					session.removeAttribute("changePasswordFail");
-				%>
-				<%
-					if (session.getAttribute("userLog") != null) {
-				%>
-
-				<div class="messages messagesErr">${userLog}</div>
-
-				<%
-					}
-
-					session.removeAttribute("userLog");
-				%>
-				<c:if test="${not empty message}">
+			
+				<c:if test="${not empty message && message!=''}">
 					<!-- here would be a message with a result of processing -->
 					<div class="messages messagesErr">${message}</div>
 
@@ -143,11 +110,11 @@
 
 
 								<div class="loginfildset">
-									<input class="texboxlogin" placeholder="Username" required
-										name="username" type="text" data-rule-required="true"> 
+									<input class="texboxlogin" placeholder="Username"    
+										name="username" type="text" required> 
 								</div>
 								<div class="loginfildset">
-									<input class="texboxlogin" placeholder="Password"
+									<input class="texboxlogin" placeholder="Password"  
 										name="password" type="password" required>
 								</div>
 

@@ -185,18 +185,20 @@ table, th, td {
 						</select>
 					</div>
 					<div id="crnt_stk_btn">
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<input name="search_stock" class="buttonsaveorder" value="Search"
 							type="button" onclick="searchStock()">
 					</div>
 
 					<div class="col-md-1">
-						<button type="button" class="btn  buttonsaveorder" id='pdf'
+						<button type="button" class="buttonsaveorder" id='pdf'
 							onclick="genPdf()" disabled>PDF</button>
 					</div>
+					 <div class="col-md-2" >
+						<b>Month: ${monthName}/${year}</b>
+			     	</div>
 					</div>
-
-
+	              
 				</div>
 
 
@@ -252,29 +254,29 @@ table, th, td {
 							type="text">
 					</div>
 					
-					<div class="col-md-2">
+					<div class="col-md-1">
 						<input name="search_stock" class="buttonsaveorder" value="Search"
 							type="button" onclick="searchStock()">
 					</div>
 
 					<div class="col-md-1">
-						<button type="button" class="btn  buttonsaveorder" id='date_pdf'
+						<button type="button" class="buttonsaveorder" id='date_pdf'
 							onclick="genPdf()" disabled>PDF</button>
 					</div>
-
+                   
 				</div>
 
 
 
+				<div class="row">
+					<div class="col-md-12">
+						<!--table-->
+						<form action="otherItemMonthEndProcess" method="POST">
+							<div class="clearfix"></div>
+							<div class="col-md-10" id="loader" style="display: none">
+				
 
-				<div class="colOuter">
-					<div class="col1">
-						<div class="col1title"></div>
-					</div>
-					<div class="col2">
-
-
-						<div align="center" id="loader" style="display: none">
+						<div align="center" >
 
 							<span>
 								<h4>
@@ -284,30 +286,10 @@ table, th, td {
 								class="l-3"></span> <span class="l-4"></span> <span class="l-5"></span>
 							<span class="l-6"></span>
 						</div>
-					</div>
-
-
-
 				</div>
 
-				<div class="col-md-2">
-					<div class="col1title">
-						<b>${monthName}</b> <b>${year}</b>
-					</div>
-				</div>
-
-
-
-
-
-
-				<div class="row">
-					<div class="col-md-12">
-						<!--table-->
-						<form action="otherItemMonthEndProcess" method="POST">
-							<div class="clearfix"></div>
-							<div class="col-md-9"></div>
-							<label for="search" class="col-md-3" id="search"> <i
+			
+							<label for="search" class="col-md-3" id="search" style="float: right; "> <i
 								class="fa fa-search" style="font-size: 20px"></i> <input
 								type="text" id="myInput" onkeyup="myFunction()"
 								style="border-radius: 25px;" placeholder="Search items by name"
@@ -340,7 +322,7 @@ table, th, td {
 											</tr>
 										</thead></table></div> --%>
 								<!-- </div> -->
-								<div><!-- class="table-wrap" -->
+								<!-- class="table-wrap" -->
 									<table id="table_grid" class="responsive-table"><!-- class="main-table" -->
 										<thead>
 											<tr class="bgpink">
@@ -366,10 +348,9 @@ table, th, td {
 										</tbody>
 									</table>
 
-								</div>
 
 							</div>
-							<div class="col-sm-3  controls">
+							<div class="col-md-1">
 								<input type="button" id="expExcel" class="btn btn-primary"
 									value="EXPORT TO Excel" onclick="exportToExcel();"
 									disabled="disabled">
@@ -377,11 +358,9 @@ table, th, td {
 
 
 
-							<div class="colOuter" id="monthEnd" style="display: none">
-								<div class="col2full">
+							<div class="col-md-2" id="monthEnd" style="display: none;">
 									<input name="" class="buttonsaveorder" value="Month End"
 										type="submit">
-								</div>
 							</div>
 						</form>
 					</div>
@@ -563,7 +542,7 @@ table, th, td {
 
 							if (isMonthClose == 1 && selectedStockOption == 1)
 
-								document.getElementById('monthEnd').style.display = "block";
+								document.getElementById('monthEnd').style= "display:block;float:right;";
 
 							//alert(isMonthClose+ "month close");			
 							//alert(data.monthClosed);	alert(selectedStockOption);
@@ -614,25 +593,25 @@ table, th, td {
 
 												if (isMonthClose == 0) {
 													tr
-															.append($('<td class="col-md-1"> <input type=text min=0 style=width:80px; readonly onchange= updateStockDiff('
+															.append($('<td class="col-md-1"> <input type="text" readonly min=0 style="width:80px;text-align:center;"  onchange= updateStockDiff('
 																	+ item.id
 																	+ ','
 																	+ curStock
-																	+ ')  id= damagedStock'
+																	+ ')  id=damagedStock'
 																	+ item.id
 																	+ ' name=damagedStock'
 																	+ item.id
 																	+ ' value = '
 																	+ item.damagedStock
-																	+ '></td>'));
+																	+ '   ></td>'));
 												} else {
 
 													tr
-															.append($('<td class="col-md-1"> <input type=text min=0 style=width:80px;   onchange= updateStockDiff('
+															.append($('<td class="col-md-1"> <input type=text min=0 style="width:80px;text-align:center;"   onchange= updateStockDiff('
 																	+ item.id
 																	+ ','
 																	+ curStock
-																	+ ')  id= damagedStock'
+																	+ ')  id=damagedStock'
 																	+ item.id
 																	+ ' name=damagedStock'
 																	+ item.id

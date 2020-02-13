@@ -127,7 +127,7 @@ jQuery(document).ready(function(){
 				</div>
 				<br />
 	<form name="editSellBill" id="editSellBill" method="post"
-					action="${pageContext.request.contextPath}/editSellBill">
+					action="${pageContext.request.contextPath}/editSellBill"   	onsubmit="updateBill.disabled = true; if((document.getElementById('remAmt').value)>0){ return confirm('Do you want to update bill?(Paid amount is less than invoice amount)');}else{ return confirm('Do you want to update bill ?');}">
 			<input type="hidden" name="sellBillNo" id="sellBillNo" value="${sellBillNo}" />
 				<input type="hidden" name="billDate" id="billDate" value="${billDate}" />
 				<input type="hidden" name="totalAmount" id="totalAmount" />
@@ -141,7 +141,7 @@ jQuery(document).ready(function(){
 								<table width="100%" border="0" cellspacing="0" cellpadding="0"
 									id="table_grid6" class="table table-bordered">
 									<tr class="bgpink">
-										<th>Index</th>
+										<th>Sr</th>
 										<th>Item Name
 										</th>
 										<th>Qty
@@ -178,15 +178,15 @@ jQuery(document).ready(function(){
 											<tr>
 												<td><c:out value="${count.index+1}" /></td>
 											
-												<td align="left"><c:out value="${sellBill.itemName}" /></td><td align="left">${sellBill.qty}</td>
-												<td align="left"><input type="number" min="0" class="form-control" style="width:90px;" value="${sellBill.qty}" id="qty${sellBill.sellBillDetailNo}" name="qty${sellBill.sellBillDetailNo}"  oninput="onQtyChange(${sellBill.sellBillDetailNo},${sellBillHeader.discountPer},${sellBill.mrpBaseRate},${sellBill.sgstPer},${sellBill.cgstPer},${sellBill.qty},this.value)"/></td>
-												<td align="left"><c:out value="${sellBill.mrpBaseRate}" /></td>
-												<td align="left" id="taxableAmt${sellBill.sellBillDetailNo}"><c:out value="${sellBill.taxableAmt}" /></td>
-												<td align="left"><c:out
+												<td style="text-align:left;"><c:out value="${sellBill.itemName}" /></td><td style="text-align:right;">${sellBill.qty}</td>
+												<td style="text-align:center;"><input type="number" min="0"  class="form-control" style="width:90px;" value="${sellBill.qty}" id="qty${sellBill.sellBillDetailNo}" name="qty${sellBill.sellBillDetailNo}"  oninput="onQtyChange(${sellBill.sellBillDetailNo},${sellBillHeader.discountPer},${sellBill.mrpBaseRate},${sellBill.sgstPer},${sellBill.cgstPer},${sellBill.qty},this.value)"      onkeydown="if(event.key==='.'){event.preventDefault();}" onpaste="let pasteData = event.clipboardData.getData('text'); if(pasteData){pasteData.replace(/[^0-9]*/g,'');} "/></td>
+												<td style="text-align:right;"><c:out value="${sellBill.mrpBaseRate}" /></td>
+												<td style="text-align:right;" id="taxableAmt${sellBill.sellBillDetailNo}"><c:out value="${sellBill.taxableAmt}" /></td>
+												<td style="text-align:right;"><c:out
 														value="${sellBill.sgstPer+sellBill.cgstPer}" /></td>
-												<td align="left" id="totalTax${sellBill.sellBillDetailNo}"><c:out value="${sellBill.totalTax}" /></td>
-												<td align="left" ><c:out value="${sellBill.mrp}" /></td>
-												<td align="left" id="grandTotal${sellBill.sellBillDetailNo}" class="sum">
+												<td style="text-align:right;" id="totalTax${sellBill.sellBillDetailNo}"><c:out value="${sellBill.totalTax}" /></td>
+												<td style="text-align:right;" ><c:out value="${sellBill.mrp}" /></td>
+												<td style="text-align:right;" id="grandTotal${sellBill.sellBillDetailNo}" class="sum">
 													<fmt:formatNumber type="number" minFractionDigits="0"
 														maxFractionDigits="0" value="${sellBill.grandTotal}" groupingUsed="false"/>
 												</td>
@@ -327,8 +327,11 @@ function calcSum() {
 }
 </script>
 <script>
+
 function onQtyChange(sellBillDetailNo,discountPer,mrpBaseRate,sgstPer,cgstPer,prevQty,qty){
 	var paidAmount=document.getElementById('paidAmt').value;
+	var val = parseFloat(qty);
+	
 	if(parseFloat(qty)>=0){
 	var taxableAmt =parseFloat(mrpBaseRate * qty);
 
