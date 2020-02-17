@@ -578,11 +578,11 @@ abbr:hover {cursor: pointer;}
 
 							<a href="${pageContext.request.contextPath}/getGrnBillDetail"><i
 								class="fa fa-plus-circle icon"></i> GRN Based on Expiry of
-								product </a>
+								Product </a>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/showGrn"><i
-								class="fa fa-plus-circle icon"></i> GRN Based on stock FIFO
-								method </a>
+								class="fa fa-plus-circle icon"></i> GRN Based on Stock FIFO
+								Method </a>
 							<div class="clearfix"></div>
 							<a href="${pageContext.request.contextPath}/displayGrn"><i
 								class="fa fa-search-plus icon"></i> View GRN </a>
