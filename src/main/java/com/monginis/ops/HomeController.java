@@ -50,6 +50,7 @@ import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetConfiguredSpDayCk;
 import com.monginis.ops.model.GetFrItem;
 import com.monginis.ops.model.GetFrMenus;
+import com.monginis.ops.model.Info;
 import com.monginis.ops.model.LatestNewsResponse;
 import com.monginis.ops.model.Menu;
 import com.monginis.ops.model.Message;
@@ -257,7 +258,9 @@ public class HomeController {
 		ModelAndView model = new ModelAndView("login");
 
 		HttpSession session = request.getSession();
-
+		String redirect = null;
+		
+		
 		String frCode = request.getParameter("username");
 		String frPassword = request.getParameter("password");
 
@@ -282,8 +285,23 @@ public class HomeController {
 
 		} else {
 
+			//Server Status 1=Down, 0=OK
+			map = new LinkedMultiValueMap<String, Object>();
+			map.add("serverStatus", "server_status");
+			Info siteStatus = restTemplate.postForObject(Constant.URL+"/checkServerStatus",map,
+					Info.class);
+			
+			if(siteStatus.isError()==false) {
+				System.out.println("Site Reponse-------"+siteStatus.isError()+"----"+siteStatus.getMessage());
+				
+					redirect = "redirect:/siteOff"; 
+				}else {
+					redirect = "redirect:/home";
+				}
+			
 			// getting fr menus
 			MultiValueMap<String, Object> menuMap = new LinkedMultiValueMap<String, Object>();
+			menuMap = new LinkedMultiValueMap<String, Object>();
 			menuMap.add("frId", loginResponse.getFranchisee().getFrId());
 
 			GetFrMenus getFrMenus = restTemplate.postForObject(Constant.URL + "/getFrConfigMenus", menuMap,
@@ -463,7 +481,7 @@ public class HomeController {
 			model.addObject("frDetails", loginResponse.getFranchisee());
 			model.addObject("url", Constant.MESSAGE_IMAGE_URL);
 			model.addObject("info", loginResponse.getLoginInfo());
-			return "redirect:/home";
+			return redirect;
 		}
 
 	}
@@ -500,6 +518,35 @@ public class HomeController {
 		logger.info("/login request mapping.");
 
 		model.addObject("message", "Session timeout ! Please login again . . .");
+
+		return model;
+
+	}
+	
+	
+	@RequestMapping(value = "/siteOff", method = RequestMethod.GET)
+	public ModelAndView siteOff(HttpSession session, HttpServletRequest request, HttpServletResponse res) {
+
+		ModelAndView model = new ModelAndView("maintenance");
+
+		System.out.println("Logout Controller User Logout");
+		
+		HttpServletResponse response = (HttpServletResponse) res;
+
+		response.setHeader("Cache-Control", "no-cache");
+		response.setHeader("Pragma", "no-cache");
+		response.setDateHeader("Expires", -1);
+
+		session.removeAttribute("frId");
+
+		session.removeAttribute("frDetails");
+		session.invalidate();
+		session.setMaxInactiveInterval(0);
+
+		System.out.println("session ID  after expire " + session.getId());
+		logger.info("/Site Down.");
+
+		model.addObject("message", "Server Down");
 
 		return model;
 
