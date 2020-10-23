@@ -222,7 +222,7 @@ public class SellReport {
 			map.add("isGrn", isGrn);
 			System.out.println("map " + map);
 			RestTemplate rest = new RestTemplate();
-			GrnGvnReport grnGvnReportList[] = rest.postForObject(Constant.URL + "/grnGvnReport", map,
+			GrnGvnReport grnGvnReportList[] = rest.postForObject(Constant.URL + "/grnGvnReportNew", map,
 					GrnGvnReport[].class);
 
 			getgrnReport = new ArrayList<>(Arrays.asList(grnGvnReportList));
@@ -236,14 +236,18 @@ public class SellReport {
 			rowData.add("Sr No");
 			rowData.add("Grn Gvn Date");
 			rowData.add("Item Name");
-			rowData.add("Tax Rate");
-			rowData.add("Taxable Amt");
-			rowData.add("Total Tax");
-			rowData.add("Grn Gvn Amt");
-			rowData.add("Approved Taxable Amt");
-			rowData.add("Approved CGST Amt");
-			rowData.add("Approved SGST Amt");
-			rowData.add("Approved IGST Amt");
+			rowData.add("Grn Qty");
+			rowData.add("Approved Qty");
+			
+//			rowData.add("Tax Rate");
+//			rowData.add("Taxable Amt");
+//			rowData.add("Total Tax");
+//			rowData.add("Grn Gvn Amt");
+//			rowData.add("Approved Taxable Amt");
+//			rowData.add("Approved CGST Amt");
+//			rowData.add("Approved SGST Amt");
+//			rowData.add("Approved IGST Amt");
+			
 			rowData.add("Approved Grand Total");
 			expoExcel.setRowData(rowData);
 
@@ -257,6 +261,7 @@ public class SellReport {
 			float appIgstSum = 0.0f;
 			float totalTax = 0.0f;
 			float grandTotal = 0.0f;
+			int qty=0,aprQty=0;
 
 			for (int i = 0; i < getgrnReport.size(); i++) {
 				expoExcel = new ExportToExcel();
@@ -271,17 +276,24 @@ public class SellReport {
 				appIgstSum = appIgstSum + getgrnReport.get(i).getAprIgstRs();
 				grandTotal = grandTotal + getgrnReport.get(i).getAprGrandTotal();
 
+				qty=qty+ getgrnReport.get(i).getGrnGvnQty();
+				aprQty=aprQty+ getgrnReport.get(i).getAprQtyAcc();
+				
 				rowData.add("" + (i + 1));
 				rowData.add("" + getgrnReport.get(i).getGrnGvnDate());
 				rowData.add("" + getgrnReport.get(i).getItemName());
-				rowData.add("" + getgrnReport.get(i).getTaxRate());
-				rowData.add("" + roundUp(getgrnReport.get(i).getTaxableAmt()));
-				rowData.add("" + roundUp(getgrnReport.get(i).getTotalTax()));
-				rowData.add("" + roundUp(getgrnReport.get(i).getGrnGvnAmt()));
-				rowData.add("" + roundUp(getgrnReport.get(i).getAprTaxableAmt()));
-				rowData.add("" + roundUp(getgrnReport.get(i).getAprCgstRs()));
-				rowData.add("" + roundUp(getgrnReport.get(i).getAprSgstRs()));
-				rowData.add("" + roundUp(getgrnReport.get(i).getAprIgstRs()));
+				rowData.add("" + getgrnReport.get(i).getGrnGvnQty());
+				rowData.add("" + getgrnReport.get(i).getAprQtyAcc());
+				
+//				rowData.add("" + getgrnReport.get(i).getTaxRate());
+//				rowData.add("" + roundUp(getgrnReport.get(i).getTaxableAmt()));
+//				rowData.add("" + roundUp(getgrnReport.get(i).getTotalTax()));
+//				rowData.add("" + roundUp(getgrnReport.get(i).getGrnGvnAmt()));
+//				rowData.add("" + roundUp(getgrnReport.get(i).getAprTaxableAmt()));
+//				rowData.add("" + roundUp(getgrnReport.get(i).getAprCgstRs()));
+//				rowData.add("" + roundUp(getgrnReport.get(i).getAprSgstRs()));
+//				rowData.add("" + roundUp(getgrnReport.get(i).getAprIgstRs()));
+				
 				rowData.add("" + roundUp(getgrnReport.get(i).getAprGrandTotal()));
 
 				expoExcel.setRowData(rowData);
@@ -295,15 +307,18 @@ public class SellReport {
 			rowData.add("");
 			rowData.add("Total");
 			rowData.add("");
-			rowData.add("");
+			rowData.add(""+qty);
+			rowData.add(""+aprQty);
+			
 
-			rowData.add("" + roundUp(taxableAmt));
-			rowData.add("" + roundUp(totalTax));
-			rowData.add("" + roundUp(grnGvnAmt));
-			rowData.add("" + roundUp(appTaxableAmt));
-			rowData.add("" + roundUp(appCgstSum));
-			rowData.add("" + roundUp(appSgstSum));
-			rowData.add("" + roundUp(appIgstSum));
+//			rowData.add("" + roundUp(taxableAmt));
+//			rowData.add("" + roundUp(totalTax));
+//			rowData.add("" + roundUp(grnGvnAmt));
+//			rowData.add("" + roundUp(appTaxableAmt));
+//			rowData.add("" + roundUp(appCgstSum));
+//			rowData.add("" + roundUp(appSgstSum));
+//			rowData.add("" + roundUp(appIgstSum));
+
 			rowData.add("" + roundUp(grandTotal));
 
 			expoExcel.setRowData(rowData);
@@ -314,8 +329,8 @@ public class SellReport {
 			session.setAttribute("excelNameNew", "GrnGvnReport");
 			session.setAttribute("reportNameNew", "View GRN Report");
 			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-			session.setAttribute("mergeUpto1", "$A$1:$L$1");
-			session.setAttribute("mergeUpto2", "$A$2:$L$2");
+			session.setAttribute("mergeUpto1", "$A$1:$F$1");
+			session.setAttribute("mergeUpto2", "$A$2:$F$2");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -338,7 +353,7 @@ public class SellReport {
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
 			map.add("isGrn", isGrn);
 			RestTemplate rest = new RestTemplate();
-			getgrnReport = rest.postForObject(Constant.URL + "/grnGvnReport", map, List.class);
+			getgrnReport = rest.postForObject(Constant.URL + "/grnGvnReportNew", map, List.class);
 
 			map = new LinkedMultiValueMap<String, Object>();
 
@@ -390,7 +405,7 @@ public class SellReport {
 			map.add("isGrn", isGrn);
 			System.out.println("map " + map);
 			RestTemplate rest = new RestTemplate();
-			GrnGvnReport[] grnGvnReportList = rest.postForObject(Constant.URL + "/grnGvnReport", map,
+			GrnGvnReport[] grnGvnReportList = rest.postForObject(Constant.URL + "/grnGvnReportNew", map,
 					GrnGvnReport[].class);
 
 			getgrnReport = new ArrayList<GrnGvnReport>(Arrays.asList(grnGvnReportList));
@@ -404,14 +419,19 @@ public class SellReport {
 			rowData.add("Sr No");
 			rowData.add("Grn Gvn Date");
 			rowData.add("Item Name");
-			rowData.add("Tax Rate");
-			rowData.add("Taxable Amt");
-			rowData.add("Total Tax");
-			rowData.add("Grn Gvn Amt");
-			rowData.add("Approved Taxable Amt");
-			rowData.add("Approved CGST Amt");
-			rowData.add("Approved SGST Amt");
-			rowData.add("Approved IGST Amt");
+			rowData.add("Gvn Qty");
+			rowData.add("Approved Qty");
+			
+			
+//			rowData.add("Tax Rate");
+//			rowData.add("Taxable Amt");
+//			rowData.add("Total Tax");
+//			rowData.add("Grn Gvn Amt");
+//			rowData.add("Approved Taxable Amt");
+//			rowData.add("Approved CGST Amt");
+//			rowData.add("Approved SGST Amt");
+//			rowData.add("Approved IGST Amt");
+			
 			rowData.add("Approved Grand Total");
 			expoExcel.setRowData(rowData);
 
@@ -425,6 +445,7 @@ public class SellReport {
 			float appIgstSum = 0.0f;
 			float totalTax = 0.0f;
 			float grandTotal = 0.0f;
+			int qty=0,aprQty=0;
 
 			for (int i = 0; i < getgrnReport.size(); i++) {
 				expoExcel = new ExportToExcel();
@@ -433,14 +454,19 @@ public class SellReport {
 				rowData.add("" + (i + 1));
 				rowData.add("" + getgrnReport.get(i).getGrnGvnDate());
 				rowData.add("" + getgrnReport.get(i).getItemName());
-				rowData.add("" + getgrnReport.get(i).getTaxRate());
-				rowData.add("" + getgrnReport.get(i).getTaxableAmt());
-				rowData.add("" + getgrnReport.get(i).getTotalTax());
-				rowData.add("" + getgrnReport.get(i).getGrnGvnAmt());
-				rowData.add("" + getgrnReport.get(i).getAprTaxableAmt());
-				rowData.add("" + getgrnReport.get(i).getAprCgstRs());
-				rowData.add("" + getgrnReport.get(i).getAprSgstRs());
-				rowData.add("" + getgrnReport.get(i).getAprIgstRs());
+				
+				rowData.add("" + getgrnReport.get(i).getGrnGvnQty());
+				rowData.add("" + getgrnReport.get(i).getAprQtyAcc());
+				
+//				rowData.add("" + getgrnReport.get(i).getTaxRate());
+//				rowData.add("" + getgrnReport.get(i).getTaxableAmt());
+//				rowData.add("" + getgrnReport.get(i).getTotalTax());
+//				rowData.add("" + getgrnReport.get(i).getGrnGvnAmt());
+//				rowData.add("" + getgrnReport.get(i).getAprTaxableAmt());
+//				rowData.add("" + getgrnReport.get(i).getAprCgstRs());
+//				rowData.add("" + getgrnReport.get(i).getAprSgstRs());
+//				rowData.add("" + getgrnReport.get(i).getAprIgstRs());
+				
 				rowData.add("" + getgrnReport.get(i).getAprGrandTotal());
 
 				taxableAmt = taxableAmt + getgrnReport.get(i).getTaxableAmt();
@@ -451,6 +477,8 @@ public class SellReport {
 				appSgstSum = appSgstSum + getgrnReport.get(i).getAprSgstRs();
 				appIgstSum = appIgstSum + getgrnReport.get(i).getAprIgstRs();
 				grandTotal = grandTotal + getgrnReport.get(i).getAprGrandTotal();
+				qty=qty+getgrnReport.get(i).getGrnGvnQty();
+				aprQty=aprQty+getgrnReport.get(i).getAprQtyAcc();
 
 				expoExcel.setRowData(rowData);
 				exportToExcelList.add(expoExcel);
@@ -461,15 +489,17 @@ public class SellReport {
 			rowData.add("");
 			rowData.add("Total");
 			rowData.add("");
-			rowData.add("");
+			rowData.add(""+qty);
+			rowData.add(""+aprQty);
 
-			rowData.add("" + roundUp(taxableAmt));
-			rowData.add("" + roundUp(totalTax));
-			rowData.add("" + roundUp(grnGvnAmt));
-			rowData.add("" + roundUp(appTaxableAmt));
-			rowData.add("" + roundUp(appCgstSum));
-			rowData.add("" + roundUp(appSgstSum));
-			rowData.add("" + roundUp(appIgstSum));
+//			rowData.add("" + roundUp(taxableAmt));
+//			rowData.add("" + roundUp(totalTax));
+//			rowData.add("" + roundUp(grnGvnAmt));
+//			rowData.add("" + roundUp(appTaxableAmt));
+//			rowData.add("" + roundUp(appCgstSum));
+//			rowData.add("" + roundUp(appSgstSum));
+//			rowData.add("" + roundUp(appIgstSum));
+			
 			rowData.add("" + roundUp(grandTotal));
 
 			expoExcel.setRowData(rowData);
@@ -480,8 +510,8 @@ public class SellReport {
 			session.setAttribute("excelNameNew", "GrnGvnReport");
 			session.setAttribute("reportNameNew", "View GVN Report");
 			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-			session.setAttribute("mergeUpto1", "$A$1:$L$1");
-			session.setAttribute("mergeUpto2", "$A$2:$L$2");
+			session.setAttribute("mergeUpto1", "$A$1:$F$1");
+			session.setAttribute("mergeUpto2", "$A$2:$F$2");
 		} catch (Exception e) {
 			e.printStackTrace();
 
@@ -503,7 +533,7 @@ public class SellReport {
 			map.add("toDate", DateConvertor.convertToYMD(toDate));
 			map.add("isGrn", isGrn);
 			RestTemplate rest = new RestTemplate();
-			getgrnReport = rest.postForObject(Constant.URL + "/grnGvnReport", map, List.class);
+			getgrnReport = rest.postForObject(Constant.URL + "/grnGvnReportNew", map, List.class);
 
 			map = new LinkedMultiValueMap<String, Object>();
 

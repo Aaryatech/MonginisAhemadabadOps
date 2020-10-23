@@ -70,16 +70,16 @@
 						<div class="col1">
 							<div class="col1title">
 								<b><span class="frm_txt">From</span></b> <input
-									id="fromdatepicker" autocomplete="off" class="texboxitemcode texboxcal float_l"
-									placeholder="From Date" name="from_Date" type="text"
-									size="35">
+									id="fromdatepicker" autocomplete="off"
+									class="texboxitemcode texboxcal float_l"
+									placeholder="From Date" name="from_Date" type="text" size="35">
 							</div>
 						</div>
 						<div class="col2">
 							<div class="col1title">
-								<b><span class="frm_txt">To</span></b> <input id="todatepicker" class="texboxitemcode texboxcal float_l"
-									autocomplete="off" placeholder="To Date" name="to_Date"
-									type="text" size="35">
+								<b><span class="frm_txt">To</span></b> <input id="todatepicker"
+									class="texboxitemcode texboxcal float_l" autocomplete="off"
+									placeholder="To Date" name="to_Date" type="text" size="35">
 							</div>
 						</div>
 						<input type="hidden" name="frId" id="frId" value="${frId}">
@@ -104,15 +104,16 @@
 						<div class="clearfix"></div>
 
 
-						<div id="table-scroll" >
-							<div id="faux-table" class="faux-table" aria="hidden"style="display: none;">
+						<div id="table-scroll">
+							<div id="faux-table" class="faux-table" aria="hidden"
+								style="display: none;">
 								<table id="table_grid1" class="main-table" border="1">
 									<thead>
 										<tr class="bgpink">
 
 
 
-											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
+											<!-- <th class="col-md-1" style="text-align: center;">Sr.No.</th>
 											<th class="col-md-1" style="text-align: center;">Grn Gvn
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Item_Name</th>
@@ -132,7 +133,20 @@
 												SGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												IGST Amt</th>
+											<th class="col-md-1" style="text-align: center;">Total</th> -->
+
+
+
+											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
+											<th class="col-md-1" style="text-align: center;">Grn Gvn
+												Date</th>
+											<th class="col-md-2" style="text-align: center;">Item_Name</th>
+											<th class="col-md-1" style="text-align: center;">Grn Gvn
+												Qty</th>
+											<th class="col-md-1" style="text-align: center;">Aprv.
+												Qty</th>
 											<th class="col-md-1" style="text-align: center;">Total</th>
+
 										</tr>
 									</thead>
 
@@ -143,13 +157,13 @@
 								</table>
 							</div>
 							<div>
-								<table id="table_grid"  class="responsive-table" border="1">
+								<table id="table_grid" class="responsive-table" border="1">
 									<thead>
 										<tr class="bgpink">
 
 
 
-											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
+											<!-- <th class="col-md-1" style="text-align: center;">Sr.No.</th>
 											<th class="col-md-1" style="text-align: center;">Grn Gvn
 												Date</th>
 											<th class="col-md-1" style="text-align: center;">Item_Name</th>
@@ -169,7 +183,19 @@
 												SGST Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												IGST Amt</th>
+											<th class="col-md-1" style="text-align: center;">Total</th> -->
+
+
+											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
+											<th class="col-md-1" style="text-align: center;">Grn Gvn
+												Date</th>
+											<th class="col-md-2" style="text-align: center;">Item_Name</th>
+											<th class="col-md-1" style="text-align: center;">Grn Gvn
+												Qty</th>
+											<th class="col-md-1" style="text-align: center;">Aprv.
+												Qty</th>
 											<th class="col-md-1" style="text-align: center;">Total</th>
+
 										</tr>
 									</thead>
 
@@ -216,7 +242,130 @@
 <!--easyTabs-->
 
 
+
+
 <script type="text/javascript">
+	function searchSellBill() {
+
+		$('#table_grid td').remove();
+
+		var isValid = validate();
+
+		if (isValid) {
+			//document.getElementById('btn_pdf').style.display = "block";
+			var fromDate = document.getElementById("fromdatepicker").value;
+			var toDate = document.getElementById("todatepicker").value;
+
+			$
+					.getJSON(
+							'${getgrnReport}',
+							{
+
+								fromDate : fromDate,
+								toDate : toDate,
+								ajax : 'true',
+
+							},
+							function(data) {
+
+								if (data == "") {
+									alert("No records found !!");
+									document.getElementById("expExcel").disabled = true;
+								}
+
+								var qtyTotal = 0;
+								var aprQtyTotal = 0;
+								var grandTotal = 0;
+								$
+										.each(
+												data,
+												function(key, list) {
+
+													document
+															.getElementById("expExcel").disabled = false;
+													document
+															.getElementById('range').style.display = 'block';
+
+													var tr = $('<tr></tr>');
+
+													tr
+													.append($(
+															'<td  style="text-align:left"></td>')
+															.html(
+																	key + 1));
+											tr
+													.append($(
+															'<td class="col-md-1" style="text-align:center"></td>')
+															.html(
+																	list.grnGvnDate));
+											tr
+													.append($(
+															'<td class="col-md-1" style="text-align:left"></td>')
+															.html(
+																	list.itemName));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:right"></td>')
+																	.html(
+																			list.grnGvnQty));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:right"></td>')
+																	.html(
+																			list.aprQtyAcc));
+
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:right"></td>')
+																	.html(
+																			list.aprGrandTotal
+																					.toFixed(2)));
+
+													qtyTotal = qtyTotal
+															+ list.grnGvnQty;
+
+													aprQtyTotal = aprQtyTotal
+															+ list.aprQtyAcc;
+													
+													grandTotal = grandTotal
+															+ list.aprGrandTotal;
+													
+													$('#table_grid tbody')
+															.append(tr);
+
+												})
+
+								var tr = "<tr>";
+								var total = "<td colspan='3'>&nbsp;&nbsp;&nbsp;<b> Total</b></td>";
+
+								var qtyTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+										+ qtyTotal.toFixed(2);
+								+"</b></td>";
+								var aprQtyTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+										+ aprQtyTotal.toFixed(2);
+								+"</b></td>";
+
+								var grand = "<td style='text-align:right'><b>&nbsp;&nbsp;&nbsp;"
+										+ grandTotal.toFixed(2);
+								+"</b></td>";
+
+								var trclosed = "</tr>";
+
+								$('#table_grid tbody').append(tr);
+								$('#table_grid tbody').append(total);
+								$('#table_grid tbody').append(qtyTot);
+								$('#table_grid tbody').append(aprQtyTot)
+								$('#table_grid tbody').append(grand);
+								$('#table_grid tbody').append(trclosed);
+
+							});
+
+		}
+	}
+</script>
+
+
+<!-- <script type="text/javascript">
 	function searchSellBill() {
 
 		$('#table_grid td').remove();
@@ -406,7 +555,11 @@
 
 		}
 	}
-</script>
+</script> -->
+
+
+
+
 <script type="text/javascript">
 	function validate() {
 
