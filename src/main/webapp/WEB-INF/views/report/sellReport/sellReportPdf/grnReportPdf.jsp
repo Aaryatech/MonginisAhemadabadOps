@@ -55,9 +55,10 @@ th {
 				<th style="text-align: center;">Sr no.</th>
 				<th style="text-align: center;">Date</th>
 				<th style="text-align: center;">Item Name</th>
-				<th style="text-align: center;">Grn Qty</th>
+				<th style="text-align: center;">GRN Qty</th>
+				<th style="text-align: center;">GRN Amt</th>
 				<th style="text-align: center;">Apr Qty</th>
-				<th style="text-align: center;">Apr Total</th>
+				<th style="text-align: center;">Apr Amt</th>
 
 			</tr>
 		</thead>
@@ -85,6 +86,10 @@ th {
 					<td style="text-align: right"><c:out
 							value="${reportList.grnGvnQty}" /></td>
 
+					<td style="text-align: right"><fmt:formatNumber type="number"
+							maxFractionDigits="2" minFractionDigits="2"
+							value="${reportList.grnGvnAmt}" /></td>
+
 					<td style="text-align: right"><c:out
 							value="${reportList.aprQtyAcc}" /></td>
 
@@ -99,6 +104,8 @@ th {
 
 					<c:set var="aprTotal"
 						value="${aprTotal + reportList.aprGrandTotal}" />
+
+					<c:set var="total" value="${total + reportList.grnGvnAmt}" />
 
 					<%-- <td style="text-align: right"><c:out
 							value="${reportList.taxRate}" /></td>
@@ -156,6 +163,8 @@ th {
 				<td colspan='3'><b>Total</b></td>
 				<td style="text-align: right"><b><fmt:formatNumber
 							type="number" maxFractionDigits="2" value="${qty}" /></b></td>
+				<td style="text-align: right"><b><fmt:formatNumber
+							type="number" maxFractionDigits="2" value="${total}" /></b></td>
 				<td style="text-align: right"><b><fmt:formatNumber
 							type="number" maxFractionDigits="2" value="${aprQty}" /></b></td>
 				<td style="text-align: right"><b><fmt:formatNumber

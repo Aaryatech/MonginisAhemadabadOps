@@ -234,9 +234,10 @@ public class SellReport {
 			List<String> rowData = new ArrayList<String>();
 
 			rowData.add("Sr No");
-			rowData.add("Grn Gvn Date");
+			rowData.add("GRN Date");
 			rowData.add("Item Name");
-			rowData.add("Grn Qty");
+			rowData.add("GRN Qty");
+			rowData.add("GRN Amt");
 			rowData.add("Approved Qty");
 			
 //			rowData.add("Tax Rate");
@@ -283,6 +284,7 @@ public class SellReport {
 				rowData.add("" + getgrnReport.get(i).getGrnGvnDate());
 				rowData.add("" + getgrnReport.get(i).getItemName());
 				rowData.add("" + getgrnReport.get(i).getGrnGvnQty());
+				rowData.add("" + getgrnReport.get(i).getGrnGvnAmt());
 				rowData.add("" + getgrnReport.get(i).getAprQtyAcc());
 				
 //				rowData.add("" + getgrnReport.get(i).getTaxRate());
@@ -308,6 +310,7 @@ public class SellReport {
 			rowData.add("Total");
 			rowData.add("");
 			rowData.add(""+qty);
+			rowData.add(""+grnGvnAmt);
 			rowData.add(""+aprQty);
 			
 
@@ -329,8 +332,8 @@ public class SellReport {
 			session.setAttribute("excelNameNew", "GrnGvnReport");
 			session.setAttribute("reportNameNew", "View GRN Report");
 			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-			session.setAttribute("mergeUpto1", "$A$1:$F$1");
-			session.setAttribute("mergeUpto2", "$A$2:$F$2");
+			session.setAttribute("mergeUpto1", "$A$1:$G$1");
+			session.setAttribute("mergeUpto2", "$A$2:$G$2");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -417,9 +420,10 @@ public class SellReport {
 			List<String> rowData = new ArrayList<String>();
 
 			rowData.add("Sr No");
-			rowData.add("Grn Gvn Date");
+			rowData.add("GVN Date");
 			rowData.add("Item Name");
-			rowData.add("Gvn Qty");
+			rowData.add("GVN Qty");
+			rowData.add("GVN Amt");
 			rowData.add("Approved Qty");
 			
 			
@@ -456,6 +460,7 @@ public class SellReport {
 				rowData.add("" + getgrnReport.get(i).getItemName());
 				
 				rowData.add("" + getgrnReport.get(i).getGrnGvnQty());
+				rowData.add("" + getgrnReport.get(i).getGrnGvnAmt());
 				rowData.add("" + getgrnReport.get(i).getAprQtyAcc());
 				
 //				rowData.add("" + getgrnReport.get(i).getTaxRate());
@@ -490,6 +495,7 @@ public class SellReport {
 			rowData.add("Total");
 			rowData.add("");
 			rowData.add(""+qty);
+			rowData.add(""+grnGvnAmt);
 			rowData.add(""+aprQty);
 
 //			rowData.add("" + roundUp(taxableAmt));
@@ -510,8 +516,8 @@ public class SellReport {
 			session.setAttribute("excelNameNew", "GrnGvnReport");
 			session.setAttribute("reportNameNew", "View GVN Report");
 			session.setAttribute("searchByNew", "From Date: " + fromDate + "  To Date: " + toDate + " ");
-			session.setAttribute("mergeUpto1", "$A$1:$F$1");
-			session.setAttribute("mergeUpto2", "$A$2:$F$2");
+			session.setAttribute("mergeUpto1", "$A$1:$G$1");
+			session.setAttribute("mergeUpto2", "$A$2:$G$2");
 		} catch (Exception e) {
 			e.printStackTrace();
 

@@ -65,38 +65,45 @@
 					</div>
 				</div>
 
+
+				<div class="row">
+					<div class="col-md-1">
+						<b><span>From</span></b>
+					</div>
+					<div class="col-md-4">
+						<input id="fromdatepicker" autocomplete="off"
+							class="texboxitemcode texboxcal " placeholder="From Date"
+							name="from_Date" type="text" size="35">
+					</div>
+
+					<div class="col-md-1">
+						<b><span>To</span></b>
+					</div>
+					<div class="col-md-4">
+						<input id="todatepicker" class="texboxitemcode texboxcal"
+							autocomplete="off" placeholder="To Date" name="to_Date"
+							type="text" size="35">
+					</div>
+
+
+					<div class="col-md-2">
+						<button class="btn search_btn" onclick="searchSellBill()">HTML
+							View</button>
+
+						<button class="btn btn-primary" value="PDF" id="PDFButton"
+							onclick="genPdf()">PDF</button>
+					</div>
+
+				</div>
+
+
 				<div class="colOuter">
 					<div align="center">
-						<div class="col1">
-							<div class="col1title">
-								<b><span class="frm_txt">From</span></b> <input
-									id="fromdatepicker" autocomplete="off"
-									class="texboxitemcode texboxcal float_l"
-									placeholder="From Date" name="from_Date" type="text" size="35">
-							</div>
-						</div>
-						<div class="col2">
-							<div class="col1title">
-								<b><span class="frm_txt">To</span></b> <input id="todatepicker"
-									class="texboxitemcode texboxcal float_l" autocomplete="off"
-									placeholder="To Date" name="to_Date" type="text" size="35">
-							</div>
-						</div>
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 						<input type="hidden" name="frName" id="frName" value="${frName}">
 
 					</div>
-
-
-					<div align="center" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
-							View</button>
-						<%--   &nbsp;&nbsp;&nbsp;
-		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
-						<br>
-					</div>
+					
 				</div>
 				<div class="row">
 					<div class="col-md-12">
@@ -165,13 +172,15 @@
 
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-1" style="text-align: center;">Gvn
+											<th class="col-md-1" style="text-align: center;">GVN
 												Date</th>
-											<th class="col-md-2" style="text-align: center;">Item_Name</th>
-											<th class="col-md-1" style="text-align: center;">Gvn Qty</th>
+											<th class="col-md-3" style="text-align: center;">Item_Name</th>
+											<th class="col-md-1" style="text-align: center;">GVN Qty</th>
+											<th class="col-md-1" style="text-align: center;">GVN Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												Qty</th>
-											<th class="col-md-1" style="text-align: center;">Total</th>
+											<th class="col-md-1" style="text-align: center;">Aprv.
+												Amt</th>
 
 
 
@@ -252,6 +261,7 @@
 								}
 
 								var qty = 0;
+								var gvnTotal = 0;
 								var aprQty = 0;
 								var grandTotal = 0;
 
@@ -287,6 +297,16 @@
 																	'<td class="col-md-1" style="text-align:right"></td>')
 																	.html(
 																			list.grnGvnQty));
+
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:right"></td>')
+																	.html(
+																			list.grnGvnAmt
+																					.toFixed(2)));
+													gvnTotal = gvnTotal
+															+ list.grnGvnAmt;
+
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
@@ -319,6 +339,11 @@
 								var qtyTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ qty.toFixed(2);
 								+"</b></td>";
+
+								var gvnTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+										+ gvnTotal.toFixed(2);
+								+"</b></td>";
+
 								var aprQtyTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ aprQty.toFixed(2);
 								+"</b></td>";
@@ -332,6 +357,7 @@
 								$('#table_grid tbody').append(tr);
 								$('#table_grid tbody').append(total);
 								$('#table_grid tbody').append(qtyTot);
+								$('#table_grid tbody').append(gvnTot);
 								$('#table_grid tbody').append(aprQtyTot)
 								$('#table_grid tbody').append(grand);
 								$('#table_grid tbody').append(trclosed);

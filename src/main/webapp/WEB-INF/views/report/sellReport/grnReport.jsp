@@ -5,7 +5,6 @@
 <jsp:include page="/WEB-INF/views/include/header.jsp"></jsp:include>
 
 
-
 <!--datepicker-->
 <script type="text/javascript"
 	src="${pageContext.request.contextPath}/resources/js/jquery-ui.js"></script>
@@ -65,22 +64,41 @@
 					</div>
 				</div>
 
+				<div class="row">
+					<div class="col-md-1">
+						<b><span >From</span></b>
+					</div> 
+					<div class="col-md-4" >
+						<input id="fromdatepicker" autocomplete="off"
+							class="texboxitemcode texboxcal " placeholder="From Date"
+							name="from_Date" type="text" size="35">
+					</div>
+
+					 <div class="col-md-1">
+						<b><span >To</span></b>
+					</div> 
+					<div class="col-md-4" >
+						<input id="todatepicker" class="texboxitemcode texboxcal "
+							autocomplete="off" placeholder="To Date" name="to_Date"
+							type="text" size="35">
+					</div>
+
+					<div class="col-md-2">
+						<button class="btn search_btn" onclick="searchSellBill()">HTML
+							View</button>
+
+						<button class="btn btn-primary" value="PDF" id="PDFButton"
+							onclick="genPdf()">PDF</button>
+					</div>
+				</div>
+
 				<div class="colOuter">
 					<div align="center">
 						<div class="col1">
-							<div class="col1title">
-								<b><span class="frm_txt">From</span></b> <input
-									id="fromdatepicker" autocomplete="off"
-									class="texboxitemcode texboxcal float_l"
-									placeholder="From Date" name="from_Date" type="text" size="35">
-							</div>
+							<div class="col1title"></div>
 						</div>
 						<div class="col2">
-							<div class="col1title">
-								<b><span class="frm_txt">To</span></b> <input id="todatepicker"
-									class="texboxitemcode texboxcal float_l" autocomplete="off"
-									placeholder="To Date" name="to_Date" type="text" size="35">
-							</div>
+							<div class="col1title"></div>
 						</div>
 						<input type="hidden" name="frId" id="frId" value="${frId}">
 						<input type="hidden" name="frName" id="frName" value="${frName}">
@@ -89,15 +107,19 @@
 
 
 					<div align="center" class="right_btn">
-						<button class="btn search_btn" onclick="searchSellBill()">HTML
-							View</button>
+
+
+
 						<%--   &nbsp;&nbsp;&nbsp;
 		    	     <a href='${pageContext.request.contextPath}/pdf?reportURL=showSellTaxBillwiseReportpPdf' id="btn_pdf" class="btn search_btn" style="display: none">PDF</a> --%>
-						<button class="btn btn-primary" value="PDF" id="PDFButton"
-							onclick="genPdf()">PDF</button>
+
 						<br>
 					</div>
 				</div>
+
+
+
+
 				<div class="row">
 					<div class="col-md-12">
 						<!--table-->
@@ -138,15 +160,15 @@
 
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-1" style="text-align: center;">Grn Gvn
+											<th class="col-md-1" style="text-align: center;">GRN
 												Date</th>
-											<th class="col-md-2" style="text-align: center;">Item_Name</th>
-											<th class="col-md-1" style="text-align: center;">Grn Gvn
-												Qty</th>
+											<th class="col-md-3" style="text-align: center;">Item_Name</th>
+											<th class="col-md-1" style="text-align: center;">GRN Qty</th>
+											<th class="col-md-1" style="text-align: center;">GRN Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												Qty</th>
-											<th class="col-md-1" style="text-align: center;">Total</th>
-
+											<th class="col-md-1" style="text-align: center;">Aprv.
+												Amt</th>
 										</tr>
 									</thead>
 
@@ -187,14 +209,15 @@
 
 
 											<th class="col-md-1" style="text-align: center;">Sr.No.</th>
-											<th class="col-md-1" style="text-align: center;">Grn Gvn
+											<th class="col-md-1" style="text-align: center;">GRN
 												Date</th>
-											<th class="col-md-2" style="text-align: center;">Item_Name</th>
-											<th class="col-md-1" style="text-align: center;">Grn Gvn
-												Qty</th>
+											<th class="col-md-3" style="text-align: center;">Item_Name</th>
+											<th class="col-md-1" style="text-align: center;">GRN Qty</th>
+											<th class="col-md-1" style="text-align: center;">GRN Amt</th>
 											<th class="col-md-1" style="text-align: center;">Aprv.
 												Qty</th>
-											<th class="col-md-1" style="text-align: center;">Total</th>
+											<th class="col-md-1" style="text-align: center;">Aprv.
+												Amt</th>
 
 										</tr>
 									</thead>
@@ -275,6 +298,7 @@
 
 								var qtyTotal = 0;
 								var aprQtyTotal = 0;
+								var grnTotal = 0;
 								var grandTotal = 0;
 								$
 										.each(
@@ -289,25 +313,33 @@
 													var tr = $('<tr></tr>');
 
 													tr
-													.append($(
-															'<td  style="text-align:left"></td>')
-															.html(
-																	key + 1));
-											tr
-													.append($(
-															'<td class="col-md-1" style="text-align:center"></td>')
-															.html(
-																	list.grnGvnDate));
-											tr
-													.append($(
-															'<td class="col-md-1" style="text-align:left"></td>')
-															.html(
-																	list.itemName));
+															.append($(
+																	'<td  style="text-align:left"></td>')
+																	.html(
+																			key + 1));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:center"></td>')
+																	.html(
+																			list.grnGvnDate));
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:left"></td>')
+																	.html(
+																			list.itemName));
+
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
 																	.html(
 																			list.grnGvnQty));
+
+													tr
+															.append($(
+																	'<td class="col-md-1" style="text-align:right"></td>')
+																	.html(
+																			list.grnGvnAmt
+																					.toFixed(2)));
 													tr
 															.append($(
 																	'<td class="col-md-1" style="text-align:right"></td>')
@@ -324,12 +356,15 @@
 													qtyTotal = qtyTotal
 															+ list.grnGvnQty;
 
+													grnTotal = grnTotal
+															+ list.grnGvnAmt;
+
 													aprQtyTotal = aprQtyTotal
 															+ list.aprQtyAcc;
-													
+
 													grandTotal = grandTotal
 															+ list.aprGrandTotal;
-													
+
 													$('#table_grid tbody')
 															.append(tr);
 
@@ -341,6 +376,11 @@
 								var qtyTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ qtyTotal.toFixed(2);
 								+"</b></td>";
+
+								var grnTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
+										+ grnTotal.toFixed(2);
+								+"</b></td>";
+
 								var aprQtyTot = "<td style='text-align:right'>&nbsp;&nbsp;&nbsp;<b>"
 										+ aprQtyTotal.toFixed(2);
 								+"</b></td>";
@@ -354,6 +394,7 @@
 								$('#table_grid tbody').append(tr);
 								$('#table_grid tbody').append(total);
 								$('#table_grid tbody').append(qtyTot);
+								$('#table_grid tbody').append(grnTot);
 								$('#table_grid tbody').append(aprQtyTot)
 								$('#table_grid tbody').append(grand);
 								$('#table_grid tbody').append(trclosed);

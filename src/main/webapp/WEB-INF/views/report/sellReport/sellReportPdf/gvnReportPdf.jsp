@@ -30,7 +30,7 @@ th {
 <body onload="myFunction()">
 	<h4 align="center">GVN Report</h4>
 	<div align="center">
-		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp; ${fromDate}
+		<h6>${frName}&nbsp;&nbsp;&nbsp;&nbsp;From&nbsp;${fromDate}
 			&nbsp;To &nbsp; ${toDate}</h6>
 	</div>
 	<table width="100%" border="1" cellspacing="0" cellpadding="1"
@@ -57,7 +57,8 @@ th {
 				<th style="text-align: center;">Sr no.</th>
 				<th style="text-align: center;">Date</th>
 				<th style="text-align: center;">Item Name</th>
-				<th style="text-align: center;">Qty</th>
+				<th style="text-align: center;">GVN Qty</th>
+				<th style="text-align: center;">GVN Amt</th>
 				<th style="text-align: center;">Aprv. Qty</th>
 				<th style="text-align: center;">Apr Total</th>
 
@@ -86,6 +87,12 @@ th {
 
 				<td style="text-align: right"><c:out
 						value="${reportList.grnGvnQty}" /></td>
+
+				<td style="text-align: right"><fmt:formatNumber type="number"
+						maxFractionDigits="2" minFractionDigits="2"
+						value="${reportList.grnGvnAmt}" /></td>
+				<c:set var="total" value="${total + reportList.grnGvnAmt}" />
+
 
 				<td style="text-align: right"><c:out
 						value="${reportList.aprQtyAcc}" /></td>
@@ -154,6 +161,9 @@ th {
 				<td style="text-align: right"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${qty}" /></b></td>
+				<td style="text-align: right"><b><fmt:formatNumber
+							type="number" minFractionDigits="2" maxFractionDigits="2"
+							value="${total}" /></b></td>
 				<td style="text-align: right"><b><fmt:formatNumber
 							type="number" minFractionDigits="2" maxFractionDigits="2"
 							value="${aprQty}" /></b></td>
