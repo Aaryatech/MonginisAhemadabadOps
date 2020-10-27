@@ -3306,9 +3306,12 @@ label:before{
 	</script>
 	<script type="text/javascript">
 		function validation(token) {
+			//alert('ok');
 			var custName = $("#custName" + token).val();
 			var phoneNo = $("#phoneNo" + token).val();
 			var itemName = $("#itemName" + token).val();
+			var rowCount = $('#table_grid1 tr').length;
+			
 			var isValid = true;
 			if (custName == "" || custName == null) {
 				isValid = false;
@@ -3316,10 +3319,7 @@ label:before{
 			} else if (phoneNo != "" && phoneNo.length != 10) {
 				isValid = false;
 				alert("Please Enter Valid Phone No");
-			} else if (itemName == "" || itemName == null) {
-				isValid = false;
-				alert("Please Enter Select Item");
-			}
+			} 
 			return isValid;
 		}
 

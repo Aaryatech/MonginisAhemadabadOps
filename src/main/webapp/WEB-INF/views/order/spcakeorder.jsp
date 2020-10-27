@@ -395,8 +395,21 @@ select {
 		<div class="col2full" >
                 <select name="spFlavour"  tabindex="-1"  onchange="onChangeFlavour()"id="spFlavour" required>
                   <option value="">Select Flavour</option>
+                  
+                  
                    <c:forEach items="${flavoursList}" var="flavoursList">
+                   	<%-- <c:set value="0" var="find"></c:set>
+                   
+                    <c:forEach items="${specialCake.erpLinkcode}" var="mspFlav">
+                   	<c:if test="${flavoursList.spfId==mspFlav}">
+                   	  	<c:set value="1" var="find"></c:set>
+                   	</c:if>
+                   
+                   </c:forEach>
+                   
+                   	<c:if test="${find==1}"> --%>
                      <option value="${flavoursList.spfId}">${flavoursList.spfName}</option>
+                  <%--    </c:if> --%>
                    </c:forEach>
                   
                  </select>
