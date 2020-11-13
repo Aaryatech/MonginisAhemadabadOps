@@ -2,31 +2,30 @@ package com.monginis.ops.model;
 
 import java.io.Serializable;
 
-
-public class SlabwiseBill{
+public class SlabwiseBill {
 
 	private String itemHsncd;
 
 	private float taxPer;
-	
+
 	private float billQty;
 
 	private float taxableAmt;
-	
+
 	private float cgstAmt;
-	
+
 	private float sgstAmt;
-	
+
+	private float igstAmt;
+
 	private float cessAmt;
-	
+
 	private float totalTax;
-	
+
 	private float grandTotal;
 
 	private int billDetailNo;
-	
-	
-	
+
 	public float getCessAmt() {
 		return cessAmt;
 	}
@@ -107,10 +106,19 @@ public class SlabwiseBill{
 		this.grandTotal = grandTotal;
 	}
 
+	public float getIgstAmt() {
+		return igstAmt;
+	}
+
+	public void setIgstAmt(float igstAmt) {
+		this.igstAmt = igstAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "SlabwiseBill [itemHsncd=" + itemHsncd + ", taxPer=" + taxPer + ", billQty=" + billQty + ", taxableAmt="
-				+ taxableAmt + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", cessAmt=" + cessAmt + ", totalTax="
-				+ totalTax + ", grandTotal=" + grandTotal + ", billDetailNo=" + billDetailNo + "]";
+				+ taxableAmt + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", cessAmt="
+				+ cessAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", billDetailNo=" + billDetailNo
+				+ "]";
 	}
 }
