@@ -25,4 +25,10 @@ public class Common {
 
 	}
 
+	public static void sendTextMessage(int i, String cName, String frName, String string, String string2,
+			float grandTotal, String string3, String cPhone) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
