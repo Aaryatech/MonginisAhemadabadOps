@@ -107,7 +107,7 @@ jQuery(document).ready(function(){
 
 				<div class="row">
 					<div class="col-md-12">
-						<h2 class="pageTitle">Bill Credit Note Report</h2>
+						<h2 class="pageTitle">Franchise Summary Report</h2>
 					</div>
 				</div>
 

@@ -726,7 +726,7 @@ abbr:hover {cursor: pointer;}
 								href="${pageContext.request.contextPath}/showSaleReportBySubCategory"><i
 								class="fa fa-files-o icon"></i> Subcategory Summery Report</a> <a
 								href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
-								class="fa fa-files-o icon"></i> Bill Credit Note Summery Report</a>
+								class="fa fa-files-o icon"></i> Franchise Summary Report</a>
 							<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i
 								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a>
 
