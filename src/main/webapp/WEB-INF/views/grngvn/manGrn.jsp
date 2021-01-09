@@ -241,6 +241,12 @@ table, th, td {
 														<td class="col-md-1" style="text-align: center;"><c:out
 																value="GRN 3(100%)"></c:out></td>
 													</c:when>
+													
+														<c:when test="${grnConfList.grnType==5}">
+														<td class="col-md-1" style="text-align: center;"><c:out
+																value="GRN 4(90%)"></c:out></td>
+													</c:when>
+													
 													<c:otherwise>
 														<c:out value="No GRN"></c:out>
 													</c:otherwise>
@@ -317,19 +323,19 @@ table, th, td {
 
 						<div class="form-group">
 
-							<c:choose>
+							 <c:choose>
 								<c:when test="${isOpen==1 || flag==0}">
 									<button type="submit" class="buttonsaveorder" disabled>
 										<i class="fa fa-check"></i> Save
 									</button>
 
 								</c:when>
-								<c:otherwise>
+								<c:otherwise> 
 									<button type="submit" class="buttonsaveorder">
 										<i class="fa fa-check"></i> Save
 									</button>
-								</c:otherwise>
-							</c:choose>
+								 </c:otherwise>
+							</c:choose> 
 
 							<!--<button type="button" class="btn">Cancel</button>-->
 
@@ -479,6 +485,27 @@ table, th, td {
 			//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
 		
 			}
+	 		if(grnType==5){
+
+			// var grnQty=$("#grnqtyauto"+itemId).val();
+				/* $("#hidden_auto_qty"+itemId).html(grnQty);
+
+				var hidden=$("#hidden_auto_qty"+itemId).val();
+				alert(hidden); */
+				
+				var grnRate=$("#grn_rate"+detailId).text();
+				
+				grnBaseRate = baseRate * 90 / 100;
+				
+				grnRate=(rate * 90) / 100;
+				
+				//var grnAmt=parseFloat(grnQty)*parseFloat(grnRate);
+				//grnAmt=grnAmt*75/100;	
+				//$("#grn_amt"+itemId).html(grnAmt.toFixed(2));
+			
+				}
+		 
+	 
 			if(grnType==2){
 			
 			

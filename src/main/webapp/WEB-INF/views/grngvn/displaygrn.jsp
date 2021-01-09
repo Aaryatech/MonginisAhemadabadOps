@@ -118,6 +118,9 @@
 												<c:when test="${grnList.grnType==4}">
 													<td class="col-md-1"><c:out value="GRN 3"></c:out></td>
 												</c:when>
+												<c:when test="${grnList.grnType==5}">
+													<td class="col-md-1"><c:out value="GRN 4"></c:out></td>
+												</c:when>
 											</c:choose>
 
 											<td class="col-md-1"><c:out value="${grnList.itemRate}" /></td>

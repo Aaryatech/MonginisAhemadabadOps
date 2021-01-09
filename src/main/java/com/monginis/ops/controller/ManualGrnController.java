@@ -380,6 +380,12 @@ System.err.println("Inside Manual Grn POST method ");
 					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
 				}
 
+				if (objShowGrnList.get(i).getGrnType() == 5) {
+					grnBaseRate = baseRate * 90 / 100;
+					grnRate = (objShowGrnList.get(i).getRate() * 90) / 100;
+					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
+				}
+				
 				if (objShowGrnList.get(i).getGrnType() == 2 || objShowGrnList.get(i).getGrnType() == 4) {
 					// postGrnGvn.setGrnGvnAmt(roundUp(grnAmt));
 
