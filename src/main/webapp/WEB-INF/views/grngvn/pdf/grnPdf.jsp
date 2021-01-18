@@ -186,6 +186,11 @@
 																	<c:set var="rate" value="${(detail.baseRate-(detail.baseRate*(detail.itemMrp/100)))* 0.75}"></c:set>
 
 																</c:when>
+																<c:when test="${detail.grnType==5}">
+																	<c:set var="type" value="GRN 4(90%)"></c:set>
+																	<c:set var="rate" value="${(detail.baseRate-(detail.baseRate*(detail.itemMrp/100)))* 0.75}"></c:set>
+
+																</c:when>
 																<c:when test="${detail.grnType==2 or detail.grnType==4}">
 																	<c:set var="type" value="GRN 3(100%)"></c:set>
 																	<c:set var="rate" value="${detail.baseRate}"></c:set>
