@@ -662,7 +662,7 @@ abbr:hover {cursor: pointer;}
 <!--2nav-->
 
 <!--4nav-->
-<div id="mySidenav4" class="sidenav">
+<div id="mySidenav4" class="sidenav" >
 	<div class="topSlide">
 		<div class="topSlide2">
 			<a href="javascript:void(0)" class="closebtn" onClick="closeNav4()"><img
@@ -724,9 +724,10 @@ abbr:hover {cursor: pointer;}
 								class="fa fa-files-o icon"></i>Itemwise-Billwise-Datewise
 								Purchase Report</a> <a
 								href="${pageContext.request.contextPath}/showSaleReportBySubCategory"><i
-								class="fa fa-files-o icon"></i> Subcategory Summery Report</a> <a
+								class="fa fa-files-o icon"></i> Subcategory Summery Report</a> 
+					<%-- 			<a
 								href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
-								class="fa fa-files-o icon"></i> Franchise Summary Report</a>
+								class="fa fa-files-o icon"></i> Franchise Summary Report</a> --%>
 							<a href="${pageContext.request.contextPath}/viewItemWiseReport"><i
 								class="fa fa-files-o icon"></i>Itemwise Purchase Report</a>
 
@@ -780,9 +781,9 @@ abbr:hover {cursor: pointer;}
 							<a href="${pageContext.request.contextPath}/showSpAdvanceReport"><i
 								class="fa fa-files-o icon"></i>SP Advance Report</a><%--  <a
 								href="${pageContext.request.contextPath}/showSpAdvTaxReport"><i
-								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> --%> <a
+								class="fa fa-files-o icon"></i>Sp Advance Tax Report</a> --%><%--  <a
 								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
-								class="fa fa-files-o icon"></i>Credit Note Report</a> <a
+								class="fa fa-files-o icon"></i>Credit Note Report</a>  --%><a
 								href="${pageContext.request.contextPath}/showCumulativeCrnNotes"><i
 								class="fa fa-files-o icon"></i>Cumulative Credit Note</a> <a
 								href="${pageContext.request.contextPath}/grnReport"><i
@@ -830,7 +831,8 @@ abbr:hover {cursor: pointer;}
 
 						</div>
 					</li>
-<li class="small-box">
+
+						<li class="small-box">
 								
 								
 								<div class="ibox">
@@ -843,6 +845,28 @@ abbr:hover {cursor: pointer;}
 						<a href="${pageContext.request.contextPath}/hsnWiseReport"><i class="fa fa-files-o icon"></i> HSN Code wise Report (Sale)</a>
 						
 						<a href="${pageContext.request.contextPath}/viewDailySalesReport"><i class="fa fa-files-o icon"></i> Daily Sales Report</a>
+						</div>
+						
+						</li>
+						<li class="small-box">
+								
+								
+								<div class="ibox">
+						<div class="ibox-head">
+						<div class="ibox-title">Summary  Report</div>
+						</div>
+						<a
+								href="${pageContext.request.contextPath}/showFranchiseeWiseBillReport"><i
+								class="fa fa-files-o icon"></i> Franchise Summary Report</a>
+								 <a
+								href="${pageContext.request.contextPath}/showInsertCreditNote"><i
+								class="fa fa-files-o icon"></i>Credit Note Report</a> 
+								<a
+								href="${pageContext.request.contextPath}/FranchiseeSellDatewiseReport"><i
+								class="fa fa-files-o icon"></i>Datewise Sales Report</a> 
+								<a
+								href="${pageContext.request.contextPath}/ProdewiseCreditNoteReport"><i
+								class="fa fa-files-o icon"></i>Product Wise Credit Note  Report</a> 
 						</div>
 						
 						</li>

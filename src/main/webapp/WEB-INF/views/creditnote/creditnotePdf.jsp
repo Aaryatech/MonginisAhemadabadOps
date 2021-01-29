@@ -24,7 +24,7 @@
 			<tr>
 				<td width="100%" colspan="12" align="left"
 					style="border-top: 1px solid #313131; padding: 4px; font-size: 16px; font-weight: bold;"><img
-					src="${pageContext.request.contextPath}/resources/img/monginislogo.png"
+					src="${pageContext.request.contextPath}/resources/images/monginislogo.png"
 					alt="logo" width="70px" height="37px"></img>&nbsp;&nbsp;&nbsp;${Constant.FACTORYNAME}</td>
 
 			</tr>
