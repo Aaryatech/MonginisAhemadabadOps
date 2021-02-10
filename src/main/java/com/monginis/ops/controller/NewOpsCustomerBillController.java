@@ -12,13 +12,18 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.ItemList;
+import org.springframework.context.annotation.Scope;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
@@ -40,6 +45,8 @@ import com.monginis.ops.billing.SellBillHeader;
 import com.monginis.ops.common.Common;
 import com.monginis.ops.constant.Constant;
 import com.monginis.ops.model.CustomerBillItem;
+import com.monginis.ops.model.FrItemStockConfigure;
+import com.monginis.ops.model.FrItemStockConfigureList;
 import com.monginis.ops.model.FrMenu;
 import com.monginis.ops.model.Franchisee;
 import com.monginis.ops.model.GetCustBillTax;
@@ -52,35 +59,34 @@ import com.monginis.ops.model.frsetting.FrSetting;
 import com.monginis.ops.model.newpos.BillItemList;
 import com.monginis.ops.model.newpos.Customer;
 import com.monginis.ops.model.newpos.CustomerBillOnHold;
+import com.monginis.ops.model.newpos.ErrorMsgWithItemList;
 import com.monginis.ops.model.newpos.NewPosBillItem;
 
 @Controller
+@Scope("session")
 public class NewOpsCustomerBillController {
-	
-	
+
 	public int frGstType = 0;
-	
-	
-	List<NewPosBillItem> billItemList = new ArrayList<NewPosBillItem>();
-	
-	List<BillItemList> itemList=new ArrayList<BillItemList>();
-	
-	List<Customer> custometList=new ArrayList<Customer>();
-	
+
+	// List<NewPosBillItem> billItemList = new ArrayList<NewPosBillItem>();
+
+	List<BillItemList> itemList = new ArrayList<BillItemList>();
+
+	public List<Customer> custometList = new ArrayList<Customer>();
+	public List<Customer> customerTempList = new ArrayList<Customer>();
+	List<NewPosBillItem> showItemList = new ArrayList<NewPosBillItem>();
 
 	LinkedHashMap<Integer, CustomerBillOnHold> hashMap = new LinkedHashMap<Integer, CustomerBillOnHold>();
 	int key = 0;
 	int tempBillNo = 0;
-	
+	int calStock = 0;
+
 	@RequestMapping(value = "/newPos/{type}", method = RequestMethod.GET)
-	public String displayNewPOs(HttpServletRequest request, HttpServletResponse response, @PathVariable int type,
-			Model model) {
-		
-		System.out.println("type---->"+type);
-		
-		
+	public ModelAndView displayNewPOs1(@PathVariable int type, HttpServletRequest request,
+			HttpServletResponse response) {
+		itemList = new ArrayList<BillItemList>();
 		RestTemplate restTemplate = new RestTemplate();
-		
+		ModelAndView model = new ModelAndView("newPos");
 		List<SubCategory> subCatResp = new ArrayList<SubCategory>();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		HttpSession session = request.getSession();
@@ -89,38 +95,32 @@ public class NewOpsCustomerBillController {
 		ArrayList<FrMenu> menuList = (ArrayList<FrMenu>) session.getAttribute("allMenuList");
 
 		int runningMonth = 0;
+
 		try {
-			
-			
-			Customer[] custResp=restTemplate.getForObject(Constant.URL+"getAllCustomer",Customer[].class);
-			custometList=new ArrayList<Customer>(Arrays.asList(custResp));
-			System.err.println("customer List Length="+custometList.size());
-			model.addAttribute("customerList", custometList);
-			model.addAttribute("holdingList", hashMap);
-			
-			
-			if (type == 1) {
-				System.err.println("holdBill------>"+hashMap.get(key));
-				model.addAttribute("holdBill", hashMap.get(key));
-				itemList = hashMap.get(key).getItemList();
-				model.addAttribute("key", key);
-			} else {
-			//itemList.clear();
-				itemList=new ArrayList<BillItemList>();
-				model.addAttribute("key", 0);
-			}
+
+			map = new LinkedMultiValueMap<String, Object>();
+
+			map.add("settingKeyList", "CHECK_STOCK_FOR_CUSTOMER_BILL");
+			FrItemStockConfigureList settingList = restTemplate.postForObject(Constant.URL + "getDeptSettingValue", map,
+					FrItemStockConfigureList.class);
+			List<FrItemStockConfigure> settingListRes = settingList.getFrItemStockConfigure();
+			calStock = settingListRes.get(0).getSettingValue();
+ 
+			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
-			ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
-			};
-			ResponseEntity<List<PostFrItemStockHeader>> responseEntity1 = restTemplate.exchange(
-					Constant.URL + "getCurrentMonthOfCatId", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
-			List<PostFrItemStockHeader> list = responseEntity1.getBody();
+			if (calStock == 1) {
+				ParameterizedTypeReference<List<PostFrItemStockHeader>> typeRef1 = new ParameterizedTypeReference<List<PostFrItemStockHeader>>() {
+				};
+				ResponseEntity<List<PostFrItemStockHeader>> responseEntity1 = restTemplate.exchange(
+						Constant.URL + "getCurrentMonthOfCatId", HttpMethod.POST, new HttpEntity<>(map), typeRef1);
+				List<PostFrItemStockHeader> list = responseEntity1.getBody();
 
-			for (int i = 0; i < list.size(); i++) {
+				for (int i = 0; i < list.size(); i++) {
 
-				runningMonth = list.get(i).getMonth();
+					runningMonth = list.get(i).getMonth();
 
+				}
 			}
 
 			String items;
@@ -131,8 +131,6 @@ public class NewOpsCustomerBillController {
 
 			GetFrMenus getFrMenus = restTemplate.postForObject(Constant.URL + "/getFrConfigMenus", menuMap,
 					GetFrMenus.class);
-
-			System.out.println("Get Fr Menus Response " + getFrMenus.toString());
 
 			List<FrMenu> frMenuList = getFrMenus.getFrMenus();
 
@@ -149,7 +147,6 @@ public class NewOpsCustomerBillController {
 			DateFormat yearFormat = new SimpleDateFormat("yyyy");
 
 			Date todaysDate = new Date();
-			System.out.println(dateFormat.format(todaysDate));
 
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(todaysDate);
@@ -158,317 +155,139 @@ public class NewOpsCustomerBillController {
 
 			Date firstDay = cal.getTime();
 
-			System.out.println("First Day of month " + firstDay);
-
-			String strFirstDay = dateFormat.format(firstDay);
-
-			System.out.println("Year " + yearFormat.format(todaysDate));
 			boolean isMonthCloseApplicable = false;
 
 			map = new LinkedMultiValueMap<String, Object>();
 
-			DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 			Date date = new Date();
-			System.out.println(dateFormat1.format(date));
 
 			Calendar cal1 = Calendar.getInstance();
 			cal1.setTime(date);
 
-			int dayOfMonth = cal1.get(Calendar.DATE);
-
 			int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
-			System.err.println(
-					"Current Cal Month " + calCurrentMonth + "menuList" + menuList.toString() + "itemShow" + items);
-
-			System.out.println("Day Of Month is: " + dayOfMonth);
 
 			if (runningMonth < calCurrentMonth) {
 
 				isMonthCloseApplicable = true;
-				System.out.println("Day Of Month End ......");
 
 			} else if (runningMonth == 12 && calCurrentMonth == 1) {
 				isMonthCloseApplicable = true;
 			}
 
 			if (isMonthCloseApplicable) {
-				System.err.println("### Inside iMonthclose app");
+
 				String strDate;
 				int year;
 				if (runningMonth == 12) {
-					System.err.println("running month =12");
+
 					year = (Calendar.getInstance().getWeekYear() - 1);
-					System.err.println("year value " + year);
+
 				} else {
-					System.err.println("running month not eq 12");
+
 					year = Calendar.getInstance().getWeekYear();
-					System.err.println("year value " + year);
+
 				}
 
-				// strDate="01/"+runningMonth+"/"+year;
-
 				strDate = year + "/" + runningMonth + "/01";
-				System.out.println("strDate-------"+strDate);
+
 				map.add("fromDt", strDate);
 			} else {
-				System.out.println("dateFormat.format(firstDay)-------"+dateFormat.format(firstDay));
+
 				map.add("fromDt", dateFormat.format(firstDay));
 
 			}
 
 			map.add("frId", frDetails.getFrId());
 			map.add("frStockType", frDetails.getStockType());
+
 			map.add("toDt", dateFormat.format(todaysDate));
 			map.add("month", String.valueOf(runningMonth));
 			map.add("year", yearFormat.format(todaysDate));
 
 			map.add("itemList", items);
-			
-			System.out.println(items);
-			System.out.println(frDetails.getFrId()+" * "+frDetails.getStockType()+" * "+dateFormat.format(todaysDate)+" * "+String.valueOf(runningMonth)+" * "+yearFormat.format(todaysDate));
-			
-			NewPosBillItem[] biiItleListArr=restTemplate.postForObject(Constant.URL+"getItemListWithCS", map, NewPosBillItem[].class);
-			List<NewPosBillItem> BillItemsRespList=new ArrayList<NewPosBillItem>(Arrays.asList(biiItleListArr));
-			billItemList = BillItemsRespList;
-			
-			String jsonStr="";
-			ObjectMapper Obj = new ObjectMapper();
+			map.add("flag", calStock);
 
-			try {
-			 jsonStr = Obj.writeValueAsString(BillItemsRespList);
-			
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			System.err.println("BillItemsRespList"+BillItemsRespList);
-			System.err.println(jsonStr+"JSO");
-			model.addAttribute("jsonItemList", jsonStr);
-			model.addAttribute("ItemList", BillItemsRespList);
-			
-			
+			System.out.println(map);
+			NewPosBillItem[] biiItleListArr = restTemplate.postForObject(Constant.URL + "getItemListWithCS", map,
+					NewPosBillItem[].class);
+			showItemList = new ArrayList<NewPosBillItem>(Arrays.asList(biiItleListArr));
 
 			SubCategory[] subCatArr = restTemplate.getForObject(Constant.URL + "getAllSubCatList", SubCategory[].class);
 			subCatResp = new ArrayList<SubCategory>(Arrays.asList(subCatArr));
-			System.err.println("Subcat List=" + "\t" + subCatResp);
 
-			model.addAttribute("subCatList", subCatResp);
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
+			model.addObject("subCatList", subCatResp);
 
-		return "newPos";
+			model.addObject("holdingList", hashMap);
 
-	}
-	
-	@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
-	@ResponseBody
-	public Info billOnHold(HttpServletRequest request, HttpServletResponse responsel) {
-
-		Info info = new Info();
-		System.out.println(" in billOnHold");
-		try {
-
-			int key = Integer.parseInt(request.getParameter("key"));
-		
-			String holdCustName = request.getParameter("holdCustName");
-			String tempGstNo = request.getParameter("custGst");
-			String tempMobNo = request.getParameter("custMob");
-			
-			System.out.println(holdCustName+" "+tempGstNo+" "+tempMobNo);
-			
-			if (hashMap.containsKey(key)) {
-				hashMap.get(key).setTempCustomerName(holdCustName);
-				hashMap.get(key).setTempGstNo(tempGstNo);
-				hashMap.get(key).setTempMobNo(tempMobNo);						
-				hashMap.get(key).setItemList(itemList);
-				System.out.println("in If");
+			if (type == 1) {
+				model.addObject("holdBill", hashMap.get(key));
+				System.out.println(hashMap.get(key));
+				itemList = hashMap.get(key).getItemList();
+				model.addObject("key", key);
+				model.addObject("tempCust", 0);
 			} else {
-				CustomerBillOnHold addNew = new CustomerBillOnHold();
-				tempBillNo = tempBillNo + 1;
-				
-				addNew.setItemList(itemList);				
-				addNew.setTempCustomerName(holdCustName);
-				addNew.setTempGstNo(tempGstNo);
-				addNew.setTempMobNo(tempMobNo);
-				
-				hashMap.put(tempBillNo, addNew);
-			System.out.println("in else");
-			}
-			System.out.println("hashMap---------->"+hashMap);
-			info.setError(false);
-			info.setMessage("Successfully");
-		} catch (Exception e) {
-			e.printStackTrace();
-			info.setError(true);
-			info.setMessage("failed");
-		}
-		return info;
-	}
+				map.add("frId", frDetails.getFrId());
+				Customer[] custResp = restTemplate.postForObject(Constant.URL + "getAllCustomerForPos", map,
+						Customer[].class);
+				custometList = new ArrayList<Customer>(Arrays.asList(custResp));
+				CustomerBillOnHold customerBillOnHold = new CustomerBillOnHold();
+				itemList = new ArrayList<>();
+				customerBillOnHold.setItemList(itemList);
+				model.addObject("key", 0);
+				model.addObject("holdBill", customerBillOnHold);
+				model.addObject("tempCust", 0);
+				for (int i = 0; i < customerTempList.size(); i++) {
 
-	
-	@RequestMapping(value="/addItemInBillLIst",method=RequestMethod.GET)
-	@ResponseBody
-	public List<BillItemList> addItemInBillLIst(HttpServletRequest request,HttpServletResponse response,Model model){
-		System.err.println("In addItemInBillLIst ");
-		try {	
-			
-			
-			String itemName=request.getParameter("itemName");
-			int itemId =Integer.parseInt(request.getParameter("itemId"));
-			float itemMrp=Float.parseFloat(request.getParameter("itemMrp"));
-			float itemTax=Float.parseFloat(request.getParameter("itemTax"));
-			String itemUom=request.getParameter("itemUom");
-			int itemQty =Integer.parseInt(request.getParameter("qty"));
-			float price=Float.parseFloat(request.getParameter("price"));
-			float paybeleTax=Float.parseFloat(request.getParameter("paybeleTax"));
-			float paybeleAmt=Float.parseFloat(request.getParameter("paybeleAmt"));
-			float tax1=Float.parseFloat(request.getParameter("tax1"));
-			float tax2=Float.parseFloat(request.getParameter("tax2"));
-			int catId=Integer.parseInt(request.getParameter("catId"));
-			int avQty=Integer.parseInt(request.getParameter("aviableQty"));
-			//System.err.println("catidtax1,2="+catId+tax1+tax2);
-			
-			int flag=0;
-			
-			
-			for(int i=0 ;i<itemList.size();i++) {
-				if(itemList.get(i).getItemId()==itemId) {
-					itemList.get(i).setItemQty(itemQty);
-					//float taxAmt=(price/100)*100;
-					itemList.get(i).setItemName(itemName);
-					itemList.get(i).setItemMrp(itemMrp);
-					itemList.get(i).setCalPrice(price);
-					itemList.get(i).setPayableTax(paybeleTax);
-					itemList.get(i).setPayableAmt(paybeleAmt);
-					itemList.get(i).setTax1(tax1);
-					itemList.get(i).setTax2(tax2);
-					itemList.get(i).setCatId(catId);
-					itemList.get(i).setAviableQty(avQty);
-					//System.out.println(itemList.get(i));
-					
-					flag=1;
-					System.out.println();
+					System.out.println("customerTempList.get " + customerTempList.get(i));
+					String phoneno = customerTempList.get(i).getPhoneNo();
+
+					Optional<Customer> result = custometList.stream()
+							.filter(obj -> phoneno.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
+					System.out.println("result " + result);
+					if (result.isEmpty()) {
+						custometList.add(customerTempList.get(i));
+
+					}
+
 				}
+
 			}
 
-			
-			if(flag==0) {
-				
-				BillItemList it=new BillItemList();
-				
-				it.setItemId(itemId);
-				it.setItemName(itemName);
-				it.setItemQty(itemQty);
-				it.setItemMrp(itemMrp);
-				it.setCalPrice(price);
-				it.setItemUom(itemUom);
-				it.setItemTax(itemTax);
-				it.setPayableTax(paybeleTax);
-				it.setPayableAmt(paybeleAmt);
-				it.setTax1(tax1);
-				it.setTax2(tax2);
-				it.setCatId(catId);
-				it.setAviableQty(avQty);
-			//	System.out.println(it);
-				itemList.add(it);
-				
-			}
-		
-		System.err.println("itemList=="+itemList.size());
-		
-			} catch (Exception e) {
-			// TODO: handle exception
-			System.err.println("Exception Occured In Catch Block Of /addItemInBillLIst Mapping");
-			e.printStackTrace();
-		}
-		
-		
-		return itemList;
-	}
-	
-	
-	
-	@RequestMapping(value="/getCustomerList",method=RequestMethod.GET)
-	@ResponseBody
-	public List<Customer>  getCustomerList(HttpServletRequest request,HttpServletResponse response){
-		System.err.println("in Get Customer List----->"+custometList);
-		return custometList;
-		
-	}
-	
-	@RequestMapping(value="/getItemList",method=RequestMethod.GET)
-	@ResponseBody
-	public List<BillItemList>  getItemList(HttpServletRequest request,HttpServletResponse response){
-		System.err.println("in Get Item List");
-		return itemList;
-		
-	}
-	
-	
-	
-	@RequestMapping(value="/addCustomer",method=RequestMethod.POST)
-	@ResponseBody
-	public int addCustomer(HttpServletRequest request,HttpServletResponse response) {
-		System.err.println("in Add Customer");
-		int flag=0;
-		/*
-		 * String name=request.getParameter("name");
-		 *  System.err.println(name+"Name Is");
-		 */
-		String uuid = UUID.randomUUID().toString();
+			if (calStock == 1) {
 
-		try {
-			String name=request.getParameter("name");
-			String mob=request.getParameter("mob");
-			String gst=request.getParameter("gst");
-			Customer cust=new Customer();
-				
-				cust.setId(uuid);
-				cust.setUserName(name);
-				cust.setPhoneNo(mob);
-				cust.setGstNo(gst);
-				System.err.println("Before=="+custometList.size());
-			custometList.add(cust);
-			System.err.println("AFter=="+custometList.size());
-			flag=1;
-			
+				for (Entry<Integer, CustomerBillOnHold> entry : hashMap.entrySet()) {
+					// System.out.println(entry.getKey() + "/" + entry.getValue());
+					List<BillItemList> holBillItemList = entry.getValue().getItemList();
+
+					for (int i = 0; i < holBillItemList.size(); i++) {
+						for (int j = 0; j < showItemList.size(); j++) {
+
+							if (Integer.parseInt(showItemList.get(j).getItemId()) == holBillItemList.get(i)
+									.getItemId()) {
+								showItemList.get(j).setTotalRegStock(
+										showItemList.get(j).getTotalRegStock() - holBillItemList.get(i).getItemQty());
+								break;
+							}
+
+						}
+
+					}
+				}
+				// List<BillItemList> holBillItemList =hashMap.get
+
+			}
+			model.addObject("customerList", custometList);
+			model.addObject("calStock", calStock);
+			model.addObject("ItemList", showItemList);
 		} catch (Exception e) {
-			// TODO: handle exception
-			System.err.println("Exception Occuered In Catach Block Of /addCustomer");
-			flag =0;
+
 			e.printStackTrace();
 		}
-		
-		return  flag;
-		
+
+		return model;
+
 	}
- 	
-	
-	
-	@RequestMapping(value="/deleteItem",method=RequestMethod.POST)
-	@ResponseBody
-	public List<BillItemList> deleteItem(HttpServletRequest request,HttpServletResponse response){
-		System.err.println("In Dlete Item From ItemList");
-		try {
-		
-			int id=Integer.parseInt(request.getParameter("id"));
-			
-			  System.err.println("id ="+id); for ( int i=0 ;i<itemList.size();i++ ) {
-			  if(itemList.get(i).getItemId()==id) { itemList.remove(i);
-			  
-			  } }
-			 
-		} catch (Exception e) {
-			// TODO: handle exception
-			System.err.println("Exception Occuered In Catch Block Of /deleteItem");
-			e.printStackTrace();
-		}
-		
-		return itemList;
-	}
-	
+
 	@RequestMapping(value = "/revertHoldBillOnCurrent", method = RequestMethod.POST)
 	@ResponseBody
 	public Info revertHoldBillOnCurrent(HttpServletRequest request, HttpServletResponse responsel) {
@@ -489,253 +308,557 @@ public class NewOpsCustomerBillController {
 		}
 		return info;
 	}
-	
-	@RequestMapping(value="/genrateSellBill",method=RequestMethod.POST)
-	public @ResponseBody SellBillHeader genrateSellBill(HttpServletRequest request,HttpServletResponse response) {
-		System.err.println("In genrateSellBill ");
-		String cName="",cPhone="",cGst ="";
+
+	@RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
+	@ResponseBody
+	public Info cancelFromHoldBill(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int index = Integer.parseInt(request.getParameter("key"));
+			hashMap.remove(index);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+
+	@RequestMapping(value = "/billOnHold", method = RequestMethod.POST)
+	@ResponseBody
+	public Info billOnHold(HttpServletRequest request, HttpServletResponse responsel) {
+
+		Info info = new Info();
+
+		try {
+
+			int key = Integer.parseInt(request.getParameter("key"));
+			// int custId = Integer.parseInt(request.getParameter("holdCustName"));
+			String holdCustName = request.getParameter("holdCustName");
+
+			Optional<Customer> result = custometList.stream()
+					.filter(obj -> holdCustName.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
+
+			if (hashMap.containsKey(key)) {
+				hashMap.get(key).setCustId(holdCustName);
+				hashMap.get(key).setTempCustomerName(result.get().getUserName() + " - " + result.get().getPhoneNo());
+				hashMap.get(key).setItemList(itemList);
+			} else {
+				CustomerBillOnHold addNew = new CustomerBillOnHold();
+				tempBillNo = tempBillNo + 1;
+				addNew.setCustId(holdCustName);
+				addNew.setItemList(itemList);
+				addNew.setTempCustomerName(result.get().getUserName() + " - " + result.get().getPhoneNo());
+				hashMap.put(tempBillNo, addNew);
+			}
+			System.out.println(hashMap);
+			info.setError(false);
+			info.setMessage("Successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+
+	@RequestMapping(value = "/addItemInBillLIst", method = RequestMethod.POST)
+	@ResponseBody
+	public ErrorMsgWithItemList addItemInBillLIst(HttpServletRequest request, HttpServletResponse response,
+			Model model) {
+
+		ErrorMsgWithItemList errorMsg = new ErrorMsgWithItemList();
+
+		try {
+
+			String itemName = request.getParameter("itemName");
+			int itemId = Integer.parseInt(request.getParameter("itemId"));
+			float itemMrp = Float.parseFloat(request.getParameter("itemMrp"));
+			float itemTax = Float.parseFloat(request.getParameter("itemTax"));
+			String itemUom = request.getParameter("itemUom");
+			int itemQty = Integer.parseInt(request.getParameter("qty"));
+			float price = Float.parseFloat(request.getParameter("price"));
+			float paybeleTax = Float.parseFloat(request.getParameter("paybeleTax"));
+			float paybeleAmt = Float.parseFloat(request.getParameter("paybeleAmt"));
+			float tax1 = Float.parseFloat(request.getParameter("tax1"));
+			float tax2 = Float.parseFloat(request.getParameter("tax2"));
+			int catId = Integer.parseInt(request.getParameter("catId"));
+			int avQty = Integer.parseInt(request.getParameter("aviableQty"));
+			// System.err.println("catidtax1,2="+catId+tax1+tax2);
+
+			int flag = 0;
+
+			for (int i = 0; i < itemList.size(); i++) {
+				if (itemList.get(i).getItemId() == itemId) {
+					if (calStock == 1) {
+						for (int j = 0; j < showItemList.size(); j++) {
+							if (Integer.parseInt(showItemList.get(j).getItemId()) == itemId) {
+
+								float curntQty = itemList.get(i).getItemQty() + showItemList.get(j).getTotalRegStock();
+
+								if (curntQty >= itemQty) {
+
+									showItemList.get(j).setTotalRegStock(
+											itemList.get(i).getItemQty() + showItemList.get(j).getTotalRegStock());
+
+									itemList.get(i).setItemQty(itemQty);
+									// float taxAmt=(price/100)*100;
+									itemList.get(i).setItemName(itemName);
+									itemList.get(i).setItemMrp(itemMrp);
+									itemList.get(i).setCalPrice(price);
+									itemList.get(i).setPayableTax(paybeleTax);
+									itemList.get(i).setPayableAmt(paybeleAmt);
+									itemList.get(i).setTax1(tax1);
+									itemList.get(i).setTax2(tax2);
+									itemList.get(i).setCatId(catId);
+									itemList.get(i).setAviableQty(avQty);
+									showItemList.get(j)
+											.setTotalRegStock(showItemList.get(j).getTotalRegStock() - itemQty);
+									errorMsg.setItemList(itemList);
+									errorMsg.setError(false);
+									errorMsg.setMsg("Item added in cart.");
+									break;
+								} else {
+									errorMsg.setItemList(itemList);
+									errorMsg.setError(true);
+									errorMsg.setMsg("Item is out of stock.");
+									System.out.println("Out of Stock...");
+								}
+							}
+						}
+					} else {
+
+						System.out.println("in else...");
+						itemList.get(i).setItemQty(itemQty);
+						// float taxAmt=(price/100)*100;
+						itemList.get(i).setItemName(itemName);
+						itemList.get(i).setItemMrp(itemMrp);
+						itemList.get(i).setCalPrice(price);
+						itemList.get(i).setPayableTax(paybeleTax);
+						itemList.get(i).setPayableAmt(paybeleAmt);
+						itemList.get(i).setTax1(tax1);
+						itemList.get(i).setTax2(tax2);
+						itemList.get(i).setCatId(catId);
+						itemList.get(i).setAviableQty(avQty);
+
+						errorMsg.setItemList(itemList);
+						errorMsg.setError(false);
+						errorMsg.setMsg("Item added in cart.");
+
+					}
+					flag = 1;
+					break;
+				}
+			}
+			System.out.println("flag " + flag);
+			if (flag == 0) {
+				if (calStock == 1) {
+					for (int i = 0; i < showItemList.size(); i++) {
+						if (Integer.parseInt(showItemList.get(i).getItemId()) == itemId) {
+							if (showItemList.get(i).getTotalRegStock() >= itemQty) {
+								showItemList.get(i).setTotalRegStock(showItemList.get(i).getTotalRegStock() - itemQty);
+								BillItemList it = new BillItemList();
+								it.setItemId(itemId);
+								it.setItemName(itemName);
+								it.setItemQty(itemQty);
+								it.setItemMrp(itemMrp);
+								it.setCalPrice(price);
+								it.setItemUom(itemUom);
+								it.setItemTax(itemTax);
+								it.setPayableTax(paybeleTax);
+								it.setPayableAmt(paybeleAmt);
+								it.setTax1(tax1);
+								it.setTax2(tax2);
+								it.setCatId(catId);
+								it.setAviableQty(avQty);
+								itemList.add(it);
+								errorMsg.setItemList(itemList);
+								errorMsg.setError(false);
+								errorMsg.setMsg("Item added in cart.");
+								System.out.println("stock " + showItemList.get(i).getTotalRegStock());
+								break;
+							} else {
+								errorMsg.setItemList(itemList);
+								errorMsg.setError(true);
+								errorMsg.setMsg("Item is out of stock.");
+								System.out.println("Out of Stock...");
+							}
+						}
+
+					}
+				} else {
+
+					BillItemList it = new BillItemList();
+					it.setItemId(itemId);
+					it.setItemName(itemName);
+					it.setItemQty(itemQty);
+					it.setItemMrp(itemMrp);
+					it.setCalPrice(price);
+					it.setItemUom(itemUom);
+					it.setItemTax(itemTax);
+					it.setPayableTax(paybeleTax);
+					it.setPayableAmt(paybeleAmt);
+					it.setTax1(tax1);
+					it.setTax2(tax2);
+					it.setCatId(catId);
+					it.setAviableQty(avQty);
+					itemList.add(it);
+					errorMsg.setItemList(itemList);
+					errorMsg.setError(false);
+					errorMsg.setMsg("Item added in cart.");
+				}
+
+			}
+			errorMsg.setItemList(itemList);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			errorMsg.setItemList(itemList);
+			errorMsg.setError(true);
+			errorMsg.setMsg("Error while adding item in cart.");
+			e.printStackTrace();
+		}
+
+		return errorMsg;
+	}
+
+	@RequestMapping(value = "/getCustomerList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<Customer> getCustomerList(HttpServletRequest request, HttpServletResponse response) {
+		// System.err.println("in Get Customer List");
+		return custometList;
+
+	}
+
+	@RequestMapping(value = "/getItemList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<BillItemList> getItemList(HttpServletRequest request, HttpServletResponse response) {
+		// System.err.println("in Get Item List");
+		return itemList;
+
+	}
+
+	@RequestMapping(value = "/getAllItemList", method = RequestMethod.GET)
+	@ResponseBody
+	public List<NewPosBillItem> getAllItemList(HttpServletRequest request, HttpServletResponse response) {
+		// System.out.println("showItemList " + showItemList);
+		return showItemList;
+
+	}
+
+	@RequestMapping(value = "/addCustomer", method = RequestMethod.POST)
+	@ResponseBody
+	public Info addCustomer(HttpServletRequest request, HttpServletResponse response) {
+		// System.err.println("in Add Customer");
+		int flag = 0;
+		/*
+		 * String name=request.getParameter("name"); System.err.println(name+"Name Is");
+		 */
+		Info info = new Info();
+
+		String uuid = UUID.randomUUID().toString();
+
+		try {
+			String name = request.getParameter("name");
+			String mob = request.getParameter("mob");
+			String gst = request.getParameter("gst");
+			Customer cust = new Customer();
+
+			cust.setId(uuid);
+			cust.setUserName(name);
+			cust.setPhoneNo(mob);
+			cust.setGstNo(gst);
+			custometList.add(cust);
+
+			flag = 1;
+			info.setError(false);
+			info.setMessage(mob);
+
+			customerTempList.add(cust);
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			// System.err.println("Exception Occuered In Catach Block Of /addCustomer");
+			flag = 0;
+			info.setError(true);
+			info.setMessage(String.valueOf(0));
+			e.printStackTrace();
+		}
+
+		return info;
+
+	}
+
+	@RequestMapping(value = "/deleteItem", method = RequestMethod.POST)
+	@ResponseBody
+	public List<BillItemList> deleteItem(HttpServletRequest request, HttpServletResponse response) {
+		// System.err.println("In Dlete Item From ItemList");
+		try {
+
+			int id = Integer.parseInt(request.getParameter("id"));
+
+			for (int i = 0; i < itemList.size(); i++) {
+				if (itemList.get(i).getItemId() == id) {
+					if (calStock == 1) {
+						for (int j = 0; j < showItemList.size(); j++) {
+
+							if (Integer.parseInt(showItemList.get(j).getItemId()) == itemList.get(i).getItemId()) {
+								showItemList.get(j).setTotalRegStock(
+										showItemList.get(j).getTotalRegStock() + itemList.get(i).getItemQty());
+								break;
+
+							}
+						}
+					}
+					itemList.remove(i);
+					break;
+				}
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.err.println("Exception Occuered In Catch Block Of /deleteItem");
+			e.printStackTrace();
+		}
+
+		return itemList;
+	}
+
+	@RequestMapping(value = "/genrateSellBill", method = RequestMethod.POST)
+	public @ResponseBody Info genrateSellBill(HttpServletRequest request, HttpServletResponse response) {
+		// System.err.println("In genrateSellBill ");
+
+		Info info = new Info();
+
+		String cName = "", cPhone = "", cGst = "";
 		HttpSession session = request.getSession();
 		Franchisee frDetails = (Franchisee) session.getAttribute("frDetails");
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		SellBillHeader sellBillHeaderRes = new SellBillHeader();
-		
-		
-		
+
 		try {
-			
-		int index = Integer.parseInt(request.getParameter("key"));
-		String custDetails=request.getParameter("custName");
-		//float paidAmt= Float.parseFloat(request.getParameter("paidAmt"));
-		int  payMode =Integer.parseInt(request.getParameter("payMode")); 
-		//System.err.println(custDetails+"cust");
-		float discountPer= Float.parseFloat(request.getParameter("discPer"));
-		float payableAmount= Float.parseFloat(request.getParameter("payableAmt"));
-		String[] customeDetailArr=custDetails.split("~");
-		for(int i=0;i<customeDetailArr.length;i++) {
-			if(i==0) {
-				 cName=customeDetailArr[i];
-			}if(i==1){
-				 cPhone =customeDetailArr[i];
-			}if(i==2) {
-				 cGst= customeDetailArr[2];
+			int index = Integer.parseInt(request.getParameter("key"));
+			String custDetails = request.getParameter("custName");
+			// float paidAmt= Float.parseFloat(request.getParameter("paidAmt"));
+			int payMode = Integer.parseInt(request.getParameter("payMode"));
+			// System.err.println(custDetails+"cust");
+			float discountPer = Float.parseFloat(request.getParameter("discPer"));
+			float payableAmount = Float.parseFloat(request.getParameter("payableAmt"));
+
+			Optional<Customer> result = custometList.stream()
+					.filter(obj -> custDetails.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
+
+			if (!result.isEmpty()) {
+				cName = result.get().getUserName();
+				cPhone = result.get().getPhoneNo();
+				cGst = result.get().getGstNo();
 			}
-		}
-		
-		
-		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		LocalDate localDate = LocalDate.now();
-		
-		
-		
-		
-		System.out.println("Cust=========="+cName+cPhone+cGst);
-		
-		SellBillHeader sellBillHeader = new SellBillHeader();
-		
-		sellBillHeader.setFrId(frDetails.getFrId());
-		sellBillHeader.setFrCode(frDetails.getFrCode());
-		sellBillHeader.setDelStatus(0);
-		sellBillHeader.setUserName(cName);
-		sellBillHeader.setBillDate(dtf.format(localDate));
-		sellBillHeader.setInvoiceNo(getInvoiceNo(request,response));
-		sellBillHeader.setPaidAmt(Math.round(payableAmount));
-		sellBillHeader.setPaymentMode(payMode);
-		sellBillHeader.setBillType('R');
-		sellBillHeader.setSellBillNo(0);
 
-		sellBillHeader.setUserGstNo(cGst);
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate localDate = LocalDate.now();
 
-		sellBillHeader.setUserPhone(cPhone);
-		
-		
-		List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
-		List<CustomerBillItem> customerBillItemList = new ArrayList<CustomerBillItem>();
-		
-		float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
-		float sumDiscAmt=0.f;
-		for (int i = 0; i < itemList.size(); i++) {
-		SellBillDetail sellBillDetail = new SellBillDetail();
-		
-		
-		
-		
-		Float rate = (float) itemList.get(i).getItemMrp();
+			System.out.println("Cust==========" + cName + cPhone + cGst);
 
-		Float tax1 = (float) itemList.get(i).getTax1();
-		Float tax2 = (float) itemList.get(i).getTax2();
-		Float tax3 = (float) itemList.get(i).getItemTax();
+			SellBillHeader sellBillHeader = new SellBillHeader();
 
-		int qty = itemList.get(i).getItemQty();
+			sellBillHeader.setFrId(frDetails.getFrId());
+			sellBillHeader.setFrCode(frDetails.getFrCode());
+			sellBillHeader.setDelStatus(0);
+			sellBillHeader.setUserName(cName);
+			sellBillHeader.setBillDate(dtf.format(localDate));
+			sellBillHeader.setInvoiceNo(getInvoiceNo(request, response));
+			sellBillHeader.setPaidAmt(Math.round(payableAmount));
+			sellBillHeader.setPaymentMode(payMode);
+			sellBillHeader.setBillType('R');
+			sellBillHeader.setSellBillNo(0);
 
-		Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
-		mrpBaseRate = roundUp(mrpBaseRate);
+			sellBillHeader.setUserGstNo(cGst);
 
-		System.out.println("Mrp: " + rate);
-		System.out.println("Tax1 : " + tax1);
-		System.out.println("tax2 : " + tax2);
+			sellBillHeader.setUserPhone(cPhone);
 
-		Float taxableAmt = (float) (mrpBaseRate * qty);
-		taxableAmt = roundUp(taxableAmt);
+			List<SellBillDetail> sellBillDetailList = new ArrayList<SellBillDetail>();
+			List<CustomerBillItem> customerBillItemList = new ArrayList<CustomerBillItem>();
 
-		// -----------------------------------------
+			float sumTaxableAmt = 0, sumTotalTax = 0, sumGrandTotal = 0, sumMrp = 0;
+			float sumDiscAmt = 0.f;
+			for (int i = 0; i < itemList.size(); i++) {
+				SellBillDetail sellBillDetail = new SellBillDetail();
 
-		float discAmt = ((taxableAmt * discountPer) / 100);
-		sumDiscAmt=sumDiscAmt+discAmt;
-		taxableAmt = taxableAmt - discAmt;
+				Float rate = (float) itemList.get(i).getItemMrp();
 
-		float sgstRs = (taxableAmt * tax1) / 100;
-		float cgstRs = (taxableAmt * tax2) / 100;
-		float igstRs = (taxableAmt * tax3) / 100;
+				Float tax1 = (float) itemList.get(i).getTax1();
+				Float tax2 = (float) itemList.get(i).getTax2();
+				Float tax3 = (float) itemList.get(i).getItemTax();
 
-		sgstRs = roundUp(sgstRs);
-		cgstRs = roundUp(cgstRs);
-		igstRs = roundUp(igstRs);
+				int qty = itemList.get(i).getItemQty();
 
-		Float totalTax = sgstRs + cgstRs;
-		totalTax = roundUp(totalTax);
+				Float mrpBaseRate = (rate * 100) / (100 + (tax1 + tax2));
+				mrpBaseRate = roundUp(mrpBaseRate);
 
-		Float grandTotal = totalTax + taxableAmt;
-		grandTotal = roundUp(grandTotal);
-		
-		sellBillDetail.setCatId(itemList.get(i).getCatId());
-		sellBillDetail.setSgstPer(tax1);
-		sellBillDetail.setSgstRs(sgstRs);
-		sellBillDetail.setCgstPer(tax2);
-		sellBillDetail.setCgstRs(cgstRs);
-		sellBillDetail.setDelStatus(0);
-		sellBillDetail.setGrandTotal(grandTotal);
-		sellBillDetail.setIgstPer(tax3);
-		sellBillDetail.setIgstRs(igstRs);
-		sellBillDetail.setItemId(itemList.get(i).getItemId());
-		sellBillDetail.setMrp(rate);
-		sellBillDetail.setMrpBaseRate(mrpBaseRate);
-		sellBillDetail.setQty(itemList.get(i).getItemQty());
-		sellBillDetail.setRemark("");
-		sellBillDetail.setSellBillDetailNo(0);
-		sellBillDetail.setSellBillNo(0);
-		sellBillDetail.setBillStockType(1);
-		
-		//sumMrp = sumMrp + (rate * qty);
-		sumTaxableAmt = sumTaxableAmt + taxableAmt;
-		sumTotalTax = sumTotalTax + totalTax;
-		sumGrandTotal = sumGrandTotal + totalTax + taxableAmt;
+				System.out.println("Mrp: " + rate);
+				System.out.println("Tax1 : " + tax1);
+				System.out.println("tax2 : " + tax2);
 
-		sellBillDetail.setTaxableAmt(taxableAmt);
-		sellBillDetail.setTotalTax(totalTax);
+				Float taxableAmt = (float) (mrpBaseRate * qty);
+				taxableAmt = roundUp(taxableAmt);
 
-		sellBillDetailList.add(sellBillDetail);
-		
-		
-		}
-		
-		sellBillHeader.setTaxableAmt(sumTaxableAmt);
-		sellBillHeader.setDiscountPer(discountPer);
-		
-		float payableAmt = sumGrandTotal;
+				// -----------------------------------------
 
-		payableAmt = roundUp(payableAmt);
-		
-		sellBillHeader.setDiscountAmt(Math.round(payableAmount));
-		sellBillHeader.setPayableAmt(Math.round(payableAmount));
-		System.out.println("Payable amt  : " + payableAmt);
-		sellBillHeader.setTotalTax(sumTotalTax);
-		sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
-		
-		
-		float calRemainingTotal = 0;
-	
+				float discAmt = ((taxableAmt * discountPer) / 100);
+				sumDiscAmt = sumDiscAmt + discAmt;
+				taxableAmt = taxableAmt - discAmt;
 
-		if (calRemainingTotal < 0) {
-			sellBillHeader.setRemainingAmt(0);
+				float sgstRs = (taxableAmt * tax1) / 100;
+				float cgstRs = (taxableAmt * tax2) / 100;
+				float igstRs = (taxableAmt * tax3) / 100;
 
-		} else {
+				sgstRs = roundUp(sgstRs);
+				cgstRs = roundUp(cgstRs);
+				igstRs = roundUp(igstRs);
 
-			sellBillHeader.setRemainingAmt(calRemainingTotal);
-		}
-		if (calRemainingTotal <= 0) {
+				Float totalTax = sgstRs + cgstRs;
+				totalTax = roundUp(totalTax);
 
-			sellBillHeader.setStatus(1);
-		} else if (calRemainingTotal == payableAmt) {
-			sellBillHeader.setStatus(2);
+				Float grandTotal = totalTax + taxableAmt;
+				grandTotal = roundUp(grandTotal);
 
-		} else if (payableAmt > calRemainingTotal) {
-			sellBillHeader.setStatus(3);
-		}
+				sellBillDetail.setCatId(itemList.get(i).getCatId());
+				sellBillDetail.setSgstPer(tax1);
+				sellBillDetail.setSgstRs(sgstRs);
+				sellBillDetail.setCgstPer(tax2);
+				sellBillDetail.setCgstRs(cgstRs);
+				sellBillDetail.setDelStatus(0);
+				sellBillDetail.setGrandTotal(grandTotal);
+				sellBillDetail.setIgstPer(tax3);
+				sellBillDetail.setIgstRs(igstRs);
+				sellBillDetail.setItemId(itemList.get(i).getItemId());
+				sellBillDetail.setMrp(rate);
+				sellBillDetail.setMrpBaseRate(mrpBaseRate);
+				sellBillDetail.setQty(itemList.get(i).getItemQty());
+				sellBillDetail.setRemark("");
+				sellBillDetail.setSellBillDetailNo(0);
+				sellBillDetail.setSellBillNo(0);
+				sellBillDetail.setBillStockType(1);
 
-		sellBillHeader.setSellBillDetailsList(sellBillDetailList);
-		
-		System.out.println("Sell Bill Detail: " + sellBillHeader.toString());
-		
-		RestTemplate restTemplate = new RestTemplate();
+				// sumMrp = sumMrp + (rate * qty);
+				sumTaxableAmt = sumTaxableAmt + taxableAmt;
+				sumTotalTax = sumTotalTax + totalTax;
+				sumGrandTotal = sumGrandTotal + totalTax + taxableAmt;
 
-		sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
-				SellBillHeader.class);
-		
-		System.out.println("info :" + sellBillHeaderRes.toString());
-		
-		//System.out.println("Sell Bill Header: " + sellBillHeader.toString());
-		
-		
-		if (sellBillHeaderRes != null) {
+				sellBillDetail.setTaxableAmt(taxableAmt);
+				sellBillDetail.setTotalTax(totalTax);
+
+				sellBillDetailList.add(sellBillDetail);
+
+				/*
+				 * for (int j = 0; j < submitSellBillItemList.size(); j++) { if
+				 * (submitSellBillItemList.get(j).getItemId() == itemList.get(i).getItemId()) {
+				 * submitSellBillItemList.get(j).setItemQty(itemList.get(i).getItemQty());
+				 * break; }
+				 * 
+				 * }
+				 */
+
+			}
+
+			sellBillHeader.setTaxableAmt(sumTaxableAmt);
+			sellBillHeader.setDiscountPer(discountPer);
+
+			float payableAmt = sumGrandTotal;
+
+			payableAmt = roundUp(payableAmt);
+
+			sellBillHeader.setDiscountAmt(Math.round(payableAmount));
+			sellBillHeader.setPayableAmt(Math.round(payableAmount));
+			System.out.println("Payable amt  : " + payableAmt);
+			sellBillHeader.setTotalTax(sumTotalTax);
+			sellBillHeader.setGrandTotal(Math.round(sumGrandTotal));
+
+			float calRemainingTotal = 0;
+
+			if (calRemainingTotal < 0) {
+				sellBillHeader.setRemainingAmt(0);
+
+			} else {
+
+				sellBillHeader.setRemainingAmt(calRemainingTotal);
+			}
+			if (calRemainingTotal <= 0) {
+
+				sellBillHeader.setStatus(1);
+			} else if (calRemainingTotal == payableAmt) {
+				sellBillHeader.setStatus(2);
+
+			} else if (payableAmt > calRemainingTotal) {
+				sellBillHeader.setStatus(3);
+			}
+
+			sellBillHeader.setSellBillDetailsList(sellBillDetailList);
+
+			System.out.println("Sell Bill Detail: " + sellBillHeader.toString());
+
+			RestTemplate restTemplate = new RestTemplate();
+
+			sellBillHeaderRes = restTemplate.postForObject(Constant.URL + "insertSellBillData", sellBillHeader,
+					SellBillHeader.class);
+
+			System.out.println("info :" + sellBillHeaderRes.toString());
+
+			// System.out.println("Sell Bill Header: " + sellBillHeader.toString());
+
+			if (sellBillHeaderRes != null) {
+				MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("frId", frDetails.getFrId());
+				FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
+						FrSetting.class);
+
+				int sellBillNo = frSetting.getSellBillNo();
+
+				sellBillNo = sellBillNo + 1;
+
+				map = new LinkedMultiValueMap<String, Object>();
+
+				map.add("frId", frDetails.getFrId());
+				map.add("sellBillNo", sellBillNo);
+
+				Info info1 = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
+
+				try {
+					String isSMS = request.getParameter("isSMS");
+					if (isSMS.equals("1"))
+						Common.sendTextMessage(2, cName, frDetails.getFrName(), "", "",
+								sellBillHeaderRes.getGrandTotal(), "", cPhone);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+			}
+			itemList = new ArrayList<BillItemList>();
 			hashMap.remove(index);
-			itemList=new ArrayList<BillItemList>();
-			MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
-			map = new LinkedMultiValueMap<String, Object>();
-			
-			
 
-			map.add("frId", frDetails.getFrId());
-			FrSetting frSetting = restTemplate.postForObject(Constant.URL + "getFrSettingValue", map,
-					FrSetting.class);
-
-			int sellBillNo = frSetting.getSellBillNo();
-			
-			sellBillNo = sellBillNo + 1;
-
-			map = new LinkedMultiValueMap<String, Object>();
-
-			map.add("frId", frDetails.getFrId());
-			map.add("sellBillNo", sellBillNo);
-			
-			Info info = restTemplate.postForObject(Constant.URL + "updateFrSettingBillNo", map, Info.class);
-			
-			try {
-			String isSMS=request.getParameter("isSMS");
-			if(isSMS.equals("1"))
-			Common.sendTextMessage(2, cName, frDetails.getFrName(), 
-					"", "", sellBillHeaderRes.getGrandTotal(), 
-					"", cPhone);
-			}catch (Exception e) {
-				e.printStackTrace();
-			}
-			
-			
-		}
-		
-		
-		
-		
-		}catch(Exception e) {
-			System.out.println("Exception:" + e.getMessage());
+			info.setError(false);
+			info.setMessage(String.valueOf(sellBillHeaderRes.getSellBillNo()));
+		} catch (Exception e) {
+			info.setError(true);
+			info.setMessage("Error while generating bill...");
 			e.printStackTrace();
 		}
-		
+
 		System.out.println("Order Response:" + sellBillHeaderRes.toString());
 
-		return sellBillHeaderRes;
+		return info;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	public String getInvoiceNo(HttpServletRequest request, HttpServletResponse response) {
 
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		RestTemplate restTemplate = new RestTemplate();
-
 
 		HttpSession session = request.getSession();
 
@@ -750,7 +873,7 @@ public class NewOpsCustomerBillController {
 
 		int billNo = frSetting.getSellBillNo();
 
-		int settingValue =billNo;
+		int settingValue = billNo;
 
 		System.out.println("Setting Value Received " + settingValue);
 		int year = Year.now().getValue();
@@ -779,8 +902,8 @@ public class NewOpsCustomerBillController {
 		Calendar cale = Calendar.getInstance();
 		cale.setTime(date);
 		int month = cale.get(Calendar.MONTH);
-		
-		month=month+1;
+
+		month = month + 1;
 
 		if (month <= 3) {
 
@@ -798,47 +921,33 @@ public class NewOpsCustomerBillController {
 
 		String invoiceNo = null;
 
-		if (length == 1)
-		{
+		if (length == 1) {
 			invoiceNo = curStrYear + "-" + "0000" + settingValue;
-		}else
-		if (length == 2)
-		{
+		} else if (length == 2) {
 			invoiceNo = curStrYear + "-" + "000" + settingValue;
-		}else
-		if (length == 3)
-		{
+		} else if (length == 3) {
 			invoiceNo = curStrYear + "-" + "00" + settingValue;
-		}else
-		if (length == 4)
-		{
+		} else if (length == 4) {
 			invoiceNo = curStrYear + "-" + "0" + settingValue;
-		}else
-		{
+		} else {
 			invoiceNo = curStrYear + "-" + settingValue;
 		}
-		invoiceNo=frDetails.getFrCode()+invoiceNo;
+		invoiceNo = frDetails.getFrCode() + invoiceNo;
 		System.out.println("*** settingValue= " + settingValue);
 		return invoiceNo;
 
 	}
-	
-	
-	
+
 	public static float roundUp(float d) {
 		return BigDecimal.valueOf(d).setScale(2, BigDecimal.ROUND_HALF_UP).floatValue();
 	}
-	
-	
-	
-	
-	
+
 	@RequestMapping(value = "/pdfSellBillNewPos", method = RequestMethod.GET)
 	public ModelAndView demoBill(HttpServletRequest request, HttpServletResponse response) {
 		System.err.println("in pdfSellBillNewPos Mapping");
 		String sellBillNo = request.getParameter("billNo");
-		System.out.println("bill No "+sellBillNo);
-		String billType=request.getParameter("type");
+		System.out.println("bill No " + sellBillNo);
+		String billType = request.getParameter("type");
 		int billNo = Integer.parseInt(sellBillNo);
 		// int billNo=Integer.parseInt(fr_Id);
 		HttpSession ses = request.getSession();
@@ -849,81 +958,55 @@ public class NewOpsCustomerBillController {
 		RestTemplate rest = new RestTemplate();
 		MultiValueMap<String, Object> map = new LinkedMultiValueMap<String, Object>();
 		try {
-		map.add("billNo", billNo);
-		if (frGstType == 10000000) {
-			model = new ModelAndView("report/franchTaxInvoice");
-			List<GetCustBillTax> getCustBilTaxList = rest.postForObject(Constant.URL + "getCustomerBillTax", map,
-					List.class);
+			map.add("billNo", billNo);
+			if (frGstType == 10000000) {
+				model = new ModelAndView("report/franchTaxInvoice");
+				List<GetCustBillTax> getCustBilTaxList = rest.postForObject(Constant.URL + "getCustomerBillTax", map,
+						List.class);
 
-			model.addObject("custBilltax", getCustBilTaxList);
-		} 
+				model.addObject("custBilltax", getCustBilTaxList);
+			}
 
-		ParameterizedTypeReference<List<GetCustmoreBillResponse>> typeRef = new ParameterizedTypeReference<List<GetCustmoreBillResponse>>() {
-		};
-		ResponseEntity<List<GetCustmoreBillResponse>> responseEntity = rest.exchange(Constant.URL + "getCustomerBill",
-				HttpMethod.POST, new HttpEntity<>(map), typeRef);
-	
-		List<GetCustmoreBillResponse> getCustmoreBillResponseList = responseEntity.getBody();
+			ParameterizedTypeReference<List<GetCustmoreBillResponse>> typeRef = new ParameterizedTypeReference<List<GetCustmoreBillResponse>>() {
+			};
+			ResponseEntity<List<GetCustmoreBillResponse>> responseEntity = rest
+					.exchange(Constant.URL + "getCustomerBill", HttpMethod.POST, new HttpEntity<>(map), typeRef);
 
-		GetCustmoreBillResponse billResponse = getCustmoreBillResponseList.get(0);
-			//System.err.println("custBill Resp"+getCustmoreBillResponseList.get(0));
-		
-		float billAmt = billResponse.getMrp()*billResponse.getQty();
-		float discPer = billResponse.getDiscountPer();
-		//System.err.println("Bill Amount======="+billAmt);
-		float intDiscAmt = roundUp((billAmt * discPer) / 100);
-		
+			List<GetCustmoreBillResponse> getCustmoreBillResponseList = responseEntity.getBody();
 
-		getCustmoreBillResponseList.get(0).setIntDiscAmt(intDiscAmt);
-		
-		//For Get Proper Values In Print
-		getCustmoreBillResponseList.get(0).setDiscountAmt(billResponse.getMrp()*billResponse.getQty());
-		//
-		System.out.println("bill no:" + billNo + "Custmore Bill : " + getCustmoreBillResponseList.toString());
+			GetCustmoreBillResponse billResponse = getCustmoreBillResponseList.get(0);
+			// System.err.println("custBill Resp"+getCustmoreBillResponseList.get(0));
 
-		model.addObject("billList", getCustmoreBillResponseList);
-		model.addObject("frGstType", frGstType);
-		model.addObject("billType", billType);
-		
-		}catch (Exception e) {
+			float billAmt = billResponse.getMrp() * billResponse.getQty();
+			float discPer = billResponse.getDiscountPer();
+			// System.err.println("Bill Amount======="+billAmt);
+			float intDiscAmt = roundUp((billAmt * discPer) / 100);
+
+			getCustmoreBillResponseList.get(0).setIntDiscAmt(intDiscAmt);
+
+			// For Get Proper Values In Print
+			getCustmoreBillResponseList.get(0).setDiscountAmt(billResponse.getMrp() * billResponse.getQty());
+			//
+			System.out.println("bill no:" + billNo + "Custmore Bill : " + getCustmoreBillResponseList.toString());
+
+			model.addObject("billList", getCustmoreBillResponseList);
+			model.addObject("frGstType", frGstType);
+			model.addObject("billType", billType);
+
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		return model;
 	}
 
-	@RequestMapping(value = "/cancelFromHoldBill", method = RequestMethod.POST)
-	@ResponseBody
-	public Info cancelFromHoldBill(HttpServletRequest request, HttpServletResponse responsel) {
+	@RequestMapping(value = "/cancelBill", method = RequestMethod.GET)
+	public @ResponseBody List<BillItemList> cancelBill(HttpServletRequest request, HttpServletResponse response) {
 
-		Info info = new Info();
+		itemList = new ArrayList<BillItemList>();
 
-		try {
+		return itemList;
 
-			int index = Integer.parseInt(request.getParameter("key"));
-			hashMap.remove(index);
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			info.setError(true);
-			info.setMessage("failed");
-		}
-		return info;
 	}
 
-//	@RequestMapping(value="/cancelBill",method=RequestMethod.GET)
-//	public @ResponseBody List<BillItemList> cancelBill(HttpServletRequest request,HttpServletResponse response) {
-//		System.err.println("In cancelBill"+itemList.size());
-//		itemList.clear();
-//		hashMap.clear();
-//		System.err.println(itemList.size());
-//	
-//		
-//		 return itemList;
-//		 
-//	}
-//	
-	
-	
-	
 }
