@@ -105,7 +105,7 @@ public class NewOpsCustomerBillController {
 					FrItemStockConfigureList.class);
 			List<FrItemStockConfigure> settingListRes = settingList.getFrItemStockConfigure();
 			calStock = settingListRes.get(0).getSettingValue();
- 
+
 			map = new LinkedMultiValueMap<String, Object>();
 			map.add("frId", frDetails.getFrId());
 
@@ -244,7 +244,7 @@ public class NewOpsCustomerBillController {
 					Optional<Customer> result = custometList.stream()
 							.filter(obj -> phoneno.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
 					System.out.println("result " + result);
-					if (result.isEmpty()) {
+					if (!result.isPresent()) {
 						custometList.add(customerTempList.get(i));
 
 					}
@@ -279,6 +279,8 @@ public class NewOpsCustomerBillController {
 			model.addObject("customerList", custometList);
 			model.addObject("calStock", calStock);
 			model.addObject("ItemList", showItemList);
+			model.addObject("itemURL", Constant.ITEM_IMAGE_URL);
+
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -652,7 +654,7 @@ public class NewOpsCustomerBillController {
 			Optional<Customer> result = custometList.stream()
 					.filter(obj -> custDetails.equalsIgnoreCase(obj.getPhoneNo())).findFirst();
 
-			if (!result.isEmpty()) {
+			if (!result.isPresent()) {
 				cName = result.get().getUserName();
 				cPhone = result.get().getPhoneNo();
 				cGst = result.get().getGstNo();

@@ -51,6 +51,8 @@
 	href="${pageContext.request.contextPath}/resources/newpos/alertify/css/themes/default.min.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/resources/customerBill/chosen.css">
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/assets/bootstrap/css/lightbox.css">
 <style>
 <!--
 -->
@@ -219,9 +221,9 @@ label:before {
 
 			<header>
 				<div class="logo">
-					<img
+					<a href="${pageContext.request.contextPath}/home"><img
 						src="${pageContext.request.contextPath}/resources/images/minlogo.png"
-						alt="mini_logo">
+						alt="mini_logo"></a>
 				</div>
 				<div class="drop_menu">
 					<select name="holdBillNo" id="holdBillNo"
@@ -1039,7 +1041,8 @@ label:before {
 	<!-- custom scrollbar plugin -->
 	<script
 		src="${pageContext.request.contextPath}/resources/newpos/js/jquery.mCustomScrollbar.concat.min.js"></script>
-
+	<script
+		src="${pageContext.request.contextPath}/resources/js/lightbox.js"></script>
 	<script>
 		(function($) {
 			$(window).on(
@@ -1092,7 +1095,19 @@ label:before {
 		 alertify.set('notifier','position', 'top-right'); 
 	});
 	
+	 
+	function imgErrorJavascript(image, type) {
+		//alert(imagepath)
+		image.onerror = "";
+		 
+			image.src = '${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg';//taste
+		 
+		return true;
+	}
+ 
 	function getAllItemList(){
+		
+		var imgurl='${itemURL}';
 		 
 		 		$.getJSON('${getAllItemList}',{ajax:true},function(data){
 		 			var jsonStr= data;
@@ -1106,8 +1121,8 @@ label:before {
 		 								'<a href="#" class="initialism  addcust1_open  " title="'+jsonStr[i].itemName+'">'+
 		 									'<div class="cake_picture">'+
 		 										'<p>'+jsonStr[i].mrp+'</p>'+
-		 										'<img src="${pageContext.request.contextPath}/resources/newpos/images/chocolate_cake.jpg" alt="">'+
-		 										'<span>'+jsonStr[i].totalRegStock+'</span>'+
+		 										'<img src="'+imgurl+''+jsonStr[i].itemImg+'" alt="" onerror="imgErrorJavascript(this,1);">'+
+		 										'<a href="'+imgurl+''+jsonStr[i].itemImg+'" data-lightbox="image-1" tabindex="-1" style="text-decoration: underline;color:#000000;" ><span>'+jsonStr[i].totalRegStock+'</span></a>'+
 		 									'</div>'+
 		 								'<div class="cake_name">'+jsonStr[i].itemName+'</div>'+
 		 							'</a> </div> </div> <div class="hiddenSubCatId" style="display: none;">'+jsonStr[i].subCatId+'</div></li>';
@@ -1284,9 +1299,9 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 	function addItem(flag){
 		 
 		if(flag>0){
-			var qty= document.getElementById("enterQty").value;
+			var qty= parseFloat(document.getElementById("enterQty").value);
 		}else{
-			var qty= document.getElementById("tblQty").value;
+			var qty= parseFloat(document.getElementById("tblQty").value);
 			
 		}
 		
@@ -1295,20 +1310,19 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 		 
 		var itemName =document.getElementById("itemNameHidden").value;
 		var itemId = document.getElementById("itemIdHidden").value;
-		var itemMrp=document.getElementById("itemMrp").value;
-		var itemTax =document.getElementById("itemTaxHidden").value;
+		var itemMrp=parseFloat(document.getElementById("itemMrp").value);
+		var itemTax =parseFloat(document.getElementById("itemTaxHidden").value);
 		var itemUom= document.getElementById("itemUomHidden").value;
 		//var catId = document.getElementById("itemUomHidden").value;
 		var tax1 = document.getElementById("itemTax1Hidden").value;
 		var tax2= document.getElementById("itemTax1Hidden").value;
 		var catId= document.getElementById("itemCatId").value;
-	var aviableQty=	document.getElementById("aviableQty").value;
+		var aviableQty=	document.getElementById("aviableQty").value;
 		var price= (qty*itemMrp).toFixed(2);
-		var paybeleTax=((price*100)/(100+itemTax)).toFixed(2);
-		var paybeleAmt=(price-paybeleTax).toFixed(2);
+		var paybeleAmt=((price*100)/(100+itemTax)).toFixed(2);
+		var paybeleTax=(price-paybeleAmt).toFixed(2);
 		
-		 //alert(itemId);
-		//alert(itemTax);
+		 //alert("(price*100) " + ((100+itemTax))); 
 		//alert(paybeleTax);
 		//alert(paybeleAmt);
 		var fd=new FormData();
@@ -1344,9 +1358,8 @@ function opnItemPopup(itemId,itemName,catId,aviableQty,itemTax1,itemTax2,itemMrp
 					
 					//alert(data.length);
 					
-					if(data.error==false){
-						alertify.success(data.msg);
-					}else{
+					if(data.error==true){
+					 
 						alertify.error(data.msg);
 					}
 						document.getElementById("enterQty").value=1;
